@@ -134,7 +134,6 @@ body {
 
   .navegacao-conteudo ul {
     gap: 15px;
-    margin-left: 20px;
   }
 
   .navegacao ul {
@@ -209,9 +208,7 @@ body {
     gap: 40px;
   }
 
-  .navegacao ul a {
-    font-size: 10px;
-  }
+  .navegacao ul a {}
 
   .navegacao ul {
     gap: 10px;
@@ -241,16 +238,8 @@ body {
     gap: 20px;
   }
 
-  .navegacao ul a {
-    font-size: 8px;
-  }
-
   .navegacao ul {
     gap: 8px;
-  }
-
-  .login ul a {
-    font-size: 8px;
   }
 
   .login ul {
@@ -373,15 +362,11 @@ body {
   display: grid;
   justify-content: center;
   margin-bottom: 50px;
-  margin-left: -134px;
   align-items: center;
-}
-
-.selecao-radio {
-  display: grid;
-  margin: 0 auto;
   text-align: center;
 }
+
+
 
 .selecao-radio h2 {
   font-size: 18px;
@@ -661,11 +646,17 @@ body {
     height: 15px;
   }
 
-
-
 }
 
 @media (max-width: 600px) {
+  .financas-bg {
+    padding-bottom: 20px;
+  }
+
+  .selecao-radio {
+    margin-bottom: 20px;
+  }
+
   .titulo {
     font-size: 1.8rem;
     margin-bottom: 10px;
@@ -676,9 +667,96 @@ body {
   }
 
   .selecao-conteudo {
-    width: 85%;
+    padding: 0px;
     display: grid;
-    grid-template-columns: 150px minmax(auto, 350px);
+    grid-template-columns: 220px 220px;
+    margin: 0 auto;
+    gap: 20px;
+    border-radius: 10px;
+    background: #e7e7e7;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
+  }
+
+  .financas-formulario {
+    grid-template-columns: 1fr;
+    border-radius: 0px;
+    width: 80%;
+    padding: 0px;
+    box-shadow: 0px 0px 0px rgb(0 0 0 / 0);
+  }
+
+
+  #compra-label {
+    grid-area: 1;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #venda-label {
+    grid-area: 1;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #pix-label {
+    grid-area: 2;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+
+  #emprestimo-label {
+    grid-area: 2;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #emprestimo-conteudo,
+  #pix-conteudo,
+  #venda-conteudo,
+  #compra-conteudo {
+    grid-column: 1/-1;
+    grid-row: 3/6;
+  }
+
+  .div-total {
+    justify-self: center;
+  }
+}
+
+/* Media do formulario */
+
+@media (max-width: 500px) {
+  .selecao-conteudo {
+    grid-template-columns: 175px 175px;
+  }
+}
+
+@media (max-width: 400px) {
+  .titulo {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .selecao-radio h2 {
+    font-size: 0.6rem;
+  }
+
+  .selecao-conteudo {
+    grid-template-columns: 120px 120px;
     margin: 0 auto;
     gap: 20px;
     border-radius: 10px;
@@ -694,55 +772,34 @@ body {
     box-shadow: 0px 0px 0px rgb(0 0 0 / 0);
   }
 
+  .financas-formulario {
+    display: grid;
+    grid-template-columns: auto;
+  }
+
   #compra-label {
-    grid-area: 1;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
+    font-size: 9px;
+    height: 25px;
+    width: 100px;
   }
 
   #venda-label {
-    grid-area: 2;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
+    font-size: 9px;
+    height: 25px;
+    width: 100px;
   }
 
   #pix-label {
-    grid-area: 3;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
+    font-size: 9px;
+    height: 25px;
+    width: 100px;
   }
 
 
   #emprestimo-label {
-    grid-area: 4;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
-  }
-
-  #emprestimo-conteudo,
-  #pix-conteudo,
-  #venda-conteudo,
-  #compra-conteudo {
-    grid-column: 2;
-    grid-row: 6/-1;
-  }
-
-  /* Media do formulario */
-  .financas-formulario {
-    display: grid;
-    grid-template-columns: auto;
+    font-size: 9px;
+    height: 25px;
+    width: 100px;
   }
 }
 
