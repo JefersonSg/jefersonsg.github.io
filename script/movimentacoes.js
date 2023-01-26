@@ -14,7 +14,7 @@ const vencimentoTotal = document.getElementById("vencimentoTotal");
 const totalFinal = document.getElementById("totalFinal");
 const div = document.querySelector(".selecao-conteudo");
 const receberOuPagar = $(".selecao-conteudo input");
-
+const lucro = document.getElementById('totalPago')
 
 
 // COMPRAS
@@ -29,13 +29,18 @@ parcelas[0].addEventListener("click", () => {
 
 // Emprestimo 
 
+
+
 valores[3].addEventListener("keyup", () => {
 
   const jurosMes = +( (valores[3].value) * (jurosComp.selectedIndex / 100));
   const jurosTotal =
     valores[3].value / parcelas[2].selectedIndex * (juros.selectedIndex / 100);
     const valorTotal = valores[3].value / parcelas[2].selectedIndex + jurosTotal + jurosMes;
-    totais[3].value = `R$ ${(valorTotal).toFixed(2)}`;
+
+    totais[3].value = `${parcelas[2].selectedIndex}x de R$ ${(valorTotal).toFixed(2)}`;
+
+    lucro.value = `Total ${(valorTotal * parcelas[2].selectedIndex).toFixed(2)}`
 
 });
 
@@ -44,7 +49,8 @@ parcelas[2].addEventListener("click", () => {
   const jurosTotal = valores[3].value / parcelas[2].selectedIndex * (juros.selectedIndex / 100);
     const valorTotal = valores[3].value / parcelas[2].selectedIndex + jurosTotal + jurosMes;
 
-    totais[3].value = `R$ ${(valorTotal).toFixed(2)}`;
+    totais[3].value = `${parcelas[2].selectedIndex}x de R$ ${(valorTotal).toFixed(2)}`;
+    lucro.value = `Total ${(valorTotal * parcelas[2].selectedIndex).toFixed(2)}`
   
 });
 
@@ -55,7 +61,8 @@ juros.addEventListener("change", () => {
     const valorTotal = valores[3].value / parcelas[2].selectedIndex + jurosTotal + jurosMes;
 
   if (juros.selectedIndex >= 0) {
-    totais[3].value = `R$ ${(valorTotal).toFixed(2)}`;
+    totais[3].value = `${parcelas[2].selectedIndex}x de R$ ${(valorTotal).toFixed(2)}`;
+    lucro.value = `Total ${(valorTotal * parcelas[2].selectedIndex).toFixed(2)}`
   }
 });
 
@@ -66,7 +73,8 @@ jurosComp.addEventListener("change", () => {
     const valorTotal = valores[3].value / parcelas[2].selectedIndex + jurosTotal + jurosMes;
 
   if (jurosComp.selectedIndex >= 0) {
-    totais[3].value = `R$ ${(valorTotal).toFixed(2)}`;
+    totais[3].value = `${parcelas[2].selectedIndex}x de R$ ${(valorTotal).toFixed(2)}`
+    lucro.value = `Total ${(valorTotal * parcelas[2].selectedIndex).toFixed(2)}`
   }
 });
 
@@ -90,37 +98,39 @@ parcelas[1].addEventListener("click", () => {
 });
 
 
-// Testando3
+// Movimentaçoes
+
+
+// Compra
 adicionar[0].addEventListener("click", function () {
   if ((totais[0].value !== "R$0") & (nomeMov[0].value !== "")) {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/compra2.svg" width="32" height="29" alt="saquinho de dinheiro"> <input disabled id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled id="aReceber" style="background: #F92828; color: #000;" value="${adicionar[0].value}" type="text" name="data" placeholder="A receber">`;
-    row.insertCell(
-      2
-    ).innerHTML = `<input disabled id="valorMensal" style="background: #F92828; color: #000;" value="R$${
-      valores[0].value * 1
-    }"  type="text" name="Valor" placeholder="Valor Mensal">`;
-    row.insertCell(
-      3
-    ).innerHTML = `<input disabled id="vencimentoTotal" style="background: #F92828; color: #000;" value="Comprou no dia ${
-      vencimentos[0].value * 1
-    }" type="text" name="data" placeholder="Comprou no dia X">`;
-    row.insertCell(
-      4
-    ).innerHTML = `<input disabled id="parcelasTotal" style="background: #F92828; color: #000;" type="text" name="parcelas" 
-    value="pagou em ${parcelas[0].value}x"
-    placeholder="em 10x" >`;
-    row.insertCell(
-      5
-    ).innerHTML = `<p id="igual">=</p> <input disabled id="totalFinal" style="background: #F92828; color: #000;" type="text" name="valorTotal" 
-    value=" -${totais[0].value}"  placeholder="Valor Total" >`;
+    row.insertCell(0).innerHTML = `
+        <img src="./img/Movimentacoes/compra2.svg" width="32" height="29" alt="saquinho de dinheiro"> <input disabled id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    `;
+    row.insertCell(1).innerHTML = `
+        <input disabled id="aReceber" style="background: #F92828; color: #000;" value="${adicionar[0].value}" type="text" name="data" placeholder="A receber">
+       `;
+    row.insertCell(2).innerHTML = `
+        <input disabled id="valorMensal" style="background: #F92828; color: #000;" value="R$${
+        valores[0].value * 1
+        }"  type="text" name="Valor" placeholder="Valor Mensal">
+    `;
+    row.insertCell(3).innerHTML = `
+        <input disabled id="vencimentoTotal" style="background: #F92828; color: #000;" value="Comprou no dia ${
+        vencimentos[0].value * 1
+        }" type="text" name="data" placeholder="Comprou no dia X">`;
+    row.insertCell(4).innerHTML = `
+       <input disabled id="parcelasTotal" style="background: #F92828; color: #000;" type="text" name="parcelas" 
+        value="pagou em ${parcelas[0].value}x"
+        placeholder="em 10x" >
+        `;
+    row.insertCell(5).innerHTML = `
+        <p id="igual">=</p> <input disabled id="totalFinal" style="background: #F92828; color: #000;" type="text" name="valorTotal" 
+        value=" -${totais[0].value}"  placeholder="Valor Total" >
+    `;
     nomeMov[0].value = "";
     receita[0].selectedIndex = "";
     vencimentos[0].value = "";
@@ -131,6 +141,9 @@ adicionar[0].addEventListener("click", function () {
     alert("Preencha todos os campos");
   }
 });
+
+// Venda
+
 adicionar[1].addEventListener("click", function () {
   if (
     valores[1].value &&
@@ -141,29 +154,31 @@ adicionar[1].addEventListener("click", function () {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor"><input disabled id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled id="aReceber" value="${adicionar[1].value}" type="text" name="data" placeholder="A receber">`;
-    row.insertCell(2).innerHTML = `<input disabled value="R$${
+    row.insertCell(0).innerHTML = `
+        <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor"><input disabled id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    `;
+    row.insertCell(1).innerHTML = `
+        <input disabled id="aReceber" value="${adicionar[1].value}" type="text" name="data" placeholder="A receber">
+    `;
+    row.insertCell(2).innerHTML = `
+       <input disabled value="R$${
       valores[1].value * 1
-    }" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">`;
-    row.insertCell(
-      3
-    ).innerHTML = `<input disabled id="vencimentoTotal" value="Vendeu no dia ${
-      vencimentos[1].value * 1
-    }" type="text" name="data" placeholder="Comprou no dia X">`;
-    row.insertCell(
-      4
-    ).innerHTML = `<input disabled id="parcelasTotal" type="text" name="razao[]" 
-    value="Faltam ${parcelas[1].value}x"
-    placeholder="em 10x" >`;
-    row.insertCell(
-      5
-    ).innerHTML = `<p id="igual">=</p> <input disabled id="totalFinal"  class="totalFinal" type="text" name="valorTotal" 
-    value="+${totais[1].value}"  placeholder="Valor Total" >`;
+       }" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">
+    `;
+    row.insertCell(3).innerHTML = `
+       <input disabled id="vencimentoTotal" value="Vendeu no dia ${
+       vencimentos[1].value * 1
+       }" type="text" name="data" placeholder="Comprou no dia X">
+    `;
+    row.insertCell(4).innerHTML = `
+        <input disabled id="parcelasTotal" type="text" name="razao[]"
+        value="Faltam ${parcelas[1].value}x"
+        placeholder="em 10x" >
+    `;
+    row.insertCell(5).innerHTML = `
+        <p id="igual">=</p> <input disabled id="totalFinal"  class="totalFinal" type="text" name="valorTotal" 
+        value="+${totais[1].value}"  placeholder="Valor Total" >
+    `;
 
     valores[1].value = "";
     totais[1].value = "";
@@ -173,6 +188,9 @@ adicionar[1].addEventListener("click", function () {
     alert("Preencha todos os campos");
   }
 });
+
+// Pix
+
 adicionar[2].addEventListener("click", function () {
   if (
     valores[2].value &&
@@ -184,22 +202,20 @@ adicionar[2].addEventListener("click", function () {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix"><input disabled id="nomeMov" back value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled id="vencimentoTotal" value=" ${
+    row.insertCell(0).innerHTML = `
+        <img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix"><input disabled id="nomeMov" back value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    `;
+    row.insertCell(1).innerHTML = `<input disabled id="vencimentoTotal" value=" ${
       "no dia " + vencimentos[2].value
     } " type="text" name="data" placeholder="Comprou no dia X">`;
-    row.insertCell(
-      2
-    ).innerHTML = `<input disabled value="R$${valores[2].value}" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">`;
+    row.insertCell(2).innerHTML = `
+        <input disabled value="R$${valores[2].value}" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">
+    `;
 
-    row.insertCell(
-      3
-    ).innerHTML = `<p id="igual">=</p> <input disabled id="totalFinal"  type="text" name="valorTotal" 
-    value=" +${totais[2].value}"  placeholder="Valor Total" >`;
+    row.insertCell(3).innerHTML = `
+        <p id="igual">=</p> <input disabled id="totalFinal"  type="text" name="valorTotal" 
+        value=" +${totais[2].value}"  placeholder="Valor Total" >
+    `;
     valores[2].value = "";
     totais[2].value = "";
     vencimentos[2].value = "";
@@ -215,23 +231,23 @@ adicionar[2].addEventListener("click", function () {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix"><input disabled id="nomeMov" style="background: #F92828; color: #000;"  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled id="vencimentoTotal" style="background: #F92828; color: #000;"  value=" ${
-      "No dia " + vencimentos[2].value * 1
-    } " type="text" name="data" placeholder="Comprou no dia X">`;
-    row.insertCell(
-      2
-    ).innerHTML = `<input disabled style="background: #F92828; color: #000;"  value="R$${
-      valores[2].value * 1
-    }" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">`;
-    row.insertCell(
-      3
-    ).innerHTML = `<p id="igual">=</p> <input disabled style="background: #F92828; color: #000;"  id="totalFinal"  type="text" name="valorTotal" 
-    value=" -${totais[2].value}"  placeholder="Valor Total" >`;
+    row.insertCell(0).innerHTML = `
+       <img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix"><input disabled id="nomeMov" style="background: #F92828; color: #000;"  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    `;
+    row.insertCell(1).innerHTML = `
+        <input disabled id="vencimentoTotal" style="background: #F92828; color: #000;"  value=" ${
+        "No dia " + vencimentos[2].value * 1
+        } " type="text" name="data" placeholder="Comprou no dia X">
+    `;
+    row.insertCell(2).innerHTML = `
+        <input disabled style="background: #F92828; color: #000;"  value="R$${
+        valores[2].value * 1
+        }" id="valorMensal" type="text" name="razao[]" placeholder="Valor Mensal">
+        `;
+    row.insertCell(3).innerHTML = `
+        <p id="igual">=</p> <input disabled style="background: #F92828; color: #000;"  id="totalFinal"  type="text" name="valorTotal" 
+        value=" -${totais[2].value}"  placeholder="Valor Total" >
+        `;
     valores[2].value = "";
     totais[2].value = "";
     vencimentos[2].value = "";
@@ -241,6 +257,8 @@ adicionar[2].addEventListener("click", function () {
     alert("preencha todos os campos");
   }
 });
+
+// Emprestimo
 
 adicionar[3].addEventListener("click", function () {
   if (
@@ -253,31 +271,51 @@ adicionar[3].addEventListener("click", function () {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <input disabled style="background: #F92828; color: #000;" id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled style="background: #F92828; color: #000;" id="aReceber" value="${adicionar[3].value}" type="text" name="data" placeholder="A receber">`;
-    row.insertCell(
-      2
-    ).innerHTML = `<input disabled style="background: #F92828; color: #000;" id="valorMensal" value="R$${
+    row.insertCell(0).innerHTML = `
+        <img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov">
+        <span>Pegou de</span>
+        <input disabled style="background: #F92828; color: #000;" id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        </div>
+        `;
+    row.insertCell(1).innerHTML = `
+      <div class = "organizaMov">
+        <span>No dia</span>
+       <input disabled style="background: #F92828; color: #000;" id="vencimentoTotal" value="No dia ${
+        vencimentos[3].value * 1
+        }" type="text" name="data" placeholder="No dia X">
+      </div>
+        `;
+    row.insertCell(2).innerHTML = `
+      <div class = "organizaMov">
+      <span>Valor de</span>
+      <input disabled style="background: #F92828; color: #000;" id="valorMensal"  value="R$${
       valores[3].value * 1
-    }"  type="text" name="Valor" placeholder="Valor Mensal">`;
-    row.insertCell(
-      3
-    ).innerHTML = `<input disabled style="background: #F92828; color: #000;" id="vencimentoTotal" value="No dia ${
-      vencimentos[3].value * 1
-    }" type="text" name="data" placeholder="No dia X">`;
-    row.insertCell(
-      4
-    ).innerHTML = `<input disabled style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
-    value="Pegou em ${parcelas[2].value}x"
-    placeholder="em 10x" >`;
-    row.insertCell(
-      5
-    ).innerHTML = `<p id="igual">=</p> <input disabled style="background: #F92828; color: #000;" id="totalFinal" type="text" name="valorTotal" 
-    value=" ${receita[2].value}${totais[3].value}"  placeholder="Valor Total" >`;
+      }"  type="text" name="Valor" placeholder="Valor Mensal">
+
+    </div>
+        `;
+    row.insertCell(3).innerHTML = `
+      <div class = "organizaMov">
+      <span>Em</span>
+     <input disabled style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
+        value="${totais[3].value}"
+        placeholder="em 10x" >
+    </div>
+        `;
+    row.insertCell(4).innerHTML = `
+    <div class = "organizaMov">
+    <span>Defcit de</span>
+    
+    <input disabled style="background: #F92828; color: #000;" id="valorMensal" value="-R$ ${((lucro.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  type="text" name="Valor" placeholder="Valor Mensal">
+    </div>
+        `;
+    row.insertCell(5).innerHTML = `
+    <div class = "organizaMov">
+    <span>Total a pagar</span>
+    
+    <input disabled style="background: #F92828; color: #000;" id="valorMensal" value="${receita[2].value} R$ ${+(lucro.value).replace('Total ',"")}"  type="text" name="Valor" placeholder="Valor Mensal">
+    </div>
+        `;
     nomeMov[3].value = "";
     receita[2].value = "";
     vencimentos[3].value = "";
@@ -286,6 +324,7 @@ adicionar[3].addEventListener("click", function () {
     totais[3].value = "";
     jurosComp.selectedIndex = "";
     juros.selectedIndex = "";
+    lucro.value = "";
   } else if (
     valores[3].value &&
     nomeMov[3].value &&
@@ -296,29 +335,40 @@ adicionar[3].addEventListener("click", function () {
     const table = document.getElementById("tabela");
     const row = table.insertRow(0);
 
-    row.insertCell(
-      0
-    ).innerHTML = `<img src="./img/Movimentacoes/emprestimo1.svg" -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <input disabled id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">`;
-    row.insertCell(
-      1
-    ).innerHTML = `<input disabled id="aReceber" value="A receber" type="text" name="data" placeholder="A receber">`;
-    row.insertCell(2).innerHTML = `<input disabled id="valorMensal" value="R$${
-      valores[3].value * 1
-    }"  type="text" name="Valor" placeholder="Valor Mensal">`;
-    row.insertCell(
-      3
-    ).innerHTML = `<input disabled id="vencimentoTotal" value="No dia ${
-      vencimentos[3].value * 1
-    }" type="text" name="data" placeholder="No dia X">`;
-    row.insertCell(
-      4
-    ).innerHTML = `<input disabled id="parcelasTotal" type="text" name="parcelas" 
-    value="Emprestou em ${parcelas[2].value}x"
-    placeholder="em x" >`;
-    row.insertCell(
-      5
-    ).innerHTML = `<p id="igual">=</p> <input disabled id="totalFinal" type="text" name="valorTotal" 
-    value=" ${receita[2].value}${totais[3].value}"  placeholder="Valor Total" >`;
+    row.insertCell(0).innerHTML = `
+        <img src="./img/Movimentacoes/emprestimo1.svg" -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov"><span>Emprestou para</span> <input disabled id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov"></div> 
+        `;
+    row.insertCell(1).innerHTML = `
+        <div class = "organizaMov"><span>No dia</span><input disabled id="vencimentoTotal" value="${
+        vencimentos[3].value * 1
+       }" type="text" name="data""></div>
+       `;
+    row.insertCell(2).innerHTML = `
+        <div class = "organizaMov"><span>Valor de</span> <input disabled id="valorMensal" value="R$ ${
+        valores[3].value * 1
+        }"  type="text" name="Valor"></div>
+        `;
+    row.insertCell(3).innerHTML = `
+        <div class = "organizaMov">
+        <span>Em</span>
+        <input disabled id="parcelasTotal" type="text" name="parcelas" 
+        value="${totais[3].value}"
+        placeholder="numero de parcelas" >
+      </div>
+      `;
+    row.insertCell(4).innerHTML = `<div class = "organizaMov">
+      <span>Lucro</span>
+      <input disabled id="valorMensal" type="text" name="Montante final" 
+      value="+R$ ${((lucro.value).replace('Total ',"") - valores[3].value).toFixed(2)} "  placeholder="Valor Total" >
+    </div>
+   `;
+    row.insertCell(5).innerHTML = `<div class = "organizaMov">
+      <span>Total</span>
+      <input disabled id="valorMensal" type="text" name="Montante Total" 
+      value="+R$ ${+(lucro.value).replace('Total ',"")} " >
+      </div>
+    `;
+    row.insertCell(6).innerHTML = ``;
     nomeMov[3].value = "";
     receita[2].value = "";
     vencimentos[3].value = "";
@@ -327,6 +377,7 @@ adicionar[3].addEventListener("click", function () {
     totais[3].value = "";
     jurosComp.selectedIndex = "";
     juros.selectedIndex = "";
+    lucro.value = "";
   } else {
     alert("Preencha todos os campos");
   }

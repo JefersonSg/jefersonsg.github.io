@@ -595,7 +595,7 @@ body {
   width: 40%;
 }
 
-
+/* Media do formulario */
 
 @media (max-width: 1000px) {
 
@@ -737,8 +737,6 @@ body {
   }
 }
 
-/* Media do formulario */
-
 @media (max-width: 500px) {
   .selecao-conteudo {
     grid-template-columns: 175px 175px;
@@ -847,14 +845,21 @@ body {
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
 }
 
+.organizaMov {
+  display: flex;
+  flex-direction: column;
+}
+
 tbody tr td {
   display: flex;
   align-items: center;
   gap: 0px 10px;
 }
 
+
+
+
 #igual {
-  margin-bottom: 10px;
   font-size: 30px;
   font-weight: 700;
 }
@@ -891,6 +896,7 @@ tbody tr td {
   width: 180px;
 }
 
+
 #aReceber {
   width: 140px;
 }
@@ -913,6 +919,13 @@ tbody tr td {
   margin-left: 10px;
 }
 
+#lucro {
+  width: 100px;
+  padding: 1px 5px;
+}
+
+/* media de Movimentacoes */
+
 @media (max-width: 1200px) {
   .movimentacoes {
     gap: 50px;
@@ -931,6 +944,41 @@ tbody tr td {
   .movimentacoes-conteudo {
     width: 850px;
   }
+
+  #tabela tr {
+    gap: 5px;
+  }
+
+  #tabela input {
+    font-size: 12px;
+  }
+
+  #nomeMov {
+    width: 130px;
+  }
+
+  #aReceber {
+    width: 90px;
+  }
+
+  #valorMensal {
+    width: 110px;
+  }
+
+  #vencimentoTotal {
+    width: 125px;
+  }
+
+  #parcelasTotal {
+    width: 110px;
+    padding: 1px 5px;
+  }
+
+  #totalFinal {
+    width: 90px;
+    margin-left: 10px;
+  }
+
 }
 
 @media (max-width: 1000px) {
@@ -949,14 +997,54 @@ tbody tr td {
   }
 
   .movimentacoes-conteudo {
-    width: 750px;
+    width: 780px;
+  }
+
+  #tabela tr {
+    gap: 5px;
+  }
+
+  #tabela input {
+    font-size: 12px;
+  }
+
+  #nomeMov {
+    width: 110px;
+  }
+
+  #aReceber {
+    width: 80px;
+  }
+
+  #valorMensal {
+    width: 100px;
+  }
+
+  #vencimentoTotal {
+    width: 115px;
+  }
+
+  #parcelasTotal {
+    width: 100px;
+    padding: 1px 5px;
+  }
+
+  #totalFinal {
+    width: 80px;
+    margin-left: 10px;
   }
 }
 
 @media (max-width: 800px) {
   .movimentacoes {
+    margin-top: 50px;
+    margin-bottom: 50px;
     gap: 0 20px;
     padding-top: 0px;
+  }
+
+  .movimentacoes img {
+    display: none;
   }
 
   .movimentacoes-bg {
