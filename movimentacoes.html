@@ -29,11 +29,11 @@
           </ul>
         </nav>
       </div>
-      <div class="login">
-        <nav>
+      <div>
+        <nav class="login">
           <ul>
             <li>
-              <img src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" width="63" height="63" alt="" class="user" />
+              <img class="perfil" src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" width="63" height="63" alt="" class="user" />
             </li>
             <li>
               <a class="font-p-m nome-login" href="./">Jeferson Silva</a>
@@ -42,12 +42,13 @@
         </nav>
       </div>
     </div>
+
   </header>
   <section class="financas-bg">
     <h1 class="titulo font-lb-b">ANOTE SUA FINANÇA</h1>
 
     <div class="selecao-radio">
-      <h2 class="font-lb-b">Qual tipo de movimentacao deseja adicionar?</h2>
+      <h2 class="font-lb-b">Qual tipo de movimentaçao deseja adicionar?</h2>
       <div class="selecao-conteudo">
 
         <input type="radio" name="transacao" value="A pagar" id="compra" />
@@ -69,6 +70,11 @@
               <div>
                 <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
               </div>
+
+              <div>
+                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
+              </div>
+
               <div>
                 <select required name="receita ou despesa" id="receita">
                   <option selected value="" disabled style="display: none">
@@ -81,9 +87,7 @@
                   <option value="cosmetico">Cosmeticos</option>
                 </select>
               </div>
-              <div>
-                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
-              </div>
+
               <div>
                 <input type="date" onkeypress="return onlynumber();" id="vencimento" name="data" placeholder="Data" />
               </div>
@@ -289,6 +293,9 @@
 
               <div class="div-total">
                 <input type="text" id="total" name="total" disabled placeholder="Total" />
+
+                <input type="text" id="total-pg" name="total" disabled placeholder="Total" />
+
               </div>
               <div class="div-botao">
                 <button id="botao-add" type="button">

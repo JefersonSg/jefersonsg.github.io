@@ -1,5 +1,6 @@
 body {
   background-color: #f3f4ef;
+  /* margin: 0 auto; */
 }
 
 /* Header */
@@ -8,11 +9,12 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 300px 1fr;
   align-items: center;
   gap: 10px;
-  margin-bottom: 110px;
+  margin-bottom: 80px;
 }
+
 .logo {
   width: 100%;
   margin-top: 18px;
@@ -22,6 +24,8 @@ body {
 .navegacao {
   display: flex;
   align-items: center;
+  gap: 100px;
+  margin: 0 auto;
   justify-content: space-between;
 }
 
@@ -32,6 +36,7 @@ body {
 .navegacao a:hover {
   color: #6d29d3;
 }
+
 .navegacao-conteudo a:hover::after {
   content: "";
   display: block;
@@ -44,9 +49,8 @@ body {
 .navegacao-conteudo ul {
   display: flex;
   gap: 50px;
-  margin-top: 0px;
-  margin-left: 113px;
 }
+
 .navegacao-conteudo ul a {
   color: #130031;
   font-size: 20px;
@@ -55,16 +59,12 @@ body {
   letter-spacing: 1.2px;
 }
 
-.login ul {
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  margin-right: 80px;
-}
+
 .login ul a {
   color: #130031;
   font-size: 20px;
 }
+
 .botao-login {
   display: block;
   text-align: center;
@@ -77,126 +77,216 @@ body {
   color: #130031;
   text-transform: uppercase;
 }
+
 .login ul {
   display: flex;
   align-items: center;
   gap: 45px;
-  margin-left: 99px;
 }
+
 .login ul a {
   color: #130031;
   font-size: 14px;
 }
+
 @media (max-width: 1400px) {
-  .logo {
-    margin-left: 80px;
-  }
+
+
   .navegacao ul a {
     font-size: 16px;
   }
+
   .botao-login {
     width: 150px;
     height: 26px;
     padding: 12px 14px;
   }
-  .navegacao-conteudo ul {
-    gap: 40px;
-    margin-left: 100px;
-  }
+
+
 }
 
 @media (max-width: 1200px) {
-  .logo {
-    margin-left: 60px;
-  }
+
+
   .header {
-    margin-bottom: 80px;
+    margin-bottom: 60px;
   }
+
   .navegacao ul a {
     font-size: 13px;
   }
 
-  .login ul {
-    margin-right: 20px;
-    gap: 20px;
-  }
-  .navegacao-conteudo ul {
-    gap: 40px;
-    margin-left: 60px;
-  }
 }
 
 @media (max-width: 1000px) {
+  .header {
+    display: flex;
+  }
+
+  .navegacao {
+    justify-self: center;
+    gap: 80px;
+  }
+
   .logo {
     margin-left: 40px;
   }
 
   .navegacao-conteudo ul {
-    gap: 30px;
-    margin-left: 40px;
+    gap: 15px;
+    margin-left: 20px;
   }
+
   .navegacao ul {
     gap: 30px;
   }
+
   .navegacao ul a {
     font-size: 12px;
   }
+
   .login ul {
     gap: 10px;
   }
+
   .login ul a {
     font-size: 12px;
   }
+
   .logo {
     width: 150px;
   }
+
   .header {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
+  }
+
+  .perfil {
+    width: 60px;
+    height: 60px;
   }
 }
 
 @media (max-width: 800px) {
-  .login {
-    display: none;
+
+  .perfil {
+    width: 50px;
+    height: 50px;
   }
-  .header {
-    grid-template-columns: 1fr;
-    align-content: center;
-    margin-bottom: 10px;
-  }
+
   .navegacao {
     justify-self: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    gap: 20px;
+    gap: 80px;
   }
+
   .logo {
     justify-self: center;
     margin: 0px auto;
+    margin-left: 20px;
     padding-left: 0px;
   }
+
   .navegacao-conteudo ul {
     margin: 0 auto;
+  }
+
+  .navegacao-conteudo li:last-child {
+    display: none;
   }
 }
 
 @media (max-width: 600px) {
-  .navegacao {
-    word-break: keep-all;
-    gap: 10px;
+  .logo {
+    margin-right: 0px;
   }
+
+  .perfil {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navegacao {
+    gap: 40px;
+  }
+
   .navegacao ul a {
     font-size: 10px;
   }
+
   .navegacao ul {
     gap: 10px;
     margin-left: 0px;
   }
+
   .login ul a {
     font-size: 10px;
   }
+
   .login ul {
     gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  .logo {
+    width: 100px;
+  }
+
+  .perfil {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navegacao {
+    gap: 20px;
+  }
+
+  .navegacao ul a {
+    font-size: 8px;
+  }
+
+  .navegacao ul {
+    gap: 8px;
+  }
+
+  .login ul a {
+    font-size: 8px;
+  }
+
+  .login ul {
+    gap: 5px;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo {
+    width: 70px;
+    margin-left: 10px;
+  }
+
+  .perfil {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navegacao {
+    gap: 15px;
+  }
+
+  .navegacao ul a {
+    font-size: 8px;
+  }
+
+  .navegacao ul {
+    gap: 8px;
+  }
+
+  .login ul a {
+    font-size: 8px;
+  }
+
+  .login ul {
+    gap: 5px;
   }
 }
 
@@ -205,8 +295,9 @@ body {
   max-width: 1600px;
   margin: 0 auto;
   border-bottom: 2px solid #6d29d3;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 }
+
 .financas {
   display: flex;
   width: auto;
@@ -215,14 +306,11 @@ body {
   justify-content: center;
 }
 
-.financas-bg h1 {
+.titulo {
   display: flex;
   max-width: max-content;
   margin: 0 auto;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding-top: 5px;
   font-size: 2.5rem;
   color: #130031;
   margin-bottom: 40px;
@@ -230,14 +318,14 @@ body {
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
-.financas-bg h1::after {
+.titulo::after {
   content: "";
   display: block;
   position: absolute;
   background-image: url("../img/Movimentacoes/mulherSentada.svg");
   width: 164px;
   height: 85px;
-  top: -9px;
+  top: -13.5px;
   right: -159px;
 }
 
@@ -284,10 +372,11 @@ body {
   margin: 0 auto;
   display: grid;
   justify-content: center;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   margin-left: -134px;
   align-items: center;
 }
+
 .selecao-radio {
   display: grid;
   margin: 0 auto;
@@ -305,11 +394,12 @@ body {
   margin-top: 30px;
   gap: 30px;
 }
+
 .transacao {
   display: none;
 }
 
-.selecao-conteudo input:checked + label {
+.selecao-conteudo input:checked+label {
   background: #cacaca;
   border: 1px solid black;
 }
@@ -319,6 +409,7 @@ body {
   text-align: center;
   font-size: 12px;
 }
+
 .financas-formulario button {
   display: flex;
   align-items: center;
@@ -357,11 +448,13 @@ body {
   text-transform: uppercase;
   font-weight: 600;
 }
+
 .div-botao {
   padding-top: 10px;
   grid-column: 1/-1;
   justify-self: center;
 }
+
 .financas-formulario button:hover {
   background: linear-gradient(#c8a6ff, #a372f0);
 }
@@ -370,6 +463,10 @@ body {
   width: 15px;
   height: 15px;
 }
+
+
+
+
 
 /* IDS */
 
@@ -389,10 +486,12 @@ body {
   width: 22px;
   height: 22px;
 }
+
 #compra-label::after {
   content: "COMPRA";
   display: block;
 }
+
 #venda-label::before {
   content: "";
   display: block;
@@ -400,10 +499,12 @@ body {
   width: 22px;
   height: 22px;
 }
+
 #venda-label::after {
   content: "VENDA";
   display: block;
 }
+
 #pix-label::before {
   content: "";
   display: block;
@@ -411,6 +512,7 @@ body {
   width: 23px;
   height: 22px;
 }
+
 #pix-label::after {
   content: "PIX";
   display: block;
@@ -423,6 +525,7 @@ body {
   width: 23px;
   height: 22px;
 }
+
 #emprestimo-label::after {
   content: "emprestimo";
   display: block;
@@ -439,10 +542,10 @@ body {
   display: none;
 }
 
-#emprestimo:checked ~ #emprestimo-conteudo,
-#venda:checked ~ #venda-conteudo,
-#compra:checked ~ #compra-conteudo,
-#pix:checked ~ #pix-conteudo {
+#emprestimo:checked~#emprestimo-conteudo,
+#venda:checked~#venda-conteudo,
+#compra:checked~#compra-conteudo,
+#pix:checked~#pix-conteudo {
   display: block;
 }
 
@@ -507,141 +610,149 @@ body {
   width: 40%;
 }
 
-@media (max-width: 1400px) {
-  .financas-bg {
-    display: grid;
-    justify-items: center;
-  }
-}
+
 
 @media (max-width: 1000px) {
-  .financas-bg h1 {
-    font-size: 36px;
+
+  .selecao-conteudo label {
+    gap: 10px;
+    border-radius: 5px;
+    font-size: 15px;
+    padding: 7px 20px;
   }
+
+
   .selecao-radio h2 {
     font-size: 16px;
   }
-  .financas-bg h1::after {
+
+  .titulo::after {
     background: url("../img/Movimentacoes/MulherSentada144x.svg");
     width: 144px;
     height: 75px;
     right: -140px;
-    top: -6.6px;
+    top: -15px;
+  }
+
+  .titulo {
+    font-size: 2rem;
   }
 }
 
 @media (max-width: 800px) {
-  .financas-bg {
-    display: grid;
-    justify-items: center;
-    justify-content: center;
-  }
-  .financas-bg h1 {
-    font-size: 30px;
-    margin-top: 20px;
-    font-size: 28px;
-    margin-bottom: 20px;
-    word-break: break-all;
-  }
-  .financas-bg h1::after {
-    background-image: url("../img/Movimentacoes/MulherSentada-2.svg");
-    width: 120px;
-    height: 64px;
-    top: -7.5px;
-    right: -116px;
-  }
-  .financas-formulario input,
-  .financas-formulario input::placeholder {
-    font-size: 13px;
+  .titulo::after {
+    display: none;
   }
 
-  .selecao-radio h2 {
-    font-size: 13px;
-  }
-
-  .financas-formulario button:hover {
-    background: linear-gradient(#c8a6ff, #a372f0);
+  .selecao-conteudo {
+    max-width: 800px;
+    gap: 20px;
+    grid-template-columns: 140px 120px 95px 165px;
   }
 
   .selecao-conteudo label {
-    display: grid;
-    grid-template-columns: 22px auto;
-    gap: 0px;
     align-items: center;
-    width: 140px;
-    padding-right: 0px;
     font-size: 12px;
     text-align: center;
   }
+
   .financas-formulario button img {
     width: 15px;
     height: 15px;
   }
 
-  #pix-label::before,
-  #compra-label::before,
-  #venda-label::before,
-  #emprestimo-label::before {
-    position: relative;
-  }
 
-  #compra-label,
-  #pix-label {
-    padding-right: 25px;
-    justify-self: center;
-  }
 
-  #venda-label,
-  #emprestimo-label {
-    justify-self: center;
-    padding-right: 25px;
-  }
-
-  #receita,
-  #parcelas {
-    font-size: 13px;
-  }
-
-  #movimentacao {
-    width: 97%;
-  }
-
-  #valor {
-    width: 97%;
-  }
-
-  #parcelas {
-    width: 100%;
-    cursor: pointer;
-  }
-
-  #receita {
-    width: 100%;
-  }
-
-  #vencimento {
-    width: 97%;
-  }
-
-  #emprestimo-juros {
-    width: 97%;
-  }
-  #total {
-    width: 40%;
-  }
 }
 
 @media (max-width: 600px) {
-  .financas-bg h1::after {
-    display: none;
+  .titulo {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  .selecao-radio h2 {
+    font-size: 0.85rem;
+  }
+
+  .selecao-conteudo {
+    width: 85%;
+    display: grid;
+    grid-template-columns: 150px minmax(auto, 350px);
+    margin: 0 auto;
+    gap: 20px;
+    border-radius: 10px;
+    background: #e7e7e7;
+    padding: 20px 10px 10px 10px;
+    box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
+  }
+
+  .financas-formulario {
+    border-radius: 0px;
+    width: 100%;
+    padding: 0px;
+    box-shadow: 0px 0px 0px rgb(0 0 0 / 0);
+  }
+
+  #compra-label {
+    grid-area: 1;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #venda-label {
+    grid-area: 2;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #pix-label {
+    grid-area: 3;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+
+  #emprestimo-label {
+    grid-area: 4;
+    justify-content: center;
+    font-size: 11px;
+    height: 30px;
+    width: 130px;
+    padding: 5px 3px;
+  }
+
+  #emprestimo-conteudo,
+  #pix-conteudo,
+  #venda-conteudo,
+  #compra-conteudo {
+    grid-column: 2;
+    grid-row: 6/-1;
+  }
+
+  /* Media do formulario */
+  .financas-formulario {
+    display: grid;
+    grid-template-columns: auto;
   }
 }
+
 /* MOVIMENTACOES */
 
 .movimentacoes-bg {
   border-bottom: 2px solid #6d29d3;
   padding-bottom: 100px;
 }
+
 .movimentacoes {
   display: flex;
   justify-content: center;
@@ -656,6 +767,7 @@ body {
 .movimentacoes h1 {
   font-size: 25px;
 }
+
 .movimentacoes img {
   width: 180px;
   margin-bottom: 45px;
@@ -668,6 +780,7 @@ body {
   display: grid;
   justify-content: center;
 }
+
 .movimentacoes-conteudo {
   text-align: center;
   padding: 20px;
@@ -688,20 +801,24 @@ tbody tr td {
   font-size: 30px;
   font-weight: 700;
 }
+
 #tabela tr {
   display: flex;
   gap: 10px;
   align-items: center;
   flex-wrap: wrap;
 }
+
 #tabela td:last-child {
   display: flex;
   align-items: center;
 }
+
 #tabela,
 #tabela td {
   border: none;
 }
+
 #tabela input {
   border-radius: 10px;
   height: 26px;
@@ -716,19 +833,24 @@ tbody tr td {
 #nomeMov {
   width: 180px;
 }
+
 #aReceber {
   width: 140px;
 }
+
 #valorMensal {
   width: 120px;
 }
+
 #vencimentoTotal {
   width: 135px;
 }
+
 #parcelasTotal {
   width: 130px;
   padding: 1px 5px;
 }
+
 #totalFinal {
   width: 110px;
   margin-left: 10px;
@@ -738,14 +860,17 @@ tbody tr td {
   .movimentacoes {
     gap: 50px;
   }
+
   .movimentacoes h1 {
     font-size: 25px;
   }
+
   .movimentacoes img {
     width: 150px;
     margin-bottom: 35px;
     margin-left: -250px;
   }
+
   .movimentacoes-conteudo {
     width: 850px;
   }
@@ -755,23 +880,28 @@ tbody tr td {
   .movimentacoes {
     gap: 40px;
   }
+
   .movimentacoes h1 {
     font-size: 20px;
   }
+
   .movimentacoes img {
     width: 150px;
     margin-bottom: 35px;
     margin-left: -200px;
   }
+
   .movimentacoes-conteudo {
     width: 750px;
   }
 }
+
 @media (max-width: 800px) {
   .movimentacoes {
     gap: 0 20px;
     padding-top: 0px;
   }
+
   .movimentacoes-bg {
     padding-bottom: 50px;
   }
@@ -781,6 +911,7 @@ tbody tr td {
     margin-bottom: 35px;
     margin-left: -140px;
   }
+
   .movimentacoes-conteudo {
     width: auto;
   }
@@ -791,12 +922,15 @@ tbody tr td {
     gap: 0 20px;
     padding-top: 0px;
   }
+
   .movimentacoes-bg {
     padding-bottom: 50px;
   }
+
   .movimentacoes h1 {
     font-size: 18px;
   }
+
   .movimentacoes img {
     width: 100px;
     height: 140px;
@@ -812,15 +946,18 @@ tbody tr td {
   padding-bottom: 100px;
   margin-bottom: 50px;
 }
+
 .saldo-bg {
   padding-top: 90px;
   max-width: 1600px;
   margin: 0 auto;
   text-align: center;
 }
+
 .saldo h2 {
   font-size: 20px;
 }
+
 .saldo img {
   margin-left: 180px;
   margin-top: 84px;
