@@ -1,0 +1,40 @@
+ul,
+li {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+.juros {
+  display: grid;
+  justify-items: center;
+  border: 1px solid black;
+  width: max-content;
+  border-radius: 10px;
+  box-shadow: 2px 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+.seta {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.juros .true {
+  display: block;
+}
+
+.menu-juros li {
+  margin-bottom: 3px;
+}
+.menu-juros li:hover {
+  cursor: pointer;
+  background: #e7e7e7;
+}

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movimentações</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@500;600;700&family=Roboto:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/movimentacoes.css" />
+  <link rel="stylesheet" href="./css/global.css" />
+  <link rel="stylesheet" href="./css/tipografia.css" />
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href="./index.html"><img src="./img/logo.svg" width="200" height="100" alt="Logo SImple Money" width="200" height="100" /></a>
+    <div class="navegacao">
+      <div class="navegacao-conteudo">
+        <nav>
+          <ul>
+            <li>
+              <a class="font-p-m" href="./movimentacoes.html">Movimentações</a>
+            </li>
+            <li><a class="font-p-m" href="./">Saldo</a></li>
+            <li><a class="font-p-m" href="./">Contato</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="login">
+        <nav>
+          <ul>
+            <li>
+              <img src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" width="63" height="63" alt="" class="user" />
+            </li>
+            <li>
+              <a class="font-p-m nome-login" href="./">Jeferson Silva</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <section class="financas-bg">
+    <h1 class="titulo font-lb-b">ANOTE SUA FINANÇA</h1>
+
+    <div class="selecao-radio">
+      <h2 class="font-lb-b">Qual tipo de movimentacao deseja adicionar?</h2>
+      <div class="selecao-conteudo">
+
+        <input type="radio" name="transacao" value="A pagar" id="compra" />
+        <label id="compra-label" for="compra"></label>
+
+        <input type="radio" value="venda" name="transacao" id="venda" />
+        <label id="venda-label" for="venda"></label>
+
+        <input type="radio" value="pix" name="transacao" id="pix" />
+        <label id="pix-label" for="pix"></label>
+
+        <input type="radio" value="emprestimo" name="transacao" id="emprestimo" />
+        <label id="emprestimo-label" for="emprestimo"></label>
+
+
+        <div class="transacao" id="compra-conteudo">
+          <div class="financas">
+            <form action="inserir-financas" class="financas-formulario">
+              <div>
+                <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
+              </div>
+              <div>
+                <select required name="receita ou despesa" id="receita">
+                  <option selected value="" disabled style="display: none">
+                    categoria da compra
+                  </option>
+                  <option value="produto eletronico">Produto Eletronico</option>
+                  <option value="roupa">Roupa</option>
+                  <option value="remedio">Remedio</option>
+                  <option value="comida">Comida</option>
+                  <option value="cosmetico">Cosmeticos</option>
+                </select>
+              </div>
+              <div>
+                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
+              </div>
+              <div>
+                <input type="date" onkeypress="return onlynumber();" id="vencimento" name="data" placeholder="Data" />
+              </div>
+              <div class="div-parcelas">
+                <select required name="parcelas" id="parcelas">
+                  <option disabled style="display:none ;" value="0">parcelas 0x</option>
+                  <option selected value="1">Parcelas 1x</option>
+                  <option value="2">Parcelas 2x</option>
+                  <option value="3">Parcelas 3x</option>
+                  <option value="4">Parcelas 4x</option>
+                  <option value="5">Parcelas 5x</option>
+                  <option value="6">Parcelas 6x</option>
+                  <option value="7">Parcelas 7x</option>
+                  <option value="8">Parcelas 8x</option>
+                  <option value="9">Parcelas 9x</option>
+                  <option value="10">Parcelas 10x</option>
+                  <option value="11">Parcelas 11x</option>
+                  <option value="12">Parcelas 12x</option>
+                </select>
+              </div>
+
+              <div class="div-total">
+                <input type="text" id="total" name="total" disabled placeholder="Total" />
+              </div>
+              <div class="div-botao">
+                <button id="botao-add" value="A pagar" type="button">
+                  Adicionar
+                  <img src="./img/Movimentacoes/Component15.svg" alt="" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="transacao" id="venda-conteudo">
+          <div class="financas">
+            <form action="inserir-financas" class="financas-formulario">
+              <div>
+                <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
+              </div>
+              <div>
+                <input onkeypress="return onlynumber();" type="text" id="valor" name="valor" placeholder="Valor" />
+              </div>
+              <div>
+                <input type="date" id="vencimento" name="vencimento" onkeypress="return onlynumber();" placeholder="Vencimento" />
+              </div>
+
+              <div>
+                <select required name="parcelas" id="parcelas">
+                  <option disabled style="display:none ;" value="0">parcelas 0x</option>
+                  <option selected value="1">Parcelas 1x</option>
+                  <option value="2">Parcelas 2x</option>
+                  <option value="3">Parcelas 3x</option>
+                  <option value="4">Parcelas 4x</option>
+                  <option value="5">Parcelas 5x</option>
+                  <option value="6">Parcelas 6x</option>
+                  <option value="7">Parcelas 7x</option>
+                  <option value="8">Parcelas 8x</option>
+                  <option value="9">Parcelas 9x</option>
+                  <option value="10">Parcelas 10x</option>
+                  <option value="11">Parcelas 11x</option>
+                  <option value="12">Parcelas 12x</option>
+                </select>
+              </div>
+
+              <div class="div-total">
+                <input type="text" id="total" name="total" disabled placeholder="Total" />
+              </div>
+              <div class="div-botao">
+                <button value="A receber" id="botao-add" type="button">
+                  Adicionar
+                  <img src="./img/Movimentacoes/Component15.svg" alt="" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="transacao" id="pix-conteudo">
+          <div class="financas">
+            <form action="inserir-financas" class="financas-formulario">
+              <div>
+                <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
+              </div>
+              <div>
+                <select required name="receita ou despesa" id="receita">
+                  <option selected value="" disabled style="display: none">
+                    Enviou ou Recebeu?
+                  </option>
+                  <option aria-placeholder="Enviou" value="-">Enviou</option>
+                  <option aria-placeholder="Recebeu" value="+">Recebeu</option>
+                </select>
+              </div>
+              <div>
+                <input type="text" id="valor" name="valor" onkeypress="return onlynumber();" placeholder="Valor" />
+              </div>
+              <div>
+                <input type="date" id="vencimento" name="vencimento" onkeypress="return onlynumber();" placeholder="Data" />
+              </div>
+
+
+              <div class="div-total">
+                <input type="text" id="total" name="total" disabled placeholder="Total" />
+              </div>
+              <div class="div-botao">
+                <button id="botao-add" type="button">
+                  Adicionar
+                  <img src="./img/Movimentacoes/Component15.svg" alt="" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="transacao" id="emprestimo-conteudo">
+          <div class="financas">
+            <form action="inserir-financas" class="financas-formulario">
+              <div>
+                <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
+              </div>
+              <div>
+                <select required name="receita ou despesa" id="receita">
+                  <option selected value="" disabled style="display: none">
+                    receita ou despesa?
+                  </option>
+                  <option value="-">Peguei Emprestimo</option>
+                  <option value="+">Emprestei Dinheiro</option>
+                </select>
+              </div>
+              <div>
+                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
+              </div>
+              <div>
+                <input type="date" id="vencimento" name="vencimento" onkeypress="return onlynumber();" placeholder="Data de vencimento" />
+              </div>
+              <div>
+                <select required name="juros" id="emprestimo-juros">
+                  <option value="0">0% de juros</option>
+                  <option value="1">1% de juros</option>
+                  <option value="2">2% de juros</option>
+                  <option value="3">3% de juros</option>
+                  <option value="4">4% de juros</option>
+                  <option value="5">5% de juros</option>
+                  <option value="6">6% de juros</option>
+                  <option value="7">7% de juros</option>
+                  <option value="8">8% de juros</option>
+                  <option value="9">9% de juros</option>
+                  <option value="10">10% de juros</option>
+                  <option value="11">11% de juros</option>
+                  <option value="12">12% de juros</option>
+                  <option value="13">13% de juros</option>
+                  <option value="14">14% de juros</option>
+                  <option value="15">15% de juros</option>
+                  <option value="16">16% de juros</option>
+                  <option value="17">17% de juros</option>
+                  <option value="18">18% de juros</option>
+                  <option value="19">19% de juros</option>
+                  <option value="20">20% de juros</option>
+                  <option value="21">21% de juros</option>
+                  <option value="22">22% de juros</option>
+                  <option value="23">23% de juros</option>
+                  <option value="24">24% de juros</option>
+                  <option value="25">25% de juros</option>
+                  <option value="26">26% de juros</option>
+                  <option value="27">27% de juros</option>
+                  <option value="28">28% de juros</option>
+                  <option value="29">29% de juros</option>
+                  <option value="30">30% de juros</option>
+
+                </select>
+              </div>
+              <div>
+                <select required name="juros-compostos" id="juros-compostos">
+                  <option value="0">0% ao mes</option>
+                  <option value="1">1% ao Mês</option>
+                  <option value="2">2% ao Mês</option>
+                  <option value="3">3% ao Mês</option>
+                  <option value="4">4% ao Mês</option>
+                  <option value="5">5% ao Mês</option>
+                  <option value="6">6% ao Mês</option>
+                  <option value="7">7% ao Mês</option>
+                  <option value="8">8% ao Mês</option>
+                  <option value="9">9% ao Mês</option>
+                  <option value="10">10% ao Mês</option>
+                  <option value="11">11% ao Mês</option>
+                  <option value="12">12% ao Mês</option>
+                </select>
+              </div>
+              <div class="div-parcela-juros">
+                <select required name="parcelas" id="parcelas">
+                  <option style="display: none;" disabled value="0">Parcelas 1x</option>
+                  <option selected value="1">Parcelas 1x</option>
+                  <option value="2">Parcelas 2x</option>
+                  <option value="3">Parcelas 3x</option>
+                  <option value="4">Parcelas 4x</option>
+                  <option value="5">Parcelas 5x</option>
+                  <option value="6">Parcelas 6x</option>
+                  <option value="7">Parcelas 7x</option>
+                  <option value="8">Parcelas 8x</option>
+                  <option value="9">Parcelas 9x</option>
+                  <option value="10">Parcelas 10x</option>
+                  <option value="11">Parcelas 11x</option>
+                  <option value="12">Parcelas 12x</option>
+                </select>
+              </div>
+
+              <div class="div-total">
+                <input type="text" id="total" name="total" disabled placeholder="Total" />
+              </div>
+              <div class="div-botao">
+                <button id="botao-add" type="button">
+                  Adicionar
+                  <img src="./img/Movimentacoes/Component15.svg" alt="" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </section>
+  <section class="movimentacoes-bg">
+    <div class="movimentacoes">
+      <img src="./img/Movimentacoes/undraw_pie_chart_re_bgs8 (1) 1.svg" width="210" height="170" alt="imagem ilustrativa de graficos" />
+      <h1 class="font-lb-b">MOVIMENTAÇÕES</h1>
+    </div>
+    <div class="movimentacoes-conteudo-bg">
+      <div id="movimentacoes-conteudo" class="movimentacoes-conteudo">
+        <form method="POST">
+
+
+          <table id="tabela">
+
+
+          </table>
+
+
+        </form>
+
+
+      </div>
+    </div>
+  </section>
+  <section class="saldo-bg">
+    <div class="saldo">
+      <h1 class="font-lb-b">SALDO</h1>
+      <div class="saldo-grafico">
+        <img src="./img/Movimentacoes/undraw_statistic_chart_re_w0pk (2) 1.svg" alt="imagem ilustrativa de saldo" width="150" height="180" />
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+<script src="./script/movimentacoes.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="./script/grafico.js"></script>
+
+</html>

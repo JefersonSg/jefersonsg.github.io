@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style-2.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div style="width: 400px; height: 500px">
+    <canvas id="myChart"></canvas>
+  </div>
+</body>
+<script src="./script/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  const labels = ["compras", "vendas", "pix", "emprestimos"];
+  const data = {
+    labels: labels,
+    datasets: [
+      {
+        label: "My first dataset",
+        backgroundColor: [
+          "rgb(255,99,132)",
+          "rgb(54, 162, 235)",
+          "rgb(255, 205, 86)",
+          "rgb(105, 205, 86)",
+        ],
+        hoverOffset: 5,
+        borderColor: "rgb(0,0,0)",
+        data: [-1320, 5000, 300 - 500 + 3000, 4500],
+      },
+    ],
+  };
+  const config = {
+    type: "pie",
+    data: data,
+    options: {},
+  };
+  const myChart = new Chart(document.getElementById("myChart"), config);
+</script>
+
+</html>

@@ -1,0 +1,26 @@
+.font-p-r {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+.font-p-m {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+.font-p-sb {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+}
+.font-lb-b {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 700;
+}
+.font-lb-r {
+  font-family: "Libre Baskerville", serif;
+  font-weight: 400;
+}
+
+.font-r-m {
+  font-family: "roboto", sans-serif;
+  font-weight: 500;
+}
