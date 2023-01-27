@@ -592,7 +592,7 @@ body {
 }
 
 #total {
-  width: 40%;
+  margin-bottom: 10px;
 }
 
 /* Media do formulario */
