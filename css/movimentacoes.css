@@ -168,6 +168,7 @@ body {
 
 @media (max-width: 800px) {
 
+
   .perfil {
     width: 50px;
     height: 50px;
@@ -280,6 +281,11 @@ body {
 }
 
 /* Financas */
+select {
+  text-align-last: center;
+  text-align: center;
+}
+
 .financas-bg {
   max-width: 1600px;
   margin: 0 auto;
@@ -449,10 +455,6 @@ body {
   height: 15px;
 }
 
-
-
-
-
 /* IDS */
 
 #compra,
@@ -555,17 +557,6 @@ body {
   position: relative;
 }
 
-#compra-label,
-#pix-label {
-  padding-right: 25px;
-  justify-self: center;
-}
-
-#venda-label,
-#emprestimo-label {
-  justify-self: center;
-  padding-right: 25px;
-}
 
 #movimentacao {
   width: 97%;
@@ -631,7 +622,7 @@ body {
 
   .selecao-conteudo {
     max-width: 800px;
-    gap: 20px;
+    gap: 15px;
     grid-template-columns: 140px 120px 95px 165px;
   }
 
@@ -639,6 +630,7 @@ body {
     align-items: center;
     font-size: 12px;
     text-align: center;
+    padding: 7px 17px;
   }
 
   .financas-formulario button img {
@@ -649,6 +641,15 @@ body {
 }
 
 @media (max-width: 600px) {
+
+  #compra-label,
+  #pix-label,
+  #venda-label,
+  #emprestimo-label {
+    justify-self: center;
+    padding-right: 25px;
+  }
+
   .financas-bg {
     padding-bottom: 20px;
   }
@@ -739,18 +740,27 @@ body {
 
 @media (max-width: 500px) {
   .selecao-conteudo {
-    grid-template-columns: 175px 175px;
+    grid-template-columns: 172px 172px;
   }
-}
 
-@media (max-width: 400px) {
   .titulo {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
     margin-bottom: 10px;
   }
 
   .selecao-radio h2 {
     font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .titulo {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .selecao-radio h2 {
+    font-size: 0.55rem;
   }
 
   .selecao-conteudo {
@@ -837,7 +847,8 @@ body {
 }
 
 .movimentacoes-conteudo {
-  text-align: center;
+  display: grid;
+  justify-content: center;
   padding: 20px;
   border-radius: 10px;
   background: #e7e7e7;
@@ -848,38 +859,35 @@ body {
 .organizaMov {
   display: flex;
   flex-direction: column;
+  text-align: center;
+
 }
 
-tbody tr td {
+.movimentacoesLista {
   display: flex;
   align-items: center;
-  gap: 0px 10px;
+  width: 1050px;
+  gap: 5px;
+  margin-bottom: 15px;
+  background-color: #cacaca;
+  padding: 7px 10px 7px 10px;
+  border-radius: 10px;
+  box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
 }
 
-
-
+.movimentacoesLista img {
+  margin-top: 10px;
+}
 
 #igual {
   font-size: 30px;
   font-weight: 700;
 }
 
-#tabela tr {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
 
-#tabela td:last-child {
-  display: flex;
-  align-items: center;
-}
 
-#tabela,
-#tabela td {
-  border: none;
-}
+
+
 
 #tabela input {
   border-radius: 10px;
@@ -896,12 +904,13 @@ tbody tr td {
   width: 180px;
 }
 
-
 #aReceber {
   width: 140px;
 }
 
-#valorMensal {
+#valorMensal,
+#valorFinal,
+#valorInicial {
   width: 120px;
 }
 
@@ -945,6 +954,14 @@ tbody tr td {
     width: 850px;
   }
 
+  .movimentacoesLista {
+    width: 830px;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+
+
   #tabela tr {
     gap: 5px;
   }
@@ -961,7 +978,9 @@ tbody tr td {
     width: 90px;
   }
 
-  #valorMensal {
+  #valorMensal,
+  #valorFinal,
+  #valorInicial {
     width: 110px;
   }
 
@@ -997,11 +1016,13 @@ tbody tr td {
   }
 
   .movimentacoes-conteudo {
-    width: 780px;
+    width: 740px;
   }
 
-  #tabela tr {
+  .movimentacoesLista {
+    width: 715px;
     gap: 5px;
+    margin-bottom: 15px;
   }
 
   #tabela input {
@@ -1016,8 +1037,10 @@ tbody tr td {
     width: 80px;
   }
 
-  #valorMensal {
-    width: 100px;
+  #valorMensal,
+  #valorFinal,
+  #valorInicial {
+    width: 90px;
   }
 
   #vencimentoTotal {
@@ -1036,6 +1059,16 @@ tbody tr td {
 }
 
 @media (max-width: 800px) {
+
+  .movimentacoes h1 {
+    font-size: 18px;
+  }
+
+  .organizaMov span {
+    margin-bottom: 2px;
+
+  }
+
   .movimentacoes {
     margin-top: 50px;
     margin-bottom: 50px;
@@ -1051,38 +1084,228 @@ tbody tr td {
     padding-bottom: 50px;
   }
 
-  .movimentacoes img {
-    width: 140px;
-    margin-bottom: 35px;
-    margin-left: -140px;
+  .movimentacoes-conteudo {
+    width: 530px;
   }
 
-  .movimentacoes-conteudo {
-    width: auto;
+  .movimentacoesLista {
+    width: 500px;
+    gap: 5px;
+    margin-bottom: 15px;
   }
+
+  #nomeMov {
+    width: 110px;
+  }
+
+  #aReceber {
+    width: 80px;
+  }
+
+
+
+  #vencimentoTotal {
+    width: 70px;
+  }
+
+  #parcelasTotal {
+    width: 100px;
+    padding: 1px 5px;
+  }
+
+  #totalFinal {
+    width: 80px;
+    margin-left: 10px;
+  }
+
+  .deficit,
+  .parcelasTotal,
+  .lucro {
+    display: none;
+    position: absolute;
+  }
+
+
 }
 
-@media (max-width: 800px) {
-  .movimentacoes {
-    gap: 0 20px;
-    padding-top: 0px;
-  }
-
-  .movimentacoes-bg {
-    padding-bottom: 50px;
-  }
+@media (max-width: 600px) {
 
   .movimentacoes h1 {
     font-size: 18px;
   }
 
-  .movimentacoes img {
-    width: 100px;
-    height: 140px;
-    margin-bottom: 35px;
-    margin-left: -140px;
+  .movimentacoes {
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+
+  .organizaMov span {
+    font-size: 12px;
+  }
+
+  #tabela input {
+    font-size: 11px;
+  }
+
+  .movimentacoes-conteudo {
+    width: 450px;
+    padding: 10px;
+  }
+
+  .movimentacoesLista {
+    width: 400px;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  #nomeMov {
+    width: 90px;
+  }
+
+  #aReceber {
+    width: 60px;
+  }
+
+  #vencimentoTotal {
+    width: 60px;
+  }
+
+  #totalFinal {
+    width: 70px;
+    margin-left: 10px;
+  }
+
+  .Deficit,
+  .parcelasTotal,
+  .lucro {
+    display: none;
+    position: absolute;
+  }
+
+  #valorMensal,
+  #valorFinal,
+  #valorInicial {
+    width: 75px;
   }
 }
+
+@media (max-width: 500px) {
+
+  .movimentacoes h1 {
+    font-size: 16px;
+  }
+
+  .movimentacoes {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+
+  .movimentacoesLista img {
+    width: 25px;
+    height: 22px;
+  }
+
+  #tabela input {
+    font-size: 11px;
+  }
+
+  .movimentacoes-conteudo {
+    width: 350px;
+    padding: 10px;
+  }
+
+  .movimentacoesLista {
+    width: 310px;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  #nomeMov {
+    width: 90px;
+  }
+
+  #aReceber {
+    width: 60px;
+  }
+
+  #vencimentoTotal {
+    width: 60px;
+  }
+
+  #totalFinal {
+    width: 70px;
+    margin-left: 10px;
+  }
+
+  .deficit,
+  .parcelasTotal,
+  .lucro,
+  .valorInicial,
+  .aReceber {
+    display: none;
+  }
+
+  #valorFinal {
+    width: 75px;
+  }
+
+  .deficit {
+    display: none;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .movimentacoes h1 {
+    font-size: 14px;
+  }
+
+  .movimentacoes {
+    margin-bottom: 10px;
+  }
+
+
+  .movimentacoesLista img {
+    width: 22px;
+    height: 18px;
+  }
+
+  #tabela input {
+    font-size: 10px;
+  }
+
+  .movimentacoes-conteudo {
+    width: 250px;
+    padding: 10px;
+  }
+
+  .movimentacoesLista {
+    width: 230px;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  #nomeMov {
+    width: 70px;
+  }
+
+
+  #vencimentoTotal {
+    width: 40px;
+  }
+
+  #totalFinal {
+    width: 70px;
+  }
+
+  #valorFinal {
+    width: 60px;
+  }
+
+}
+
+
 
 /* Saldo */
 
