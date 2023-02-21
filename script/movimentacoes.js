@@ -19,10 +19,11 @@ const lucro = document.getElementById('totalPago')
 
 // COMPRAS
 valores[0].addEventListener("keyup", () => {
-  totais[0].value = `${parcelas[0].value}x de R$ ${valores[0].value / parcelas[0].value}`;
+  totais[0].value = `${parcelas[0].value}x de R$ ${(valores[0].value / parcelas[0].value).toFixed(2)}`;
+  localStorage.valorCompra = valores[0].value
 });
 
-parcelas[0].addEventListener("click", () => {
+parcelas[0].addEventListener("change", () => {
   totais[0].value = `${parcelas[0].value}x de R$ ${(valores[0].value / parcelas[0].value).toFixed(2)}`;
 });
 
@@ -43,7 +44,7 @@ valores[3].addEventListener("keyup", () => {
 
 });
 
-parcelas[2].addEventListener("click", () => {
+parcelas[2].addEventListener("change", () => {
   const jurosMes = +((valores[3].value) * (jurosComp.selectedIndex /100));
   const jurosTotal = valores[3].value / parcelas[2].selectedIndex * (juros.selectedIndex / 100);
     const valorTotal = valores[3].value / parcelas[2].selectedIndex + jurosTotal + jurosMes;
@@ -82,7 +83,7 @@ jurosComp.addEventListener("change", () => {
 valores[2].addEventListener("change", () => {
   const troca = valores[2].value;
 
-  totais[2].value = `R$ ${troca * 1}`;
+  totais[2].value = `R$ ${(troca * 1).toFixed(2)}`;
 });
 
 // VENDAS
@@ -92,7 +93,7 @@ valores[1].addEventListener("change", () => {
 });
 
 
-parcelas[1].addEventListener("click", () => {
+parcelas[1].addEventListener("change", () => {
   totais[1].value = `${parcelas[1].value}x de R$ ${(valores[1].value / parcelas[1].value).toFixed(2)}`;
 });
 
@@ -136,7 +137,7 @@ adicionar[0].addEventListener("click", function () {
       <div class = "organizaMov valorMensal">
         <span>Valor</span>
         <input readonly id="valorFinal" style="background: #F92828; color: #000;" value="R$${
-        valores[0].value * 1 
+        (valores[0].value * 1).toFixed(2)
         }"  type="text" name="Valor" placeholder="Valor Mensal">
       </div>
 
@@ -193,7 +194,7 @@ adicionar[1].addEventListener("click", function () {
         <div class = "organizaMov valorFinal">
           <span>Valor</span>
          <input readonly value="R$${
-          valores[1].value * 1
+          (valores[1].value * 1).toFixed(2)
          }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
         </div>
 
@@ -241,7 +242,7 @@ adicionar[2].addEventListener("click", function () {
     
         <div class = "organizaMov valorFinal">
           <span>Valor</span>
-          <input readonly value="R$${valores[2].value}" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
+          <input readonly value="R$${(+valores[2].value).toFixed(2)}" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
         </div>
       </div>
     `;
@@ -325,14 +326,16 @@ adicionar[3].addEventListener("click", function () {
           <div class = "organizaMov valorInicial">
             <span>Valor</span>
             <input readonly style="background: #F92828; color: #000;" id="valorInicial"  value="R$${
-          valores[3].value * 1
+          (valores[3].value * 1).toFixed(2)
           }"  type="text" name="Valor" placeholder="Valor Mensal">
 
          </div>
           <div class = "organizaMov parcelasTotal">
           <span>Em</span>
           <input readonly style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
-            value="${totais[3].value}"
+            value="${
+              totais[3].value
+            }"
             placeholder="em 10x" >
           </div>
 
@@ -344,7 +347,7 @@ adicionar[3].addEventListener("click", function () {
           <div class = "organizaMov valorFinal">
           <span>Valor final</span>
         
-          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="${receita[2].value} R$ ${+(lucro.value).replace('Total ',"")}"  type="text" name="Valor" placeholder="Valor Mensal">
+          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ ${(+(lucro.value).replace('Total ',"")).toFixed(2)}"  type="text" name="Valor" placeholder="Valor Mensal">
         </div>
       </div>
         `;
@@ -387,7 +390,7 @@ adicionar[3].addEventListener("click", function () {
         <div class = "organizaMov valorInicial">
           <span>Valor</span> 
           <input readonly id="valorMensal" class = "valorInicial"  value="R$ ${
-          valores[3].value * 1
+          (valores[3].value * 1).toFixed(2)
           }"  type="text" name="Valor">
         </div>
         <div class = "organizaMov parcelasTotal">
@@ -404,7 +407,7 @@ adicionar[3].addEventListener("click", function () {
         <div class = "organizaMov valorFinal">
           <span>Valor final</span>
           <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" 
-          value="+R$ ${+(lucro.value).replace('Total ',"")} " >
+          value="R$ ${(+(lucro.value).replace('Total ',"")).toFixed(2)} " >
         </div>
       </div>
     `;
