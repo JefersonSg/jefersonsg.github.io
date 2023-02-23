@@ -170,7 +170,7 @@ adicionar[1].addEventListener("click", function () {
     const div = document.createElement('div')
 
     div.innerHTML = `
-      <div class="movimentacoesLista" value='venda'>
+      <div class="movimentacoesLista" id='vendaLabel' value='venda'>
         <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor">
 
         <div class = "organizaMov nomeMov">
@@ -229,7 +229,7 @@ adicionar[2].addEventListener("click", function () {
     
 
     div.innerHTML = `
-      <div class="movimentacoesLista" value="pixRecebido">
+      <div class="movimentacoesLista" id='pixLabel' value="pixRecebido">
         <img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix">
         <div class = "organizaMov nomeMov">
           <span>Recebeu de</span>
@@ -268,7 +268,7 @@ adicionar[2].addEventListener("click", function () {
   ) {
 
     div.innerHTML = `
-    <div class="movimentacoesLista" value='pixEnviado'>
+    <div class="movimentacoesLista" id='pixLabel' value='pixEnviado'>
        <img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px;    padding-right: 4px; width="31 " height="29" alt="Pix">
        <div class = "organizaMov nomeMov">
         <span>Enviou Para</span>
@@ -277,13 +277,13 @@ adicionar[2].addEventListener("click", function () {
 
       <div class = "organizaMov vencimentoTotal">
         <span>No dia</span>
-        <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value=" ${"No dia " + vencimentos[2].value * 1} " type="text" name="data" placeholder="Comprou no dia X">
+        <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value=" ${vencimentos[2].value * 1} " type="text" name="data" placeholder="Comprou no dia X">
       </div>
 
 
       <div class = "organizaMov valorFinal">
         <span>Valor</span>
-        <input readonly style="background: #F92828; color: #000;"  value="R$${
+        <input readonly style="background: #F92828; color: #000;"  value="${
         valores[2].value * 1
         }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
       </div>
@@ -319,7 +319,7 @@ adicionar[3].addEventListener("click", function () {
     const div = document.createElement('div')
 
     div.innerHTML = `
-        <div class="movimentacoesLista" value='emprestado'>
+        <div class="movimentacoesLista" id="empPegoLabel" value='emprestado'>
           <img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov nomeMov">
             <span>Pegou de</span>
            <input readonly style="background: #F92828; color: #000;" id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
@@ -350,7 +350,7 @@ adicionar[3].addEventListener("click", function () {
 
           <div class = "organizaMov deficit">
             <span>Deficit</span>       
-            <input readonly style="background: #F92828; color: #000;" id="deficit" value="-R$ ${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  type="text" name="Valor" placeholder="Deficit">
+            <input readonly style="background: #F92828; color: #000;" id="deficit" value="${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  type="text" name="Valor" placeholder="Deficit">
          </div>
 
           <div class = "organizaMov valorFinal">
@@ -381,7 +381,7 @@ adicionar[3].addEventListener("click", function () {
   const div = document.createElement('div')
 
     div.innerHTML = `
-      <div class="movimentacoesLista" value='emprestei'>
+      <div class="movimentacoesLista" id="empLabel" value='emprestei'>
         <img src="./img/Movimentacoes/emprestimo1.svg" -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> 
         <div class = "organizaMov nomeMov">
           <span>Emprestou para</span> 
@@ -442,77 +442,125 @@ adicionar[3].addEventListener("click", function () {
 
 // Storage
 
+function arrumarValores() {
+  const ls = JSON.parse(localStorage.transacoes)
 
 
-
-function arrumarArray() {
-  const categoria = JSON.parse(localStorage.categorias)
-  const parcela = JSON.parse(localStorage.parcelas)
-  const lucro = JSON.parse(localStorage.lucro)
-  const deficit = JSON.parse(localStorage.deficit)
-  const valorInicial = JSON.parse(localStorage.valor)
+  if (!!localStorage.compras) {
+    const compra = JSON.parse(localStorage.compras)
+    const compraLabel = document.querySelectorAll('#compraLabel')
 
 
-  const compraPaineis = document.querySelectorAll('#compraLabel')
-  const vendaPaineis = document.querySelectorAll('#vendaLabel')
-  const empPaineis = document.querySelectorAll('#empLabel')
-  const empPegoPaineis = document.querySelectorAll('#empPegoLabel')
+    compraLabel.forEach((i, n)=>{
+      const nome = i.querySelector('#nomeMov')
+      const categoria = i.querySelector('#aReceber')
+      const data = i.querySelector('#vencimentoTotal')
+      const parcelas = i.querySelector('#parcelasTotal')
+      const valor = i.querySelector('#valorFinal')
+  
+      nome.value = compra[n].nome
+      categoria.value = compra[n].categoria
+      data.value = compra[n].data
+      parcelas.value = compra[n].parcelas
+      valor.value = compra[n].valor
+    })
+  }
+  if (!!localStorage.vendas) {
+    const venda = JSON.parse(localStorage.vendas)
+    const vendaLabel = document.querySelectorAll('#vendaLabel')
 
-  compraPaineis.forEach((i, index)=>{
-    const categorias = i.querySelector('#aReceber')
+
+    vendaLabel.forEach((i, n)=>{
+      const nome = i.querySelector('#nomeMov')
+      const data = i.querySelector('#vencimentoTotal')
+      const parcelas = i.querySelector('#parcelasTotal')
+      const valor = i.querySelector('#valorFinal')
+
+      nome.value = venda[n].nome
+      data.value = venda[n].data
+      parcelas.value = venda[n].parcelas
+      valor.value = venda[n].valor
+    })
+  }
+  if (!!localStorage.pix) {
+    const pix = JSON.parse(localStorage.pix)
+    const pixLabel = document.querySelectorAll('#pixLabel')
+
+    
+    pixLabel.forEach((i, n)=>{
+      const nome = i.querySelector('#nomeMov')
+      const data = i.querySelector('#vencimentoTotal')
+      const valor = i.querySelector('#valorFinal')
+
+      nome.value = pix[n].nome
+      data.value = pix[n].data
+      valor.value = pix[n].valor
+    })
+  }
+  if (!!localStorage.empDevido) {
+  const empPego = JSON.parse(localStorage.empDevido)
+  const empPegoLabel = document.querySelectorAll('#empPegoLabel')
+
+  empPegoLabel.forEach((i, n)=>{
+    const nome = i.querySelector('#nomeMov')
+    const data = i.querySelector('#vencimentoTotal')
+    const valorInit = i.querySelector('#valorInicial')
+    const deficit = i.querySelector('#deficit')
     const parcelas = i.querySelector('#parcelasTotal')
+    const valor = i.querySelector('#valorFinal')
 
-    categorias.value = categoria[index]
-    parcelas.value = parcela[index]
-
+    nome.value = empPego[n].nome
+    data.value = empPego[n].data
+    valorInit.value = empPego[n].valorInicial
+    parcelas.value = empPego[n].parcelas
+    deficit.value = empPego[n].deficit
+    valor.value = empPego[n].valorFinal
   })
+    
+  }
+  if (!!localStorage.empEnviado) {
+    const empEnviado = JSON.parse(localStorage.empEnviado)
+    const empLabel = document.querySelectorAll('#empLabel')
+      
 
-  vendaPaineis.forEach((i, index)=>{
-    const parcelas = i.querySelector('#parcelasTotal')
-    parcelas.value = parcela[index]
-  })
+    empLabel.forEach((i, n)=>{
+      const nome = i.querySelector('#nomeMov')
+      const data = i.querySelector('#vencimentoTotal')
+      const valorInit = i.querySelector('#valorInicial')
+      const lucro = i.querySelector('#lucro')
+      const parcelas = i.querySelector('#parcelasTotal')
+      const valor = i.querySelector('#valorFinal')
 
-  empPaineis.forEach((i, index)=>{
-    const lucros = i.querySelector('#lucro')
-    const valor = i.querySelector('#valorMensal')
-    const parcelas = i.querySelector('#parcelasTotal')
+      nome.value = empEnviado[n].nome
+      data.value = empEnviado[n].data
+      valorInit.value = empEnviado[n].valorInicial
+      parcelas.value = empEnviado[n].parcelas
+      lucro.value = empEnviado[n].lucro
+      valor.value = empEnviado[n].valorFinal
+    })
+  }
 
-    valor.value = valorInicial[index]
-    lucros.value = lucro[index]
-    parcelas.value = parcela[index]
-  })
 
-  empPegoPaineis.forEach((i, index)=>{
 
-    const deficits = i.querySelector('#deficit')
-    const valor = i.querySelector('#valorInicial')
-    const parcelas = i.querySelector('#parcelasTotal')
 
-    valor.value = valorInicial[index]
-    deficits.value = deficit[index]
-    parcelas.value = parcela[index]
-  })
+
+
+
+
+
+
+
+
+
 
 
 
   
+
 }
-
-
 
 function criarPaineis() {
   const ls = JSON.parse(localStorage.transacoes)
-  const valor = JSON.parse(localStorage.valores)
-  const data = JSON.parse(localStorage.datas)
-  const nome = JSON.parse(localStorage.nome)
-  const categoria = JSON.parse(localStorage.categorias)
-  const parcela = JSON.parse(localStorage.parcelas)
-  const lucro = JSON.parse(localStorage.lucro)
-  const deficit = JSON.parse(localStorage.deficit)
-  const valorInicial = JSON.parse(localStorage.valor)
-
-
-  
 
      ls.forEach((v,i)=>{
       const table = document.getElementById("tabela");
@@ -527,39 +575,29 @@ function criarPaineis() {
   
         <div class = "organizaMov nomeMov">
           <span>Comprou de</span>
-          <input readonly  id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="${
-            nome[i]
-          }" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+          <input readonly  id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
         </div>
   
         <div class = "organizaMov aReceber">
           <span>Categoria</span>
-          <input readonly id="aReceber" style="background: #F92828; color: #000;" value="${
-            categoria[i]
-          }" type="text" name="data" placeholder="A receber">
+          <input readonly id="aReceber" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="A receber">
         </div>
   
         <div class = "organizaMov vencimentoTotal">
           <span>No dia</span>
-          <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="${
-          data[i]
-          }" type="text" name="data" placeholder="Comprou no dia X">
+          <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
         </div>
   
         <div class = "organizaMov parcelasTotal">
           <span>Pagou em</span>
           <input readonly id="parcelasTotal" style="background: #F92828; color: #000;" type="text" name="parcelas" 
-            value="${
-              parcela[i]
-            } "
+            value=" "
             placeholder="em 10x" >
         </div>
   
         <div class = "organizaMov valorInicial">
           <span>Valor</span>
-          <input readonly id="valorFinal" style="background: #F92828; color: #000;" value="${
-          (valor[i])
-          }"  type="text" name="Valor" placeholder="Valor Mensal">
+          <input readonly id="valorFinal" style="background: #F92828; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
         </div>
   
       </div>
@@ -571,73 +609,68 @@ function criarPaineis() {
   
           <div class = "organizaMov nomeMov">
             <span>Vendeu Para</span>
-            <input readonly id="nomeMov" value="${nome[i]}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            <input readonly id="nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
           </div>
   
           <div class = "organizaMov vencimentoTotal">
             <span>No dia</span>
-            <input readonly id="vencimentoTotal" value="${
-            data[i]
-            }" type="text" name="data" placeholder="Venda feira no dia X">
+            <input readonly id="vencimentoTotal" value="" type="text" name="data" placeholder="Venda feira no dia X">
           </div>
           
           <div class = "organizaMov parcelasTotal">
             <span>Parcelou em</span>
             <input readonly id="parcelasTotal" type="text" name="razao[]"
-            value="${parcela[i]}"
+            value=""
             placeholder="em 10x" >
           </div>
   
           <div class = "organizaMov valorFinal">
             <span>Valor</span>
-           <input readonly value="${
-            valor[i]
-           }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
+           <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
           </div>
   
         </div>
       `;
       } else if(v === 'pixEnviado') {
         div.innerHTML = `
-        <div class="movimentacoesLista" value='pixEnviado'>
+        <div class="movimentacoesLista" id='pixLabel' value='pixEnviado'>
            <img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px;    padding-right: 4px; width="31 " height="29" alt="Pix">
            <div class = "organizaMov nomeMov">
             <span>Enviou Para</span>
-            <input readonly id="nomeMov" style="background: #F92828; color: #000;"  value="${nome[i]}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            <input readonly id="nomeMov" style="background: #F92828; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
            </div>
     
           <div class = "organizaMov vencimentoTotal">
             <span>No dia</span>
-            <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value=" ${data[i]} " type="text" name="data" placeholder="Comprou no dia X">
+            <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
           </div>
     
     
           <div class = "organizaMov valorFinal">
             <span>Valor</span>
-            <input readonly style="background: #F92828; color: #000;"  value="${valor[i]}" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
+            <input readonly style="background: #F92828; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
           </div>
         </div>
             
             `;
       } else if(v === 'pixRecebido') {
         div.innerHTML = `
-        <div class="movimentacoesLista" value="pixRecebido">
+        <div class="movimentacoesLista" id='pixLabel' value="pixRecebido">
           <img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix">
           <div class = "organizaMov nomeMov">
             <span>Recebeu de</span>
           
-            <input readonly id="nomeMov" back value="${nome[i]}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            <input readonly id="nomeMov" back value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
   
           </div>
           <div class = "organizaMov vencimentoTotal">
             <span>No dia</span>
-            <input readonly id="vencimentoTotal" value=" ${data[i]
-            } " type="text" name="data" placeholder="Comprou no dia X">
+            <input readonly id="vencimentoTotal" value="" type="text" name="data" placeholder="Comprou no dia X">
           </div>
       
           <div class = "organizaMov valorFinal">
             <span>Valor</span>
-            <input readonly value="${valor[i]}" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
+            <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
           </div>
         </div>
       `;
@@ -648,37 +681,33 @@ function criarPaineis() {
           <div class = "organizaMov nomeMov">
             <span>Emprestou para</span> 
             <input readonly id="nomeMov" 
-            class = "nomeMov" value="${nome[i]}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
           </div> 
   
           <div class = "organizaMov vencimentoTotal">
               <span>No dia</span>
-              <input readonly   class = "vencimentoTotal" id="vencimentoTotal" value="${
-              data[i]
-            }" type="text" name="data"">
+              <input readonly   class = "vencimentoTotal" id="vencimentoTotal" value="" type="text" name="data"">
           </div>
   
           <div class = "organizaMov valorInicial">
             <span>Valor</span> 
-            <input readonly id="valorMensal" class = "valorInicial"  value="R$ ${
-            valorInicial[i]
-            }"  type="text" name="Valor">
+            <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
           </div>
           <div class = "organizaMov parcelasTotal">
             <span>Em</span>
             <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
-            value="${parcela[i]}"
+            value=""
             placeholder="numero de parcelas" >
           </div>
           <div class = "organizaMov lucro">
             <span>Lucro</span>
             <input readonly class = "lucro" id="lucro" type="text" name="Montante final" 
-            value="${lucro[i]} "  placeholder="Valor Total" >
+            value=""  placeholder="Valor Total" >
           </div>
           <div class = "organizaMov valorFinal">
             <span>Valor final</span>
             <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" 
-            value="${valor[i]}" >
+            value="" >
           </div>
         </div>
       `;
@@ -687,41 +716,35 @@ function criarPaineis() {
         <div class="movimentacoesLista" id="empPegoLabel" value='emprestado'>
           <img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov nomeMov">
             <span>Pegou de</span>
-           <input readonly style="background: #F92828; color: #000;" id="nomeMov" value="${nome[i]}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+           <input readonly style="background: #F92828; color: #000;" id="nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
           </div>
 
           <div class = "organizaMov vencimentoTotal">
             <span>No dia</span>
-           <input readonly style="background: #F92828; color: #000;" id="vencimentoTotal" value="${
-            data[i]
-            }" type="text" name="data" placeholder="No dia X">
+           <input readonly style="background: #F92828; color: #000;" id="vencimentoTotal" value="" type="text" name="data" placeholder="No dia X">
           </div>
 
           <div class = "organizaMov valorInicial">
             <span>Valor</span>
-            <input readonly style="background: #F92828; color: #000;" id="valorInicial"  value="${
-          valorInicial[i]
-          }"  type="text" name="Valor" placeholder="Valor Mensal">
+            <input readonly style="background: #F92828; color: #000;" id="valorInicial"  value=""  type="text" name="Valor" placeholder="Valor Mensal">
 
          </div>
           <div class = "organizaMov parcelasTotal">
           <span>Em</span>
           <input readonly style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
-            value="${
-              parcela[i]
-            }"
+            value=""
             placeholder="em 10x" >
           </div>
 
           <div class = "organizaMov deficit">
             <span>Deficit</span>       
-            <input readonly style="background: #F92828; color: #000;" id="deficit" value="${deficit[i]}"  type="text" name="Valor" placeholder="Deficit">
+            <input readonly style="background: #F92828; color: #000;" id="deficit" value=""  type="text" name="Valor" placeholder="Deficit">
          </div>
 
           <div class = "organizaMov valorFinal">
           <span>Valor final</span>
         
-          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ ${valor[i]}"  type="text" name="Valor" placeholder="Valor Mensal">
+          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ "  type="text" name="Valor" placeholder="Valor Mensal">
         </div>
       </div>
         `;
@@ -732,53 +755,149 @@ function criarPaineis() {
       
       table.appendChild(div)
     })
+
   }
 
 function storage() {
-  const nomeMovi = document.querySelectorAll("#nomeMov")
-  const categoria = document.querySelectorAll('#aReceber')
-  const data = document.querySelectorAll("#vencimentoTotal")
-  const parcela = document.querySelectorAll("#parcelasTotal")
-  const valor = document.querySelectorAll("#valorFinal")
+
   const transacao = document.querySelectorAll('.movimentacoesLista')
-  const lucroEmp = document.querySelectorAll('#lucro')
-  const deficit = document.querySelectorAll("#deficit")
-  const valorInicial = document.querySelectorAll('#valorInicial')
 
+  const compraLabel = document.querySelectorAll('#compraLabel')
+  const vendaLabel = document.querySelectorAll('#vendaLabel')
+  const pixLabel = document.querySelectorAll('#pixLabel')
+  const empLabel = document.querySelectorAll('#empLabel')
+  const empPegoLabel = document.querySelectorAll('#empPegoLabel')
+
+
+  const compraArray = []
+  const vendaArray = []
+  const pixArray = []
+  const EmprestimoEnviado = []
+  const emprestimoDevido = []
+  
+
+  compraLabel.forEach((i)=>{
+    const nome = i.querySelector('#nomeMov')
+    const categoria = i.querySelector('#aReceber')
+    const data = i.querySelector('#vencimentoTotal')
+    const parcelas = i.querySelector('#parcelasTotal')
+    const valor = i.querySelector('#valorFinal')
+
+
+    const compra = {
+      nome : "",
+      categoria : '',
+      data : '',
+      parcelas : '',
+      valor : '',
+    }
+    compra['nome'] = [nome.value]
+    compra['categoria'] = [categoria.value]
+    compra['data'] = [data.value]
+    compra['parcelas'] = [parcelas.value]
+    compra['valor'] = [valor.value]
+    compraArray.push(compra)
+  })
+  vendaLabel.forEach((i)=>{
+    const nome = i.querySelector('#nomeMov')
+    const data = i.querySelector('#vencimentoTotal')
+    const parcelas = i.querySelector('#parcelasTotal')
+    const valor = i.querySelector('#valorFinal')
+
+    const venda = {
+      nome : "",
+      data : '',
+      parcelas : '',
+      valor : '',
+    }
+
+    venda['nome'] = [nome.value]
+    venda['data'] = [data.value]
+    venda['parcelas'] = [parcelas.value]
+    venda['valor'] = [valor.value]
+    vendaArray.push(venda)
+  })
+
+  pixLabel.forEach((i)=>{
+    const nome = i.querySelector('#nomeMov')
+    const data = i.querySelector('#vencimentoTotal')
+    const valor = i.querySelector('#valorFinal')
+
+    const pix = {
+      nome : "",
+      data : '',
+      valor : '',
+    }
+
+    pix['nome'] = [nome.value]
+    pix['data'] = [data.value]
+    pix['valor'] = [valor.value]
+    pixArray.push(pix)
+
+
+  })
+
+  empPegoLabel.forEach((i)=>{
+    const nome = i.querySelector('#nomeMov')
+    const data = i.querySelector('#vencimentoTotal')
+    const valorInit = i.querySelector('#valorInicial')
+    const deficit = i.querySelector('#deficit')
+    const parcelas = i.querySelector('#parcelasTotal')
+    const valor = i.querySelector('#valorFinal')
+
+    const emprestimo = {
+      nome : "",
+      data : '',
+      valorInicial : '',
+      parcelas : '',
+      deficit : '',
+      valorFinal : '',
+    }
+
+    emprestimo['nome'] = [nome.value]
+    emprestimo['data'] = [data.value]
+    emprestimo['parcelas'] = [parcelas.value]
+    emprestimo['valorInicial'] = [valorInit.value]
+    emprestimo['deficit'] = [deficit.value]
+    emprestimo['valorFinal'] = [valor.value]
+    emprestimoDevido.push(emprestimo)
+  })
+
+  empLabel.forEach((i)=>{
+    const nome = i.querySelector('#nomeMov')
+    const data = i.querySelector('#vencimentoTotal')
+    const valorInit = i.querySelector('#valorInicial')
+    const lucro = i.querySelector('#lucro')
+    const parcelas = i.querySelector('#parcelasTotal')
+    const valor = i.querySelector('#valorFinal')
+
+    const emprestimo = {
+      nome : "",
+      data : '',
+      valorInicial : '',
+      parcelas : '',
+      lucro : '',
+      valorFinal : '',
+    }
+
+    emprestimo['nome'] = [nome.value]
+    emprestimo['data'] = [data.value]
+    emprestimo['parcelas'] = [parcelas.value]
+    emprestimo['valorInicial'] = [valorInit.value]
+    emprestimo['lucro'] = [lucro.value]
+    emprestimo['valorFinal'] = [valor.value]
+    EmprestimoEnviado.push(emprestimo)
+  })
+  
   const transacoes = []
-  const nomes = []
-  const datas = []
-  const categorias = []
-  const parcelas = []
-  const valores = []
-  const lucros = []
-  const deficits = []
-  const valoresLimpos = []
 
-  
-  
   transacao.forEach(t => transacoes.push(t.getAttribute('value')))
-  nomeMovi.forEach(n => nomes.push(n.value))
-  data.forEach(d => datas.push(d.value))
-  categoria.forEach(c => categorias.push(c.value))
-  parcela.forEach(p => parcelas.push(p.value))
-  valor.forEach(v => valores.push(v.value))
-  lucroEmp.forEach(l => lucros.push(l.value))
-  deficit.forEach(d => deficits.push(d.value))
-  valorInicial.forEach(v => valoresLimpos.push(v.value))
-  
-
+  localStorage.setItem('compras', JSON.stringify(compraArray))
+  localStorage.setItem('vendas', JSON.stringify(vendaArray))
+  localStorage.setItem('pix', JSON.stringify(pixArray))
+  localStorage.setItem('empEnviado', JSON.stringify(EmprestimoEnviado))
+  localStorage.setItem('empDevido', JSON.stringify(emprestimoDevido))
   localStorage.setItem('transacoes', JSON.stringify(transacoes))
-  localStorage.setItem('nome', JSON.stringify(nomes))
-  localStorage.setItem('categorias', JSON.stringify(categorias))
-  localStorage.setItem('datas', JSON.stringify(datas))
-  localStorage.setItem('parcelas', JSON.stringify(parcelas))
-  localStorage.setItem('valores', JSON.stringify(valores))
-  localStorage.setItem('lucro', JSON.stringify(lucros))
-  localStorage.setItem('deficit', JSON.stringify(deficits))
-  localStorage.setItem('valor', JSON.stringify(valoresLimpos))
-  
-
 }
 
 
@@ -798,5 +917,6 @@ if (!!localStorage.transacoes) {
 }
 
 if (!!localStorage.transacoes) {
-  arrumarArray()
+  arrumarValores()
 }
+
