@@ -879,16 +879,6 @@ select {
   margin-top: 10px;
 }
 
-#igual {
-  font-size: 30px;
-  font-weight: 700;
-}
-
-
-
-
-
-
 #tabela input {
   border-radius: 10px;
   height: 26px;
@@ -928,7 +918,8 @@ select {
   margin-left: 10px;
 }
 
-#lucro {
+#lucro,
+#deficit {
   width: 100px;
   padding: 1px 5px;
 }
@@ -1025,9 +1016,6 @@ select {
     margin-bottom: 15px;
   }
 
-  #tabela input {
-    font-size: 12px;
-  }
 
   #nomeMov {
     width: 110px;
@@ -1037,6 +1025,7 @@ select {
     width: 80px;
   }
 
+  #deficit,
   #valorMensal,
   #valorFinal,
   #valorInicial {
