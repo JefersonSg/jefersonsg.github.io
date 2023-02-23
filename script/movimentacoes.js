@@ -361,6 +361,7 @@ adicionar[3].addEventListener("click", function () {
       </div>
         `;
         table.appendChild(div)
+        storage()
 
     nomeMov[3].value = "";
     receita[2].value = "";
@@ -422,7 +423,7 @@ adicionar[3].addEventListener("click", function () {
     `;
           table.appendChild(div)
 
-
+          storage()
     nomeMov[3].value = "";
     receita[2].value = "";
     vencimentos[3].value = "";
@@ -435,7 +436,7 @@ adicionar[3].addEventListener("click", function () {
   } else {
     alert("Preencha todos os campos");
   }
-  storage()
+  
 });
 
 
@@ -761,7 +762,6 @@ function criarPaineis() {
 function storage() {
 
   const transacao = document.querySelectorAll('.movimentacoesLista')
-
   const compraLabel = document.querySelectorAll('#compraLabel')
   const vendaLabel = document.querySelectorAll('#vendaLabel')
   const pixLabel = document.querySelectorAll('#pixLabel')
@@ -870,6 +870,8 @@ function storage() {
     const lucro = i.querySelector('#lucro')
     const parcelas = i.querySelector('#parcelasTotal')
     const valor = i.querySelector('#valorFinal')
+    const juros = document.querySelector('#emprestimo-juros')
+    const jurosMes = document.querySelector('#juros-compostos')
 
     const emprestimo = {
       nome : "",
@@ -878,6 +880,8 @@ function storage() {
       parcelas : '',
       lucro : '',
       valorFinal : '',
+      juros: '',
+      jurosMes:'',
     }
 
     emprestimo['nome'] = [nome.value]
@@ -886,6 +890,8 @@ function storage() {
     emprestimo['valorInicial'] = [valorInit.value]
     emprestimo['lucro'] = [lucro.value]
     emprestimo['valorFinal'] = [valor.value]
+    emprestimo['juros'] = [juros.value]
+    emprestimo['jurosMes'] = [jurosMes.value]
     EmprestimoEnviado.push(emprestimo)
   })
   
