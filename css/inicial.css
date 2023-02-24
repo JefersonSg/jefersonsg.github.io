@@ -1,5 +1,6 @@
 body {
   background-color: #f3f4ef;
+  position: relative;
 }
 
 /* Header */
@@ -13,6 +14,7 @@ body {
   gap: 10px;
   margin-bottom: 110px;
 }
+
 .logo {
   width: 100%;
   margin-top: 18px;
@@ -32,6 +34,7 @@ body {
 .navegacao a:hover {
   color: #6d29d3;
 }
+
 .navegacao-conteudo a:hover::after {
   content: "";
   display: block;
@@ -47,6 +50,7 @@ body {
   margin-top: 0px;
   margin-left: 113px;
 }
+
 .navegacao-conteudo ul a {
   color: #130031;
   font-size: 20px;
@@ -61,10 +65,12 @@ body {
   gap: 50px;
   margin-right: 80px;
 }
+
 .login ul a {
   color: #130031;
   font-size: 20px;
 }
+
 .botao-login {
   display: block;
   text-align: center;
@@ -77,18 +83,22 @@ body {
   color: #130031;
   text-transform: uppercase;
 }
+
 @media (max-width: 1400px) {
   .logo {
     margin-left: 80px;
   }
+
   .navegacao ul a {
     font-size: 16px;
   }
+
   .botao-login {
     width: 150px;
     height: 26px;
     padding: 12px 14px;
   }
+
   .navegacao-conteudo ul {
     gap: 40px;
     margin-left: 100px;
@@ -99,9 +109,11 @@ body {
   .logo {
     margin-left: 60px;
   }
+
   .header {
     margin-bottom: 80px;
   }
+
   .navegacao ul a {
     font-size: 13px;
   }
@@ -111,11 +123,13 @@ body {
     gap: 40px;
     margin-left: 40px;
   }
+
   .botao-login {
     width: 100px;
     height: 20px;
     padding: 12px 14px;
   }
+
   .navegacao-conteudo ul {
     gap: 40px;
     margin-left: 60px;
@@ -131,26 +145,33 @@ body {
     gap: 30px;
     margin-left: 40px;
   }
+
   .navegacao ul {
     gap: 30px;
   }
+
   .navegacao ul a {
     font-size: 12px;
   }
+
   .login ul {
     gap: 20px;
   }
+
   .login ul a {
     font-size: 12px;
   }
+
   .logo {
     width: 150px;
   }
+
   .botao-login {
     width: 85px;
     height: 20px;
     padding: 8px 10px;
   }
+
   .header {
     margin-bottom: 60px;
   }
@@ -160,40 +181,30 @@ body {
   .login {
     display: none;
   }
+
   .header {
     grid-template-columns: 1fr;
     align-content: center;
     margin-bottom: 10px;
   }
+
   .navegacao {
     justify-self: center;
     gap: 30px;
     flex-wrap: wrap;
     gap: 20px;
   }
+
   .botao-login {
     width: max-content;
     height: auto;
   }
+
   .logo {
     justify-self: center;
     margin-right: 0pc;
   }
-  /* .navegacao ul {
-    gap: 20px;
-  }
-  .login ul {
-    margin-top: 0px;
-    gap: 20px;
-    font-weight: 400;
-    margin-left: 0px;
-    font-size: 12px;
-  } */
-  /* .botao-login {
-    border: none;
-    padding: 0px;
-    text-transform: none;
-  } */
+
 }
 
 @media (max-width: 600px) {
@@ -201,18 +212,22 @@ body {
     margin-left: 0px;
     padding-left: 0px;
   }
+
   .navegacao {
     margin-top: 10px;
     word-break: keep-all;
     gap: 10px;
   }
+
   .navegacao ul a {
     font-size: 10px;
   }
+
   .navegacao ul {
     gap: 10px;
     margin-left: 0px;
   }
+
   /* .login ul a {
     font-size: 10px;
   } */
@@ -220,10 +235,11 @@ body {
     gap: 10px;
   } */
 }
+
 /* Main */
-main {
-  border-bottom: 1px solid #6d29d3;
-}
+
+
+
 
 .principal {
   display: grid;
@@ -231,6 +247,7 @@ main {
   max-width: 1600px;
   margin: 0 auto;
   padding-bottom: 120px;
+
 }
 
 .principal-conteudo h1 {
@@ -248,21 +265,26 @@ main {
   color: #130031;
   line-height: 54px;
 }
+
 .imagem {
   margin-right: 100px;
   justify-content: end;
 }
+
 .imagem img:last-child {
   display: none;
 }
+
 @media (max-width: 1560px) {
   .principal-conteudo h1 {
     font-size: 38px;
   }
+
   .principal-conteudo p {
     font-size: 30px;
   }
 }
+
 @media (max-width: 1400px) {
   .imagem {
     justify-self: end;
@@ -270,12 +292,14 @@ main {
     z-index: -1;
     height: 500px;
   }
+
   .principal-conteudo h1 {
     margin-left: 80px;
     font-size: 34px;
     margin-top: 40px;
     margin-bottom: 40px;
   }
+
   .principal-conteudo p {
     font-size: 26px;
     margin-left: 80px;
@@ -286,6 +310,7 @@ main {
     width: 400px;
   }
 }
+
 @media (max-width: 1200px) {
   .principal {
     padding-bottom: 40px;
@@ -296,17 +321,24 @@ main {
     margin-bottom: 30px;
     margin-left: 60px;
   }
+
   .principal-conteudo p {
     font-size: 18px;
     margin-bottom: 40px;
     margin-left: 60px;
   }
+
   .imagem {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+  }
+
+  .imagem img {
     width: 340px;
-    margin-top: -100px;
-    margin-right: 0px;
   }
 }
+
 @media (max-width: 1000px) {
   .principal {
     padding-bottom: 0px;
@@ -317,104 +349,136 @@ main {
     margin-bottom: 30px;
     margin-left: 40px;
   }
+
   .principal-conteudo p {
     font-size: 18px;
     margin-bottom: 30px;
     margin-left: 40px;
     line-height: 30px;
   }
-  .imagem {
+
+  .imagem img {
     width: 300px;
-    margin-top: -140px;
   }
+
 }
+
 @media (max-width: 800px) {
+  .principal {
+    height: auto;
+    width: 90%;
+  }
+
   .principal-conteudo h1 {
     font-size: 20px;
     margin-bottom: 20px;
     margin-left: 20px;
   }
+
   .principal-conteudo p {
     font-size: 14px;
     line-height: 25px;
     margin-bottom: 30px;
     margin-left: 20px;
   }
-  .imagem {
-    justify-self: end;
-    padding-bottom: 50px;
-  }
+
+
+
   .imagem img:first-child {
-    width: auto;
-    margin-top: 30px;
-    margin-right: 20px;
+    object-fit: contain;
+    margin-left: 300px;
+    margin-top: -100px;
+    justify-items: center;
   }
 }
+
 @media (max-width: 600px) {
+
   .principal-conteudo h1 {
-    font-size: 18px;
+    font-size: 25px;
     margin-bottom: 20px;
     margin-left: 20px;
   }
+
   .principal-conteudo p {
-    font-size: 12px;
+    font-size: 18px;
     line-height: 25px;
     margin-bottom: 30px;
-    margin-left: 20px;
+    margin-left: 30px;
   }
+
   .principal {
-    align-content: center;
-    margin-bottom: 0px;
+    grid-template-columns: 1fr;
+    margin-bottom: 70px;
+    justify-items: center;
+    height: auto;
+    padding-bottom: 0px;
   }
+
+
+
   .imagem img:first-child {
-    display: none;
+    margin-left: 0px;
+    margin-right: 20px;
+    margin-top: 70px;
+    justify-items: center;
   }
-  .imagem img:last-child {
-    display: block;
-    width: 240px;
-    margin-top: 240px;
-  }
+
   .imagem {
-    display: grid;
-    width: auto;
+    display: flex;
     margin-top: -160px;
     height: 470px;
   }
 }
 
 @media (max-width: 500px) {
+  .imagem img {
+    height: 520px;
+  }
+
+  .loginConteudo {
+    margin-top: -270px;
+    width: 80%;
+    height: 300px;
+  }
+
   .principal {
     align-content: center;
-    padding-bottom: 50px;
+    padding-bottom: 0px;
+    margin-bottom: 30px;
   }
+
   .principal-conteudo h1 {
-    font-size: 15px;
+    font-size: 20px;
     margin-bottom: 20px;
     margin-left: 10px;
   }
+
   .principal-conteudo p {
-    font-size: 10px;
+    font-size: 14px;
     line-height: 20px;
     margin-bottom: 30px;
     margin-left: 10px;
   }
-  .imagem img:first-child {
-    display: none;
-  }
-  .imagem:last-child {
-    margin-top: -138px;
-    display: block;
-    width: 174px;
-    height: 300px;
-  }
+
+
+
 }
+
 @media (max-width: 350px) {
+
   .principal {
-    grid-template-columns: auto auto;
+    margin-bottom: 0px;
   }
+
+  .imagem img {
+    height: 450px;
+  }
+
   .principal-conteudo {
     word-break: keep-all;
   }
+
   .principal-conteudo-botoes {
     flex-wrap: wrap;
   }
@@ -423,118 +487,132 @@ main {
 /* Botoes */
 .principal-conteudo-botoes {
   display: flex;
+  align-items: center;
   margin-left: 107px;
 }
-.principal-conteudo-botoes a:first-child {
+
+.botao-conta {
   margin-right: 70px;
 }
+
 .botao-conta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(#bb98ff, #a47df0);
-  text-align: center;
+  cursor: pointer;
   padding: 15px 25px;
   font-size: 32px;
   border-radius: 10px;
   letter-spacing: 1.1px;
   color: #25005c;
   max-width: max-content;
-  height: 49px;
+  border: 1px solid #8a4be8;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 18px 15px;
 }
+
 .botao-conta:hover {
   background: linear-gradient(#b28cfc, #946be2);
   color: #130031;
 }
+
 .botao-entrar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(#8a4be8, #6120c1);
+  border: 1px solid #6120c1;
   padding: 15px 25px;
   border-radius: 10px;
   font-size: 32px;
-  text-align: center;
   letter-spacing: 1.1px;
-  width: 130px;
-  height: 49px;
   color: #d3b7ff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
 }
+
 .botao-entrar:hover {
   background: linear-gradient(#7a3cd9, #4a1b90);
 }
+
 @media (max-width: 1400px) {
   .principal-conteudo-botoes {
     margin-left: 80px;
   }
+
   .botao-conta {
-    padding: 15px 25px;
     font-size: 28px;
-    height: 45px;
   }
+
   .botao-entrar {
-    padding: 15px 25px;
     font-size: 28px;
     width: max-content;
-    height: 45px;
   }
 }
+
 @media (max-width: 1200px) {
   .principal-conteudo-botoes {
     margin-left: 60px;
   }
+
   .botao-conta {
-    padding: 12px 20px;
     font-size: 24px;
-    height: 45px;
   }
+
   .botao-entrar {
-    padding: 12px 20px;
     font-size: 24px;
     width: max-content;
-    height: 45px;
   }
+
   .principal-conteudo-botoes a:first-child {
     margin-right: 50px;
   }
 }
+
 @media (max-width: 1000px) {
   .principal-conteudo-botoes {
     margin-left: 40px;
   }
+
   .botao-conta {
-    padding: 8px 15px;
     font-size: 15px;
-    height: 30px;
-    border-radius: 6px;
   }
+
   .botao-entrar {
-    padding: 8px 15px;
     font-size: 15px;
     border-radius: 6px;
-    height: 30px;
   }
+
   .principal-conteudo-botoes a:first-child {
     margin-right: 30px;
   }
 }
+
 @media (max-width: 800px) {
   .principal-conteudo-botoes {
     margin-left: 20px;
   }
+
   .botao-conta {
-    padding: 8px 15px;
-    font-size: 12px;
-    height: 25px;
-    border-radius: 6px;
-    width: max-content;
-  }
-  .botao-entrar {
-    padding: 8px 15px;
-    font-size: 12px;
-    height: 25px;
-    border-radius: 6px;
-  }
-  .principal-conteudo-botoes a:first-child {
     margin-right: 30px;
+    width: 180px;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 12px;
+    border-radius: 6px;
   }
+
+  .botao-entrar {
+
+    font-size: 12px;
+    border-radius: 6px;
+    width: 80px;
+    height: 45px;
+  }
+
 }
+
 @media (max-width: 500px) {
   .principal-conteudo-botoes {
     margin-left: 10px;
@@ -542,17 +620,15 @@ main {
   }
 
   .botao-conta {
-    padding: 8px 10px;
     font-size: 9px;
-    height: 20px;
     border-radius: 6px;
   }
+
   .botao-entrar {
-    padding: 8px 10px;
     font-size: 9px;
-    height: 20px;
     border-radius: 6px;
   }
+
   .principal-conteudo-botoes a:first-child {
     margin-right: 5px;
   }
@@ -560,7 +636,8 @@ main {
 
 /* Rodape */
 .rodape-bg {
-  background: linear-gradient(#f3f4ef, #d7d8d5);
+  border-top: 1px solid #6d29d3;
+
 }
 
 .rodape {
@@ -570,50 +647,61 @@ main {
   grid-template-columns: minmax(150px, 500px) minmax(300px, 613px) 300px;
   padding-bottom: 10px;
 }
+
 .rodape h2 {
   margin-top: 30px;
   margin-bottom: 30px;
   color: #130031;
   font-size: 20px;
 }
+
 .rodape-img {
   display: grid;
   justify-items: start;
   margin-left: 175px;
   margin-top: 80px;
 }
+
 .contato {
   display: grid;
   justify-content: center;
 }
+
 .contato h2 {
   margin-left: 112px;
 }
+
 .contato li {
   margin-bottom: 15px;
   color: #130031;
   font-size: 12px;
   width: 300px;
 }
+
 .contato a {
   color: #130031;
   font-family: "Poppins";
 }
+
 .contato li:nth-child(2) {
   padding-bottom: 14px;
   border-bottom: 2px solid #c0a7e5;
 }
+
 .redes {
   margin-left: 80px;
 }
+
 .redes h2 {
   margin-left: 60px;
   margin-bottom: 40px;
 }
+
 .redes ul {
   display: flex;
   gap: 40px;
 }
+
 @media (max-width: 1200px) {
   .rodape-img {
     margin-left: auto;
@@ -625,16 +713,20 @@ main {
     justify-self: center;
     margin: 100px auto;
   }
+
   .rodape h2 {
     font-size: 16px;
   }
+
   .contato li {
     font-size: 10px;
   }
+
   .redes {
     margin: 0 auto;
   }
 }
+
 @media (max-width: 800px) {
   .rodape {
     max-width: 1600px;
@@ -649,10 +741,12 @@ main {
     width: 150px;
     font-size: 8px;
   }
+
   .rodape {
     max-width: 1600px;
     grid-template-columns: 1fr 1fr;
   }
+
   .redes img {
     width: 25px;
   }
@@ -660,11 +754,13 @@ main {
   .rodape-img {
     display: none;
   }
+
   .contato h2 {
     text-align: center;
     margin-left: 0px;
   }
 }
+
 @media (max-width: 300px) {
   .rodape {
     grid-template-columns: 1fr;

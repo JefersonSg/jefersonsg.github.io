@@ -1,0 +1,158 @@
+.modal-container {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.25);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  animation: modal .3s forwards;
+}
+
+.modal-container.ativo {
+  display: flex;
+}
+
+#login {
+  background-color: white;
+  padding: 20px;
+  border: 10px solid #a47df0;
+  box-shadow: 0 0 0 4px white;
+  border-radius: 5px;
+  position: relative;
+}
+
+.fechar {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #a47df0;
+  border: 1px solid white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+}
+
+#login.ativo {
+  display: grid;
+}
+
+.conteudo-formulario {
+  background-color: white;
+  display: grid;
+
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0)
+  }
+}
+
+.conteudo-formulario label {
+  display: block;
+  font-family: 'poppins';
+  margin: 1rem 0 .5rem 0;
+
+}
+
+.conteudo-formulario input {
+  width: 500px;
+  margin: 0.7rem 0.5rem
+}
+
+
+
+#botaoFormulario {
+  height: 50px;
+  background: linear-gradient(#bb98ff, #a47df0);
+  border: 1px solid #a47df0;
+  border-radius: 10px;
+  width: max-content;
+  justify-self: center;
+}
+
+@media (max-width: 800px) {
+
+  .conteudo-formulario input {
+    margin-bottom: 10px;
+    width: 300px;
+  }
+}
+
+@media (max-width: 500px) {
+
+  .conteudo-formulario input {
+    width: 150px;
+    margin: 0.5rem 0.4rem;
+  }
+
+  .fechar {
+    top: -25px;
+    right: -25px;
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .conteudo-formulario label {
+    font-size: 13px;
+    margin: .6rem 0 .4rem 0;
+
+  }
+
+  #botaoFormulario {
+    height: 40px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 300px) {
+  #login {
+    background-color: white;
+    padding: 20px;
+    border: 5px solid #a47df0;
+    box-shadow: 0 0 0 2px white;
+    border-radius: 5px;
+    position: relative;
+  }
+
+  .conteudo-formulario input {
+    margin: 0.3rem 0.2rem;
+    width: 100px;
+  }
+
+  .fechar {
+    top: -20px;
+    right: -20px;
+    width: 35px;
+    height: 35px;
+    font-size: 0.8rem;
+  }
+
+  .conteudo-formulario label {
+    margin: .4rem 0 .2rem 0;
+  }
+
+  #botaoFormulario {
+    height: 30px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+
+
+}

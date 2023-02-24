@@ -442,7 +442,12 @@ adicionar[3].addEventListener("click", function () {
 
 
 // Storage
-
+function arrumarNome() {
+  const nomeLogin = document.querySelector('.nome-login')
+  const nomeUser = JSON.parse(localStorage.usuarios)
+  nomeLogin.innerText = `${nomeUser[0].nome} ${nomeUser[0].sobrenome}`
+  
+}
 function arrumarValores() {
   const ls = JSON.parse(localStorage.transacoes)
 
@@ -926,3 +931,4 @@ if (!!localStorage.transacoes) {
   arrumarValores()
 }
 
+arrumarNome()

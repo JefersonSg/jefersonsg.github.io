@@ -6,7 +6,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Simple Money</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/css/modal.css">
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,6 +15,22 @@
 </head>
 
 <body>
+  <section class="modal-container" data-modal="container">
+    <div id="login">
+      <button data-modal="fechar" class="fechar">X</button>
+      <form class="conteudo-formulario" action="" method="post">
+        <label for="nome">Nome</label>
+        <input type="text" name="nome" id="nome">
+        <label for="sobreNome">Sobrenome</label>
+        <input type="text" name="sobrenome" id="sobrenome">
+        <label for="nomeUsuario">Nome de usuario</label>
+        <input type="text" name="usuario" id="nomeUsuario">
+        <label for="senha">Senha</label>
+        <input type="password" name="senha" id="senha">
+        <button type="button" id="botaoFormulario" class="font-p-sb">confirmar</button>
+      </form>
+    </div>
+  </section>
   <header class="header">
     <div class="logo">
       <a href="./index.html"><img src="./img/logo.svg" width="200" height="100" alt="Logo SImple Money" /></a>
@@ -42,27 +59,27 @@
       </div>
     </div>
   </header>
-  <main>
-    <div class="principal">
-      <div class="principal-conteudo">
-        <h1 class="font-lb-b">Simplifique sua vida financeira</h1>
-        <p class="font-lb-r">
-          Aqui você junta todas <br />
-          as informações necessárias <br />
-          para descomplicar a sua vida! <br />
-          Então vamos começar?
-        </p>
-        <div class="principal-conteudo-botoes">
-          <a class="botao-conta font-p-sb" href="./">CRIAR CONTA</a>
-          <a class="botao-entrar font-p-sb" href="./">ENTRAR</a>
-        </div>
-      </div>
-      <div class="imagem">
-        <img src="./img/Captura de tela 2022-08-15 215654 1.svg" alt="Imagem Ilustrativa" width="547" height="603" />
-        <img src="/img/undraw_savings_re_eq4w.svg" alt="" />
+  <div class="principal">
+    <div class="principal-conteudo">
+      <h1 class="font-lb-b">Simplifique sua vida financeira</h1>
+      <p class="font-lb-r">
+        Aqui você junta todas <br />
+        as informações necessárias <br />
+        para descomplicar a sua vida! <br />
+        Então vamos começar?
+      </p>
+      <div class="principal-conteudo-botoes">
+        <button class="botao-conta font-p-sb">CRIAR CONTA</button>
+        <button class="botao-entrar font-p-sb">ENTRAR</button>
       </div>
     </div>
-  </main>
+    <div class="imagem">
+      <img src="./img/Captura de tela 2022-08-15 215654 1.svg" alt="Imagem Ilustrativa" width="547" height="603" />
+      <img src="/img/undraw_savings_re_eq4w.svg" alt="" />
+    </div>
+  </div>
+
+
   <footer class="rodape-bg">
     <div class="rodape">
       <div class="rodape-img">
@@ -90,6 +107,9 @@
       </div>
     </div>
   </footer>
+
 </body>
+<script src="./script/inicial.js"></script>
+<script src="/script/modal.js"></script>
 
 </html>
