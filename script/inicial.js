@@ -32,7 +32,6 @@ if (nome && sobrenome && nomeUser && senha) {
   localStorage.setItem('usuarios', JSON.stringify(usuarios))
 
   window.open("movimentacoes.html", '_top')
-
 }
 
 
@@ -40,4 +39,6 @@ if (nome && sobrenome && nomeUser && senha) {
 botao.addEventListener('click', newUser)
 
 
-
+if (localStorage.usuarios) {
+  window.open("movimentacoes.html", '_top')
+}

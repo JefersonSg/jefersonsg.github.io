@@ -15,6 +15,30 @@
 </head>
 
 <body>
+  <div class="editValueBg">
+    <div class="editValue">
+      <span id="fecharEdit">X</span>
+      <label for="nome">Nome</label>
+      <input readonly type="nome" id="nomeEdit">
+      <label for="data">Data</label>
+      <input readonly type="data" id="dataEdit">
+      <label for="valor">Valor</label>
+      <input readonly type="valor" id="valorEdit">
+      <label for="parcelas">Parcelas</label>
+      <input readonly type="parcelas" id="parcelasEdit">
+      <label for="defict">Defict</label>
+      <input readonly type="defict" id="defictEdit">
+      <label for="valor-final">Valor Final</label>
+      <input readonly type="valor-final" id="valorFinEdit">
+      <button type="button" id="editar"></button>
+      <button type="button" id="deletar">Deletar</button>
+    </div>
+    <div class="confirmar">
+      <span>Deseja mesmo deletar?</span>
+      <button type="button" id="sim">Sim</button>
+      <button type="button" id="nao">Não</button>
+    </div>
+  </div>
   <header class="header">
     <a class="logo" href="./index.html"><img src="./img/logo.svg" width="200" height="100" alt="Logo SImple Money" width="200" height="100" /></a>
     <div class="navegacao">
@@ -316,14 +340,10 @@
     <div class="movimentacoes-conteudo-bg">
       <div id="movimentacoes-conteudo" class="movimentacoes-conteudo">
         <form method="POST">
-
-
           <table id="tabela">
 
 
           </table>
-
-
         </form>
 
 
@@ -341,6 +361,8 @@
       </div>
     </div>
   </section> -->
+
+
 </body>
 <script src="./script/movimentacoes.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

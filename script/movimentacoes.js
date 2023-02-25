@@ -354,10 +354,12 @@ adicionar[3].addEventListener("click", function () {
          </div>
 
           <div class = "organizaMov valorFinal">
-          <span>Valor final</span>
+            <span>Valor final</span>
+          
+            <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="${(+(totalPago.value).replace('Total ',"")).toFixed(2)}"  type="text" name="Valor" placeholder="Valor Mensal">
+          </div>
+
         
-          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="${(+(totalPago.value).replace('Total ',"")).toFixed(2)}"  type="text" name="Valor" placeholder="Valor Mensal">
-        </div>
       </div>
         `;
         table.appendChild(div)
@@ -440,6 +442,19 @@ adicionar[3].addEventListener("click", function () {
 });
 
 
+// onlyNumber
+
+function onlynumber(evt) {
+  var theEvent = evt || window.event;
+  var key = theEvent.keyCode || theEvent.which;
+  key = String.fromCharCode(key);
+  //var regex = /^[0-9.,]+$/;
+  var regex = /^[0-9.]+$/;
+  if (!regex.test(key)) {
+    theEvent.returnValue = false;
+    if (theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
 
 // Storage
 function arrumarNome() {
@@ -546,23 +561,6 @@ function arrumarValores() {
     })
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
 }
 
 function criarPaineis() {
@@ -571,8 +569,6 @@ function criarPaineis() {
      ls.forEach((v,i)=>{
       const table = document.getElementById("tabela");
       const div = document.createElement('div')
-      
-
 
       if (v === 'compra') {
         div.innerHTML = `
@@ -748,17 +744,14 @@ function criarPaineis() {
          </div>
 
           <div class = "organizaMov valorFinal">
-          <span>Valor final</span>
-        
-          <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ "  type="text" name="Valor" placeholder="Valor Mensal">
-        </div>
+            <span>Valor final</span>
+          
+            <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ "  type="text" name="Valor" placeholder="Valor Mensal">
+          </div>
       </div>
         `;
       }
-      
-      
 
-      
       table.appendChild(div)
     })
 
@@ -911,18 +904,6 @@ function storage() {
   localStorage.setItem('transacoes', JSON.stringify(transacoes))
 }
 
-
-function onlynumber(evt) {
-  var theEvent = evt || window.event;
-  var key = theEvent.keyCode || theEvent.which;
-  key = String.fromCharCode(key);
-  //var regex = /^[0-9.,]+$/;
-  var regex = /^[0-9.]+$/;
-  if (!regex.test(key)) {
-    theEvent.returnValue = false;
-    if (theEvent.preventDefault) theEvent.preventDefault();
-  }
-}
 if (!!localStorage.transacoes) {
   criarPaineis()
 }
@@ -931,4 +912,197 @@ if (!!localStorage.transacoes) {
   arrumarValores()
 }
 
-arrumarNome()
+if (localStorage.usuarios) {
+  arrumarNome()
+
+  const logo = document.querySelector('.logo')
+  
+  logo.addEventListener('click',(e)=>{
+      e.preventDefault()
+  })
+} else {
+  window.open('index.html', '_top')
+
+}
+
+const empLabel = document.querySelectorAll('#empLabel')
+const compraLabel = document.querySelectorAll('#compraLabel')
+const vendaLabel = document.querySelectorAll('#vendaLabel')
+const pixLabel = document.querySelectorAll('#pixLabel')
+const empPegoLabel = document.querySelectorAll('#empPegoLabel')
+const btnEditar = document.querySelector('#editar')
+const btnDeletar = document.querySelector('#deletar')
+
+
+empLabel.forEach((i)=>{
+    i.addEventListener('click',()=>{
+      const editValueBg = document.querySelector('.editValueBg')
+      const exit = document.querySelector('#fecharEdit')
+      editValueBg.classList.add('ativo')
+
+      function removeAtivoBg() {
+        editValueBg.classList.remove('ativo')
+      }
+
+      function deletLabel() {
+        const confirm = document.querySelector('.confirmar')
+        const editValueBg = document.querySelector('.editValueBg')
+        const sim = confirm.querySelector('#sim')
+        const nao = confirm.querySelector('#nao')
+        confirm.classList.add('ativo')
+
+        function removeAtivo() {
+          confirm.classList.remove('ativo')
+        }
+        function removeAll() {
+          editValueBg.classList.remove('ativo')
+          i.remove()
+          storage()
+        }
+      
+        sim.addEventListener('click', removeAll)
+        nao.addEventListener('click', removeAtivo)
+      }
+        const nomeEdit = document.querySelector('#nomeEdit')
+        const dataEdit = document.querySelector('#dataEdit')
+        const valorEdit = document.querySelector('#valorEdit')
+        const parcelasEdit = document.querySelector('#parcelasEdit')
+        const deficitEdit = document.querySelector('#defictEdit')
+        const valorFinalEdit = document.querySelector('#valorFinEdit')
+        
+        const nome = i.querySelector('#nomeMov')
+        const data = i.querySelector('#vencimentoTotal')
+        const valorInit = i.querySelector('#valorInicial')
+        const lucro = i.querySelector('#lucro')
+        const parcelas = i.querySelector('#parcelasTotal')
+        const valor = i.querySelector('#valorFinal')
+
+
+
+      function changeValue() {
+        nomeEdit.value = nome.value 
+        dataEdit.value = data.value
+        valorEdit.value = valorInit.value
+        parcelasEdit.value = parcelas.value
+        deficitEdit.value= lucro.value
+        valorFinalEdit.value = valor.value
+      }
+      
+      function EditValue() {
+        if (!btnEditar.classList.contains('ativo')) {
+          nome.value = nomeEdit.value
+          data.value = dataEdit.value
+          valorInit.value = valorEdit.value
+          parcelas.value = parcelasEdit.value
+          lucro.value = deficitEdit.value
+          valor.value = valorFinalEdit.value
+          storage()
+        }
+      }
+          
+          
+          
+      btnEditar.addEventListener('click', readOnly)
+      exit.addEventListener('click', removeAtivoBg)
+      btnDeletar.addEventListener('click',deletLabel)
+      btnEditar.addEventListener('click', EditValue)
+      changeValue()
+    
+})})
+compraLabel.forEach((i, index)=>{
+    i.addEventListener('click',()=>{
+      const editValueBg = document.querySelector('.editValueBg')
+      const exit = document.querySelector('#fecharEdit')
+      editValueBg.classList.add('ativo')
+
+      function removeAtivoBg() {
+        editValueBg.classList.remove('ativo')
+      }
+
+      function deletLabel() {
+        const confirm = document.querySelector('.confirmar')
+        const editValueBg = document.querySelector('.editValueBg')
+        const sim = confirm.querySelector('#sim')
+        const nao = confirm.querySelector('#nao')
+        confirm.classList.add('ativo')
+
+        function removeAtivo() {
+          confirm.classList.remove('ativo')
+        }
+        function removeAll() {
+          editValueBg.classList.remove('ativo')
+          i.remove()
+          storage()
+        }
+      
+        sim.addEventListener('click', removeAll)
+        nao.addEventListener('click', removeAtivo)
+      }
+        const nomeEdit = document.querySelector('#nomeEdit')
+        const dataEdit = document.querySelector('#dataEdit')
+        const valorEdit = document.querySelector('#valorEdit')
+        const parcelasEdit = document.querySelector('#parcelasEdit')
+        const deficitEdit = document.querySelector('#defictEdit')
+        const valorFinalEdit = document.querySelector('#valorFinEdit')
+        
+        const nome = i.querySelector('#nomeMov')
+        const data = i.querySelector('#vencimentoTotal')
+        const valorInit = i.querySelector('#valorInicial')
+        const lucro = i.querySelector('#lucro')
+        const parcelas = i.querySelector('#parcelasTotal')
+        const valor = i.querySelector('#valorFinal')
+
+
+
+      function changeValue() {
+        nomeEdit.value = nome.value 
+        dataEdit.value = data.value
+        valorEdit.value = valorInit.value
+        parcelasEdit.value = parcelas.value
+        deficitEdit.value= lucro.value
+        valorFinalEdit.value = valor.value
+      }
+      
+      function EditValue() {
+        if (!btnEditar.classList.contains('ativo')) {
+          nome.value = nomeEdit.value
+          data.value = dataEdit.value
+          valorInit.value = valorEdit.value
+          parcelas.value = parcelasEdit.value
+          lucro.value = deficitEdit.value
+          valor.value = valorFinalEdit.value
+          storage()
+        }
+      }
+          
+          
+          
+      btnEditar.addEventListener('click', readOnly)
+      exit.addEventListener('click', removeAtivoBg)
+      btnDeletar.addEventListener('click',deletLabel)
+      btnEditar.addEventListener('click', EditValue)
+      changeValue()
+    
+})})
+
+
+  function readOnly() {
+      const nome = document.querySelector('#nomeEdit')
+      const data = document.querySelector('#dataEdit')
+      const valor = document.querySelector('#valorEdit')
+      const parcelas = document.querySelector('#parcelasEdit')
+      const deficit = document.querySelector('#defictEdit')
+      const valorFinal = document.querySelector('#valorFinEdit')
+
+      nome.toggleAttribute('readonly')
+      data.toggleAttribute('readonly')
+      valor.toggleAttribute('readonly')
+      parcelas.toggleAttribute('readonly')
+      deficit.toggleAttribute('readonly')
+      valorFinal.toggleAttribute('readonly')
+
+      btnEditar.classList.toggle('ativo')
+
+  }
+
+
