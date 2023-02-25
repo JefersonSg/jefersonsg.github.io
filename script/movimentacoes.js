@@ -597,7 +597,7 @@ function criarPaineis() {
             placeholder="em 10x" >
         </div>
   
-        <div class = "organizaMov valorInicial">
+        <div class = "organizaMov valorFinal">
           <span>Valor</span>
           <input readonly id="valorFinal" style="background: #F92828; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
         </div>
