@@ -340,12 +340,18 @@ select {
   text-align: center;
 }
 
-.selecao-conteudo label:hover {
+#compra-button:hover,
+#venda-button:hover,
+#pix-button:hover,
+#emprestimo-button:hover {
   background: #d3d3d3;
   border-color: #a5a5a5;
 }
 
-.selecao-conteudo label {
+#compra-button,
+#venda-button,
+#pix-button,
+#emprestimo-button {
   background: #d9d9d9;
   cursor: pointer;
   display: flex;
@@ -390,7 +396,10 @@ select {
   display: none;
 }
 
-.selecao-conteudo input:checked+label {
+#compra-button.ativo,
+#venda-button.ativo,
+#pix-button.ativo,
+#emprestimo-button.ativo {
   background: #cacaca;
   border: 1px solid black;
 }
@@ -466,7 +475,7 @@ select {
   pointer-events: none;
 }
 
-#compra-label::before {
+#compra-button::before {
   content: "";
   display: block;
   background-image: url("../img/Movimentacoes/compra.svg");
@@ -474,12 +483,12 @@ select {
   height: 22px;
 }
 
-#compra-label::after {
+#compra-button::after {
   content: "COMPRA";
   display: block;
 }
 
-#venda-label::before {
+#venda-button::before {
   content: "";
   display: block;
   background-image: url("../img/Movimentacoes/venda.svg");
@@ -487,12 +496,12 @@ select {
   height: 22px;
 }
 
-#venda-label::after {
+#venda-button::after {
   content: "VENDA";
   display: block;
 }
 
-#pix-label::before {
+#pix-button::before {
   content: "";
   display: block;
   background-image: url("../img/Movimentacoes/pix.svg");
@@ -500,12 +509,12 @@ select {
   height: 22px;
 }
 
-#pix-label::after {
+#pix-button::after {
   content: "PIX";
   display: block;
 }
 
-#emprestimo-label::before {
+#emprestimo-button::before {
   content: "";
   display: block;
   background-image: url("../img/Movimentacoes/emprestimo.svg");
@@ -513,7 +522,7 @@ select {
   height: 22px;
 }
 
-#emprestimo-label::after {
+#emprestimo-button::after {
   content: "emprestimo";
   display: block;
 }
@@ -529,10 +538,10 @@ select {
   display: none;
 }
 
-#emprestimo:checked~#emprestimo-conteudo,
-#venda:checked~#venda-conteudo,
-#compra:checked~#compra-conteudo,
-#pix:checked~#pix-conteudo {
+#emprestimo-conteudo.ativo,
+#venda-conteudo.ativo,
+#compra-conteudo.ativo,
+#pix-conteudo.ativo {
   display: block;
 }
 
@@ -590,7 +599,10 @@ select {
 
 @media (max-width: 1000px) {
 
-  .selecao-conteudo label {
+  #emprestimo-button,
+  #venda-button,
+  #compra-button,
+  #pix-button {
     gap: 10px;
     border-radius: 5px;
     font-size: 15px;
@@ -626,7 +638,10 @@ select {
     grid-template-columns: 140px 120px 95px 165px;
   }
 
-  .selecao-conteudo label {
+  #emprestimo-button,
+  #venda-button,
+  #compra-button,
+  #pix-button {
     align-items: center;
     font-size: 12px;
     text-align: center;
@@ -642,10 +657,10 @@ select {
 
 @media (max-width: 600px) {
 
-  #compra-label,
-  #pix-label,
-  #venda-label,
-  #emprestimo-label {
+  #compra-button,
+  #pix-button,
+  #venda-button,
+  #emprestimo-button {
     justify-self: center;
     padding-right: 25px;
   }
@@ -688,7 +703,7 @@ select {
   }
 
 
-  #compra-label {
+  #compra-button {
     grid-area: 1;
     justify-content: center;
     font-size: 11px;
@@ -697,7 +712,7 @@ select {
     padding: 5px 3px;
   }
 
-  #venda-label {
+  #venda-button {
     grid-area: 1;
     justify-content: center;
     font-size: 11px;
@@ -706,17 +721,17 @@ select {
     padding: 5px 3px;
   }
 
-  #pix-label {
+  #pix-button {
     grid-area: 2;
     justify-content: center;
     font-size: 11px;
-    height: 30px;
+    height: 40px;
     width: 130px;
     padding: 5px 3px;
   }
 
 
-  #emprestimo-label {
+  #emprestimo-button {
     grid-area: 2;
     justify-content: center;
     font-size: 11px;
@@ -785,26 +800,26 @@ select {
     grid-template-columns: auto;
   }
 
-  #compra-label {
+  #compra-button {
     font-size: 9px;
     height: 25px;
     width: 100px;
   }
 
-  #venda-label {
+  #venda-button {
     font-size: 9px;
     height: 25px;
     width: 100px;
   }
 
-  #pix-label {
+  #pix-button {
     font-size: 9px;
     height: 25px;
     width: 100px;
   }
 
 
-  #emprestimo-label {
+  #emprestimo-button {
     font-size: 9px;
     height: 25px;
     width: 100px;
@@ -891,7 +906,6 @@ select {
   color: white;
   cursor: pointer;
 }
-
 
 .movimentacoes-bg {
   border-bottom: 2px solid #6d29d3;

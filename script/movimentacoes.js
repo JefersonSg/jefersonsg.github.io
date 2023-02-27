@@ -15,6 +15,32 @@ const totalFinal = document.getElementById("totalFinal");
 const div = document.querySelector(".selecao-conteudo");
 const receberOuPagar = $(".selecao-conteudo input");
 const totalPago = document.getElementById('totalPago')
+const btnCompra = document.querySelector('#compra-button')
+const btnVenda = document.querySelector('#venda-button')
+const btnPix = document.querySelector('#pix-button')
+const btnEmp = document.querySelector('#emprestimo-button')
+const formCompra = document.querySelector('#compra-conteudo')
+const formVenda = document.querySelector('#venda-conteudo')
+const formPix = document.querySelector('#pix-conteudo')
+const formEmp = document.querySelector('#emprestimo-conteudo')
+
+function removeAtivo(a,b,c,d,e,f,g,h){
+
+  a.classList.toggle('ativo')
+  e.classList.remove('ativo')
+  c.classList.remove('ativo')
+  d.classList.remove('ativo')
+
+  b.classList.toggle('ativo')
+  f.classList.remove('ativo')
+  g.classList.remove('ativo')
+  h.classList.remove('ativo')
+}
+
+btnCompra.addEventListener('click', ()=> removeAtivo(btnCompra,formCompra,btnVenda,btnPix,btnEmp,formVenda,formPix,formEmp))
+btnVenda.addEventListener('click', ()=> removeAtivo(btnVenda,formVenda,btnCompra,btnPix,btnEmp,formCompra,formPix,formEmp))
+btnPix.addEventListener('click', ()=> removeAtivo(btnPix,formPix,btnCompra,btnVenda,btnEmp,formCompra,formVenda,formEmp))
+btnEmp.addEventListener('click', ()=> removeAtivo(btnEmp,formEmp,btnCompra,btnVenda,btnPix,formCompra,formVenda,formPix))
 
 
 // COMPRAS
@@ -1329,9 +1355,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     
           storage()
       }
-      function conta (){
-        valorFinalEdit.value = +valorEdit.value.toFixed(2)
-      }
+
       function removeAtivoBg() {
         const confirm = editValueBg.querySelector('.confirmar')
         editValueBg.classList.remove('ativo')
@@ -1350,7 +1374,6 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
           parcelasEdit.toggleAttribute('disabled')
           categoriaEdit.toggleAttribute('disabled')
       }
-      valorEdit.addEventListener('keyup', conta)   
       btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
       btnEditar.addEventListener('click', readOnly)
       exit.addEventListener('click', removeAtivoBg)

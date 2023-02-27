@@ -49,22 +49,11 @@
     <h1 class="titulo font-lb-b">ANOTE SUA FINANÇA</h1>
 
     <div class="selecao-radio">
-      <h2 class="font-lb-b">Qual tipo de movimentaçao deseja adicionar?</h2>
       <div class="selecao-conteudo">
-
-        <input type="radio" name="transacao" value="A pagar" id="compra" />
-        <label id="compra-label" for="compra"></label>
-
-        <input type="radio" value="venda" name="transacao" id="venda" />
-        <label id="venda-label" for="venda"></label>
-
-        <input type="radio" value="pix" name="transacao" id="pix" />
-        <label id="pix-label" for="pix"></label>
-
-        <input type="radio" value="emprestimo" name="transacao" id="emprestimo" />
-        <label id="emprestimo-label" for="emprestimo"></label>
-
-
+        <button type="button" id="compra-button"></button>
+        <button type="bottom" id="venda-button"></button>
+        <button type="button" id="pix-button"></button>
+        <button type="button" id="emprestimo-button"></button>
         <div class="transacao" id="compra-conteudo">
           <div class="financas">
             <form action="inserir-financas" class="financas-formulario">
