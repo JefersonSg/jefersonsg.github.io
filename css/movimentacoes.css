@@ -812,15 +812,22 @@ select {
 }
 
 /* MOVIMENTACOES */
+.organizaMov.jurosLs {
+  display: none;
+}
+
 
 .editValueBg {
   position: fixed;
+  top: 0;
+  left: 0;
   display: none;
   align-items: center;
   justify-content: center;
   height: 100vh;
   width: 100%;
   z-index: 2000;
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .editValueBg.ativo {
