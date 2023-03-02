@@ -8,26 +8,30 @@ body {
 .header {
   margin: 0 auto;
   width: 100%;
-  height: 42px;
+  height: 48px;
   background-color: #009FE3;
   display: flex;
   justify-content: start;
+  align-items: center;
 }
 
 .perfil {
-  padding: 8px 0px 0px 12px;
+  width: 95%;
+  margin: 0 auto;
   color: white;
 }
 
 .perfil ul {
   display: grid;
-  grid-template-columns: 25px 1fr;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 0px 4px;
 }
 
 .nome-login {
-  font-size: 10px;
+  font-size: 12px;
+  line-height: 1;
+  color: white;
   white-space: nowrap;
 }
 
@@ -37,21 +41,36 @@ body {
   height: 25px;
 }
 
+@media (min-width: 500px) {
+
+  .img-perfil {
+    width: 30px;
+    height: 30px;
+  }
+
+  .perfil {
+    padding: 0px 0px 0px 12px;
+    margin: 0 auto;
+    color: white;
+  }
+}
 
 /* Financas */
 
 select {
   text-align-last: center;
   text-align: center;
+  color: black;
 }
 
 .financas-bg {
+  width: 100%;
   margin: 0 auto;
   margin-top: 8px;
 }
 
 .selecao-radio {
-  width: 280px;
+  width: 88%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -211,8 +230,6 @@ select {
   justify-self: center;
 }
 
-
-
 .div-botao {
   padding-top: 10px;
   grid-column: 1/-1;
@@ -229,7 +246,6 @@ select {
 }
 
 /* IDS */
-
 
 
 #compra-button::before {
@@ -339,12 +355,15 @@ select {
   cursor: pointer;
 }
 
+.parcelasTotal {
+  display: none;
+}
+
 #receita {
   width: 100%;
 }
 
-#vencimento,
-#Data {
+#data {
   width: 97%;
 }
 
@@ -372,20 +391,43 @@ select {
   height: 100vh;
   width: 100%;
   z-index: 2000;
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .editValueBg.ativo {
   display: flex;
+  animation: modal .4s forwards;
+}
+
+@keyframes modal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0)
+  }
 }
 
 .editValue {
-  width: 600px;
+  width: 70%;
+  display: grid;
+  grid-template-columns: 1fr;
   background-color: white;
   padding: 20px;
   height: 230px;
-  border: 1px solid black;
+  border: 10px solid #38A1FF;
+  box-shadow: 0 0 0 4px white;
   position: relative;
+}
+
+.botaoEdit {
+  display: flex;
+  justify-self: center;
+  margin-top: 16px;
+  gap: 16px;
 }
 
 .editValue label {
@@ -438,489 +480,123 @@ select {
 }
 
 .movimentacoes-bg {
-  border-bottom: 2px solid #6d29d3;
-  padding-bottom: 400px;
+  width: 100%;
+  margin-top: 32px;
 }
 
-.movimentacoes {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  gap: 60px;
-  max-width: 1600px;
+
+.movimentacoes-bg h3 {
+  font-size: 14px;
+  width: 90%;
   margin: 0 auto;
-  padding-top: 25px;
-}
-
-.movimentacoes h1 {
-  font-size: 25px;
-}
-
-.movimentacoes img {
-  width: 180px;
-  margin-bottom: 45px;
-  margin-left: -300px;
 }
 
 .movimentacoes-conteudo-bg {
-  max-width: 1600px;
   margin: 0 auto;
+  margin-top: 8px;
+  width: 100%;
   display: grid;
-  justify-content: center;
+  justify-items: center;
 }
 
 .movimentacoes-conteudo {
   display: grid;
   justify-content: center;
-  padding: 20px;
-  border-radius: 10px;
-  background: #e7e7e7;
-  width: 1100px;
+  border-radius: 5px;
+  background: white;
+  padding: 12px;
+  width: 88%;
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
 }
 
-.organizaMov {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
 
-}
 
 .movimentacoesLista {
-  display: flex;
+  display: grid;
+  grid-template-columns: 22px 70% auto;
   align-items: center;
-  width: 1050px;
-  gap: 5px;
-  margin-bottom: 15px;
-  background-color: #cacaca;
-  padding: 7px 10px 7px 10px;
-  border-radius: 10px;
-  box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
+  gap: 4px 8px;
+  margin: 0 auto;
+  margin-bottom: 8px;
   cursor: pointer;
+  border-bottom: 1px solid #D8D8D8;
 }
 
-.movimentacoesLista.ativo {}
-
-.movimentacoesLista img {
-  margin-top: 10px;
-}
-
-#tabela input {
-  border-radius: 10px;
-  height: 26px;
-  background-color: #7aff64;
-  color: #130031;
-  border-color: #3f019d;
-  text-align: center;
+.movimentacoesLista span {
   font-family: roboto, sans-serif;
-  font-size: 15px;
+  font-size: 10px;
+}
+
+.icon-transacao {
+  grid-row: 1/3;
+  width: 22px;
+  height: 22px;
+}
+
+#data {
+  color: #878787;
+}
+
+.valorInicial,
+#valorFinal,
+#data,
+#categoria,
+#data {
+  width: 50px;
 }
 
 #nomeMov {
-  width: 180px;
+  width: 100px;
 }
 
-#aReceber {
-  width: 140px;
-}
 
-#valorMensal,
-#valorFinal,
-#valorInicial {
-  width: 120px;
-}
 
-#vencimentoTotal {
-  width: 135px;
-}
-
-#parcelasTotal {
-  width: 130px;
-  padding: 1px 5px;
-}
-
-#totalFinal {
-  width: 110px;
-  margin-left: 10px;
+#tabela {
+  width: 85vw;
 }
 
 #lucro,
-#deficit {
-  width: 100px;
-  padding: 1px 5px;
+#deficit,
+#jurosLs,
+#jurosMesLs,
+#parcelasTotal {
+  display: none;
 }
+
+#categoria {
+  color: #878787;
+}
+
+#tabela input {
+  border: none;
+  text-align: start;
+  background-color: rgba(0, 0, 0, 0);
+  font-family: roboto, sans-serif;
+  font-size: 10px;
+}
+
+.movimentacoesLista div {
+  display: flex;
+  align-items: center;
+  gap: 0px 2px;
+}
+
+.valorFinal,
+.pix#nomeMov,
+.parcelas-venda#parcelasTotal {
+  display: block;
+  color: #878787;
+}
+
+.valorspan,
+.nomeMovi span {
+  color: #878787;
+}
+
+
 
 /* media de Movimentacoes */
 
-@media (max-width: 1200px) {
-  .movimentacoes {
-    gap: 50px;
-  }
-
-  .movimentacoes h1 {
-    font-size: 25px;
-  }
-
-  .movimentacoes img {
-    width: 150px;
-    margin-bottom: 35px;
-    margin-left: -250px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 850px;
-  }
-
-  .movimentacoesLista {
-    width: 830px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-
-
-  #tabela tr {
-    gap: 5px;
-  }
-
-  #tabela input {
-    font-size: 12px;
-  }
-
-  #nomeMov {
-    width: 130px;
-  }
-
-  #aReceber {
-    width: 90px;
-  }
-
-  #valorMensal,
-  #valorFinal,
-  #valorInicial {
-    width: 110px;
-  }
-
-  #vencimentoTotal {
-    width: 125px;
-  }
-
-  #parcelasTotal {
-    width: 110px;
-    padding: 1px 5px;
-  }
-
-  #totalFinal {
-    width: 90px;
-    margin-left: 10px;
-  }
-
-}
-
-@media (max-width: 1000px) {
-  .movimentacoes {
-    gap: 40px;
-  }
-
-  .movimentacoes h1 {
-    font-size: 20px;
-  }
-
-  .movimentacoes img {
-    width: 150px;
-    margin-bottom: 35px;
-    margin-left: -200px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 740px;
-  }
-
-  .movimentacoesLista {
-    width: 715px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-
-  #nomeMov {
-    width: 110px;
-  }
-
-  #aReceber {
-    width: 80px;
-  }
-
-  #deficit,
-  #lucro,
-  #valorMensal,
-  #valorFinal,
-  #valorInicial {
-    width: 90px;
-  }
-
-  #vencimentoTotal {
-    width: 115px;
-  }
-
-  #parcelasTotal {
-    width: 100px;
-    padding: 1px 5px;
-  }
-
-  #totalFinal {
-    width: 80px;
-    margin-left: 10px;
-  }
-}
-
-@media (max-width: 800px) {
-
-  .movimentacoes h1 {
-    font-size: 18px;
-  }
-
-  .organizaMov span {
-    margin-bottom: 2px;
-
-  }
-
-  .movimentacoes {
-    margin-top: 50px;
-    margin-bottom: 50px;
-    gap: 0 20px;
-    padding-top: 0px;
-  }
-
-  .movimentacoes img {
-    display: none;
-  }
-
-  .movimentacoes-bg {
-    padding-bottom: 50px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 530px;
-  }
-
-  .movimentacoesLista {
-    width: 500px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-  #nomeMov {
-    width: 110px;
-  }
-
-  #aReceber {
-    width: 80px;
-  }
-
-
-
-  #vencimentoTotal {
-    width: 70px;
-  }
-
-  #parcelasTotal {
-    width: 100px;
-    padding: 1px 5px;
-  }
-
-  #totalFinal {
-    width: 80px;
-    margin-left: 10px;
-  }
-
-  .deficit,
-  .parcelasTotal,
-  .lucro {
-    display: none;
-    position: absolute;
-  }
-
-
-}
-
-@media (max-width: 600px) {
-
-  .movimentacoes h1 {
-    font-size: 18px;
-  }
-
-  .movimentacoes {
-    margin-top: 30px;
-    margin-bottom: 30px;
-  }
-
-  .organizaMov span {
-    font-size: 12px;
-  }
-
-  #tabela input {
-    font-size: 11px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 450px;
-    padding: 10px;
-  }
-
-  .movimentacoesLista {
-    width: 400px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-  #nomeMov {
-    width: 90px;
-  }
-
-  #aReceber {
-    width: 60px;
-  }
-
-  #vencimentoTotal {
-    width: 60px;
-  }
-
-  #totalFinal {
-    width: 70px;
-    margin-left: 10px;
-  }
-
-  .Deficit,
-  .parcelasTotal,
-  .lucro {
-    display: none;
-    position: absolute;
-  }
-
-  #valorMensal,
-  #valorFinal,
-  #valorInicial {
-    width: 75px;
-  }
-}
-
-@media (max-width: 500px) {
-
-  .movimentacoes h1 {
-    font-size: 16px;
-  }
-
-  .movimentacoes {
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-
-
-  .movimentacoesLista img {
-    width: 25px;
-    height: 22px;
-  }
-
-  #tabela input {
-    font-size: 11px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 350px;
-    padding: 10px;
-  }
-
-  .movimentacoesLista {
-    width: 310px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-  #nomeMov {
-    width: 90px;
-  }
-
-  #aReceber {
-    width: 60px;
-  }
-
-  #vencimentoTotal {
-    width: 60px;
-  }
-
-  #totalFinal {
-    width: 70px;
-    margin-left: 10px;
-  }
-
-  .deficit,
-  .parcelasTotal,
-  .lucro,
-  .valorInicial,
-  .aReceber {
-    display: none;
-  }
-
-  #valorFinal {
-    width: 75px;
-  }
-
-  .deficit {
-    display: none;
-  }
-}
-
-@media (max-width: 400px) {
-
-  .movimentacoes h1 {
-    font-size: 14px;
-  }
-
-  .movimentacoes {
-    margin-bottom: 10px;
-  }
-
-
-  .movimentacoesLista img {
-    width: 22px;
-    height: 18px;
-  }
-
-  #tabela input {
-    font-size: 10px;
-  }
-
-  .movimentacoes-conteudo {
-    width: 250px;
-    padding: 10px;
-  }
-
-  .movimentacoesLista {
-    width: 230px;
-    gap: 5px;
-    margin-bottom: 15px;
-  }
-
-  #nomeMov {
-    width: 70px;
-  }
-
-
-  #vencimentoTotal {
-    width: 40px;
-  }
-
-  #totalFinal {
-    width: 70px;
-  }
-
-  #valorFinal {
-    width: 60px;
-  }
-
-}
 
 
 

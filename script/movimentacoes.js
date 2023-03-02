@@ -1,16 +1,15 @@
-const $ = document.querySelectorAll.bind(document);
-const parcelas = $("#parcelas");
-const valores = $("#valor");
-const totais = $("#total");
-const receita = $("#receita");
-const vencimentos = $("#vencimento");
-const adicionar = $("#botao-add");
+const parcelas = document.querySelectorAll("#parcelas");
+const valores = document.querySelectorAll("#valor");
+const totais = document.querySelectorAll("#total");
+const receita = document.querySelectorAll("#receita");
+const adicionar = document.querySelectorAll("#botao-add");
 const jurosComp = document.getElementById("juros-compostos");
 const juros = document.getElementById("emprestimo-juros");
-const nomeMov = $("#movimentacao");
-const aReceber = document.getElementById("aReceber");
+const nomeMov = document.querySelectorAll("#movimentacao");
+const categoria = document.getElementById("categoria");
 const valorMensal = document.getElementById("valorMensal");
-const vencimentoTotal = document.getElementById("vencimentoTotal");
+const data = document.querySelectorAll('#data')
+const dataInfo = document.querySelectorAll("#dataInfo");
 const totalFinal = document.getElementById("totalFinal");
 const totalPago = document.getElementById('totalPago')
 const btnCompra = document.querySelector('#compra-button')
@@ -21,7 +20,7 @@ const formCompra = document.querySelector('#compra-conteudo')
 const formVenda = document.querySelector('#venda-conteudo')
 const formPix = document.querySelector('#pix-conteudo')
 const formEmp = document.querySelector('#emprestimo-conteudo')
-
+console.log(parcelas)
 function removeAtivo(a,b,c,d,e,f,g,h){
 
   a.classList.toggle('ativo')
@@ -84,48 +83,34 @@ parcelas[1].addEventListener("change", () => totais[1].value = `${parcelas[1].va
 
 // Compra
 adicionar[0].addEventListener("click", function () {
-  
-  if ((totais[0].value !== "R$0") & (nomeMov[0].value !== "")) {
+   if ((totais[0].value !== "R$0") & (nomeMov[0].value !== "")) {
     const edit = document.createElement('div')
     const table = document.getElementById("tabela");
     const div = document.createElement('div')
+    div.classList.add('movimentacoesLista')
+    div.setAttribute('value', 'compra')
+    div.id = 'compraLabel'
     edit.id = 'compraEdit'
     div.innerHTML = `
-    <div class="movimentacoesLista" id="compraLabel" value="compra">
-      <img src="./img/Movimentacoes/compra2.svg" width="32" height="29" alt="saquinho de dinheiro"> 
+    <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
+            <div>
+            <span>Despesa com</span>
+            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov"></div>
 
-      <div class = "organizaMov nomeMov">
-        <span>Comprou de</span>
-        <input readonly  id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-      </div>
+            <input readonly id="valorFinal" ; color: #000;" value="R$${
+              (valores[0].value * 1).toFixed(2)
+              }"  type="text" name="Valor" placeholder="Valor Mensal">
+            
+            <input readonly id="categoria" ; color: #000;" value="${receita[0].value}" type="text" name="data" placeholder="A receber">
 
-      <div class = "organizaMov aReceber">
-        <span>Categoria</span>
-        <input readonly id="aReceber" style="background: #F92828; color: #000;" value="${receita[0].value}" type="text" name="data" placeholder="A receber">
-      </div>
-
-      <div class = "organizaMov vencimentoTotal">
-        <span>No dia</span>
-        <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="${
-        vencimentos[0].value * 1
-        }" type="text" name="data" placeholder="Comprou no dia X">
-      </div>
-
-      <div class = "organizaMov parcelasTotal">
-        <span>Pagou em</span>
-        <input readonly id="parcelasTotal" style="background: #F92828; color: #000;" type="text" name="parcelas" 
-          value="${parcelas[0].value}x de R$ ${(valores[0].value / parcelas[0].value).toFixed(2)} "
-          placeholder="em 10x" >
-      </div>
-
-      <div class = "organizaMov valorMensal">
-        <span>Valor</span>
-        <input readonly id="valorFinal" style="background: #F92828; color: #000;" value="R$${
-        (valores[0].value * 1).toFixed(2)
-        }"  type="text" name="Valor" placeholder="Valor Mensal">
-      </div>
-    </div>
-    `
+            <input readonly id="data" ; color: #000;" value="${
+              dataInfo[0].value * 1
+              }" type="text" name="data" placeholder="Comprou no dia X">
+            
+            <input readonly id="parcelasTotal" ; color: #000;" type="text" name="parcelas" 
+              value="${parcelas[0].value}x de R$ ${(valores[0].value / parcelas[0].value).toFixed(2)} "
+              placeholder="em 10x" >
+      `
  
     edit.innerHTML = `
       <div class="editValueBg">
@@ -162,8 +147,10 @@ adicionar[0].addEventListener("click", function () {
             </select>
           <label for="valor">Valor</label>
           <input readonly type="valor" id="valorEdit">
-          <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
+          <div class='botaoEdit'>
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+        </div>
         </div>
         <div class="confirmar">
           <span>Deseja mesmo deletar?</span>
@@ -172,7 +159,8 @@ adicionar[0].addEventListener("click", function () {
         </div>
       </div>
   `;
-    table.appendChild(div)
+  let firstChild = table.firstChild;
+    table.insertBefore(div, firstChild)
     document.body.appendChild(edit)
 
     div.addEventListener('click',()=> {
@@ -189,10 +177,10 @@ adicionar[0].addEventListener("click", function () {
       const compraEditModal= document.querySelectorAll('#compraEdit')
     
       const nome = div.querySelector('#nomeMov')
-      const data = div.querySelector('#vencimentoTotal')
+      const data = div.querySelector('#data')
       const parcelas = div.querySelector('#parcelasTotal')
       const valor = div.querySelector('#valorFinal')
-      const categoria = div.querySelector('#aReceber')
+      const categoria = div.querySelector('#categoria')
     
       function deletLabel() {
         const confirm = editValueBg.querySelector('.confirmar')
@@ -263,7 +251,7 @@ adicionar[0].addEventListener("click", function () {
 
     nomeMov[0].value = "";
     receita[0].selectedIndex = "";
-    vencimentos[0].value = "";
+    dataInfo[0].value = "";
     valores[0].value = "";
     parcelas[0].selectedIndex = "1";
     totais[0].value = "";
@@ -280,45 +268,33 @@ adicionar[1].addEventListener("click", function () {
   if (
     valores[1].value &&
     nomeMov[1].value &&
-    vencimentos[1].value != 0 &&
+    dataInfo[1].value != 0 &&
     totais[1].value != "R$0"
   ) {
     const table = document.getElementById("tabela");
     const div = document.createElement('div')
+    div.classList.add('movimentacoesLista')
+    div.id = 'vendaLabel'
+    div.setAttribute('value', 'venda')
+
     const edit = document.createElement('div')
     edit.id = 'vendaEdit'
 
     div.innerHTML = `
-      <div class="movimentacoesLista" id='vendaLabel' value='venda'>
-        <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor">
+    <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+    <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
-        <div class = "organizaMov nomeMov">
-          <span>Vendeu Para</span>
-          <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-        </div>
+    <input readonly value="R${
+      (valores[1].value * 1).toFixed(2)
+     }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
+    
+    <input readonly class='parcelas-venda' id="parcelasTotal" type="text" name="razao[]"
+    value="${totais[1].value}"
+    placeholder="em 10x" >
 
-        <div class = "organizaMov vencimentoTotal">
-          <span>No dia</span>
-          <input readonly id="vencimentoTotal" value="${
-          vencimentos[1].value * 1
+    <input readonly id="data" value="${
+          dataInfo[1].value * 1
           }" type="text" name="data" placeholder="Venda feira no dia X">
-        </div>
-        
-        <div class = "organizaMov parcelasTotal">
-          <span>Parcelou em</span>
-          <input readonly id="parcelasTotal" type="text" name="razao[]"
-          value="${totais[1].value}"
-          placeholder="em 10x" >
-        </div>
-
-        <div class = "organizaMov valorFinal">
-          <span>Valor</span>
-         <input readonly value="R$${
-          (valores[1].value * 1).toFixed(2)
-         }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
-        </div>
-
-      </div>
     `;
     edit.innerHTML = `
     <div class="editValueBg">
@@ -345,8 +321,11 @@ adicionar[1].addEventListener("click", function () {
           </select>
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
-        <button type="button" id="editar"></button>
-        <button type="button" id="deletar">Deletar</button>
+        <div class='botoesEdit'>
+          <button type="button" id="editar"></button>
+          <button type="button" id="deletar">Deletar</button>
+        </div>
+
       </div>
       <div class="confirmar">
         <span>Deseja mesmo deletar?</span>
@@ -355,7 +334,8 @@ adicionar[1].addEventListener("click", function () {
       </div>
     </div>
 `;
-      table.appendChild(div)
+      let firstChild = table.firstChild;
+      table.insertBefore(div, firstChild)
       document.body.appendChild(edit)
 
       div.addEventListener('click',()=> {
@@ -370,7 +350,7 @@ adicionar[1].addEventListener("click", function () {
         const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
       
         const nome = div.querySelector('#nomeMov')
-        const data = div.querySelector('#vencimentoTotal')
+        const data = div.querySelector('#data')
         const parcelas = div.querySelector('#parcelasTotal')
         const valor = div.querySelector('#valorFinal')
       
@@ -440,7 +420,7 @@ adicionar[1].addEventListener("click", function () {
 
     valores[1].value = "";
     totais[1].value = "";
-    vencimentos[1].value = "";
+    dataInfo[1].value = "";
     nomeMov[1].value = "";
   } else {
     alert("Preencha todos os campos");
@@ -452,37 +432,35 @@ adicionar[2].addEventListener("click", function () {
     const edit = document.createElement('div')
     const table = document.getElementById("tabela");
     const div = document.createElement('div');
+    div.classList.add('movimentacoesLista')
+    div.id = 'pixLabel'
     edit.id = 'PixEdit'
 
   if (
     valores[2].value &&
     nomeMov[2].value &&
-    vencimentos[2].value != 0 &&
+    dataInfo[2].value != 0 &&
     receita[1].value == "+" &&
     totais[2].value != "R$0"
   ) {
     
-
+    div.setAttribute('value', 'pixRecebido')
     div.innerHTML = `
-      <div class="movimentacoesLista" id='pixLabel' value="pixRecebido">
-        <img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix">
-        <div class = "organizaMov nomeMov">
-          <span>Recebeu de</span>
-        
-          <input readonly id="nomeMov" back value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
 
-        </div>
-        <div class = "organizaMov vencimentoTotal">
-          <span>No dia</span>
-          <input readonly id="vencimentoTotal" value=" ${vencimentos[2].value
-          } " type="text" name="data" placeholder="Comprou no dia X">
-        </div>
+    <input value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+
     
-        <div class = "organizaMov valorFinal">
-          <span>Valor</span>
-          <input readonly value="R$${(+valores[2].value).toFixed(2)}" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
-        </div>
-      </div>
+    <input readonly ;  value="${
+      valores[2].value * 1
+      }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
+
+    <div>
+    <span  class='valorspan'>De</span>
+    <input readonly class='pix' id="nomeMov" ;  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    </div>
+
+    <input readonly id="data" ; value="${dataInfo[2].value}" type="text" name="data" placeholder="Comprou no dia X">
     `;
 
     edit.innerHTML = `
@@ -495,8 +473,10 @@ adicionar[2].addEventListener("click", function () {
         <input readonly type="data" id="dataEdit">
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
-        <button type="button" id="editar"></button>
-        <button type="button" id="deletar">Deletar</button>
+        <div class='botoesEdit'>
+          <button type="button" id="editar"></button>
+          <button type="button" id="deletar">Deletar</button>
+        </div>
       </div>
       <div class="confirmar">
         <span>Deseja mesmo deletar?</span>
@@ -505,8 +485,9 @@ adicionar[2].addEventListener("click", function () {
       </div>
     </div>
         `;
-      table.appendChild(div)
-      document.body.appendChild(edit)
+    let firstChild = table.firstChild;
+    table.insertBefore(div, firstChild)
+    document.body.appendChild(edit)
 
       div.addEventListener('click',()=> {
         const editValueBg =  edit.querySelector('.editValueBg')
@@ -519,7 +500,7 @@ adicionar[2].addEventListener("click", function () {
         const valorEdit = editValueBg.querySelector('#valorEdit')
       
         const nome = div.querySelector('#nomeMov')
-        const data = div.querySelector('#vencimentoTotal')
+        const data = div.querySelector('#data')
         const valor = div.querySelector('#valorFinal')
       
         function deletLabel() {
@@ -584,38 +565,34 @@ adicionar[2].addEventListener("click", function () {
     storage()
     valores[2].value = "";
     totais[2].value = "";
-    vencimentos[2].value = "";
+    dataInfo[2].value = "";
     nomeMov[2].value = "";
     receita[1].value = "";
   } else if (
     valores[2].value &&
     nomeMov[2].value &&
-    vencimentos[2].value != 0 &&
+    dataInfo[2].value != 0 &&
     receita[1].value == "-" &&
     totais[2].value != "R$0"
   ) {
 
+    div.setAttribute('value', 'pixEnviado')
     div.innerHTML = `
-    <div class="movimentacoesLista" id='pixLabel' value='pixEnviado'>
-       <img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px;    padding-right: 4px; width="31 " height="29" alt="Pix">
-       <div class = "organizaMov nomeMov">
-        <span>Enviou Para</span>
-        <input readonly id="nomeMov" style="background: #F92828; color: #000;"  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-       </div>
+    <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
 
-      <div class = "organizaMov vencimentoTotal">
-        <span>No dia</span>
-        <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value=" ${vencimentos[2].value * 1} " type="text" name="data" placeholder="Comprou no dia X">
-      </div>
+    <input value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
+    
+    <input readonly ;  value="${
+      valores[2].value * 1
+      }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
-      <div class = "organizaMov valorFinal">
-        <span>Valor</span>
-        <input readonly style="background: #F92828; color: #000;"  value="${
-        valores[2].value * 1
-        }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
-      </div>
+    <div>
+    <span  class='valorspan'>De</span>
+    <input readonly class='pix' id="nomeMov" ;  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
     </div>
+
+    <input readonly id="data" ; value="${dataInfo[2].value}" type="text" name="data" placeholder="Comprou no dia X">
         
         `;
     edit.innerHTML = `
@@ -628,8 +605,10 @@ adicionar[2].addEventListener("click", function () {
         <input readonly type="data" id="dataEdit">
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
-        <button type="button" id="editar"></button>
-        <button type="button" id="deletar">Deletar</button>
+        <div class='botaoEdit'>
+          <button type="button" id="editar"></button>
+          <button type="button" id="deletar">Deletar</button>
+      </div>
       </div>
       <div class="confirmar">
         <span>Deseja mesmo deletar?</span>
@@ -638,7 +617,8 @@ adicionar[2].addEventListener("click", function () {
       </div>
     </div>
         `;
-        table.appendChild(div)
+        let firstChild = table.firstChild;
+        table.insertBefore(div, firstChild)
         document.body.appendChild(edit)
         div.addEventListener('click',()=> {
           const editValueBg =  edit.querySelector('.editValueBg')
@@ -651,7 +631,7 @@ adicionar[2].addEventListener("click", function () {
           const valorEdit = editValueBg.querySelector('#valorEdit')
         
           const nome = div.querySelector('#nomeMov')
-          const data = div.querySelector('#vencimentoTotal')
+          const data = div.querySelector('#data')
           const valor = div.querySelector('#valorFinal')
         
           function deletLabel() {
@@ -717,7 +697,7 @@ adicionar[2].addEventListener("click", function () {
 
     valores[2].value = "";
     totais[2].value = "";
-    vencimentos[2].value = "";
+    dataInfo[2].value = "";
     nomeMov[2].value = "";
     receita[1].value = "";
   } else {
@@ -732,64 +712,262 @@ adicionar[3].addEventListener("click", function () {
   if (
     valores[3].value &&
     nomeMov[3].value &&
-    vencimentos[3].value &&
+    dataInfo[3].value &&
     totais[3].value !== 0 &&
     receita[2].value == "-"
   ) {
     const div = document.createElement('div')
     const edit = document.createElement('div')
-
+    div.classList.add('movimentacoesLista')
+    div.id = 'empPegoLabel'
+    div.setAttribute('value', 'emprestado')
 
     div.innerHTML = `
-        <div class="movimentacoesLista" id="empPegoLabel" value='emprestado'>
-          <img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov nomeMov">
-            <span>Pegou de</span>
-           <input readonly style="background: #F92828; color: #000;" id="nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-          </div>
+    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
 
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-           <input readonly style="background: #F92828; color: #000;" id="vencimentoTotal" value="${
-            vencimentos[3].value * 1
-            }" type="text" name="data" placeholder="No dia X">
-          </div>
+    <div>
+      <span>Emprestimo enviado para </span>
+      <input readonly id="nomeMov" 
+      class = "nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    </div>
 
-          <div class = "organizaMov valorInicial">
-            <span>Valor</span>
-            <input readonly style="background: #F92828; color: #000;" id="valorInicial"  value="${
-          (valores[3].value * 1).toFixed(2)
-          }"  type="text" name="Valor" placeholder="Valor Mensal">
+    <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
+    value="${
+      totais[3].value
+    }"
+    placeholder="numero de parcelas" >
+    
+    <input readonly class = "deficit" id="deficit" type="text" name="Montante final" value="${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  placeholder="Valor pedido" >
 
-         </div>
-          <div class = "organizaMov parcelasTotal">
-          <span>Em</span>
-          <input readonly style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
-            value="${
-              totais[3].value
-            }"
-            placeholder="em 10x" >
-          </div>
 
-          <div class = "organizaMov deficit">
-            <span>Deficit</span>       
-            <input readonly style="background: #F92828; color: #000;" id="deficit" value="${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  type="text" name="Valor" placeholder="Deficit">
-         </div>
-
-          <div class = "organizaMov valorFinal">
-            <span>Valor final</span>
-          
-            <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="${(+(totalPago.value).replace('Total ',"")).toFixed(2)}"  type="text" name="Valor" placeholder="Valor Mensal">
-          </div>
-
-        
-      </div>
+    <input readonly id="valorInicial" class = "valorInicial"  value="R$${
+      (valores[3].value * 1).toFixed(2)
+      }"  type="text" name="Valor">
+    
+    
+    <div>
+    <span class='valorspan'>Total a receber</span>
+    <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="${(+(totalPago.value).replace('Total ',"")).toFixed(2)}">
+    </div>
+    
+    <input readonly   class = "data"id="data" value="${
+      dataInfo[3].value
+      }" type="text" name="data"">
+    
+      <input readonly id='jurosLs' type="text" name="Montante Total" 
+      value="${juros.value}" >
+    
+      <input readonly id='jurosMesLs' type="text" name="Montante Total" 
+      value="${jurosComp.value}" >
         `;
-        table.appendChild(div)
+    edit.innerHTML = `
+        <div class="editValueBg">
+          <div class="editValue">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="nome" id="nomeEdit">
+            <label for="data">Data</label>
+            <input readonly type="data" id="dataEdit">
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
+          <select disabled name="juros" id="jurosEdit">
+            <option value="0">0% de juros</option>
+            <option value="1">1% de juros</option>
+            <option value="2">2% de juros</option>
+            <option value="3">3% de juros</option>
+            <option value="4">4% de juros</option>
+            <option value="5">5% de juros</option>
+            <option value="6">6% de juros</option>
+            <option value="7">7% de juros</option>
+            <option value="8">8% de juros</option>
+            <option value="9">9% de juros</option>
+            <option value="10">10% de juros</option>
+            <option value="11">11% de juros</option>
+            <option value="12">12% de juros</option>
+            <option value="13">13% de juros</option>
+            <option value="14">14% de juros</option>
+            <option value="15">15% de juros</option>
+            <option value="16">16% de juros</option>
+            <option value="17">17% de juros</option>
+            <option value="18">18% de juros</option>
+            <option value="19">19% de juros</option>
+            <option value="20">20% de juros</option>
+            <option value="21">21% de juros</option>
+            <option value="22">22% de juros</option>
+            <option value="23">23% de juros</option>
+            <option value="24">24% de juros</option>
+            <option value="25">25% de juros</option>
+            <option value="26">26% de juros</option>
+            <option value="27">27% de juros</option>
+            <option value="28">28% de juros</option>
+            <option value="29">29% de juros</option>
+            <option value="30">30% de juros</option>
+          </select>
+          <select disabled name="juros-compostos" id="jurosCompEdit">
+            <option value="0">0% ao mes</option>
+            <option value="1">1% ao Mês</option>
+            <option value="2">2% ao Mês</option>
+            <option value="3">3% ao Mês</option>
+            <option value="4">4% ao Mês</option>
+            <option value="5">5% ao Mês</option>
+            <option value="6">6% ao Mês</option>
+            <option value="7">7% ao Mês</option>
+            <option value="8">8% ao Mês</option>
+            <option value="9">9% ao Mês</option>
+            <option value="10">10% ao Mês</option>
+            <option value="11">11% ao Mês</option>
+            <option value="12">12% ao Mês</option>
+          </select>
+            <label for="deficit">Deficit</label>
+            <input readonly type="deficit" id="deficitEdit">
+            <label for="valor-final">Valor Final</label>
+            <input readonly type="valor-final" id="valorFinEdit">
+
+          <div class='botaoEdit'>
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+          </div>
+            
+          </div>
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
+          </div>
+        </div>
+      `;
+      let firstChild = table.firstChild;
+      table.insertBefore(div, firstChild)
+      document.body.appendChild(edit)
+
+        const editValueBg =  edit.querySelector('.editValueBg')
+        const exit = editValueBg.querySelector('#fecharEdit')
+        const btnDeletar = editValueBg.querySelector('#deletar')
+        const nomeEdit = editValueBg.querySelector('#nomeEdit')
+        const dataEdit = editValueBg.querySelector('#dataEdit')
+        const valorEdit = editValueBg.querySelector('#valorEdit')
+        const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+        const jurosEdit = editValueBg.querySelector('#jurosEdit')
+        const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
+        const deficitEdit = editValueBg.querySelector('#deficitEdit')
+        const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
+        const btnEditar = edit.querySelector('#editar')
+
+      
+        const nome = div.querySelector('#nomeMov')
+        const data = div.querySelector('#data')
+        const valorInit = div.querySelector('#valorInicial')
+        const deficitInit = div.querySelector('#deficit')
+        const parcelasInit = div.querySelector('#parcelasTotal')
+        const valor = div.querySelector('#valorFinal')
+        const jurosInit = div.querySelector("#jurosLs")
+        const jurosMesInit = div.querySelector("#jurosMesLs")
+      
+        function deletLabel() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          const sim = confirm.querySelector('#sim')
+          const nao = confirm.querySelector('#nao')
+          confirm.classList.add('ativo')
+      
+          function removeAtivo() {
+            confirm.classList.remove('ativo')
+          }
+          function removeAll() {
+            editValueBg.classList.remove('ativo')
+            div.remove()
+            edit.remove()
+            storage()
+          }
+        
+          sim.addEventListener('click', removeAll)
+          nao.addEventListener('click', removeAtivo)
+        }
+      
+        function changeValue() {
+          nomeEdit.value = nome.value
+          dataEdit.value = data.value
+          valorEdit.value = valorInit.value.replace('R$ ', '')
+          parcelasEdit.value = parcelasInit.value.slice(0,1)
+          jurosEdit.value = jurosInit.value
+          jurosMesEdit.value = jurosMesInit.value
+          deficitEdit.value= deficitInit.value.replace('+R$ ', '')
+          valorFinalEdit.value = valor.value.replace('R$ ','')
+        }
+        changeValue()
+        
+        function EditValue() {
+          nome.value = nomeEdit.value
+          data.value = dataEdit.value
+          valorInit.value = `${valorEdit.value}`
+          parcelasInit.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
+          deficit.value = deficitEdit.value
+          valor.value = valorFinalEdit.value
+            storage()
+        }
+        function conta (){
+          const jurosTotal = (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100
+          const deficitInit = valorEdit.value * jurosTotal
+          const valorFim = deficit + +valorEdit.value
+          valorFinalEdit.value = valorFim.toFixed(2)
+          deficitEdit.value = deficit.toFixed(2)
+        }
+  
+        function removeAtivoBg() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          editValueBg.classList.remove('ativo')
+          confirm.classList.remove('ativo')
+      
+          if (btnEditar.classList.contains('ativo')) {
+          btnEditar.classList.remove('ativo')
+          readOnly()
+          }
+      
+        }
+        function readOnly() {
+          nomeEdit.toggleAttribute('readonly')
+          dataEdit.toggleAttribute('readonly')
+          valorEdit.toggleAttribute('readonly')
+          parcelasEdit.toggleAttribute('disabled')
+          jurosEdit.toggleAttribute('disabled')
+          jurosMesEdit.toggleAttribute('disabled')
+        }
+        valorEdit.addEventListener('keyup', conta)
+        parcelasEdit.addEventListener('click', conta)
+        jurosEdit.addEventListener('click', conta)
+        jurosMesEdit.addEventListener('click', conta)
+
+        btnEditar.addEventListener('click', readOnly)
+        exit.addEventListener('click', removeAtivoBg)
+        btnDeletar.addEventListener('click',deletLabel)
+        if (!btnEditar.classList.contains('ativo')) {
+          btnEditar.addEventListener('click', EditValue)
+            }
+        btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))    
+
+        div.addEventListener('click',()=> {
+            editValueBg.classList.add('ativo')
+              });
+
         storage()
 
     nomeMov[3].value = "";
     receita[2].value = "";
-    vencimentos[3].value = "";
+    dataInfo[3].value = "";
     valores[3].value = "";
     parcelas[2].selectedIndex = "1";
     totais[3].value = "";
@@ -799,7 +977,7 @@ adicionar[3].addEventListener("click", function () {
   } else if (
     valores[3].value &&
     nomeMov[3].value &&
-    vencimentos[3].value &&
+    dataInfo[3].value &&
     totais[3].value !== 0 &&
     receita[2].value == "+"
   ) {
@@ -811,54 +989,41 @@ adicionar[3].addEventListener("click", function () {
         div.setAttribute('value', 'emprestei')
 
     div.innerHTML = `
+    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
 
-        <img src="./img/Movimentacoes/emprestimo1.svg" -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> 
-        <div class = "organizaMov nomeMov">
-          <span>Emprestou para</span> 
-          <input readonly id="nomeMov" 
-          class = "nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-        </div> 
+    <div>
+      <span>Emprestimo enviado para </span>
+      <input readonly id="nomeMov" 
+      class = "nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+    </div>
 
-        <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-            <input readonly   class = "vencimentoTotal" id="vencimentoTotal" value="${
-            vencimentos[3].value * 1
-          }" type="text" name="data"">
-        </div>
+    <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
+    value="${totais[3].value}"
+    placeholder="numero de parcelas" >
+    
+    <input readonly class = "lucro" id="lucro" type="text" name="Montante final" value="R$ ${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  placeholder="Valor pedido" >
 
-        <div class = "organizaMov valorInicial">
-          <span>Valor</span> 
-          <input readonly id="valorInicial" class = "valorInicial"  value="R$ ${
-          (valores[3].value * 1).toFixed(2)
-          }"  type="text" name="Valor">
-        </div>
-        <div class = "organizaMov parcelasTotal">
-          <span>Em</span>
-          <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
-          value="${totais[3].value}"
-          placeholder="numero de parcelas" >
-        </div>
-        <div class = "organizaMov lucro">
-          <span>Lucro</span>
-          <input readonly class = "lucro" id="lucro" type="text" name="Montante final" 
-          value="+R$ ${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)} "  placeholder="Valor Total" >
-        </div>
-        <div class = "organizaMov valorFinal">
-          <span>Valor final</span>
-          <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" 
-          value="R$ ${(+(totalPago.value).replace('Total ',"")).toFixed(2)} " >
-        </div>
 
-        <div class = "organizaMov jurosLs">
-          <span>Juros</span>
-          <input readonly  id='jurosLs' type="text" name="Montante Total" 
-          value="${juros.value}" >
-        </div>
-        <div class = "organizaMov jurosLs">
-          <span>Juros ao Mes</span>
-          <input readonly id="jurosMesLs" type="text" name="Montante Total" 
-          value="${jurosComp.value}" >
-        </div>
+    <input readonly id="valorInicial" class = "valorInicial"  value="R$ ${
+      (valores[3].value * 1).toFixed(2)
+      }"  type="text" name="Valor">
+    
+    
+    <div>
+    <span class='valorspan'>Total a receber</span>
+    <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="R$ ${(+(totalPago.value).replace('Total ',"")).toFixed(2)}" >
+    </div>
+    
+    <input readonly   class = "data"id="data" value="${
+      dataInfo[3].value
+    }" type="text" name="data"">
+    
+    <input readonly id='jurosLs' type="text" name="Montante Total" 
+  value="${juros.value}" >
+
+  <input readonly id='jurosMesLs' type="text" name="Montante Total" 
+  value="${jurosComp.value}" >
+
         `;
     edit.innerHTML = `
         <div class="editValueBg">
@@ -937,8 +1102,12 @@ adicionar[3].addEventListener("click", function () {
             <input readonly type="lucro" id="lucroEdit">
             <label for="valor-final">Valor Final</label>
             <input readonly type="valor-final" id="valorFinEdit">
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
+            
+            <div class='botaoEdit'>
+              <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
+
           </div>
           <div class="confirmar">
             <span>Deseja mesmo deletar?</span>
@@ -947,7 +1116,8 @@ adicionar[3].addEventListener("click", function () {
           </div>
         </div>
       `;
-      table.appendChild(div)
+      let firstChild = table.firstChild;
+      table.insertBefore(div, firstChild)
       document.body.appendChild(edit)
       
         const editValueBg =  edit.querySelector('.editValueBg')
@@ -961,15 +1131,17 @@ adicionar[3].addEventListener("click", function () {
         const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
         const lucroEdit = editValueBg.querySelector('#lucroEdit')
         const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
+        const btnEditar = edit.querySelector('#editar')
+
       
         const nome = div.querySelector('#nomeMov')
-        const data = div.querySelector('#vencimentoTotal')
+        const data = div.querySelector('#data')
         const valorInit = div.querySelector('#valorInicial')
         const lucro = div.querySelector('#lucro')
-        const parcelas = div.querySelector('#parcelasTotal')
+        const parcelasInit = div.querySelector('#parcelasTotal')
         const valor = div.querySelector('#valorFinal')
-        const juros = div.querySelector("#jurosLs")
-        const jurosMes = div.querySelector("#jurosMesLs")
+        const jurosInit = div.querySelector("#jurosLs")
+        const jurosMesInit = div.querySelector("#jurosMesLs")
       
         function deletLabel() {
           const confirm = editValueBg.querySelector('.confirmar')
@@ -995,9 +1167,9 @@ adicionar[3].addEventListener("click", function () {
           nomeEdit.value = nome.value
           dataEdit.value = data.value
           valorEdit.value = valorInit.value.replace('R$ ', '')
-          parcelasEdit.value = parcelas.value.slice(0,1)
-          jurosEdit.value = juros.value
-          jurosMesEdit.value = jurosMes.value
+          parcelasEdit.value = parcelasInit.value.slice(0,1)
+          jurosEdit.value = jurosInit.value
+          jurosMesEdit.value = jurosMesInit.value
           lucroEdit.value= lucro.value.replace('+R$ ', '')
           valorFinalEdit.value = valor.value.replace('R$ ','')
         }
@@ -1041,8 +1213,8 @@ adicionar[3].addEventListener("click", function () {
         }
         valorEdit.addEventListener('keyup', conta)
         parcelasEdit.addEventListener('click', conta)
-        jurosEdit.addEventListener('click', conta)
-        jurosMesEdit.addEventListener('click', conta)
+        // jurosEdit.addEventListener('click', conta)
+        // jurosMesEdit.addEventListener('click', conta)
 
         btnEditar.addEventListener('click', readOnly)
         exit.addEventListener('click', removeAtivoBg)
@@ -1050,7 +1222,6 @@ adicionar[3].addEventListener("click", function () {
         if (!btnEditar.classList.contains('ativo')) {
           btnEditar.addEventListener('click', EditValue)
             }
-        const btnEditar = edit.querySelector('#editar')
         btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))    
 
         div.addEventListener('click',()=> {
@@ -1059,9 +1230,9 @@ adicionar[3].addEventListener("click", function () {
           storage()
     nomeMov[3].value = "";
     receita[2].value = "";
-    vencimentos[3].value = "";
+    dataInfo[3].value = "";
     valores[3].value = "";
-    parcelas[2].selectedIndex = "1";
+    parcelas[2].selectedIndex =  '0';
     totais[3].value = "";
     jurosComp.selectedIndex = "";
     juros.selectedIndex = "";
@@ -1091,7 +1262,6 @@ function arrumarNome() {
   const nomeLogin = document.querySelector('.nome-login')
   const nomeUser = JSON.parse(localStorage.usuarios)
   nomeLogin.innerText = `Olá, ${nomeUser[0].nome} ${(nomeUser[0].sobrenome).slice(0,1)}.`
-  
 }
 function arrumarValores() {
   const ls = JSON.parse(localStorage.transacoes)
@@ -1104,14 +1274,14 @@ function arrumarValores() {
 
     compraLabel.forEach((i, n)=>{
       const nome = i.querySelector('#nomeMov')
-      const categoria = i.querySelector('#aReceber')
-      const data = i.querySelector('#vencimentoTotal')
+      const categoria = i.querySelector('#categoria')
+      const data = i.querySelector('#data')
       const parcelas = i.querySelector('#parcelasTotal')
       const valor = i.querySelector('#valorFinal')
   
-      nome.value = compra[n].nome
+      nome.value = `${compra[n].nome}`
       categoria.value = compra[n].categoria
-      data.value = compra[n].data
+      data.value = `${compra[n].data}`
       parcelas.value = compra[n].parcelas
       valor.value = compra[n].valor
     })
@@ -1123,11 +1293,11 @@ function arrumarValores() {
 
     vendaLabel.forEach((i, n)=>{
       const nome = i.querySelector('#nomeMov')
-      const data = i.querySelector('#vencimentoTotal')
+      const data = i.querySelector('#data')
       const parcelas = i.querySelector('#parcelasTotal')
       const valor = i.querySelector('#valorFinal')
 
-      nome.value = venda[n].nome
+      nome.value = `${venda[n].nome}`
       data.value = venda[n].data
       parcelas.value = venda[n].parcelas
       valor.value = venda[n].valor
@@ -1140,7 +1310,7 @@ function arrumarValores() {
     
     pixLabel.forEach((i, n)=>{
       const nome = i.querySelector('#nomeMov')
-      const data = i.querySelector('#vencimentoTotal')
+      const data = i.querySelector('#data')
       const valor = i.querySelector('#valorFinal')
 
       nome.value = pix[n].nome
@@ -1154,7 +1324,7 @@ function arrumarValores() {
 
   empPegoLabel.forEach((i, n)=>{
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const valorInit = i.querySelector('#valorInicial')
     const deficit = i.querySelector('#deficit')
     const parcelas = i.querySelector('#parcelasTotal')
@@ -1176,7 +1346,7 @@ function arrumarValores() {
 
     empLabel.forEach((i, n)=>{
       const nome = i.querySelector('#nomeMov')
-      const data = i.querySelector('#vencimentoTotal')
+      const data = i.querySelector('#data')
       const valorInit = i.querySelector('#valorInicial')
       const lucro = i.querySelector('#lucro')
       const parcelas = i.querySelector('#parcelasTotal')
@@ -1212,34 +1382,20 @@ function criarPaineis() {
         div.id = 'compraLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
-          <img src="./img/Movimentacoes/compra2.svg" width="32" height="29" alt="saquinho de dinheiro"> 
-    
-          <div class = "organizaMov nomeMov">
-            <span>Comprou de</span>
-            <input readonly  id="nomeMov" class="testando" style="background: #F92828; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-          </div>
-    
-          <div class = "organizaMov aReceber">
-            <span>Categoria</span>
-            <input readonly id="aReceber" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="A receber">
-          </div>
-    
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-            <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
-          </div>
-    
-          <div class = "organizaMov parcelasTotal">
-            <span>Pagou em</span>
-            <input readonly id="parcelasTotal" style="background: #F92828; color: #000;" type="text" name="parcelas" 
+        <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
+            <div>
+            <span>Despesa com</span>
+            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov"></div>
+
+            <input readonly id="valorFinal" ; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
+            
+            <input readonly id="categoria" ; color: #000;" value="" type="text" name="data" placeholder="A receber">
+
+            <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
+            
+            <input readonly id="parcelasTotal" ; color: #000;" type="text" name="parcelas" 
               value=" "
               placeholder="em 10x" >
-          </div>
-    
-          <div class = "organizaMov valorFinal">
-            <span>Valor</span>
-            <input readonly id="valorFinal" style="background: #F92828; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
-          </div>
       `
       edit.innerHTML = `
       <div class="editValueBg">
@@ -1276,8 +1432,12 @@ function criarPaineis() {
             </select>
           <label for="valor">Valor</label>
           <input readonly type="valor" id="valorEdit">
-          <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
+
+          <div class='botaoEdit'>
+           <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+          </div>
+
         </div>
         <div class="confirmar">
           <span>Deseja mesmo deletar?</span>
@@ -1291,29 +1451,16 @@ function criarPaineis() {
         div.id = 'vendaLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
-          <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor">
-  
-          <div class = "organizaMov nomeMov">
-            <span>Vendeu Para</span>
+        <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
             <input readonly id="nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-          </div>
-  
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-            <input readonly id="vencimentoTotal" value="" type="text" name="data" placeholder="Venda feira no dia X">
-          </div>
-          
-          <div class = "organizaMov parcelasTotal">
-            <span>Parcelou em</span>
-            <input readonly id="parcelasTotal" type="text" name="razao[]"
+            <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
+            
+            <input readonly class='parcelas-venda' id="parcelasTotal" type="text" name="razao[]"
             value=""
             placeholder="em 10x" >
-          </div>
-  
-          <div class = "organizaMov valorFinal">
-            <span>Valor</span>
-           <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
-          </div>
+
+            <input readonly id="data" value="" type="text" name="data" placeholder="Venda feira no dia X">
+          
       `;
       edit.innerHTML = `
       <div class="editValueBg">
@@ -1341,8 +1488,10 @@ function criarPaineis() {
           </select>
           <label for="valor">Valor</label>
           <input readonly type="valor" id="valorEdit">
-          <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
+          <div class='botaoEdit'>
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+          </div>
         </div>
         <div class="confirmar">
           <span>Deseja mesmo deletar?</span>
@@ -1356,23 +1505,20 @@ function criarPaineis() {
         div.id = 'pixLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
+          <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
 
-           <img src="./img/Movimentacoes/pix.svg"  style="margin-left: -2px;    padding-right: 4px; width="31 " height="29" alt="Pix">
-           <div class = "organizaMov nomeMov">
-            <span>Enviou Para</span>
-            <input readonly id="nomeMov" style="background: #F92828; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-           </div>
-    
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-            <input readonly id="vencimentoTotal" style="background: #F92828; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
+          <input #000;"  value="Transferencia enviada" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+
+          
+          <input readonly ; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
+
+
+          <div>
+          <span  class='valorspan'>Para</span>
+          <input readonly class='pix' id="nomeMov" ; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
           </div>
-    
-    
-          <div class = "organizaMov valorFinal">
-            <span>Valor</span>
-            <input readonly style="background: #F92828; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
-          </div>
+
+          <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
             `;
         edit.innerHTML = `
         <div class="editValueBg">
@@ -1384,8 +1530,10 @@ function criarPaineis() {
             <input readonly type="data" id="dataEdit">
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
+            <div>
+              <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
           </div>
           <div class="confirmar">
             <span>Deseja mesmo deletar?</span>
@@ -1400,92 +1548,79 @@ function criarPaineis() {
         div.setAttribute('value', v)
         div.innerHTML = `
 
-          <img src="./img/Movimentacoes/pix.svg" style="margin-left: -2px; padding-right: 4px; width="31 " height="29" alt="Pix">
-          <div class = "organizaMov nomeMov">
-            <span>Recebeu de</span>
-          
-            <input readonly id="nomeMov" back value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-  
-          </div>
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-            <input readonly id="vencimentoTotal" value="" type="text" name="data" placeholder="Comprou no dia X">
-          </div>
-      
-          <div class = "organizaMov valorFinal">
-            <span>Valor</span>
-            <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">    
-          </div>
-            `;
-        edit.innerHTML = `
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-            <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
+        <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+
+        <input #000;"  value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+
+        
+        <input readonly ; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
+
+
+        <div>
+        <span  class='valorspan'>De</span>
+        <input readonly class='pix' id="nomeMov" ; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
         </div>
+
+        <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
             `;
+            edit.innerHTML = `
+            <div class="editValueBg">
+              <div class="editValue">
+                <span id="fecharEdit">X</span>
+                <label for="nome">Nome</label>
+                <input readonly type="nome" id="nomeEdit">
+                <label for="data">Data</label>
+                <input readonly type="data" id="dataEdit">
+                <label for="valor">Valor</label>
+                <input readonly type="valor" id="valorEdit">
+                <div>
+                  <button type="button" id="editar"></button>
+                  <button type="button" id="deletar">Deletar</button>
+                </div>
+              </div>
+              <div class="confirmar">
+                <span>Deseja mesmo deletar?</span>
+                <button type="button" id="sim">Sim</button>
+                <button type="button" id="nao">Não</button>
+              </div>
+            </div>
+                `;
       } else if(v === 'emprestei') {
         edit.id =  v+'Edit'
         div.id = 'empLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
+        
+            <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
 
-          <img src="./img/Movimentacoes/emprestimo1.svg" -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> 
-          <div class = "organizaMov nomeMov">
-            <span>Emprestou para</span> 
-            <input readonly id="nomeMov" 
-            class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-          </div> 
+            <div>
+              <span>Emprestimo enviado para </span>
+              <input readonly id="nomeMov" 
+              class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            </div>
   
-          <div class = "organizaMov vencimentoTotal">
-              <span>No dia</span>
-              <input readonly   class = "vencimentoTotal" id="vencimentoTotal" value="" type="text" name="data"">
-          </div>
-  
-          <div class = "organizaMov valorInicial">
-            <span>Valor</span> 
-            <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
-          </div>
-          <div class = "organizaMov parcelasTotal">
-            <span>Em</span>
             <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
             value=""
             placeholder="numero de parcelas" >
-          </div>
-          <div class = "organizaMov lucro">
-            <span>Lucro</span>
-            <input readonly class = "lucro" id="lucro" type="text" name="Montante final" 
-            value=""  placeholder="Valor Total" >
-          </div>
-          <div class = "organizaMov valorFinal">
-            <span>Valor final</span>
-            <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" 
-            value="" >
-          </div>
-          <div class = "organizaMov jurosLs">
-          <span>Juros</span>
-          <input readonly id='jurosLs' type="text" name="Montante Total" 
+            
+            <input readonly class = "lucro" id="lucro" type="text" name="Montante final" value=""  placeholder="Valor pedido" >
+
+
+            <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
+            
+            
+            <div>
+            <span class='valorspan'>Total a receber</span>
+            <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
+            </div>
+            
+            <input readonly   class = "data"id="data" value="" type="text" name="data"">
+            
+            <input readonly id='jurosLs' type="text" name="Montante Total" 
           value="" >
-        </div>
-        <div class = "organizaMov jurosLs" >
-          <span>Juros ao Mes</span>
+
           <input readonly id='jurosMesLs' type="text" name="Montante Total" 
           value="" >
-        </div>
-        </div>
         `;
         edit.innerHTML = `
         <div class="editValueBg">
@@ -1564,8 +1699,11 @@ function criarPaineis() {
             <input readonly type="lucro" id="lucroEdit">
             <label for="valor-final">Valor Final</label>
             <input readonly type="valor-final" id="valorFinEdit">
+          <div class='botaoEdit'>
             <button type="button" id="editar"></button>
             <button type="button" id="deletar">Deletar</button>
+          </div>
+
           </div>
           <div class="confirmar">
             <span>Deseja mesmo deletar?</span>
@@ -1575,43 +1713,134 @@ function criarPaineis() {
         </div>
       `;
       } else if(v === 'emprestado') {
+        edit.id =  v+'Edit'
         div.id = 'empPegoLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
+        
+        <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
 
-          <img src="./img/Movimentacoes/emprestimo1.svg" style="margin-left: -2.1px; padding-right: 4px; width="32" height="29" alt="banco"> <div class = "organizaMov nomeMov">
-            <span>Pegou de</span>
-           <input readonly style="background: #F92828; color: #000;" id="nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        <div>
+          <span>Emprestimo enviado para </span>
+          <input readonly id="nomeMov" 
+          class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        </div>
+
+        <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
+        value=""
+        placeholder="numero de parcelas" >
+        
+        <input readonly class = "deficit" id="deficit" type="text" name="Montante final" value=""  placeholder="Valor pedido" >
+
+
+        <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
+        
+        
+        <div>
+        <span class='valorspan'>Total a receber</span>
+        <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
+        </div>
+        
+        <input readonly   class = "data"id="data" value="" type="text" name="data"">
+        
+        <input readonly id='jurosLs' type="text" name="Montante Total" 
+      value="" >
+
+      <input readonly id='jurosMesLs' type="text" name="Montante Total" 
+      value="" >
+    `;
+        edit.innerHTML = `
+        <div class="editValueBg">
+          <div class="editValue">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="nome" id="nomeEdit">
+            <label for="data">Data</label>
+            <input readonly type="data" id="dataEdit">
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
+          <select disabled name="juros" id="jurosEdit">
+            <option value="0">0% de juros</option>
+            <option value="1">1% de juros</option>
+            <option value="2">2% de juros</option>
+            <option value="3">3% de juros</option>
+            <option value="4">4% de juros</option>
+            <option value="5">5% de juros</option>
+            <option value="6">6% de juros</option>
+            <option value="7">7% de juros</option>
+            <option value="8">8% de juros</option>
+            <option value="9">9% de juros</option>
+            <option value="10">10% de juros</option>
+            <option value="11">11% de juros</option>
+            <option value="12">12% de juros</option>
+            <option value="13">13% de juros</option>
+            <option value="14">14% de juros</option>
+            <option value="15">15% de juros</option>
+            <option value="16">16% de juros</option>
+            <option value="17">17% de juros</option>
+            <option value="18">18% de juros</option>
+            <option value="19">19% de juros</option>
+            <option value="20">20% de juros</option>
+            <option value="21">21% de juros</option>
+            <option value="22">22% de juros</option>
+            <option value="23">23% de juros</option>
+            <option value="24">24% de juros</option>
+            <option value="25">25% de juros</option>
+            <option value="26">26% de juros</option>
+            <option value="27">27% de juros</option>
+            <option value="28">28% de juros</option>
+            <option value="29">29% de juros</option>
+            <option value="30">30% de juros</option>
+          </select>
+          <select disabled name="juros-compostos" id="jurosCompEdit">
+            <option value="0">0% ao mes</option>
+            <option value="1">1% ao Mês</option>
+            <option value="2">2% ao Mês</option>
+            <option value="3">3% ao Mês</option>
+            <option value="4">4% ao Mês</option>
+            <option value="5">5% ao Mês</option>
+            <option value="6">6% ao Mês</option>
+            <option value="7">7% ao Mês</option>
+            <option value="8">8% ao Mês</option>
+            <option value="9">9% ao Mês</option>
+            <option value="10">10% ao Mês</option>
+            <option value="11">11% ao Mês</option>
+            <option value="12">12% ao Mês</option>
+          </select>
+            <label for="deficit">Deficit</label>
+            <input readonly type="deficit" id="deficitEdit">
+            <label for="valor-final">Valor Final</label>
+            <input readonly type="valor-final" id="valorFinEdit">
+          <div class='botaoEdit'>
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
           </div>
 
-          <div class = "organizaMov vencimentoTotal">
-            <span>No dia</span>
-           <input readonly style="background: #F92828; color: #000;" id="vencimentoTotal" value="" type="text" name="data" placeholder="No dia X">
           </div>
-
-          <div class = "organizaMov valorInicial">
-            <span>Valor</span>
-            <input readonly style="background: #F92828; color: #000;" id="valorInicial"  value=""  type="text" name="Valor" placeholder="Valor Mensal">
-
-         </div>
-          <div class = "organizaMov parcelasTotal">
-          <span>Em</span>
-          <input readonly style="background: #F92828; color: #000;" id="parcelasTotal" type="text" name="parcelas" 
-            value=""
-            placeholder="em 10x" >
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
           </div>
-
-          <div class = "organizaMov deficit">
-            <span>Deficit</span>       
-            <input readonly style="background: #F92828; color: #000;" id="deficit" value=""  type="text" name="Valor" placeholder="Deficit">
-         </div>
-
-          <div class = "organizaMov valorFinal">
-            <span>Valor final</span>
-          
-            <input readonly style="background: #F92828; color: #000;" id="valorFinal" value="R$ "  type="text" name="Valor" placeholder="Valor Mensal">
-          </div>
+        </div>
         `;
+      } else {
+        console.log('erro')
       }
 
       table.appendChild(div)
@@ -1639,8 +1868,8 @@ function storage() {
 
   compraLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
-    const categoria = i.querySelector('#aReceber')
-    const data = i.querySelector('#vencimentoTotal')
+    const categoria = i.querySelector('#categoria')
+    const data = i.querySelector('#data')
     const parcelas = i.querySelector('#parcelasTotal')
     const valor = i.querySelector('#valorFinal')
 
@@ -1661,7 +1890,7 @@ function storage() {
   })
   vendaLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const parcelas = i.querySelector('#parcelasTotal')
     const valor = i.querySelector('#valorFinal')
 
@@ -1681,7 +1910,7 @@ function storage() {
 
   pixLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const valor = i.querySelector('#valorFinal')
 
     const pix = {
@@ -1700,14 +1929,13 @@ function storage() {
 
   empPegoLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const valorInit = i.querySelector('#valorInicial')
     const deficit = i.querySelector('#deficit')
     const parcelas = i.querySelector('#parcelasTotal')
     const valor = i.querySelector('#valorFinal')
-    const juros = i.querySelector('#emprestimo-juros')
-    const jurosMes = i.querySelector('#juros-compostos')
-
+    const juros = i.querySelector('#jurosLs')
+    const jurosMes = i.querySelector('#jurosMesLs')
     const emprestimo = {
       nome : "",
       data : '',
@@ -1718,7 +1946,6 @@ function storage() {
       juros: '',
       jurosMes:'',
     }
-
     emprestimo['nome'] = [nome.value]
     emprestimo['data'] = [data.value]
     emprestimo['parcelas'] = [parcelas.value]
@@ -1732,7 +1959,7 @@ function storage() {
 
   empLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const valorInit = i.querySelector('#valorInicial')
     const lucro = i.querySelector('#lucro')
     const parcelas = i.querySelector('#parcelasTotal')
@@ -1780,19 +2007,11 @@ if (!!localStorage.transacoes) {
 if (!!localStorage.transacoes) {
   arrumarValores()
 }
-
 if (localStorage.usuarios) {
-  arrumarNome()
-
-  const logo = document.querySelector('.logo')
-  
-  logo.addEventListener('click',(e)=>{
-      e.preventDefault()
-  })
+arrumarNome()
 } else {
   window.open('index.html', '_top')
 }
-
 const empLabel = document.querySelectorAll('#empLabel')
 const compraLabel = document.querySelectorAll('#compraLabel')
 const vendaLabel = document.querySelectorAll('#vendaLabel')
@@ -1800,6 +2019,113 @@ const pixLabel = document.querySelectorAll('#pixLabel')
 const empPegoLabel = document.querySelectorAll('#empPegoLabel')
 
 
+  empPegoLabel.forEach((i, n)=>{
+  const empLabelEdit = document.querySelectorAll('#emprestadoEdit')
+  const editValueBg = empLabelEdit[n].querySelector('.editValueBg')
+  const exit = editValueBg.querySelector('#fecharEdit')
+  const btnEditar = editValueBg.querySelector('#editar')
+  const btnDeletar = editValueBg.querySelector('#deletar')
+  const nomeEdit = editValueBg.querySelector('#nomeEdit')
+  const dataEdit = editValueBg.querySelector('#dataEdit')
+  const valorEdit = editValueBg.querySelector('#valorEdit')
+  const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+  const jurosEdit = editValueBg.querySelector('#jurosEdit')
+  const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
+  const deficitEdit = editValueBg.querySelector('#deficitEdit')
+  const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
+
+  const nome = i.querySelector('#nomeMov')
+  const data = i.querySelector('#data')
+  const valorInit = i.querySelector('#valorInicial')
+  const deficit = i.querySelector('#deficit')
+  const parcelas = i.querySelector('#parcelasTotal')
+  const valor = i.querySelector('#valorFinal')
+  const juros = i.querySelector("#jurosLs")
+  const jurosMes = i.querySelector("#jurosMesLs")
+
+  function deletLabel() {
+    const confirm = editValueBg.querySelector('.confirmar')
+    const sim = confirm.querySelector('#sim')
+    const nao = confirm.querySelector('#nao')
+    confirm.classList.add('ativo')
+
+    function removeAtivo() {
+      confirm.classList.remove('ativo')
+    }
+    function removeAll() {
+      editValueBg.classList.remove('ativo')
+      empLabelEdit[n].remove()
+      i.remove()
+      storage()
+    }
+  
+    sim.addEventListener('click', removeAll)
+    nao.addEventListener('click', removeAtivo)
+  }
+
+  function changeValue() {
+    nomeEdit.value = nome.value
+    dataEdit.value = data.value
+    valorEdit.value = valorInit.value.replace('R$ ', '')
+    parcelasEdit.value = parcelas.value.slice(0,1)
+    jurosEdit.value = juros.value
+    jurosMesEdit.value = jurosMes.value
+    deficitEdit.value= deficit.value.replace('+R$ ', '')
+    valorFinalEdit.value = valor.value.replace('R$ ','')
+  }
+  changeValue()
+  
+  function EditValue() {
+      nome.value = nomeEdit.value
+      data.value = dataEdit.value
+      valorInit.value = `${valorEdit.value}`
+      parcelas.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
+      deficit.value = deficitEdit.value
+      valor.value = valorFinalEdit.value
+      storage()
+  }
+  function conta (){
+    const jurosTotal = (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100
+    const lucro = valorEdit.value * jurosTotal
+    const valorFim = lucro + +valorEdit.value
+    valorFinalEdit.value = valorFim.toFixed(2)
+    lucroEdit.value = lucro.toFixed(2)
+  }
+  function removeAtivoBg() {
+    const confirm = editValueBg.querySelector('.confirmar')
+    editValueBg.classList.remove('ativo')
+    confirm.classList.remove('ativo')
+
+    if (btnEditar.classList.contains('ativo')) {
+    btnEditar.classList.remove('ativo')
+    readOnly()
+      
+    }
+
+  }
+  function readOnly() {
+      nomeEdit.toggleAttribute('readonly')
+      dataEdit.toggleAttribute('readonly')
+      valorEdit.toggleAttribute('readonly')
+      parcelasEdit.toggleAttribute('disabled')
+      jurosEdit.toggleAttribute('disabled')
+      jurosMesEdit.toggleAttribute('disabled')
+  }
+
+  valorEdit.addEventListener('keyup', conta)
+  parcelasEdit.addEventListener('click', conta)
+  jurosEdit.addEventListener('click', conta)
+  jurosMesEdit.addEventListener('click', conta)    
+  btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
+  btnEditar.addEventListener('click', readOnly)
+  exit.addEventListener('click', removeAtivoBg)
+  btnDeletar.addEventListener('click',deletLabel)
+  if (!btnEditar.classList.contains('ativo')) {
+    btnEditar.addEventListener('click', EditValue)
+  }
+  
+    i.addEventListener('click',()=> editValueBg.classList.add('ativo'))
+        })  
 
   empLabel.forEach((i, n)=>{
   const empLabelEdit = document.querySelectorAll('#empresteiEdit')
@@ -1815,10 +2141,9 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
   const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
   const lucroEdit = editValueBg.querySelector('#lucroEdit')
   const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
-  const empEditModal= document.querySelectorAll('#empresteiEdit')
 
   const nome = i.querySelector('#nomeMov')
-  const data = i.querySelector('#vencimentoTotal')
+  const data = i.querySelector('#data')
   const valorInit = i.querySelector('#valorInicial')
   const lucro = i.querySelector('#lucro')
   const parcelas = i.querySelector('#parcelasTotal')
@@ -1837,7 +2162,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     }
     function removeAll() {
       editValueBg.classList.remove('ativo')
-      empEditModal[n].remove()
+      empLabelEdit[n].remove()
       i.remove()
       storage()
     }
@@ -1920,14 +2245,12 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       const dataEdit = editValueBg.querySelector('#dataEdit')
       const valorEdit = editValueBg.querySelector('#valorEdit')
       const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
-      const categoriaEdit = editValueBg.querySelector('#categoriaEdit')
-      const compraEditModal= document.querySelectorAll('#compraEdit')
     
       const nome = i.querySelector('#nomeMov')
-      const data = i.querySelector('#vencimentoTotal')
+      const data = i.querySelector('#data')
       const parcelas = i.querySelector('#parcelasTotal')
       const valor = i.querySelector('#valorFinal')
-      const categoria = i.querySelector('#aReceber')
+      const categoria = i.querySelector('#categoria')
     
       function deletLabel() {
         const confirm = editValueBg.querySelector('.confirmar')
@@ -1941,7 +2264,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
         function removeAll() {
           editValueBg.classList.remove('ativo')
           i.remove()
-          compraEditModal[n].remove()
+          compraEdit[n].remove()
           storage()
         }
       
@@ -1978,6 +2301,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
         }
     
       }
+
       function readOnly() {
           nomeEdit.toggleAttribute('readonly')
           dataEdit.toggleAttribute('readonly')
@@ -1985,6 +2309,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
           parcelasEdit.toggleAttribute('disabled')
           categoriaEdit.toggleAttribute('disabled')
       }
+
       btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
       btnEditar.addEventListener('click', readOnly)
       exit.addEventListener('click', removeAtivoBg)
@@ -1992,7 +2317,6 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       if (!btnEditar.classList.contains('ativo')) {
         btnEditar.addEventListener('click', EditValue)
       }
-      
         i.addEventListener('click',()=> editValueBg.classList.add('ativo'))
         })
 
@@ -2005,10 +2329,11 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
           const nomeEdit = editValueBg.querySelector('#nomeEdit')
           const dataEdit = editValueBg.querySelector('#dataEdit')
           const valorEdit = editValueBg.querySelector('#valorEdit')
-          const parcelasEdit = editValueBg.querySelector('#parcelasEdit')          
+          const parcelasEdit = editValueBg.querySelector('#parcelasEdit')     
+    
         
           const nome = i.querySelector('#nomeMov')
-          const data = i.querySelector('#vencimentoTotal')
+          const data = i.querySelector('#data')
           const parcelas = i.querySelector('#parcelasTotal')
           const valor = i.querySelector('#valorFinal')
         
@@ -2022,10 +2347,10 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
               confirm.classList.remove('ativo')
             }
             function removeAll() {
-              editValueBg.classList.remove('ativo')
-              vendaEditModal[n].remove()
-              i.remove()
-              storage()
+                editValueBg.classList.remove('ativo')
+                i.remove()
+                vendaEdit[n].remove()
+                storage()
             }
           
             sim.addEventListener('click', removeAll)
@@ -2089,11 +2414,10 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     const nomeEdit = editValueBg.querySelector('#nomeEdit')
     const dataEdit = editValueBg.querySelector('#dataEdit')
     const valorEdit = editValueBg.querySelector('#valorEdit')
-    const pixEditModal= document.querySelectorAll('#pixEdit')
 
   
     const nome = i.querySelector('#nomeMov')
-    const data = i.querySelector('#vencimentoTotal')
+    const data = i.querySelector('#data')
     const valor = i.querySelector('#valorFinal')
   
     function deletLabel() {
@@ -2107,7 +2431,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       }
       function removeAll() {
         editValueBg.classList.remove('ativo')
-        pixEditModal[n].remove()
+        pixEdit[n].remove()
         i.remove()
         storage()
       }

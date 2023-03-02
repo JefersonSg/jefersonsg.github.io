@@ -18,6 +18,11 @@
   display: flex;
 }
 
+.editValue {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 #criarConta,
 #entrar {
   background-color: white;
