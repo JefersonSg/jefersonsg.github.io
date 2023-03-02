@@ -17,38 +17,26 @@
 <body>
 
   <header class="header">
-    <a class="logo" href="./index.html"><img src="./img/logo.svg" width="200" height="100" alt="Logo SImple Money" width="200" height="100" /></a>
-    <div class="navegacao">
-      <div class="navegacao-conteudo">
-        <nav>
-          <ul>
-            <li>
-              <a class="font-p-m" href="./movimentacoes.html">Movimentações</a>
-            </li>
-            <li><a class="font-p-m" href="./">Saldo</a></li>
-            <li><a class="font-p-m" href="./">Contato</a></li>
-          </ul>
-        </nav>
-      </div>
-      <div>
-        <nav class="login">
-          <ul>
-            <li>
-              <img class="perfil" src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" width="63" height="63" alt="" class="user" />
-            </li>
-            <li>
-              <span class="font-p-m nome-login">Jeferson Silva</span>
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </div>
+    <nav class="perfil">
+      <ul>
+        <img class="img-perfil" src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" />
+        <li>
+          <span class="font-p-m nome-login"></span>
+        </li>
+      </ul>
+    </nav>
 
   </header>
   <section class="financas-bg">
-    <h1 class="titulo font-lb-b">ANOTE SUA FINANÇA</h1>
 
     <div class="selecao-radio">
+      <div class="saldo-geral">
+        <h3 class="saldo font-r-m">Saldo</h3>
+        <span class="status font-r-m"></span>
+      </div>
+      <img class="menu" src="./img/menu.svg" alt="menu hamburguer">
+      <h4 class="valor font-p-sb">R$ 0,00</h4>
+      <p class="texto">Adicione novas atividades</p>
       <div class="selecao-conteudo">
         <button type="button" id="compra-button"></button>
         <button type="bottom" id="venda-button"></button>
@@ -330,7 +318,7 @@
 
 </body>
 <script src="./script/movimentacoes.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="./script/grafico.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+<!-- <script src="./script/grafico.js"></script> -->
 
 </html>

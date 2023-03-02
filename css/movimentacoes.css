@@ -1,344 +1,118 @@
 body {
-  background-color: #f3f4ef;
+  background-color: #F0F0F0;
   position: relative;
 }
 
 /* Header */
 
 .header {
-  max-width: 1600px;
   margin: 0 auto;
+  width: 100%;
+  height: 42px;
+  background-color: #009FE3;
+  display: flex;
+  justify-content: start;
+}
+
+.perfil {
+  padding: 8px 0px 0px 12px;
+  color: white;
+}
+
+.perfil ul {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 25px 1fr;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 80px;
+  gap: 0px 4px;
 }
 
-.logo {
-  width: 100%;
-  margin-top: 18px;
-  margin-left: 107px;
+.nome-login {
+  font-size: 10px;
+  white-space: nowrap;
 }
 
-.navegacao {
-  display: flex;
-  align-items: center;
-  gap: 100px;
+.img-perfil {
   margin: 0 auto;
-  justify-content: space-between;
+  width: 25px;
+  height: 25px;
 }
 
-.navegacao a {
-  position: relative;
-}
-
-.navegacao a:hover {
-  color: #6d29d3;
-}
-
-.navegacao-conteudo a:hover::after {
-  content: "";
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background: #130031;
-}
-
-.navegacao-conteudo ul {
-  display: flex;
-  gap: 50px;
-}
-
-.navegacao-conteudo ul a {
-  color: #130031;
-  font-size: 20px;
-  font-weight: 600;
-  padding: 15px 0px;
-  letter-spacing: 1.2px;
-}
-
-
-.login ul a {
-  color: #130031;
-  font-size: 20px;
-}
-
-.botao-login {
-  display: block;
-  text-align: center;
-  font-weight: 600;
-  width: 170px;
-  height: 26px;
-  padding: 15px 18px;
-  border: 2px solid;
-  border-radius: 10px;
-  color: #130031;
-  text-transform: uppercase;
-}
-
-.login ul {
-  display: flex;
-  align-items: center;
-  gap: 45px;
-}
-
-.login ul a {
-  color: #130031;
-  font-size: 14px;
-}
-
-@media (max-width: 1400px) {
-
-
-  .navegacao ul a {
-    font-size: 16px;
-  }
-
-  .botao-login {
-    width: 150px;
-    height: 26px;
-    padding: 12px 14px;
-  }
-
-
-}
-
-@media (max-width: 1200px) {
-
-
-  .header {
-    margin-bottom: 60px;
-  }
-
-  .navegacao ul a {
-    font-size: 13px;
-  }
-
-}
-
-@media (max-width: 1000px) {
-  .header {
-    display: flex;
-  }
-
-  .navegacao {
-    justify-self: center;
-    gap: 80px;
-  }
-
-  .logo {
-    margin-left: 40px;
-  }
-
-  .navegacao-conteudo ul {
-    gap: 15px;
-  }
-
-  .navegacao ul {
-    gap: 30px;
-  }
-
-  .navegacao ul a {
-    font-size: 12px;
-  }
-
-  .login ul {
-    gap: 10px;
-  }
-
-  .login ul a {
-    font-size: 12px;
-  }
-
-  .logo {
-    width: 150px;
-  }
-
-  .header {
-    margin-bottom: 40px;
-  }
-
-  .perfil {
-    width: 60px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 800px) {
-
-
-  .perfil {
-    width: 50px;
-    height: 50px;
-  }
-
-  .navegacao {
-    justify-self: center;
-    gap: 80px;
-  }
-
-  .logo {
-    justify-self: center;
-    margin: 0px auto;
-    margin-left: 20px;
-    padding-left: 0px;
-  }
-
-  .navegacao-conteudo ul {
-    margin: 0 auto;
-  }
-
-  .navegacao-conteudo li:last-child {
-    display: none;
-  }
-}
-
-@media (max-width: 600px) {
-  .logo {
-    margin-right: 0px;
-  }
-
-  .perfil {
-    width: 40px;
-    height: 40px;
-  }
-
-  .navegacao {
-    gap: 40px;
-  }
-
-  .navegacao ul a {}
-
-  .navegacao ul {
-    gap: 10px;
-    margin-left: 0px;
-  }
-
-  .login ul a {
-    font-size: 10px;
-  }
-
-  .login ul {
-    gap: 10px;
-  }
-}
-
-@media (max-width: 500px) {
-  .logo {
-    width: 100px;
-  }
-
-  .perfil {
-    width: 30px;
-    height: 30px;
-  }
-
-  .navegacao {
-    gap: 20px;
-  }
-
-  .navegacao ul {
-    gap: 8px;
-  }
-
-  .login ul {
-    gap: 5px;
-  }
-}
-
-@media (max-width: 400px) {
-  .logo {
-    width: 70px;
-    margin-left: 10px;
-  }
-
-  .perfil {
-    width: 20px;
-    height: 20px;
-  }
-
-  .navegacao {
-    gap: 15px;
-  }
-
-  .navegacao ul a {
-    font-size: 8px;
-  }
-
-  .navegacao ul {
-    gap: 8px;
-  }
-
-  .login ul a {
-    font-size: 8px;
-  }
-
-  .login ul {
-    gap: 5px;
-  }
-}
 
 /* Financas */
+
 select {
   text-align-last: center;
   text-align: center;
 }
 
 .financas-bg {
-  max-width: 1600px;
   margin: 0 auto;
-  border-bottom: 2px solid #6d29d3;
-  padding-bottom: 50px;
+  margin-top: 8px;
 }
 
-.financas {
+.selecao-radio {
+  width: 280px;
+  height: auto;
   display: flex;
-  width: auto;
-  flex-wrap: wrap;
+  flex-direction: column;
   margin: 0 auto;
-  justify-content: center;
-}
-
-.titulo {
-  display: flex;
-  max-width: max-content;
-  margin: 0 auto;
-  align-items: center;
-  font-size: 2.5rem;
-  color: #130031;
-  margin-bottom: 40px;
-  position: relative;
-  text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
-
-.titulo::after {
-  content: "";
-  display: block;
-  position: absolute;
-  background-image: url("../img/Movimentacoes/mulherSentada.svg");
-  width: 164px;
-  height: 85px;
-  top: -13.5px;
-  right: -159px;
-}
-
-.financas-formulario {
-  display: grid;
-  gap: 10px;
-  align-items: center;
-}
-
-.financas-formulario select,
-.financas-formulario input {
-  background: #d3b7ff;
-  border: 1px solid #130031;
+  padding: 12px;
   border-radius: 5px;
-  height: 26px;
-  font-family: "roboto", sans-serif;
-  text-align: center;
+  background-color: white;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  position: relative;
 }
+
+.selecao-conteudo {
+  display: grid;
+  grid-template-columns: 120px 120px;
+  align-self: center;
+  gap: 16px 25px;
+}
+
+.saldo {
+  font-size: 10px;
+  line-height: 1;
+}
+
+.valor {
+  font-size: 18px;
+  line-height: 1;
+  margin-top: 8px;
+}
+
+.saldo-geral {
+  display: flex;
+  gap: 0 4px;
+}
+
+.status {
+  display: block;
+  width: 60px;
+  height: 11px;
+  background-color: #8ED0EC;
+  border-radius: 5px;
+}
+
+.menu {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+}
+
+.texto {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-family: 'roboto', sans-serif;
+}
+
+.transacao {
+  display: none;
+}
+
+
 
 #compra-button:hover,
 #venda-button:hover,
@@ -352,102 +126,92 @@ select {
 #venda-button,
 #pix-button,
 #emprestimo-button {
-  background: #d9d9d9;
+  background: #EFEFEF;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  gap: 0px 8px;
   font-family: "Libre Baskerville", serif;
   border-radius: 5px;
   font-weight: 700;
-  font-size: 15px;
-  text-transform: uppercase;
-  width: max-content;
-  padding: 10px 25px 10px 15px;
-  border: 1px solid #d9d9d9;
+  font-size: 10px;
+  width: 120px;
+  height: 35px;
+  border: 1px solid #C9C9C9;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
-
-.selecao-radio {
-  max-width: 1600px;
-  margin: 0 auto;
-  display: grid;
-  justify-content: center;
-  margin-bottom: 50px;
-  align-items: center;
-  text-align: center;
-}
-
-
-
-.selecao-radio h2 {
-  font-size: 18px;
-}
-
-.selecao-conteudo {
-  max-width: 1300px;
-  display: grid;
-  grid-template-columns: 160px 140px 105px 195px;
-  margin-top: 30px;
-  gap: 30px;
-}
-
-.transacao {
-  display: none;
 }
 
 #compra-button.ativo,
 #venda-button.ativo,
 #pix-button.ativo,
 #emprestimo-button.ativo {
-  background: #cacaca;
-  border: 1px solid black;
+  background: #C9C9C9;
+  border: 1px solid #B8B8B8;
 }
+
+.financas-formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: center;
+  padding-top: 8px;
+  margin-top: 6px;
+  border-top: 1px solid #D8D8D8;
+  display: grid;
+  width: 100%;
+}
+
+.financas-formulario select,
+.financas-formulario input {
+  background: #d3b7ff;
+  border: 1px solid #130031;
+  border-radius: 5px;
+  height: 20px;
+  font-family: "roboto", sans-serif;
+  text-align: center;
+  font-size: 10px;
+}
+
 
 .financas-formulario input::placeholder {
   color: #545454;
   text-align: center;
-  font-size: 12px;
+  font-size: 10px;
 }
 
 .financas-formulario button {
   display: flex;
   align-items: center;
   gap: 0px 8px;
-  width: 95px;
-  padding: 6.2px 10px;
+  width: 110px;
+  height: 30px;
+  padding: 5px 5px 5px 10px;
   color: #130031;
   background: linear-gradient(#ceaeff, #ac7df4);
   border: 1px solid #130031;
   border-radius: 5px;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
 }
 
-.financas-formulario {
-  display: grid;
-  border-radius: 10px;
-  width: 100%;
-  grid-template-columns: 1fr 1fr;
-  background: #e7e7e7;
-  padding: 20px 10px 10px 10px;
-  box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
-}
 
 .div-total,
-.div-parcelas,
+.div-parcelas {
+  grid-column: 1/-1;
+}
+
 .div-parcela-juros {
   grid-column: 1/-1;
 }
 
-.financas-formulario button {
-  gap: 0px 8px;
-  height: 30px;
-  width: 110px;
-  padding: 5px 5px 5px 10px;
-  font-size: 12px;
-  text-transform: uppercase;
-  font-weight: 600;
+.div-total {
+  justify-self: center;
 }
+
+
 
 .div-botao {
   padding-top: 10px;
@@ -466,14 +230,7 @@ select {
 
 /* IDS */
 
-#compra,
-#venda,
-#emprestimo,
-#pix {
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-}
+
 
 #compra-button::before {
   content: "";
@@ -484,7 +241,7 @@ select {
 }
 
 #compra-button::after {
-  content: "COMPRA";
+  content: "Despesa";
   display: block;
 }
 
@@ -497,7 +254,7 @@ select {
 }
 
 #venda-button::after {
-  content: "VENDA";
+  content: "Receita";
   display: block;
 }
 
@@ -510,7 +267,7 @@ select {
 }
 
 #pix-button::after {
-  content: "PIX";
+  content: "Transferencia";
   display: block;
 }
 
@@ -523,7 +280,7 @@ select {
 }
 
 #emprestimo-button::after {
-  content: "emprestimo";
+  content: "Emprestimo";
   display: block;
 }
 
@@ -597,234 +354,7 @@ select {
 
 /* Media do formulario */
 
-@media (max-width: 1000px) {
 
-  #emprestimo-button,
-  #venda-button,
-  #compra-button,
-  #pix-button {
-    gap: 10px;
-    border-radius: 5px;
-    font-size: 15px;
-    padding: 7px 20px;
-  }
-
-
-  .selecao-radio h2 {
-    font-size: 16px;
-  }
-
-  .titulo::after {
-    background: url("../img/Movimentacoes/MulherSentada144x.svg");
-    width: 144px;
-    height: 75px;
-    right: -140px;
-    top: -15px;
-  }
-
-  .titulo {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 800px) {
-  .titulo::after {
-    display: none;
-  }
-
-  .selecao-conteudo {
-    max-width: 800px;
-    gap: 15px;
-    grid-template-columns: 140px 120px 95px 165px;
-  }
-
-  #emprestimo-button,
-  #venda-button,
-  #compra-button,
-  #pix-button {
-    align-items: center;
-    font-size: 12px;
-    text-align: center;
-    padding: 7px 17px;
-  }
-
-  .financas-formulario button img {
-    width: 15px;
-    height: 15px;
-  }
-
-}
-
-@media (max-width: 600px) {
-
-  #compra-button,
-  #pix-button,
-  #venda-button,
-  #emprestimo-button {
-    justify-self: center;
-    padding-right: 25px;
-  }
-
-  .financas-bg {
-    padding-bottom: 20px;
-  }
-
-  .selecao-radio {
-    margin-bottom: 20px;
-  }
-
-  .titulo {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-
-  .selecao-radio h2 {
-    font-size: 0.85rem;
-  }
-
-  .selecao-conteudo {
-    padding: 0px;
-    display: grid;
-    grid-template-columns: 220px 220px;
-    margin: 0 auto;
-    gap: 20px;
-    border-radius: 10px;
-    background: #e7e7e7;
-    padding: 20px 10px 10px 10px;
-    box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
-  }
-
-  .financas-formulario {
-    grid-template-columns: 1fr;
-    border-radius: 0px;
-    width: 80%;
-    padding: 0px;
-    box-shadow: 0px 0px 0px rgb(0 0 0 / 0);
-  }
-
-
-  #compra-button {
-    grid-area: 1;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
-  }
-
-  #venda-button {
-    grid-area: 1;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
-  }
-
-  #pix-button {
-    grid-area: 2;
-    justify-content: center;
-    font-size: 11px;
-    height: 40px;
-    width: 130px;
-    padding: 5px 3px;
-  }
-
-
-  #emprestimo-button {
-    grid-area: 2;
-    justify-content: center;
-    font-size: 11px;
-    height: 30px;
-    width: 130px;
-    padding: 5px 3px;
-  }
-
-  #emprestimo-conteudo,
-  #pix-conteudo,
-  #venda-conteudo,
-  #compra-conteudo {
-    grid-column: 1/-1;
-    grid-row: 3/6;
-  }
-
-  .div-total {
-    justify-self: center;
-  }
-}
-
-@media (max-width: 500px) {
-  .selecao-conteudo {
-    grid-template-columns: 172px 172px;
-  }
-
-  .titulo {
-    font-size: 1.35rem;
-    margin-bottom: 10px;
-  }
-
-  .selecao-radio h2 {
-    font-size: 0.6rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .titulo {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-  }
-
-  .selecao-radio h2 {
-    font-size: 0.55rem;
-  }
-
-  .selecao-conteudo {
-    grid-template-columns: 120px 120px;
-    margin: 0 auto;
-    gap: 20px;
-    border-radius: 10px;
-    background: #e7e7e7;
-    padding: 20px 10px 10px 10px;
-    box-shadow: 0px 1px 1px rgb(0 0 0 / 25%);
-  }
-
-  .financas-formulario {
-    border-radius: 0px;
-    width: 100%;
-    padding: 0px;
-    box-shadow: 0px 0px 0px rgb(0 0 0 / 0);
-  }
-
-  .financas-formulario {
-    display: grid;
-    grid-template-columns: auto;
-  }
-
-  #compra-button {
-    font-size: 9px;
-    height: 25px;
-    width: 100px;
-  }
-
-  #venda-button {
-    font-size: 9px;
-    height: 25px;
-    width: 100px;
-  }
-
-  #pix-button {
-    font-size: 9px;
-    height: 25px;
-    width: 100px;
-  }
-
-
-  #emprestimo-button {
-    font-size: 9px;
-    height: 25px;
-    width: 100px;
-  }
-}
 
 /* MOVIMENTACOES */
 .organizaMov.jurosLs {

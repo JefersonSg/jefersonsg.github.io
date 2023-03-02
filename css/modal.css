@@ -1,4 +1,5 @@
-.modal-container {
+.modal-container,
+.modal-container-entrar {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.25);
   width: 100%;
@@ -12,14 +13,16 @@
   animation: modal .3s forwards;
 }
 
-.modal-container.ativo {
+.modal-container.ativo,
+.modal-container-entrar.ativo {
   display: flex;
 }
 
-#login {
+#criarConta,
+#entrar {
   background-color: white;
   padding: 20px;
-  border: 10px solid #a47df0;
+  border: 10px solid #38A1FF;
   box-shadow: 0 0 0 4px white;
   border-radius: 5px;
   position: relative;
@@ -32,22 +35,23 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  background-color: #a47df0;
+  background-color: #38A1FF;
   border: 1px solid white;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   font-size: 1.2rem;
   color: white;
   cursor: pointer;
 }
 
-#login.ativo {
+#criarConta.ativo,
+#entrar.ativo {
   display: grid;
 }
 
-.conteudo-formulario {
+.conteudo-formulario,
+.formulario-entrar {
   background-color: white;
   display: grid;
-
 }
 
 @keyframes modal {
@@ -62,98 +66,32 @@
   }
 }
 
-.conteudo-formulario label {
+.conteudo-formulario label,
+.formulario-entrar label {
   display: block;
   font-family: 'poppins';
-  margin: 1rem 0 .5rem 0;
-
+  margin: 1rem 0 .1rem;
 }
 
-.conteudo-formulario input {
-  width: 500px;
+.conteudo-formulario,
+.formulario-entrar {
+  font-family: 'roboto', sans-serif;
+  width: 18rem;
   margin: 0.7rem 0.5rem
 }
 
 
 
-#botaoFormulario {
-  height: 50px;
-  background: linear-gradient(#bb98ff, #a47df0);
-  border: 1px solid #a47df0;
+#botaoFormulario,
+#botaoFormularioEntrar {
+  color: white;
+  letter-spacing: 1.1px;
+  margin-top: 32px;
+  background: linear-gradient(#38A1FF, #1F88E5);
+  border: 1px solid #166EBD;
+  padding: 10px 15px;
   border-radius: 10px;
   width: max-content;
   justify-self: center;
   cursor: pointer;
-}
-
-@media (max-width: 800px) {
-
-  .conteudo-formulario input {
-    margin-bottom: 10px;
-    width: 300px;
-  }
-}
-
-@media (max-width: 500px) {
-
-  .conteudo-formulario input {
-    width: 150px;
-    margin: 0.5rem 0.4rem;
-  }
-
-  .fechar {
-    top: -25px;
-    right: -25px;
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  .conteudo-formulario label {
-    font-size: 13px;
-    margin: .6rem 0 .4rem 0;
-
-  }
-
-  #botaoFormulario {
-    height: 40px;
-    margin-top: 10px;
-  }
-}
-
-@media (max-width: 300px) {
-  #login {
-    background-color: white;
-    padding: 20px;
-    border: 5px solid #a47df0;
-    box-shadow: 0 0 0 2px white;
-    border-radius: 5px;
-    position: relative;
-  }
-
-  .conteudo-formulario input {
-    margin: 0.3rem 0.2rem;
-    width: 100px;
-  }
-
-  .fechar {
-    top: -20px;
-    right: -20px;
-    width: 35px;
-    height: 35px;
-    font-size: 0.8rem;
-  }
-
-  .conteudo-formulario label {
-    margin: .4rem 0 .2rem 0;
-  }
-
-  #botaoFormulario {
-    height: 30px;
-    font-size: 12px;
-    font-weight: 500;
-  }
-
-
-
 }

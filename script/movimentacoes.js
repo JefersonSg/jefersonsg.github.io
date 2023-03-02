@@ -12,8 +12,6 @@ const aReceber = document.getElementById("aReceber");
 const valorMensal = document.getElementById("valorMensal");
 const vencimentoTotal = document.getElementById("vencimentoTotal");
 const totalFinal = document.getElementById("totalFinal");
-const div = document.querySelector(".selecao-conteudo");
-const receberOuPagar = $(".selecao-conteudo input");
 const totalPago = document.getElementById('totalPago')
 const btnCompra = document.querySelector('#compra-button')
 const btnVenda = document.querySelector('#venda-button')
@@ -128,6 +126,200 @@ adicionar[0].addEventListener("click", function () {
       </div>
     </div>
     `
+ 
+    edit.innerHTML = `
+      <div class="editValueBg">
+        <div class="editValue">
+          <span id="fecharEdit">X</span>
+          <label for="nome">Nome</label>
+          <input readonly type="nome" id="nomeEdit">
+          <select disabled id="categoriaEdit" name="receita ou despesa" >
+          <option selected value=""  style="display: none">
+            categoria da compra
+          </option>
+          <option value="produto eletronico">Produto Eletronico</option>
+          <option value="roupa">Roupa</option>
+          <option value="remedio">Remedio</option>
+          <option value="comida">Comida</option>
+          <option value="cosmetico">Cosmeticos</option>
+        </select>
+          <label for="data">Data</label>
+          <input readonly type="data" id="dataEdit">
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+              <option  style="display:none ;" value="0">parcelas 0x</option>
+              <option value="1">Parcelas 1x</option>
+              <option value="2">Parcelas 2x</option>
+              <option value="3">Parcelas 3x</option>
+              <option value="4">Parcelas 4x</option>
+              <option value="5">Parcelas 5x</option>
+              <option value="6">Parcelas 6x</option>
+              <option value="7">Parcelas 7x</option>
+              <option value="8">Parcelas 8x</option>
+              <option value="9">Parcelas 9x</option>
+              <option value="10">Parcelas 10x</option>
+              <option value="11">Parcelas 11x</option>
+              <option value="12">Parcelas 12x</option>
+            </select>
+          <label for="valor">Valor</label>
+          <input readonly type="valor" id="valorEdit">
+          <button type="button" id="editar"></button>
+          <button type="button" id="deletar">Deletar</button>
+        </div>
+        <div class="confirmar">
+          <span>Deseja mesmo deletar?</span>
+          <button type="button" id="sim">Sim</button>
+          <button type="button" id="nao">Não</button>
+        </div>
+      </div>
+  `;
+    table.appendChild(div)
+    document.body.appendChild(edit)
+
+    div.addEventListener('click',()=> {
+      const editValueBg =  edit.querySelector('.editValueBg')
+      editValueBg.classList.add('ativo')
+      const exit = editValueBg.querySelector('#fecharEdit')
+      const btnEditar = editValueBg.querySelector('#editar')
+      const btnDeletar = editValueBg.querySelector('#deletar')
+      const nomeEdit = editValueBg.querySelector('#nomeEdit')
+      const dataEdit = editValueBg.querySelector('#dataEdit')
+      const valorEdit = editValueBg.querySelector('#valorEdit')
+      const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+      const categoriaEdit = editValueBg.querySelector('#categoriaEdit')
+      const compraEditModal= document.querySelectorAll('#compraEdit')
+    
+      const nome = div.querySelector('#nomeMov')
+      const data = div.querySelector('#vencimentoTotal')
+      const parcelas = div.querySelector('#parcelasTotal')
+      const valor = div.querySelector('#valorFinal')
+      const categoria = div.querySelector('#aReceber')
+    
+      function deletLabel() {
+        const confirm = editValueBg.querySelector('.confirmar')
+        const sim = confirm.querySelector('#sim')
+        const nao = confirm.querySelector('#nao')
+        confirm.classList.add('ativo')
+    
+        function removeAtivo() {
+          confirm.classList.remove('ativo')
+        }
+        function removeAll() {
+          editValueBg.classList.remove('ativo')
+          div.remove()
+          edit.remove()
+          storage()
+        }
+      
+        sim.addEventListener('click', removeAll)
+        nao.addEventListener('click', removeAtivo)
+      }
+    
+      function changeValue() {
+        nomeEdit.value = nome.value
+        dataEdit.value = data.value
+        valorEdit.value = valor.value.replace('R$', '')
+        parcelasEdit.value = parcelas.value.slice(0,1)
+        categoriaEdit.value = categoria.value
+      }
+      changeValue()
+      
+      function EditValue() {
+          nome.value = nomeEdit.value
+          data.value = dataEdit.value
+          parcelas.value = `${parcelasEdit.value}x de R$${(valorEdit.value / +parcelasEdit.value).toFixed(2)}`
+          valor.value = valorEdit.value
+    
+          storage()
+      }
+
+      function removeAtivoBg() {
+        const confirm = editValueBg.querySelector('.confirmar')
+        editValueBg.classList.remove('ativo')
+        confirm.classList.remove('ativo')
+    
+        if (btnEditar.classList.contains('ativo')) {
+        btnEditar.classList.remove('ativo')
+        readOnly()
+        }
+    
+      }
+      function readOnly() {
+          nomeEdit.toggleAttribute('readonly')
+          dataEdit.toggleAttribute('readonly')
+          valorEdit.toggleAttribute('readonly')
+          parcelasEdit.toggleAttribute('disabled')
+          categoriaEdit.toggleAttribute('disabled')
+      }
+      btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
+      btnEditar.addEventListener('click', readOnly)
+      exit.addEventListener('click', removeAtivoBg)
+      btnDeletar.addEventListener('click',deletLabel)
+      if (!btnEditar.classList.contains('ativo')) {
+        btnEditar.addEventListener('click', EditValue)
+          }
+        });
+
+        
+
+    nomeMov[0].value = "";
+    receita[0].selectedIndex = "";
+    vencimentos[0].value = "";
+    valores[0].value = "";
+    parcelas[0].selectedIndex = "1";
+    totais[0].value = "";
+
+    storage()
+  } else {
+    alert("Preencha todos os campos");
+  }
+  
+});
+
+// Venda
+adicionar[1].addEventListener("click", function () {
+  if (
+    valores[1].value &&
+    nomeMov[1].value &&
+    vencimentos[1].value != 0 &&
+    totais[1].value != "R$0"
+  ) {
+    const table = document.getElementById("tabela");
+    const div = document.createElement('div')
+    const edit = document.createElement('div')
+    edit.id = 'vendaEdit'
+
+    div.innerHTML = `
+      <div class="movimentacoesLista" id='vendaLabel' value='venda'>
+        <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor">
+
+        <div class = "organizaMov nomeMov">
+          <span>Vendeu Para</span>
+          <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        </div>
+
+        <div class = "organizaMov vencimentoTotal">
+          <span>No dia</span>
+          <input readonly id="vencimentoTotal" value="${
+          vencimentos[1].value * 1
+          }" type="text" name="data" placeholder="Venda feira no dia X">
+        </div>
+        
+        <div class = "organizaMov parcelasTotal">
+          <span>Parcelou em</span>
+          <input readonly id="parcelasTotal" type="text" name="razao[]"
+          value="${totais[1].value}"
+          placeholder="em 10x" >
+        </div>
+
+        <div class = "organizaMov valorFinal">
+          <span>Valor</span>
+         <input readonly value="R$${
+          (valores[1].value * 1).toFixed(2)
+         }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
+        </div>
+
+      </div>
+    `;
     edit.innerHTML = `
     <div class="editValueBg">
       <div class="editValue">
@@ -163,67 +355,87 @@ adicionar[0].addEventListener("click", function () {
       </div>
     </div>
 `;
-    table.appendChild(div)
-    document.body.appendChild(edit)
-    nomeMov[0].value = "";
-    receita[0].selectedIndex = "";
-    vencimentos[0].value = "";
-    valores[0].value = "";
-    parcelas[0].selectedIndex = "1";
-    totais[0].value = "";
-
-    storage()
-  } else {
-    alert("Preencha todos os campos");
-  }
-});
-
-
-// Venda
-adicionar[1].addEventListener("click", function () {
-  if (
-    valores[1].value &&
-    nomeMov[1].value &&
-    vencimentos[1].value != 0 &&
-    totais[1].value != "R$0"
-  ) {
-    const table = document.getElementById("tabela");
-    const div = document.createElement('div')
-
-    div.innerHTML = `
-      <div class="movimentacoesLista" id='vendaLabel' value='venda'>
-        <img src="./img/Movimentacoes/venda3.svg" width="32" height="29" alt="valor">
-
-        <div class = "organizaMov nomeMov">
-          <span>Vendeu Para</span>
-          <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-        </div>
-
-        <div class = "organizaMov vencimentoTotal">
-          <span>No dia</span>
-          <input readonly id="vencimentoTotal" value="${
-          vencimentos[1].value * 1
-          }" type="text" name="data" placeholder="Venda feira no dia X">
-        </div>
-        
-        <div class = "organizaMov parcelasTotal">
-          <span>Parcelou em</span>
-          <input readonly id="parcelasTotal" type="text" name="razao[]"
-          value="${totais[1].value}"
-          placeholder="em 10x" >
-        </div>
-
-        <div class = "organizaMov valorFinal">
-          <span>Valor</span>
-         <input readonly value="R$${
-          (valores[1].value * 1).toFixed(2)
-         }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
-        </div>
-
-      </div>
-    `;
       table.appendChild(div)
+      document.body.appendChild(edit)
 
+      div.addEventListener('click',()=> {
+        const editValueBg =  edit.querySelector('.editValueBg')
+        editValueBg.classList.add('ativo')
+        const exit = editValueBg.querySelector('#fecharEdit')
+        const btnEditar = editValueBg.querySelector('#editar')
+        const btnDeletar = editValueBg.querySelector('#deletar')
+        const nomeEdit = editValueBg.querySelector('#nomeEdit')
+        const dataEdit = editValueBg.querySelector('#dataEdit')
+        const valorEdit = editValueBg.querySelector('#valorEdit')
+        const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+      
+        const nome = div.querySelector('#nomeMov')
+        const data = div.querySelector('#vencimentoTotal')
+        const parcelas = div.querySelector('#parcelasTotal')
+        const valor = div.querySelector('#valorFinal')
+      
+        function deletLabel() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          const sim = confirm.querySelector('#sim')
+          const nao = confirm.querySelector('#nao')
+          confirm.classList.add('ativo')
+      
+          function removeAtivo() {
+            confirm.classList.remove('ativo')
+          }
+          function removeAll() {
+            editValueBg.classList.remove('ativo')
+            div.remove()
+            edit.remove()
+            storage()
+          }
+        
+          sim.addEventListener('click', removeAll)
+          nao.addEventListener('click', removeAtivo)
+        }
+      
+        function changeValue() {
+          nomeEdit.value = nome.value
+          dataEdit.value = data.value
+          valorEdit.value = valor.value.replace('R$', '')
+          parcelasEdit.value = parcelas.value.slice(0,1)
+        }
+        changeValue()
+        
+        function EditValue() {
+            nome.value = nomeEdit.value
+            data.value = dataEdit.value
+            parcelas.value = `${parcelasEdit.value}x de R$${(valorEdit.value / +parcelasEdit.value).toFixed(2)}`
+            valor.value = valorEdit.value
+      
+            storage()
+        }
+  
+        function removeAtivoBg() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          editValueBg.classList.remove('ativo')
+          confirm.classList.remove('ativo')
+      
+          if (btnEditar.classList.contains('ativo')) {
+          btnEditar.classList.remove('ativo')
+          readOnly()
+          }
+      
+        }
+        function readOnly() {
+            nomeEdit.toggleAttribute('readonly')
+            dataEdit.toggleAttribute('readonly')
+            valorEdit.toggleAttribute('readonly')
+            parcelasEdit.toggleAttribute('disabled')
+        }
+        btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
+        btnEditar.addEventListener('click', readOnly)
+        exit.addEventListener('click', removeAtivoBg)
+        btnDeletar.addEventListener('click',deletLabel)
+        if (!btnEditar.classList.contains('ativo')) {
+          btnEditar.addEventListener('click', EditValue)
+            }
+          });
       storage()
 
     valores[1].value = "";
@@ -237,8 +449,11 @@ adicionar[1].addEventListener("click", function () {
 
 // Pix
 adicionar[2].addEventListener("click", function () {
+    const edit = document.createElement('div')
     const table = document.getElementById("tabela");
     const div = document.createElement('div');
+    edit.id = 'PixEdit'
+
   if (
     valores[2].value &&
     nomeMov[2].value &&
@@ -269,11 +484,104 @@ adicionar[2].addEventListener("click", function () {
         </div>
       </div>
     `;
-    
-    table.appendChild(div)
 
+    edit.innerHTML = `
+    <div class="editValueBg">
+      <div class="editValue">
+        <span id="fecharEdit">X</span>
+        <label for="nome">Nome</label>
+        <input readonly type="nome" id="nomeEdit">
+        <label for="data">Data</label>
+        <input readonly type="data" id="dataEdit">
+        <label for="valor">Valor</label>
+        <input readonly type="valor" id="valorEdit">
+        <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
+      </div>
+      <div class="confirmar">
+        <span>Deseja mesmo deletar?</span>
+        <button type="button" id="sim">Sim</button>
+        <button type="button" id="nao">Não</button>
+      </div>
+    </div>
+        `;
+      table.appendChild(div)
+      document.body.appendChild(edit)
+
+      div.addEventListener('click',()=> {
+        const editValueBg =  edit.querySelector('.editValueBg')
+        editValueBg.classList.add('ativo')
+        const exit = editValueBg.querySelector('#fecharEdit')
+        const btnEditar = editValueBg.querySelector('#editar')
+        const btnDeletar = editValueBg.querySelector('#deletar')
+        const nomeEdit = editValueBg.querySelector('#nomeEdit')
+        const dataEdit = editValueBg.querySelector('#dataEdit')
+        const valorEdit = editValueBg.querySelector('#valorEdit')
+      
+        const nome = div.querySelector('#nomeMov')
+        const data = div.querySelector('#vencimentoTotal')
+        const valor = div.querySelector('#valorFinal')
+      
+        function deletLabel() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          const sim = confirm.querySelector('#sim')
+          const nao = confirm.querySelector('#nao')
+          confirm.classList.add('ativo')
+      
+          function removeAtivo() {
+            confirm.classList.remove('ativo')
+          }
+          function removeAll() {
+            editValueBg.classList.remove('ativo')
+            div.remove()
+            edit.remove()
+            storage()
+          }
+        
+          sim.addEventListener('click', removeAll)
+          nao.addEventListener('click', removeAtivo)
+        }
+      
+        function changeValue() {
+          nomeEdit.value = nome.value
+          dataEdit.value = data.value
+          valorEdit.value = valor.value.replace('R$', '')
+        }
+        changeValue()
+        
+        function EditValue() {
+            nome.value = nomeEdit.value
+            data.value = dataEdit.value
+            valor.value = valorEdit.value
+      
+            storage()
+        }
+  
+        function removeAtivoBg() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          editValueBg.classList.remove('ativo')
+          confirm.classList.remove('ativo')
+      
+          if (btnEditar.classList.contains('ativo')) {
+          btnEditar.classList.remove('ativo')
+          readOnly()
+          }
+      
+        }
+        function readOnly() {
+            nomeEdit.toggleAttribute('readonly')
+            dataEdit.toggleAttribute('readonly')
+            valorEdit.toggleAttribute('readonly')
+        }
+        btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
+        btnEditar.addEventListener('click', readOnly)
+        exit.addEventListener('click', removeAtivoBg)
+        btnDeletar.addEventListener('click',deletLabel)
+        if (!btnEditar.classList.contains('ativo')) {
+          btnEditar.addEventListener('click', EditValue)
+            }
+          });
     storage()
-
     valores[2].value = "";
     totais[2].value = "";
     vencimentos[2].value = "";
@@ -310,8 +618,101 @@ adicionar[2].addEventListener("click", function () {
     </div>
         
         `;
+    edit.innerHTML = `
+    <div class="editValueBg">
+      <div class="editValue">
+        <span id="fecharEdit">X</span>
+        <label for="nome">Nome</label>
+        <input readonly type="nome" id="nomeEdit">
+        <label for="data">Data</label>
+        <input readonly type="data" id="dataEdit">
+        <label for="valor">Valor</label>
+        <input readonly type="valor" id="valorEdit">
+        <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
+      </div>
+      <div class="confirmar">
+        <span>Deseja mesmo deletar?</span>
+        <button type="button" id="sim">Sim</button>
+        <button type="button" id="nao">Não</button>
+      </div>
+    </div>
+        `;
         table.appendChild(div)
-
+        document.body.appendChild(edit)
+        div.addEventListener('click',()=> {
+          const editValueBg =  edit.querySelector('.editValueBg')
+          editValueBg.classList.add('ativo')
+          const exit = editValueBg.querySelector('#fecharEdit')
+          const btnEditar = editValueBg.querySelector('#editar')
+          const btnDeletar = editValueBg.querySelector('#deletar')
+          const nomeEdit = editValueBg.querySelector('#nomeEdit')
+          const dataEdit = editValueBg.querySelector('#dataEdit')
+          const valorEdit = editValueBg.querySelector('#valorEdit')
+        
+          const nome = div.querySelector('#nomeMov')
+          const data = div.querySelector('#vencimentoTotal')
+          const valor = div.querySelector('#valorFinal')
+        
+          function deletLabel() {
+            const confirm = editValueBg.querySelector('.confirmar')
+            const sim = confirm.querySelector('#sim')
+            const nao = confirm.querySelector('#nao')
+            confirm.classList.add('ativo')
+        
+            function removeAtivo() {
+              confirm.classList.remove('ativo')
+            }
+            function removeAll() {
+              editValueBg.classList.remove('ativo')
+              div.remove()
+              edit.remove()
+              storage()
+            }
+          
+            sim.addEventListener('click', removeAll)
+            nao.addEventListener('click', removeAtivo)
+          }
+        
+          function changeValue() {
+            nomeEdit.value = nome.value
+            dataEdit.value = data.value
+            valorEdit.value = valor.value.replace('R$', '')
+          }
+          changeValue()
+          
+          function EditValue() {
+              nome.value = nomeEdit.value
+              data.value = dataEdit.value
+              valor.value = valorEdit.value
+        
+              storage()
+          }
+    
+          function removeAtivoBg() {
+            const confirm = editValueBg.querySelector('.confirmar')
+            editValueBg.classList.remove('ativo')
+            confirm.classList.remove('ativo')
+        
+            if (btnEditar.classList.contains('ativo')) {
+            btnEditar.classList.remove('ativo')
+            readOnly()
+            }
+        
+          }
+          function readOnly() {
+              nomeEdit.toggleAttribute('readonly')
+              dataEdit.toggleAttribute('readonly')
+              valorEdit.toggleAttribute('readonly')
+          }
+          btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))
+          btnEditar.addEventListener('click', readOnly)
+          exit.addEventListener('click', removeAtivoBg)
+          btnDeletar.addEventListener('click',deletLabel)
+          if (!btnEditar.classList.contains('ativo')) {
+            btnEditar.addEventListener('click', EditValue)
+              }
+            });
         storage()
 
     valores[2].value = "";
@@ -336,6 +737,8 @@ adicionar[3].addEventListener("click", function () {
     receita[2].value == "-"
   ) {
     const div = document.createElement('div')
+    const edit = document.createElement('div')
+
 
     div.innerHTML = `
         <div class="movimentacoesLista" id="empPegoLabel" value='emprestado'>
@@ -401,6 +804,8 @@ adicionar[3].addEventListener("click", function () {
     receita[2].value == "+"
   ) {
   const div = document.createElement('div')
+  const edit = document.createElement('div')
+
         div.classList.add('movimentacoesLista')
         div.id = 'empLabel'
         div.setAttribute('value', 'emprestei')
@@ -455,8 +860,202 @@ adicionar[3].addEventListener("click", function () {
           value="${jurosComp.value}" >
         </div>
         `;
-          table.appendChild(div)
+    edit.innerHTML = `
+        <div class="editValueBg">
+          <div class="editValue">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="nome" id="nomeEdit">
+            <label for="data">Data</label>
+            <input readonly type="data" id="dataEdit">
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
+          <select disabled name="juros" id="jurosEdit">
+            <option value="0">0% de juros</option>
+            <option value="1">1% de juros</option>
+            <option value="2">2% de juros</option>
+            <option value="3">3% de juros</option>
+            <option value="4">4% de juros</option>
+            <option value="5">5% de juros</option>
+            <option value="6">6% de juros</option>
+            <option value="7">7% de juros</option>
+            <option value="8">8% de juros</option>
+            <option value="9">9% de juros</option>
+            <option value="10">10% de juros</option>
+            <option value="11">11% de juros</option>
+            <option value="12">12% de juros</option>
+            <option value="13">13% de juros</option>
+            <option value="14">14% de juros</option>
+            <option value="15">15% de juros</option>
+            <option value="16">16% de juros</option>
+            <option value="17">17% de juros</option>
+            <option value="18">18% de juros</option>
+            <option value="19">19% de juros</option>
+            <option value="20">20% de juros</option>
+            <option value="21">21% de juros</option>
+            <option value="22">22% de juros</option>
+            <option value="23">23% de juros</option>
+            <option value="24">24% de juros</option>
+            <option value="25">25% de juros</option>
+            <option value="26">26% de juros</option>
+            <option value="27">27% de juros</option>
+            <option value="28">28% de juros</option>
+            <option value="29">29% de juros</option>
+            <option value="30">30% de juros</option>
+          </select>
+          <select disabled name="juros-compostos" id="jurosCompEdit">
+            <option value="0">0% ao mes</option>
+            <option value="1">1% ao Mês</option>
+            <option value="2">2% ao Mês</option>
+            <option value="3">3% ao Mês</option>
+            <option value="4">4% ao Mês</option>
+            <option value="5">5% ao Mês</option>
+            <option value="6">6% ao Mês</option>
+            <option value="7">7% ao Mês</option>
+            <option value="8">8% ao Mês</option>
+            <option value="9">9% ao Mês</option>
+            <option value="10">10% ao Mês</option>
+            <option value="11">11% ao Mês</option>
+            <option value="12">12% ao Mês</option>
+          </select>
+            <label for="lucro">Lucro</label>
+            <input readonly type="lucro" id="lucroEdit">
+            <label for="valor-final">Valor Final</label>
+            <input readonly type="valor-final" id="valorFinEdit">
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+          </div>
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
+          </div>
+        </div>
+      `;
+      table.appendChild(div)
+      document.body.appendChild(edit)
+      
+        const editValueBg =  edit.querySelector('.editValueBg')
+        const exit = editValueBg.querySelector('#fecharEdit')
+        const btnDeletar = editValueBg.querySelector('#deletar')
+        const nomeEdit = editValueBg.querySelector('#nomeEdit')
+        const dataEdit = editValueBg.querySelector('#dataEdit')
+        const valorEdit = editValueBg.querySelector('#valorEdit')
+        const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+        const jurosEdit = editValueBg.querySelector('#jurosEdit')
+        const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
+        const lucroEdit = editValueBg.querySelector('#lucroEdit')
+        const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
+      
+        const nome = div.querySelector('#nomeMov')
+        const data = div.querySelector('#vencimentoTotal')
+        const valorInit = div.querySelector('#valorInicial')
+        const lucro = div.querySelector('#lucro')
+        const parcelas = div.querySelector('#parcelasTotal')
+        const valor = div.querySelector('#valorFinal')
+        const juros = div.querySelector("#jurosLs")
+        const jurosMes = div.querySelector("#jurosMesLs")
+      
+        function deletLabel() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          const sim = confirm.querySelector('#sim')
+          const nao = confirm.querySelector('#nao')
+          confirm.classList.add('ativo')
+      
+          function removeAtivo() {
+            confirm.classList.remove('ativo')
+          }
+          function removeAll() {
+            editValueBg.classList.remove('ativo')
+            div.remove()
+            edit.remove()
+            storage()
+          }
+        
+          sim.addEventListener('click', removeAll)
+          nao.addEventListener('click', removeAtivo)
+        }
+      
+        function changeValue() {
+          nomeEdit.value = nome.value
+          dataEdit.value = data.value
+          valorEdit.value = valorInit.value.replace('R$ ', '')
+          parcelasEdit.value = parcelas.value.slice(0,1)
+          jurosEdit.value = juros.value
+          jurosMesEdit.value = jurosMes.value
+          lucroEdit.value= lucro.value.replace('+R$ ', '')
+          valorFinalEdit.value = valor.value.replace('R$ ','')
+        }
+        changeValue()
+        
+        function EditValue() {
+          nome.value = nomeEdit.value
+          data.value = dataEdit.value
+          valorInit.value = `${valorEdit.value}`
+          parcelas.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
+          lucro.value = lucroEdit.value
+          valor.value = valorFinalEdit.value
+            storage()
+        }
+        function conta (){
+          const jurosTotal = (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100
+          const lucro = valorEdit.value * jurosTotal
+          const valorFim = lucro + +valorEdit.value
+          valorFinalEdit.value = valorFim.toFixed(2)
+          lucroEdit.value = lucro.toFixed(2)
+        }
+  
+        function removeAtivoBg() {
+          const confirm = editValueBg.querySelector('.confirmar')
+          editValueBg.classList.remove('ativo')
+          confirm.classList.remove('ativo')
+      
+          if (btnEditar.classList.contains('ativo')) {
+          btnEditar.classList.remove('ativo')
+          readOnly()
+          }
+      
+        }
+        function readOnly() {
+          nomeEdit.toggleAttribute('readonly')
+          dataEdit.toggleAttribute('readonly')
+          valorEdit.toggleAttribute('readonly')
+          parcelasEdit.toggleAttribute('disabled')
+          jurosEdit.toggleAttribute('disabled')
+          jurosMesEdit.toggleAttribute('disabled')
+        }
+        valorEdit.addEventListener('keyup', conta)
+        parcelasEdit.addEventListener('click', conta)
+        jurosEdit.addEventListener('click', conta)
+        jurosMesEdit.addEventListener('click', conta)
 
+        btnEditar.addEventListener('click', readOnly)
+        exit.addEventListener('click', removeAtivoBg)
+        btnDeletar.addEventListener('click',deletLabel)
+        if (!btnEditar.classList.contains('ativo')) {
+          btnEditar.addEventListener('click', EditValue)
+            }
+        const btnEditar = edit.querySelector('#editar')
+        btnEditar.addEventListener('click', ()=> btnEditar.classList.toggle('ativo'))    
+
+        div.addEventListener('click',()=> {
+            editValueBg.classList.add('ativo')
+              });
           storage()
     nomeMov[3].value = "";
     receita[2].value = "";
@@ -472,12 +1071,6 @@ adicionar[3].addEventListener("click", function () {
   }
   
 });
-
-
-const compraLabelTeste = document.querySelectorAll('#compraLabel')
-
-console.log(compraLabelTeste)
-
 
 // onlyNumber
 
@@ -497,7 +1090,7 @@ function onlynumber(evt) {
 function arrumarNome() {
   const nomeLogin = document.querySelector('.nome-login')
   const nomeUser = JSON.parse(localStorage.usuarios)
-  nomeLogin.innerText = `${nomeUser[0].nome} ${nomeUser[0].sobrenome}`
+  nomeLogin.innerText = `Olá, ${nomeUser[0].nome} ${(nomeUser[0].sobrenome).slice(0,1)}.`
   
 }
 function arrumarValores() {
@@ -728,8 +1321,24 @@ function criarPaineis() {
           <span id="fecharEdit">X</span>
           <label for="nome">Nome</label>
           <input readonly type="nome" id="nomeEdit">
+
           <label for="data">Data</label>
           <input readonly type="data" id="dataEdit">
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
           <label for="valor">Valor</label>
           <input readonly type="valor" id="valorEdit">
           <button type="button" id="editar"></button>
@@ -740,7 +1349,7 @@ function criarPaineis() {
           <button type="button" id="sim">Sim</button>
           <button type="button" id="nao">Não</button>
         </div>
-      </div>
+    </div>
   `;
       } else if(v === 'pixEnviado') {
         edit.id = 'pixEdit'
@@ -1206,6 +1815,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
   const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit')
   const lucroEdit = editValueBg.querySelector('#lucroEdit')
   const valorFinalEdit = editValueBg.querySelector('#valorFinEdit')
+  const empEditModal= document.querySelectorAll('#empresteiEdit')
 
   const nome = i.querySelector('#nomeMov')
   const data = i.querySelector('#vencimentoTotal')
@@ -1227,6 +1837,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     }
     function removeAll() {
       editValueBg.classList.remove('ativo')
+      empEditModal[n].remove()
       i.remove()
       storage()
     }
@@ -1254,8 +1865,6 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       parcelas.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
       lucro.value = lucroEdit.value
       valor.value = valorFinalEdit.value
-
-      console.log()
       storage()
   }
   function conta (){
@@ -1312,6 +1921,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       const valorEdit = editValueBg.querySelector('#valorEdit')
       const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
       const categoriaEdit = editValueBg.querySelector('#categoriaEdit')
+      const compraEditModal= document.querySelectorAll('#compraEdit')
     
       const nome = i.querySelector('#nomeMov')
       const data = i.querySelector('#vencimentoTotal')
@@ -1331,6 +1941,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
         function removeAll() {
           editValueBg.classList.remove('ativo')
           i.remove()
+          compraEditModal[n].remove()
           storage()
         }
       
@@ -1394,8 +2005,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
           const nomeEdit = editValueBg.querySelector('#nomeEdit')
           const dataEdit = editValueBg.querySelector('#dataEdit')
           const valorEdit = editValueBg.querySelector('#valorEdit')
-          const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
-          const categoriaEdit = editValueBg.querySelector('#categoriaEdit')
+          const parcelasEdit = editValueBg.querySelector('#parcelasEdit')          
         
           const nome = i.querySelector('#nomeMov')
           const data = i.querySelector('#vencimentoTotal')
@@ -1413,6 +2023,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
             }
             function removeAll() {
               editValueBg.classList.remove('ativo')
+              vendaEditModal[n].remove()
               i.remove()
               storage()
             }
@@ -1478,6 +2089,8 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     const nomeEdit = editValueBg.querySelector('#nomeEdit')
     const dataEdit = editValueBg.querySelector('#dataEdit')
     const valorEdit = editValueBg.querySelector('#valorEdit')
+    const pixEditModal= document.querySelectorAll('#pixEdit')
+
   
     const nome = i.querySelector('#nomeMov')
     const data = i.querySelector('#vencimentoTotal')
@@ -1494,6 +2107,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       }
       function removeAll() {
         editValueBg.classList.remove('ativo')
+        pixEditModal[n].remove()
         i.remove()
         storage()
       }
@@ -1546,5 +2160,4 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     
       i.addEventListener('click',()=> editValueBg.classList.add('ativo'))
   })
-
 

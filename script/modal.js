@@ -1,16 +1,19 @@
-const btnConta = document.querySelector('.botao-conta')
-const btnFechar = document.querySelector('[data-modal="fechar"]')
 const container = document.querySelector('.modal-container')
+const btnConta = document.querySelector('.botao-conta')
+const btnFechar = document.querySelectorAll('.fechar')
+const containerEntrar = document.querySelector('.modal-container-entrar')
+const btnEntrar = document.querySelector('.botao-entrar')
 
 
-if (btnConta && btnFechar && container) {
+if (btnConta && btnFechar) {
   
-    function abrirModal() {
-      container.classList.add('ativo')
+    function abrirModal(item) {
+      item.classList.add('ativo')
     }
 
     function fecharModal() {
       container.classList.remove('ativo')
+      containerEntrar.classList.remove('ativo')
     }
 
     function outsideClick(e) {
@@ -18,8 +21,12 @@ if (btnConta && btnFechar && container) {
             fecharModal()
       }
     }
-
-    btnConta.addEventListener('click', abrirModal)
-    btnFechar.addEventListener('click',fecharModal)
+    btnConta.addEventListener('click', ()=> abrirModal(container))
+    btnFechar.forEach((i)=>{
+      i.addEventListener('click',()=> fecharModal())
+    })
     container.addEventListener('click', outsideClick)
+    btnEntrar.addEventListener('click',()=> abrirModal(containerEntrar)) 
+    containerEntrar.addEventListener('click', outsideClick)
+
 }
