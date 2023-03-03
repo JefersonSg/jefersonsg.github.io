@@ -20,7 +20,7 @@ const formCompra = document.querySelector('#compra-conteudo')
 const formVenda = document.querySelector('#venda-conteudo')
 const formPix = document.querySelector('#pix-conteudo')
 const formEmp = document.querySelector('#emprestimo-conteudo')
-console.log(parcelas)
+
 function removeAtivo(a,b,c,d,e,f,g,h){
 
   a.classList.toggle('ativo')
@@ -92,10 +92,10 @@ adicionar[0].addEventListener("click", function () {
     div.id = 'compraLabel'
     edit.id = 'compraEdit'
     div.innerHTML = `
-    <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
-            <div>
-            <span>Despesa com</span>
-            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov"></div>
+            <div class='icon icon-transacao'>
+            <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
+            </div>
+            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
             <input readonly id="valorFinal" ; color: #000;" value="R$${
               (valores[0].value * 1).toFixed(2)
@@ -281,7 +281,9 @@ adicionar[1].addEventListener("click", function () {
     edit.id = 'vendaEdit'
 
     div.innerHTML = `
+    <div class='icon icon-transacao'>
     <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+    </div>
     <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
     <input readonly value="R${
@@ -456,7 +458,6 @@ adicionar[2].addEventListener("click", function () {
       }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
     <div>
-    <span  class='valorspan'>De</span>
     <input readonly class='pix' id="nomeMov" ;  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
     </div>
 
@@ -588,7 +589,6 @@ adicionar[2].addEventListener("click", function () {
       }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
     <div>
-    <span  class='valorspan'>De</span>
     <input readonly class='pix' id="nomeMov" ;  value="${nomeMov[2].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
     </div>
 
@@ -723,13 +723,12 @@ adicionar[3].addEventListener("click", function () {
     div.setAttribute('value', 'emprestado')
 
     div.innerHTML = `
+    <div class='icon icon-transacao'>
     <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+    </div>
 
-    <div>
-      <span>Emprestimo enviado para </span>
       <input readonly id="nomeMov" 
       class = "nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-    </div>
 
     <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
     value="${
@@ -745,10 +744,7 @@ adicionar[3].addEventListener("click", function () {
       }"  type="text" name="Valor">
     
     
-    <div>
-    <span class='valorspan'>Total a receber</span>
     <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="${(+(totalPago.value).replace('Total ',"")).toFixed(2)}">
-    </div>
     
     <input readonly   class = "data"id="data" value="${
       dataInfo[3].value
@@ -989,13 +985,12 @@ adicionar[3].addEventListener("click", function () {
         div.setAttribute('value', 'emprestei')
 
     div.innerHTML = `
+    <div class='icon icon-transacao'>
     <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+    </div>
 
-    <div>
-      <span>Emprestimo enviado para </span>
       <input readonly id="nomeMov" 
       class = "nomeMov" value="${nomeMov[3].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-    </div>
 
     <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
     value="${totais[3].value}"
@@ -1009,10 +1004,7 @@ adicionar[3].addEventListener("click", function () {
       }"  type="text" name="Valor">
     
     
-    <div>
-    <span class='valorspan'>Total a receber</span>
     <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="R$ ${(+(totalPago.value).replace('Total ',"")).toFixed(2)}" >
-    </div>
     
     <input readonly   class = "data"id="data" value="${
       dataInfo[3].value
@@ -1382,10 +1374,11 @@ function criarPaineis() {
         div.id = 'compraLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
-        <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
-            <div>
-            <span>Despesa com</span>
-            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov"></div>
+            <div class='icon icon-transacao'>
+            <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
+            </div>
+
+            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
             <input readonly id="valorFinal" ; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
             
@@ -1451,8 +1444,11 @@ function criarPaineis() {
         div.id = 'vendaLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
-        <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+          <div class='icon icon-transacao'>
+          <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+          </div> 
             <input readonly id="nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+
             <input readonly value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
             
             <input readonly class='parcelas-venda' id="parcelasTotal" type="text" name="razao[]"
@@ -1505,22 +1501,23 @@ function criarPaineis() {
         div.id = 'pixLabel'
         div.setAttribute('value', v)
         div.innerHTML = `
-          <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
 
-          <input #000;"  value="Transferencia enviada" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        <div class='icon icon-transacao'>
+        <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+        </div>
+
+          <input readonly  value="Transferencia enviada" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
           
-          <input readonly ; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
+          <input readonly  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
 
-          <div>
-          <span  class='valorspan'>Para</span>
-          <input readonly class='pix' id="nomeMov" ; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-          </div>
-
-          <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
+          <input readonly class='pix' id="nomeMov"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+          
+          <input readonly id="data" value="" type="text" name="data" placeholder="Comprou no dia X">
             `;
         edit.innerHTML = `
+        
         <div class="editValueBg">
           <div class="editValue">
             <span id="fecharEdit">X</span>
@@ -1548,20 +1545,19 @@ function criarPaineis() {
         div.setAttribute('value', v)
         div.innerHTML = `
 
+        <div class='icon icon-transacao'>
         <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-
-        <input #000;"  value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-
-        
-        <input readonly ; color: #000;"  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
-
-
-        <div>
-        <span  class='valorspan'>De</span>
-        <input readonly class='pix' id="nomeMov" ; color: #000;"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
         </div>
 
-        <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
+        <input readonly  value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+
+        
+        <input readonly  value="" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
+
+
+        <input readonly class='pix' id="nomeMov"  value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+        
+        <input readonly id="data" value="" type="text" name="data" placeholder="Comprou no dia X">
             `;
             edit.innerHTML = `
             <div class="editValueBg">
@@ -1591,14 +1587,13 @@ function criarPaineis() {
         div.setAttribute('value', v)
         div.innerHTML = `
         
-            <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+        <div class='icon icon-transacao'>
+        <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+        </div>
 
-            <div>
-              <span>Emprestimo enviado para </span>
-              <input readonly id="nomeMov" 
-              class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
-            </div>
-  
+          <input readonly id="nomeMov" 
+          class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+              
             <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
             value=""
             placeholder="numero de parcelas" >
@@ -1609,11 +1604,8 @@ function criarPaineis() {
             <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
             
             
-            <div>
-            <span class='valorspan'>Total a receber</span>
             <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
-            </div>
-            
+
             <input readonly   class = "data"id="data" value="" type="text" name="data"">
             
             <input readonly id='jurosLs' type="text" name="Montante Total" 
@@ -1718,14 +1710,13 @@ function criarPaineis() {
         div.setAttribute('value', v)
         div.innerHTML = `
         
+        <div class='icon icon-transacao'>
         <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-
-        <div>
-          <span>Emprestimo enviado para </span>
-          <input readonly id="nomeMov" 
-          class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
         </div>
 
+          <input readonly id="nomeMov" 
+          class = "nomeMov" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+          
         <input readonly class = "parcelasTotal" id="parcelasTotal" type="text" name="parcelas" 
         value=""
         placeholder="numero de parcelas" >
@@ -1736,10 +1727,7 @@ function criarPaineis() {
         <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
         
         
-        <div>
-        <span class='valorspan'>Total a receber</span>
         <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
-        </div>
         
         <input readonly   class = "data"id="data" value="" type="text" name="data"">
         
@@ -2245,13 +2233,13 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       const dataEdit = editValueBg.querySelector('#dataEdit')
       const valorEdit = editValueBg.querySelector('#valorEdit')
       const parcelasEdit = editValueBg.querySelector('#parcelasEdit')
+      const categoriaEdit = editValueBg.querySelector('#categoriaEdit')
     
       const nome = i.querySelector('#nomeMov')
       const data = i.querySelector('#data')
       const parcelas = i.querySelector('#parcelasTotal')
       const valor = i.querySelector('#valorFinal')
       const categoria = i.querySelector('#categoria')
-    
       function deletLabel() {
         const confirm = editValueBg.querySelector('.confirmar')
         const sim = confirm.querySelector('#sim')

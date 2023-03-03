@@ -57,12 +57,6 @@ body {
 
 /* Financas */
 
-select {
-  text-align-last: center;
-  text-align: center;
-  color: black;
-}
-
 .financas-bg {
   width: 100%;
   margin: 0 auto;
@@ -84,7 +78,7 @@ select {
 
 .selecao-conteudo {
   display: grid;
-  grid-template-columns: 120px 120px;
+  grid-template-columns: 135px 135px;
   align-self: center;
   gap: 16px 25px;
 }
@@ -131,8 +125,6 @@ select {
   display: none;
 }
 
-
-
 #compra-button:hover,
 #venda-button:hover,
 #pix-button:hover,
@@ -146,6 +138,7 @@ select {
 #pix-button,
 #emprestimo-button {
   background: #EFEFEF;
+  color: black;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -154,9 +147,9 @@ select {
   font-family: "Libre Baskerville", serif;
   border-radius: 5px;
   font-weight: 700;
-  font-size: 10px;
-  width: 120px;
-  height: 35px;
+  font-size: 12px;
+  width: 135px;
+  height: 45px;
   border: 1px solid #C9C9C9;
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 }
@@ -165,8 +158,8 @@ select {
 #venda-button.ativo,
 #pix-button.ativo,
 #emprestimo-button.ativo {
-  background: #C9C9C9;
-  border: 1px solid #B8B8B8;
+  background: #d3d3d3;
+  border: 1px solid #a5a5a5;
 }
 
 .financas-formulario {
@@ -190,6 +183,8 @@ select {
   font-family: "roboto", sans-serif;
   text-align: center;
   font-size: 10px;
+  text-align-last: center;
+  color: black;
 }
 
 
@@ -325,8 +320,9 @@ select {
 #juros-compostos,
 #emprestimo-juros {
   padding: 0px 10px;
-  width: max-content;
-  height: 30.19px;
+  width: 148px;
+  height: 24px;
+  padding: 4px 6px;
   cursor: pointer;
   position: relative;
   text-align: center;
@@ -339,11 +335,8 @@ select {
   position: relative;
 }
 
-
-#movimentacao {
-  width: 97%;
-}
-
+#dataInfo,
+#movimentacao,
 #valor {
   width: 97%;
 }
@@ -361,6 +354,13 @@ select {
 
 #receita {
   width: 100%;
+}
+
+.icon {
+  background-color: #FFFDFF;
+  padding: 5px;
+  border: 1px solid #EEEEEE;
+  border-radius: 50%;
 }
 
 #data {
@@ -417,7 +417,7 @@ select {
   grid-template-columns: 1fr;
   background-color: white;
   padding: 20px;
-  height: 230px;
+  height: auto;
   border: 10px solid #38A1FF;
   box-shadow: 0 0 0 4px white;
   position: relative;
@@ -509,22 +509,16 @@ select {
   filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
 }
 
-
-
 .movimentacoesLista {
   display: grid;
-  grid-template-columns: 22px 70% auto;
+  grid-template-columns: 34px 60% auto;
   align-items: center;
   gap: 4px 8px;
   margin: 0 auto;
   margin-bottom: 8px;
   cursor: pointer;
-  border-bottom: 1px solid #D8D8D8;
-}
-
-.movimentacoesLista span {
-  font-family: roboto, sans-serif;
-  font-size: 10px;
+  padding: 0px 0px 4px 0px;
+  border-bottom: 1px solid #EEEEEE;
 }
 
 .icon-transacao {
@@ -533,20 +527,17 @@ select {
   height: 22px;
 }
 
-#data {
-  color: #878787;
-}
+
 
 .valorInicial,
 #valorFinal,
-#data,
 #categoria,
 #data {
-  width: 50px;
+  width: 70px;
 }
 
 #nomeMov {
-  width: 100px;
+  width: 60px;
 }
 
 
@@ -563,37 +554,41 @@ select {
   display: none;
 }
 
-#categoria {
-  color: #878787;
-}
+
 
 #tabela input {
   border: none;
+  font-family: 'roboto', sans-serif;
+  font-weight: 400;
   text-align: start;
+  color: #313131;
   background-color: rgba(0, 0, 0, 0);
-  font-family: roboto, sans-serif;
-  font-size: 10px;
+  font-size: 0.8rem
 }
 
-.movimentacoesLista div {
-  display: flex;
-  align-items: center;
-  gap: 0px 2px;
-}
 
+#categoria,
+#data,
 .valorFinal,
 .pix#nomeMov,
 .parcelas-venda#parcelasTotal {
   display: block;
-  color: #878787;
-}
-
-.valorspan,
-.nomeMovi span {
-  color: #878787;
+  color: #939393 !important;
+  font-size: 0.6rem !important;
 }
 
 
+
+/* @media (min-width: 375px) {
+  #tabela input {
+    font-size: 0.7rem
+  }
+
+  #tabela span {
+    font-size: 0.7rem;
+  }
+
+} */
 
 /* media de Movimentacoes */
 
