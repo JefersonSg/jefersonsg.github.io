@@ -123,6 +123,8 @@ body {
   top: 12px;
   right: 12px;
   cursor: pointer;
+  width: 18px;
+  height: 10px;
 }
 
 .texto {
@@ -326,6 +328,17 @@ body {
 
 /* ids formulario */
 
+#compra-button,
+#venda-button,
+#pix-button,
+#emprestimo-button {
+  gap: 0px 8px;
+  font-size: 14px;
+  width: 150px;
+  height: 50px;
+}
+
+
 #receita,
 #parcelas,
 #juros-compostos,
@@ -389,7 +402,12 @@ body {
 
 /* Media do formulario */
 
-
+@media (min-width: 375px) {
+  .selecao-conteudo {
+    grid-template-columns: 150px 150px;
+    gap: 16px 32px;
+  }
+}
 
 /* MOVIMENTACOES */
 .organizaMov.jurosLs {
@@ -528,6 +546,8 @@ body {
 .movimentacoesLista {
   display: grid;
   grid-template-columns: 40px 60% auto;
+  font-family: 'roboto', sans-serif;
+  font-size: 0.8rem;
   align-items: center;
   gap: 0px 8px;
   margin: 0 auto;
@@ -543,6 +563,9 @@ body {
   height: 26px;
 }
 
+#data {
+  grid-column: 3;
+}
 
 
 .valorInicial,
@@ -553,7 +576,7 @@ body {
 }
 
 #nomeMov {
-  width: 60px;
+  width: auto;
 }
 
 
@@ -592,28 +615,6 @@ body {
   color: #939393 !important;
   font-size: 0.6rem !important;
 }
-
-
-
-@media (min-width: 375px) {
-  .selecao-conteudo {
-    grid-template-columns: 150px 150px;
-    gap: 16px 32px;
-  }
-
-  #compra-button,
-  #venda-button,
-  #pix-button,
-  #emprestimo-button {
-    gap: 0px 8px;
-    font-size: 14px;
-    width: 150px;
-    height: 50px;
-  }
-
-}
-
-
 
 
 
