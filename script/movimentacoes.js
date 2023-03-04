@@ -1984,7 +1984,6 @@ function storage() {
   })
   
   const transacoes = []
-  console.log(valores)
   localStorage.setItem('valores', JSON.stringify(valores))
   transacao.forEach(t => transacoes.push(t.getAttribute('value')))
   localStorage.setItem('compras', JSON.stringify(compraArray))
