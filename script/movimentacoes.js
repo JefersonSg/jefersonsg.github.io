@@ -97,7 +97,7 @@ adicionar[0].addEventListener("click", function () {
             </div>
             <input readonly  id="nomeMov" class="testando" ; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
-            <input readonly id="valorFinal" ; color: #000;" value="R$ ${
+            <input readonly id="valorFinal" ; color: #000;" value="-R$ ${
               (valores[0].value * 1).toFixed(2)
               }"  type="text" name="Valor" placeholder="Valor Mensal">
             
@@ -205,7 +205,7 @@ adicionar[0].addEventListener("click", function () {
       function changeValue() {
         nomeEdit.value = nome.value
         dataEdit.value = data.value
-        valorEdit.value = valor.value.replace('R$', '')
+        valorEdit.value = valor.value.replace('-R$', '')
         parcelasEdit.value = parcelas.value.slice(0,1)
         categoriaEdit.value = categoria.value
       }
@@ -453,7 +453,7 @@ adicionar[2].addEventListener("click", function () {
     <input value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
     
-    <input readonly ;  value="${
+    <input readonly ;  value="R$ ${
       valores[2].value * 1
       }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
@@ -584,7 +584,7 @@ adicionar[2].addEventListener("click", function () {
     <input value="Transferencia recebida" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
     
-    <input readonly ;  value="${
+    <input readonly ;  value="-R$ ${
       valores[2].value * 1
       }" id="valorFinal" type="text" name="razao[]" placeholder="Valor">
 
@@ -1378,15 +1378,15 @@ function criarPaineis() {
             <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
             </div>
 
-            <input readonly  id="nomeMov" class="testando" ; color: #000;" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
+            <input readonly  id="nomeMov" class="testando" value="" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
-            <input readonly id="valorFinal" ; color: #000;" value=""  type="text" name="Valor" placeholder="Valor Mensal">
+            <input readonly id="valorFinal" value=""  type="text" name="Valor" placeholder="Valor Mensal">
             
-            <input readonly id="categoria" ; color: #000;" value="" type="text" name="data" placeholder="A receber">
+            <input readonly id="categoria" value="" type="text" name="data" placeholder="A receber">
 
-            <input readonly id="data" ; color: #000;" value="" type="text" name="data" placeholder="Comprou no dia X">
+            <input readonly id="data" value="" type="text" name="data" placeholder="Comprou no dia X">
             
-            <input readonly id="parcelasTotal" ; color: #000;" type="text" name="parcelas" 
+            <input readonly id="parcelasTotal" type="text" name="parcelas" 
               value=" "
               placeholder="em 10x" >
       `
@@ -1496,7 +1496,7 @@ function criarPaineis() {
         </div>
     </div>
   `;
-      } else if(v === 'pixEnviado') {
+      } else if(v === 'pixEnviado') { 
         edit.id = 'pixEdit'
         div.id = 'pixLabel'
         div.setAttribute('value', v)
@@ -1877,7 +1877,7 @@ function storage() {
     compra['parcelas'] = [parcelas.value]
     compra['valor'] = [valor.value]
     compraArray.push(compra)
-    valores.push(+(valor.value).replace('R$','') * -1)
+    valores.push(+(valor.value).replace('-R$','') * -1)
   })
   vendaLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
@@ -1915,7 +1915,7 @@ function storage() {
     pix['data'] = [data.value]
     pix['valor'] = [valor.value]
     pixArray.push(pix)
-    valores.push(+(valor.value).replace('R$',''))
+    valores.push(+(valor.value).replace('-R$','') * -1)
   })
 
   empPegoLabel.forEach((i)=>{
@@ -1980,7 +1980,7 @@ function storage() {
     emprestimo['juros'] = [juros.value]
     emprestimo['jurosMes'] = [jurosMes.value]
     EmprestimoEnviado.push(emprestimo)
-    valores.push(+(valorInit.value).replace('R$','') * -1)
+    valores.push(+(valorInit.value).replace('-R$','') * -1)
   })
   
   const transacoes = []
@@ -2092,7 +2092,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
   function EditValue() {
       nome.value = nomeEdit.value
       data.value = dataEdit.value
-      valorInit.value = `${valorEdit.value}`
+      valorInit.value = `R$ ${valorEdit.value}`
       parcelas.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
       deficit.value = deficitEdit.value
       valor.value = valorFinalEdit.value
@@ -2200,7 +2200,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
   function EditValue() {
       nome.value = nomeEdit.value
       data.value = dataEdit.value
-      valorInit.value = `${valorEdit.value}`
+      valorInit.value = `-R$ ${valorEdit.value}`
       parcelas.value = `${parcelasEdit.value}x de R$${(valorFinalEdit.value / +parcelasEdit.value).toFixed(2)}`
       lucro.value = lucroEdit.value
       valor.value = valorFinalEdit.value
@@ -2289,7 +2289,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       function changeValue() {
         nomeEdit.value = nome.value
         dataEdit.value = data.value
-        valorEdit.value = valor.value.replace('R$', '')
+        valorEdit.value = valor.value.replace('-R$', '')
         parcelasEdit.value = parcelas.value.slice(0,1)
         categoriaEdit.value = categoria.value
       }
@@ -2298,8 +2298,8 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       function EditValue() {
           nome.value = nomeEdit.value
           data.value = dataEdit.value
-          parcelas.value = `${parcelasEdit.value}x de R$${(valorEdit.value / +parcelasEdit.value).toFixed(2)}`
-          valor.value = valorEdit.value
+          parcelas.value = parcelasEdit.value
+          valor.value = `-R$ ${valorEdit.value}`
     
           storage()
       }
@@ -2383,7 +2383,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
               nome.value = nomeEdit.value
               data.value = dataEdit.value
               parcelas.value = `${parcelasEdit.value}x de R$${(valorEdit.value / +parcelasEdit.value).toFixed(2)}`
-              valor.value = valorEdit.value
+              valor.value = `R$ ${valorEdit.value}`
         
               storage()
           }
@@ -2464,7 +2464,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     function EditValue() {
         nome.value = nomeEdit.value
         data.value = dataEdit.value
-        valor.value = valorEdit.value
+        valor.value = `R$ ${valorEdit.value}`
   
         storage()
     }
