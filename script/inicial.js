@@ -32,6 +32,6 @@ if (nome && sobrenome && nomeUser && senha) {
 }
 botao.addEventListener('click', newUser)
 
-// if (localStorage.usuarios) {
-//   window.open("movimentacoes.html", '_top')
-// }   
+if (localStorage.usuarios) {
+  window.open("movimentacoes.html", '_top')
+}   

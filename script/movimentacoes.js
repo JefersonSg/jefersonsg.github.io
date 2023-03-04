@@ -1852,6 +1852,7 @@ function storage() {
   const pixArray = []
   const EmprestimoEnviado = []
   const emprestimoDevido = []
+  const valores = []
   
 
   compraLabel.forEach((i)=>{
@@ -1875,6 +1876,7 @@ function storage() {
     compra['parcelas'] = [parcelas.value]
     compra['valor'] = [valor.value]
     compraArray.push(compra)
+    valores.push(+(valor.value).replace('R$','') * -1)
   })
   vendaLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
@@ -1894,6 +1896,7 @@ function storage() {
     venda['parcelas'] = [parcelas.value]
     venda['valor'] = [valor.value]
     vendaArray.push(venda)
+    valores.push(+(valor.value).replace('R$',''))
   })
 
   pixLabel.forEach((i)=>{
@@ -1911,8 +1914,7 @@ function storage() {
     pix['data'] = [data.value]
     pix['valor'] = [valor.value]
     pixArray.push(pix)
-
-
+    valores.push(+(valor.value).replace('R$',''))
   })
 
   empPegoLabel.forEach((i)=>{
@@ -1975,9 +1977,11 @@ function storage() {
     emprestimo['juros'] = [juros.value]
     emprestimo['jurosMes'] = [jurosMes.value]
     EmprestimoEnviado.push(emprestimo)
+    valores.push(+(valorInit.value).replace('R$','') * -1)
   })
   
   const transacoes = []
+  console.log(valores)
 
   transacao.forEach(t => transacoes.push(t.getAttribute('value')))
   localStorage.setItem('compras', JSON.stringify(compraArray))
