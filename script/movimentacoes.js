@@ -97,7 +97,7 @@ adicionar[0].addEventListener("click", function () {
             </div>
             <input readonly  id="nomeMov" class="testando" ; color: #000;" value="${nomeMov[0].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
-            <input readonly id="valorFinal" ; color: #000;" value="R$${
+            <input readonly id="valorFinal" ; color: #000;" value="R$ ${
               (valores[0].value * 1).toFixed(2)
               }"  type="text" name="Valor" placeholder="Valor Mensal">
             
@@ -286,7 +286,7 @@ adicionar[1].addEventListener("click", function () {
     </div>
     <input readonly id="nomeMov" value="${nomeMov[1].value}" type="text" name="nome da movimentacao" placeholder="Nome da Mov">
 
-    <input readonly value="R${
+    <input readonly value="R$ ${
       (valores[1].value * 1).toFixed(2)
      }" id="valorFinal" type="text" name="razao[]" placeholder="Valor Mensal">
     
@@ -736,10 +736,10 @@ adicionar[3].addEventListener("click", function () {
     }"
     placeholder="numero de parcelas" >
     
-    <input readonly class = "deficit" id="deficit" type="text" name="Montante final" value="${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  placeholder="Valor pedido" >
+    <input readonly class = "deficit" id="deficit" type="text" name="Montante final" value="R$ ${((totalPago.value).replace('Total ',"") - valores[3].value).toFixed(2)}"  placeholder="Valor pedido" >
 
 
-    <input readonly id="valorInicial" class = "valorInicial"  value="R$${
+    <input readonly id="valorInicial" class = "valorInicial"  value="R$ ${
       (valores[3].value * 1).toFixed(2)
       }"  type="text" name="Valor">
     
@@ -1601,7 +1601,7 @@ function criarPaineis() {
             <input readonly class = "lucro" id="lucro" type="text" name="Montante final" value=""  placeholder="Valor pedido" >
 
 
-            <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
+            <input readonly id="valorInicial" class = "valorInicial"  value=""  type="text" name="Valor">
             
             
             <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
@@ -1724,7 +1724,7 @@ function criarPaineis() {
         <input readonly class = "deficit" id="deficit" type="text" name="Montante final" value=""  placeholder="Valor pedido" >
 
 
-        <input readonly id="valorInicial" class = "valorInicial"  value="R$"  type="text" name="Valor">
+        <input readonly id="valorInicial" class = "valorInicial"  value=""  type="text" name="Valor">
         
         
         <input readonly class = "valorFinal" id="valorFinal" type="text" name="Montante Total" value="" >
@@ -1845,6 +1845,7 @@ function storage() {
   const pixLabel = document.querySelectorAll('#pixLabel')
   const empLabel = document.querySelectorAll('#empLabel')
   const empPegoLabel = document.querySelectorAll('#empPegoLabel')
+  const valorStatus = document.querySelector('.valor')
 
 
   const compraArray = []
@@ -1854,7 +1855,7 @@ function storage() {
   const emprestimoDevido = []
   const valores = []
   
-
+ 
   compraLabel.forEach((i)=>{
     const nome = i.querySelector('#nomeMov')
     const categoria = i.querySelector('#categoria')
@@ -1944,7 +1945,9 @@ function storage() {
     emprestimo['valorFinal'] = [valor.value]
     emprestimo['juros'] = [juros.value]
     emprestimo['jurosMes'] = [jurosMes.value]
-    emprestimoDevido.push(emprestimo)
+    emprestimoDevido.push(emprestimo) 
+    valores.push(+(valorInit.value).replace('R$',''))
+
   })
 
   empLabel.forEach((i)=>{
@@ -1982,7 +1985,7 @@ function storage() {
   
   const transacoes = []
   console.log(valores)
-
+  localStorage.setItem('valores', JSON.stringify(valores))
   transacao.forEach(t => transacoes.push(t.getAttribute('value')))
   localStorage.setItem('compras', JSON.stringify(compraArray))
   localStorage.setItem('vendas', JSON.stringify(vendaArray))
@@ -1990,6 +1993,25 @@ function storage() {
   localStorage.setItem('empEnviado', JSON.stringify(EmprestimoEnviado))
   localStorage.setItem('empDevido', JSON.stringify(emprestimoDevido))
   localStorage.setItem('transacoes', JSON.stringify(transacoes))
+
+
+  const status = document.querySelector('.status')
+  
+  const soma = valores.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0)
+  if (soma > 0) {
+    status.style.backgroundColor = ' rgb(227, 247, 236)'
+    status.innerHTML = '<img src="./img/Movimentacoes/positivo.svg" alt=""> Positivo'
+  } else if (soma === 0) {
+    status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)'
+    status.innerHTML = '<img src="./img/Movimentacoes/neutro.svg" alt=""> Neutro'
+  } else if (soma < 0) {
+    status.style.backgroundColor = ' rgba(255, 0, 0, 0.5)'
+    status.innerHTML = '<img src="./img/Movimentacoes/negativo.svg" alt=""> Negativo'
+    status.style.color = '#610000' 
+  }
+
+  valorStatus.innerText = `R$ ${(soma).toFixed(2).replace('.',',')}`
+
 }
 
 if (!!localStorage.transacoes) {
@@ -2062,7 +2084,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     parcelasEdit.value = parcelas.value.slice(0,1)
     jurosEdit.value = juros.value
     jurosMesEdit.value = jurosMes.value
-    deficitEdit.value= deficit.value.replace('+R$ ', '')
+    deficitEdit.value= deficit.value.replace('R$ ', '')
     valorFinalEdit.value = valor.value.replace('R$ ','')
   }
   changeValue()
@@ -2170,7 +2192,7 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
     parcelasEdit.value = parcelas.value.slice(0,1)
     jurosEdit.value = juros.value
     jurosMesEdit.value = jurosMes.value
-    lucroEdit.value= lucro.value.replace('+R$ ', '')
+    lucroEdit.value= lucro.value.replace('R$ ', '')
     valorFinalEdit.value = valor.value.replace('R$ ','')
   }
   changeValue()
@@ -2477,3 +2499,4 @@ const empPegoLabel = document.querySelectorAll('#empPegoLabel')
       i.addEventListener('click',()=> editValueBg.classList.add('ativo'))
   })
 
+storage()
