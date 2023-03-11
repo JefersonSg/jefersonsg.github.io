@@ -568,12 +568,16 @@ body {
 }
 
 
-.valorInicial,
-#valorFinal,
+
 #categoria,
 #data {
   width: 70px;
 }
+#valorFinal,
+.valorInicial{
+  width: auto;
+}
+
 
 #nomeMov {
   width: auto;
