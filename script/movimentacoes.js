@@ -124,17 +124,17 @@ valores[2].addEventListener(
 valores[1].addEventListener(
   'change',
   () =>
-    (totais[1].value = `${parcelas[1].value}x de R$ ${(
-      valores[1].value / parcelas[1].value
-    ).toFixed(2)}`),
+  (totais[1].value = `${parcelas[1].value}x de R$ ${(
+    valores[1].value / parcelas[1].value
+  ).toFixed(2)}`),
 );
 
 parcelas[1].addEventListener(
   'change',
   () =>
-    (totais[1].value = `${parcelas[1].value}x de R$ ${(
-      valores[1].value / parcelas[1].value
-    ).toFixed(2)}`),
+  (totais[1].value = `${parcelas[1].value}x de R$ ${(
+    valores[1].value / parcelas[1].value
+  ).toFixed(2)}`),
 );
 
 // Movimentaçoes
@@ -157,10 +157,10 @@ adicionar[0].addEventListener('click', function () {
             <p id="nomeMov">${nomeMov[0].value}</p>
             <p id="valorFinal">-R$ ${(valores[0].value * 1).toFixed(2)}</p>
             <p id="categoria">${receita[0].value}</p>
-            <p id="data">${dataInfo[0].value * 1}</p>
+            <p id="data">${dataInfo[0].value}</p>
             <p id="parcelasTotal">${parcelas[0].value}x de R$ ${(
-      valores[0].value / parcelas[0].value
-    ).toFixed(2)}</p>
+        valores[0].value / parcelas[0].value
+      ).toFixed(2)}</p>
       `;
 
     edit.innerHTML = `
@@ -169,6 +169,7 @@ adicionar[0].addEventListener('click', function () {
           <span id="fecharEdit">X</span>
           <label for="nome">Nome</label>
           <input readonly type="nome" id="nomeEdit">
+
           <select disabled id="categoriaEdit" name="receita ou despesa" >
           <option selected value=""  style="display: none">
             categoria da compra
@@ -179,8 +180,10 @@ adicionar[0].addEventListener('click', function () {
           <option value="comida">Comida</option>
           <option value="cosmetico">Cosmeticos</option>
         </select>
+        
           <label for="data">Data</label>
-          <input readonly type="data" id="dataEdit">
+          <input readonly type="date" ;" id="dataInfo" name="data" />
+
           <select disabled readonly name="parcelas" id="parcelasEdit">
               <option  style="display:none ;" value="0">parcelas 0x</option>
               <option value="1">Parcelas 1x</option>
@@ -221,7 +224,7 @@ adicionar[0].addEventListener('click', function () {
       const btnEditar = editValueBg.querySelector('#editar');
       const btnDeletar = editValueBg.querySelector('#deletar');
       const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataEdit');
+      const dataEdit = editValueBg.querySelector('#dataInfo');
       const valorEdit = editValueBg.querySelector('#valorEdit');
       const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
       const categoriaEdit = editValueBg.querySelector('#categoriaEdit');
@@ -255,7 +258,7 @@ adicionar[0].addEventListener('click', function () {
       function changeValue() {
         nomeEdit.value = nome.innerText;
         dataEdit.value = data.innerText;
-        valorEdit.value = valor.innerText.replace('-R$', '');
+        valorEdit.value = (+valor.innerText.replace('-R$', '')).toFixed(2);
         parcelasEdit.value = parcelas.innerText.slice(0, 1);
         categoriaEdit.value = categoria.innerText;
       }
@@ -267,7 +270,7 @@ adicionar[0].addEventListener('click', function () {
         parcelas.innerText = `${parcelasEdit.value}x de R$${(
           valorEdit.innerText / +parcelasEdit.value
         ).toFixed(2)}`;
-        valor.value = valorEdit.innerText;
+        valor.value = (+valorEdit.innerText).toFixed(2);
 
         storage();
       }
@@ -348,8 +351,10 @@ adicionar[1].addEventListener('click', function () {
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
+
         <label for="data">Data</label>
-        <input readonly type="data" id="dataEdit">
+        <input readonly type="date" ;" id="dataInfo" name="data" />
+
         <select disabled readonly name="parcelas" id="parcelasEdit">
             <option  style="display:none ;" value="0">parcelas 0x</option>
             <option value="1">Parcelas 1x</option>
@@ -391,7 +396,7 @@ adicionar[1].addEventListener('click', function () {
       const btnEditar = editValueBg.querySelector('#editar');
       const btnDeletar = editValueBg.querySelector('#deletar');
       const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataEdit');
+      const dataEdit = editValueBg.querySelector('#dataInfo');
       const valorEdit = editValueBg.querySelector('#valorEdit');
       const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
 
@@ -423,7 +428,7 @@ adicionar[1].addEventListener('click', function () {
       function changeValue() {
         nomeEdit.value = nome.innerText;
         dataEdit.value = data.innerText;
-        valorEdit.value = valor.innerText.replace('R$', '');
+        valorEdit.value = (+valor.innerText.replace('R$', '')).toFixed(2);
         parcelasEdit.value = parcelas.innerText.slice(0, 1);
       }
       changeValue();
@@ -434,7 +439,7 @@ adicionar[1].addEventListener('click', function () {
         parcelas.innerText = `${parcelasEdit.value}x de R$${(
           valorEdit.value / +parcelasEdit.value
         ).toFixed(2)}`;
-        valor.innerText = valorEdit.value;
+        valor.innerText = (+valorEdit.value).toFixed(2);
 
         storage();
       }
@@ -483,7 +488,7 @@ adicionar[2].addEventListener('click', function () {
   const div = document.createElement('div');
   div.classList.add('movimentacoesLista');
   div.id = 'pixLabel';
-  edit.id = 'PixEdit';
+  edit.id = 'pixEdit';
 
   if (
     valores[2].value &&
@@ -494,10 +499,12 @@ adicionar[2].addEventListener('click', function () {
   ) {
     div.setAttribute('value', 'pixRecebido');
     div.innerHTML = `
-    <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+    <div class='icon icon-transacao'>
+      <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+    </div>
 
     <p>Transferencia recebida</p>
-    <p id="valorFinal">+R$ ${valores[2].value * 1}</p>
+    <p id="valorFinal">+R$ ${(+valores[2].value).toFixed(2)}</p>
     <p class='pix' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `;
@@ -508,8 +515,10 @@ adicionar[2].addEventListener('click', function () {
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
+
         <label for="data">Data</label>
-        <input readonly type="data" id="dataEdit">
+        <input readonly type="date" ;" id="dataInfo" name="data" />
+
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
         <div class='botoesEdit'>
@@ -536,7 +545,7 @@ adicionar[2].addEventListener('click', function () {
       const btnEditar = editValueBg.querySelector('#editar');
       const btnDeletar = editValueBg.querySelector('#deletar');
       const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataEdit');
+      const dataEdit = editValueBg.querySelector('#dataInfo');
       const valorEdit = editValueBg.querySelector('#valorEdit');
 
       const nome = div.querySelector('#nomeMov');
@@ -566,7 +575,7 @@ adicionar[2].addEventListener('click', function () {
       function changeValue() {
         nomeEdit.value = nome.innerText;
         dataEdit.value = data.innerText;
-        valorEdit.value = valor.innerText.replace('+R$', '');
+        valorEdit.value = (+valor.innerText.replace('+R$', '')).toFixed(2);
       }
       changeValue();
 
@@ -621,10 +630,11 @@ adicionar[2].addEventListener('click', function () {
   ) {
     div.setAttribute('value', 'pixEnviado');
     div.innerHTML = `
-    <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-
+    <div class='icon icon-transacao'>
+      <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+    </div>
     <p>Transferencia enviada</p>
-    <p id="valorFinal">-R$ ${valores[2].value * 1}</p>
+    <p id="valorFinal">-R$ ${(+valores[2].value).toFixed(2)}</p>
     <p class='pix' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
         `;
@@ -635,7 +645,8 @@ adicionar[2].addEventListener('click', function () {
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
         <label for="data">Data</label>
-        <input readonly type="data" id="dataEdit">
+        <input readonly type="date" ;" id="dataInfo" name="data" />
+
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
         <div class='botaoEdit'>
@@ -662,7 +673,7 @@ adicionar[2].addEventListener('click', function () {
       const btnEditar = editValueBg.querySelector('#editar');
       const btnDeletar = editValueBg.querySelector('#deletar');
       const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataEdit');
+      const dataEdit = editValueBg.querySelector('#dataInfo');
       const valorEdit = editValueBg.querySelector('#valorEdit');
 
       const nome = div.querySelector('#nomeMov');
@@ -692,14 +703,14 @@ adicionar[2].addEventListener('click', function () {
       function changeValue() {
         nomeEdit.value = nome.innerText;
         dataEdit.value = data.innerText;
-        valorEdit.value = valor.innerText.replace('-R$', '');
+        valorEdit.value = (+valor.innerText.replace('-R$', '')).toFixed(2);
       }
       changeValue();
 
       function EditValue() {
         nome.innerText = nomeEdit.value;
         data.innerText = dataEdit.value;
-        valor.innerText = `-R$ ${valorEdit.value}`;
+        valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`;
 
         storage();
       }
@@ -766,15 +777,15 @@ adicionar[3].addEventListener('click', function () {
     <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${totais[3].value}</p>
     <p class = "deficit" id="deficit">-R$ ${(
-      totalPago.value.replace('Total ', '') - valores[3].value
-    ).toFixed(2)}</p>
+        totalPago.value.replace('Total ', '') - valores[3].value
+      ).toFixed(2)}</p>
     <p id="valorInicial" class = "valorInicial">+R$ ${(
-      valores[3].value * 1
-    ).toFixed(2)}</p>
+        valores[3].value * 1
+      ).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
-      'Total ',
-      '',
-    )).toFixed(2)}</p>
+        'Total ',
+        '',
+      )).toFixed(2)}</p>
     <p class = "data"id="data">${dataInfo[3].value}</p>
     <p id='jurosLs'>${juros.value}</p>
     <p id='jurosMesLs'>${jurosComp.value}</p>
@@ -785,8 +796,10 @@ adicionar[3].addEventListener('click', function () {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+
             <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
           <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -880,7 +893,7 @@ adicionar[3].addEventListener('click', function () {
     const exit = editValueBg.querySelector('#fecharEdit');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
     const jurosEdit = editValueBg.querySelector('#jurosEdit');
@@ -1023,15 +1036,15 @@ adicionar[3].addEventListener('click', function () {
     <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${totais[3].value}</p>
     <p class = "lucro" id="lucro">+R$ ${(
-      totalPago.value.replace('Total ', '') - valores[3].value
-    ).toFixed(2)}</p>
+        totalPago.value.replace('Total ', '') - valores[3].value
+      ).toFixed(2)}</p>
     <p id="valorInicial" class = "valorInicial">-R$ ${(
-      valores[3].value * 1
-    ).toFixed(2)}</p>
+        valores[3].value * 1
+      ).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">R$ ${(+totalPago.value.replace(
-      'Total ',
-      '',
-    )).toFixed(2)}</p>
+        'Total ',
+        '',
+      )).toFixed(2)}</p>
     <p class = "data"id="data">${dataInfo[3].value}</p>
     <p id='jurosLs'>${juros.value}</p>
     <p id='jurosMesLs'>${jurosComp.value}</p>
@@ -1042,8 +1055,10 @@ adicionar[3].addEventListener('click', function () {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+
             <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
           <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -1135,7 +1150,7 @@ adicionar[3].addEventListener('click', function () {
     const exit = editValueBg.querySelector('#fecharEdit');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
     const jurosEdit = editValueBg.querySelector('#jurosEdit');
@@ -1408,6 +1423,8 @@ function criarPaineis() {
           <span id="fecharEdit">X</span>
           <label for="nome">Nome</label>
           <input readonly type="nome" id="nomeEdit">
+
+          <label for="categoria">Categoria</label>
           <select disabled id="categoriaEdit" name="receita ou despesa" >
           <option selected value=""  style="display: none">
             categoria da compra
@@ -1418,8 +1435,12 @@ function criarPaineis() {
           <option value="comida">Comida</option>
           <option value="cosmetico">Cosmeticos</option>
         </select>
-          <label for="data">Data</label>
-          <input readonly type="data" id="dataEdit">
+
+        <label for="data">Data</label>
+        <input readonly type="date" ;" id="dataInfo" name="data" />
+
+          <label for="parcelas">Parcelas</label>
+
           <select disabled readonly name="parcelas" id="parcelasEdit">
               <option  style="display:none ;" value="0">parcelas 0x</option>
               <option value="1">Parcelas 1x</option>
@@ -1474,7 +1495,9 @@ function criarPaineis() {
           <input readonly type="nome" id="nomeEdit">
 
           <label for="data">Data</label>
-          <input readonly type="data" id="dataEdit">
+          <input readonly type="date" ;" id="dataInfo" name="data" />
+
+          <label for="parcelas">Parcelas</label>
           <select disabled readonly name="parcelas" id="parcelasEdit">
             <option  style="display:none ;" value="0">parcelas 0x</option>
             <option value="1">Parcelas 1x</option>
@@ -1518,15 +1541,16 @@ function criarPaineis() {
         <p class='pix' id="nomeMov"></p>
         <p id="data"></p>
             `;
-      edit.innerHTML = `
-        
+      edit.innerHTML = `        
         <div class="editValueBg">
           <div class="editValue">
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+
             <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
             <div class="botaoEdit">
@@ -1562,8 +1586,10 @@ function criarPaineis() {
                 <span id="fecharEdit">X</span>
                 <label for="nome">Nome</label>
                 <input readonly type="nome" id="nomeEdit">
+                
                 <label for="data">Data</label>
-                <input readonly type="data" id="dataEdit">
+                <input readonly type="date" ;" id="dataInfo" name="data" />
+
                 <label for="valor">Valor</label>
                 <input readonly type="valor" id="valorEdit">
                 <div class="botaoEdit">
@@ -1604,10 +1630,14 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+
             <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
+
+          <label for="parcelas">Parcelas</label>
           <select disabled readonly name="parcelas" id="parcelasEdit">
             <option  style="display:none ;" value="0">parcelas 0x</option>
             <option value="1">Parcelas 1x</option>
@@ -1623,6 +1653,8 @@ function criarPaineis() {
             <option value="11">Parcelas 11x</option>
             <option value="12">Parcelas 12x</option>
           </select>
+
+          <label for="juros">Juros</label>
           <select disabled name="juros" id="jurosEdit">
             <option value="0">0% de juros</option>
             <option value="1">1% de juros</option>
@@ -1656,20 +1688,22 @@ function criarPaineis() {
             <option value="29">29% de juros</option>
             <option value="30">30% de juros</option>
           </select>
+
+          <label for="juros-compostos">Juros ao mês</label>
           <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mes</option>
-            <option value="1">1% ao Mês</option>
-            <option value="2">2% ao Mês</option>
-            <option value="3">3% ao Mês</option>
-            <option value="4">4% ao Mês</option>
-            <option value="5">5% ao Mês</option>
-            <option value="6">6% ao Mês</option>
-            <option value="7">7% ao Mês</option>
-            <option value="8">8% ao Mês</option>
-            <option value="9">9% ao Mês</option>
-            <option value="10">10% ao Mês</option>
-            <option value="11">11% ao Mês</option>
-            <option value="12">12% ao Mês</option>
+            <option value="0">0% ao mês</option>
+            <option value="1">1% ao mês</option>
+            <option value="2">2% ao mês</option>
+            <option value="3">3% ao mês</option>
+            <option value="4">4% ao mês</option>
+            <option value="5">5% ao mês</option>
+            <option value="6">6% ao mês</option>
+            <option value="7">7% ao mês</option>
+            <option value="8">8% ao mês</option>
+            <option value="9">9% ao mês</option>
+            <option value="10">10% ao mês</option>
+            <option value="11">11% ao mês</option>
+            <option value="12">12% ao mês</option>
           </select>
             <label for="lucro">Lucro</label>
             <input readonly type="lucro" id="lucroEdit">
@@ -1713,10 +1747,14 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+
             <label for="data">Data</label>
-            <input readonly type="data" id="dataEdit">
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
             <label for="valor">Valor</label>
             <input readonly type="valor" id="valorEdit">
+
+            <label for="parcelas">Parcelas</label>
           <select disabled readonly name="parcelas" id="parcelasEdit">
             <option  style="display:none ;" value="0">parcelas 0x</option>
             <option value="1">Parcelas 1x</option>
@@ -1732,6 +1770,8 @@ function criarPaineis() {
             <option value="11">Parcelas 11x</option>
             <option value="12">Parcelas 12x</option>
           </select>
+
+          <label for="juros">Juros</label>
           <select disabled name="juros" id="jurosEdit">
             <option value="0">0% de juros</option>
             <option value="1">1% de juros</option>
@@ -1765,20 +1805,22 @@ function criarPaineis() {
             <option value="29">29% de juros</option>
             <option value="30">30% de juros</option>
           </select>
+
+          <label for="juros-compostos">Juros ao mês</label>
           <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mes</option>
-            <option value="1">1% ao Mês</option>
-            <option value="2">2% ao Mês</option>
-            <option value="3">3% ao Mês</option>
-            <option value="4">4% ao Mês</option>
-            <option value="5">5% ao Mês</option>
-            <option value="6">6% ao Mês</option>
-            <option value="7">7% ao Mês</option>
-            <option value="8">8% ao Mês</option>
-            <option value="9">9% ao Mês</option>
-            <option value="10">10% ao Mês</option>
-            <option value="11">11% ao Mês</option>
-            <option value="12">12% ao Mês</option>
+            <option value="0">0% ao mês</option>
+            <option value="1">1% ao mês</option>
+            <option value="2">2% ao mês</option>
+            <option value="3">3% ao mês</option>
+            <option value="4">4% ao mês</option>
+            <option value="5">5% ao mês</option>
+            <option value="6">6% ao mês</option>
+            <option value="7">7% ao mês</option>
+            <option value="8">8% ao mês</option>
+            <option value="9">9% ao mês</option>
+            <option value="10">10% ao mês</option>
+            <option value="11">11% ao mês</option>
+            <option value="12">12% ao mês</option>
           </select>
             <label for="deficit">Deficit</label>
             <input readonly type="deficit" id="deficitEdit">
@@ -2033,7 +2075,7 @@ if (localStorage.empDevido) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
     const jurosEdit = editValueBg.querySelector('#jurosEdit');
@@ -2145,7 +2187,7 @@ if (localStorage.empEnviado) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
     const jurosEdit = editValueBg.querySelector('#jurosEdit');
@@ -2257,7 +2299,7 @@ if (localStorage.compras) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
     const categoriaEdit = editValueBg.querySelector('#categoriaEdit');
@@ -2344,7 +2386,7 @@ if (localStorage.vendas) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
     const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
 
@@ -2429,7 +2471,7 @@ if (localStorage.pixEnviado) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
 
     const nome = i.querySelector('#nomeMov');
@@ -2459,14 +2501,14 @@ if (localStorage.pixEnviado) {
     function changeValue() {
       nomeEdit.value = nome.innerText;
       dataEdit.value = data.innerText;
-      valorEdit.value = valor.innerText.replace('-R$', '');
+      valorEdit.value = (+valor.innerText.replace('-R$', '')).toFixed(2);
     }
     changeValue();
 
     function EditValue() {
       nome.innerText = nomeEdit.value;
       data.innerText = dataEdit.value;
-      valor.innerText = `-R$ ${valorEdit.value}`;
+      valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`;
 
       storage();
     }
@@ -2507,7 +2549,7 @@ if (localStorage.pixRecebido) {
     const btnEditar = editValueBg.querySelector('#editar');
     const btnDeletar = editValueBg.querySelector('#deletar');
     const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataEdit');
+    const dataEdit = editValueBg.querySelector('#dataInfo');
     const valorEdit = editValueBg.querySelector('#valorEdit');
 
     const nome = i.querySelector('#nomeMov');
@@ -2537,14 +2579,14 @@ if (localStorage.pixRecebido) {
     function changeValue() {
       nomeEdit.value = nome.innerText;
       dataEdit.value = data.innerText;
-      valorEdit.value = valor.innerText.replace('+R$', '');
+      valorEdit.value = (+valor.innerText.replace('+R$', '')).toFixed(2);
     }
     changeValue();
 
     function EditValue() {
       nome.innerText = nomeEdit.value;
       data.innerText = dataEdit.value;
-      valor.innerText = `+R$ ${valorEdit.value}`;
+      valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`;
 
       storage();
     }
@@ -2579,3 +2621,17 @@ if (localStorage.pixRecebido) {
 }
 
 storage();
+
+// onlyNumber
+
+function onlynumber(evt) {
+  var theEvent = evt || window.event;
+  var key = theEvent.keyCode || theEvent.which;
+  key = String.fromCharCode(key);
+  //var regex = /^[0-9.,]+$/;
+  var regex = /^[0-9.]+$/;
+  if (!regex.test(key)) {
+    theEvent.returnValue = false;
+    if (theEvent.preventDefault) theEvent.preventDefault();
+  }
+}

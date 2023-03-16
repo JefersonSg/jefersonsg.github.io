@@ -149,7 +149,8 @@ body {
 #compra-button,
 #venda-button,
 #pix-button,
-#emprestimo-button {
+#emprestimo-button { 
+
   background: #EFEFEF;
   color: black;
   cursor: pointer;
@@ -324,6 +325,19 @@ body {
 #compra-conteudo.ativo,
 #pix-conteudo.ativo {
   display: block;
+  animation: formulario .2s forwards;
+}
+
+@keyframes formulario {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0)
+  }
 }
 
 /* ids formulario */
@@ -338,12 +352,11 @@ body {
   height: 50px;
 }
 
-
+#dataInfo,
 #receita,
 #parcelas,
 #juros-compostos,
 #emprestimo-juros {
-  padding: 0px 10px;
   width: 148px;
   height: 24px;
   padding: 4px 6px;
@@ -351,7 +364,9 @@ body {
   position: relative;
   text-align: center;
 }
-
+#dataInfo{
+  padding: 0 2px;
+}
 #pix-label::before,
 #compra-label::before,
 #venda-label::before,
@@ -417,6 +432,7 @@ body {
 
 .editValueBg {
   position: fixed;
+  font-family: 'roboto', sans-serif;
   top: 0;
   left: 0;
   display: none;
@@ -430,13 +446,12 @@ body {
 
 .editValueBg.ativo {
   display: flex;
-  animation: modal .4s forwards;
 }
 
 @keyframes modal {
   from {
     opacity: 0;
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, 200px, 0);
   }
 
   to {
@@ -449,12 +464,33 @@ body {
   width: 70%;
   display: grid;
   grid-template-columns: 1fr;
+  gap: 5px;
   background-color: white;
   padding: 20px;
+  border-radius: 20px;
   height: auto;
-  border: 10px solid #38A1FF;
   box-shadow: 0 0 0 4px white;
   position: relative;
+  animation: modal .4s forwards;
+
+}
+
+#compraEdit .editValue{
+  border: 10px solid #F92828;
+}
+#emprestadoEdit .editValue {
+  border: 10px solid #6D29D3; 
+}
+
+#pixEdit .editValue{
+  border: 10px solid #32BCAD; 
+}
+#pixEnvEdit .editValue {
+  border: 10px solid #32BCAD; 
+}
+
+#vendaEdit .editValue {
+  border: 10px solid #00920F; 
 }
 
 .botaoEdit {
@@ -464,8 +500,8 @@ body {
   gap: 16px;
 }
 
-.editValue label {
-  display: block;
+.editValue input,.editValue select {
+  margin-bottom: 8px;
 }
 
 #editar::before {
