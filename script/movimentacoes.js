@@ -15,8 +15,6 @@ const formPix = document.querySelector('#pix-conteudo');
 const formEmp = document.querySelector('#emprestimo-conteudo');
 
 
-
-
 function addAtivo(item) {
   btnForm.forEach((i)=>{ if (i !== item) { i.classList.remove('ativo') } })
   item.classList.toggle('ativo')
@@ -33,9 +31,6 @@ function addAtivo(item) {
 btnForm.forEach((item)=>{
   item.addEventListener('click', ()=>{addAtivo(item)})
 })
-
-
-
 
 // Emprestimo
 
@@ -57,28 +52,31 @@ parcelas[2].addEventListener('change', contaEmp);
 juros.addEventListener('change', contaEmp);
 jurosComp.addEventListener('change', contaEmp);
 
+//  COMPRA
+function contaCompra() {
+    valor[0].value = `${parcelas[0].value}x de R$ ${(
+      InputValor[0].value / parcelas[0].value
+    ).toFixed(2)}`;
+}
+InputValor[0].addEventListener('keyup', contaCompra);
+parcelas[0].addEventListener('change', contaCompra);
+
 // PIX
 InputValor[2].addEventListener(
-  'change',
+   'change',
   () => (valor[2].value = `R$ ${(InputValor[2].value * 1).toFixed(2)}`),
 );
 
 // VENDAS
-InputValor[1].addEventListener(
-  'change',
-  () =>
-  (valor[1].value = `${parcelas[1].value}x de R$ ${(
-    InputValor[1].value / parcelas[1].value
-  ).toFixed(2)}`),
-);
 
-parcelas[1].addEventListener(
-  'change',
-  () =>
-  (valor[1].value = `${parcelas[1].value}x de R$ ${(
+function contaVenda() {
+  valor[1].value = `${parcelas[1].value}x de R$ ${(
     InputValor[1].value / parcelas[1].value
-  ).toFixed(2)}`),
-);
+  ).toFixed(2)}`
+}
+InputValor[1].addEventListener('change',contaVenda);
+parcelas[1].addEventListener(
+  'change', contaVenda);
 
 // Movimentaçoes
 
@@ -89,23 +87,227 @@ function novaDiv(type) {
   let div = document.createElement('div')
   div.classList.add('movimentacoesLista');
   const table = document.getElementById('tabela');
-  if (type == 'compra') {
+     if (type === 'compra') {
     div.innerHTML = `
     <div class='icon icon-transacao'>
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
-
     <p id="nomeMov"></p>
     <p id="valorFinal"></p>
     <p id="categoria"></p>
     <p id="data"></p>
     <p id="parcelasTotal"></p>
-`}
-  table.insertBefore(div, table.firstChild);
+    `
+    table.insertBefore(div, table.firstChild);
+   } else if (type === 'venda') {
+    div.innerHTML = `
+    <div class='icon icon-transacao'>
+    <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+    </div>
+
+    <p id="nomeMov"></p>
+    <p id="valorFinal"></p>
+    <p class='parcelas-venda' id="parcelasTotal"></p>
+    <p id="data"></p>
+    `
+    table.insertBefore(div, table.firstChild);
+   } else if (type === 'transferencia') {
+    div.innerHTML = `
+    <div class='icon icon-transacao'>
+      <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+    </div>
+
+    <p>Transferencia recebida</p>
+    <p id="valorFinal"></p>
+    <p class='pix' id="nomeMov"></p>
+    <p id="data"></p>
+    `
+    table.insertBefore(div, table.firstChild);
+   } else if (type === 'emprestimo') {
+    div.innerHTML = `
+    <div class='icon icon-transacao'>
+    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+    </div>
+
+    <p id="nomeMov" class = "nomeMov"></p>
+    <p class="parcelasTotal" id="parcelasTotal"></p>
+    <p class = "deficit" id="deficit"></p>
+    <p id="valorInicial" class = "valorInicial"></p>
+    <p class = "valorFinal" id="valorFinal"></p>
+    <p class = "data"id="data"></p>
+    <p id='jurosLs'></p>
+    <p id='jurosMesLs'></p>
+    `
+    table.insertBefore(div, table.firstChild);
+   } else {
+    console.log('erro')
+   }
+} 
+function campoEditar(type) {
+  type = this.value
+  let edit = document.createElement('div')
+
+    if (type === 'compra') {
+    edit.id = 'compraEdit';
+    edit.innerHTML = `
+    <div class="editValueBg">
+      <div class="editValue">
+        <span id="fecharEdit">X</span>
+        <label for="nome">Nome</label>
+        <input readonly type="text" name='nome' id="nomeEdit">
+
+        <label for="categoria">Categoria</label>
+        <select disabled id="categoriaEdit" name="categoria" >
+        <option selected value=""  style="display: none">
+          categoria da compra
+        </option>
+        <option value="produto eletronico">Produto Eletronico</option>
+        <option value="roupa">Roupa</option>
+        <option value="remedio">Remedio</option>
+        <option value="comida">Comida</option>
+        <option value="cosmetico">Cosmeticos</option>
+      </select>
+
+      <label for="data">Data</label>
+      <input readonly type="date" ;" id="dataInfo" name="data" />
+
+        <label for="parcelas">Parcelas</label>
+
+        <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
+        <label for="valor">Valor</label>
+        <input readonly type="valor" id="valorEdit">
+
+        <div class='botaoEdit'>
+         <button type="button" id="editar"></button>
+          <button type="button" id="deletar">Deletar</button>
+        </div>
+
+      </div>
+      <div class="confirmar">
+        <span>Deseja mesmo deletar?</span>
+        <button type="button" id="sim">Sim</button>
+        <button type="button" id="nao">Não</button>
+      </div>
+    </div>
+    `;
+    document.body.appendChild(edit)
+  } else if (type === 'venda') {
+    edit.id = 'vendaEdit';
+    edit.innerHTML = `
+      <div class="editValueBg">
+        <div class="editValue">
+          <span id="fecharEdit">X</span>
+          <label for="nome">Nome</label>
+          <input readonly type="nome" id="nomeEdit">
+
+          <label for="data">Data</label>
+          <input readonly type="date" ;" id="dataInfo" name="data" />
+
+          <label for="parcelas">Parcelas</label>
+          <select disabled readonly name="parcelas" id="parcelasEdit">
+            <option  style="display:none ;" value="0">parcelas 0x</option>
+            <option value="1">Parcelas 1x</option>
+            <option value="2">Parcelas 2x</option>
+            <option value="3">Parcelas 3x</option>
+            <option value="4">Parcelas 4x</option>
+            <option value="5">Parcelas 5x</option>
+            <option value="6">Parcelas 6x</option>
+            <option value="7">Parcelas 7x</option>
+            <option value="8">Parcelas 8x</option>
+            <option value="9">Parcelas 9x</option>
+            <option value="10">Parcelas 10x</option>
+            <option value="11">Parcelas 11x</option>
+            <option value="12">Parcelas 12x</option>
+          </select>
+          <label for="valor">Valor</label>
+          <input readonly type="valor" id="valorEdit">
+          <div class='botaoEdit'>
+            <button type="button" id="editar"></button>
+            <button type="button" id="deletar">Deletar</button>
+          </div>
+        </div>
+        <div class="confirmar">
+          <span>Deseja mesmo deletar?</span>
+          <button type="button" id="sim">Sim</button>
+          <button type="button" id="nao">Não</button>
+        </div>
+    </div>
+    `;
+    document.body.appendChild(edit)
+  } else if (type === 'transferencia') {
+    edit.id = 'transferenciaEdit';
+    edit.innerHTML = `        
+        <div class="editValueBg">
+          <div class="editValue">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="nome" id="nomeEdit">
+
+            <label for="data">Data</label>
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
+            <div class="botaoEdit">
+              <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
+          </div>
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
+          </div>
+        </div>
+    `;
+    document.body.appendChild(edit)
+  } else if (type === 'emprestimo') {
+    edit.id = 'emprestimoEdit';
+    edit.innerHTML = `
+            <div class="editValueBg">
+              <div class="editValue">
+                <span id="fecharEdit">X</span>
+                <label for="nome">Nome</label>
+                <input readonly type="nome" id="nomeEdit">
+                
+                <label for="data">Data</label>
+                <input readonly type="date" ;" id="dataInfo" name="data" />
+
+                <label for="valor">Valor</label>
+                <input readonly type="valor" id="valorEdit">
+                <div class="botaoEdit">
+                  <button type="button" id="editar"></button>
+                  <button type="button" id="deletar">Deletar</button>
+                </div>
+              </div>
+              <div class="confirmar">
+                <span>Deseja mesmo deletar?</span>
+                <button type="button" id="sim">Sim</button>
+                <button type="button" id="nao">Não</button>
+              </div>
+            </div>
+    `;
+    document.body.appendChild(edit)
+  } else { console.log('erro')}
 }
 
 adicionar.forEach((i)=>{
   i.addEventListener('click', novaDiv)
+  i.addEventListener('click', campoEditar)
 })
 
 // Venda
