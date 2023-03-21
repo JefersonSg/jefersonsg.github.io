@@ -37,11 +37,12 @@
       <h4 class="valor font-p-sb">R$ 0,00</h4>
       <p class="texto">Adicione novas atividades</p>
       <div class="selecao-conteudo">
-        <button type="button" id="compra-button"></button>
-        <button type="bottom" id="venda-button"></button>
-        <button type="button" id="pix-button"></button>
-        <button type="button" id="emprestimo-button"></button>
-        <div class="transacao" id="compra-conteudo">
+        <button type="button" value="compra" class="btnForm" id="compra-button"></button>
+        <button type="button" value="venda" class="btnForm" id="venda-button"></button>
+        <button type="button" value="transferencia" class="btnForm" id="pix-button"></button>
+        <button type="button" value="emprestimo" class="btnForm" id="emprestimo-button"></button>
+
+        <div class="transacao" value="compra" id="compra-conteudo">
           <div class="financas">
             <form action="inserir-financas" class="financas-formulario">
               <div>
@@ -53,7 +54,7 @@
               </div>
 
               <div>
-                <select required name="receita ou despesa" id="receita">
+                <select required name="categoria" id="categoriaInit">
                   <option selected value="" disabled style="display: none">
                     categoria da compra
                   </option>
@@ -98,7 +99,7 @@
             </form>
           </div>
         </div>
-        <div class="transacao" id="venda-conteudo">
+        <div class="transacao" value="venda" id="venda-conteudo">
           <div class="financas">
             <form action="inserir-financas" class="financas-formulario">
               <div>
@@ -142,19 +143,19 @@
             </form>
           </div>
         </div>
-        <div class="transacao" id="pix-conteudo">
+        <div class="transacao" value="transferencia" id="pix-conteudo">
           <div class="financas">
             <form action="inserir-financas" class="financas-formulario">
               <div>
                 <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da pessoa" />
               </div>
               <div>
-                <select required name="receita ou despesa" id="receita">
+                <select required name="categoria" id="categoriaInit">
                   <option selected value="" disabled style="display: none">
                     Enviou ou Recebeu?
                   </option>
-                  <option aria-placeholder="Enviou" value="-">Enviou</option>
-                  <option aria-placeholder="Recebeu" value="+">Recebeu</option>
+                  <option value="Enviou">Enviou</option>
+                  <option value="Recebeu">Recebeu</option>
                 </select>
               </div>
               <div>
@@ -177,16 +178,16 @@
             </form>
           </div>
         </div>
-        <div class="transacao" id="emprestimo-conteudo">
+        <div class="transacao" value="emprestimo" id="emprestimo-conteudo">
           <div class="financas">
             <form action="inserir-financas" class="financas-formulario">
               <div>
                 <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
               </div>
               <div>
-                <select required name="receita ou despesa" id="receita">
+                <select required name="categoria" id="categoriaInit">
                   <option selected value="" disabled style="display: none">
-                    receita ou despesa?
+                    Tipo de emprestimo
                   </option>
                   <option value="-">Peguei Emprestimo</option>
                   <option value="+">Emprestei Dinheiro</option>

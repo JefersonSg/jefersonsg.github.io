@@ -149,7 +149,7 @@ body {
 #compra-button,
 #venda-button,
 #pix-button,
-#emprestimo-button { 
+#emprestimo-button {
 
   background: #EFEFEF;
   color: black;
@@ -353,7 +353,7 @@ body {
 }
 
 #dataInfo,
-#receita,
+#categoriaInit,
 #parcelas,
 #juros-compostos,
 #emprestimo-juros {
@@ -364,9 +364,11 @@ body {
   position: relative;
   text-align: center;
 }
-#dataInfo{
+
+#dataInfo {
   padding: 0 2px;
 }
+
 #pix-label::before,
 #compra-label::before,
 #venda-label::before,
@@ -391,7 +393,7 @@ body {
   display: none;
 }
 
-#receita {
+#categoriaInit {
   width: 100%;
 }
 
@@ -475,22 +477,24 @@ body {
 
 }
 
-#compraEdit .editValue{
+#compraEdit .editValue {
   border: 10px solid #F92828;
 }
+
 #emprestadoEdit .editValue {
-  border: 10px solid #6D29D3; 
+  border: 10px solid #6D29D3;
 }
 
-#pixEdit .editValue{
-  border: 10px solid #32BCAD; 
+#pixEdit .editValue {
+  border: 10px solid #32BCAD;
 }
+
 #pixEnvEdit .editValue {
-  border: 10px solid #32BCAD; 
+  border: 10px solid #32BCAD;
 }
 
 #vendaEdit .editValue {
-  border: 10px solid #00920F; 
+  border: 10px solid #00920F;
 }
 
 .botaoEdit {
@@ -500,7 +504,8 @@ body {
   gap: 16px;
 }
 
-.editValue input,.editValue select {
+.editValue input,
+.editValue select {
   margin-bottom: 8px;
 }
 
@@ -609,8 +614,9 @@ body {
 #data {
   width: 70px;
 }
+
 #valorFinal,
-.valorInicial{
+.valorInicial {
   width: auto;
 }
 
