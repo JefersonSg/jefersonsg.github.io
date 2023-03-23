@@ -361,7 +361,6 @@ body {
   height: 24px;
   padding: 4px 6px;
   cursor: pointer;
-  position: relative;
   text-align: center;
 }
 
@@ -369,16 +368,9 @@ body {
   padding: 0 2px;
 }
 
-#pix-label::before,
-#compra-label::before,
-#venda-label::before,
-#emprestimo-label::before {
-  position: relative;
-}
-
 #dataInfo,
 #movimentacao,
-#valor {
+#valorInput {
   width: 97%;
 }
 
@@ -433,15 +425,15 @@ body {
 
 
 .editValueBg {
+  display: none;
   position: fixed;
   font-family: 'roboto', sans-serif;
   top: 0;
   left: 0;
-  display: none;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
   width: 100%;
+  align-items: center;
+  justify-content: center;
   z-index: 2000;
   background-color: rgba(0, 0, 0, 0.3);
 }
@@ -463,37 +455,34 @@ body {
 }
 
 .editValue {
-  width: 70%;
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 5px;
+  width: 70%;
   background-color: white;
   padding: 20px;
   border-radius: 20px;
   height: auto;
   box-shadow: 0 0 0 4px white;
-  position: relative;
   animation: modal .4s forwards;
 
 }
 
-#compraEdit .editValue {
+#compraLabelEdit .editValue {
   border: 10px solid #F92828;
 }
 
-#emprestadoEdit .editValue {
+#emprestimoLabelEdit .editValue {
   border: 10px solid #6D29D3;
 }
 
-#pixEdit .editValue {
+#transferenciaLabelEdit .editValue {
   border: 10px solid #32BCAD;
 }
 
-#pixEnvEdit .editValue {
-  border: 10px solid #32BCAD;
-}
 
-#vendaEdit .editValue {
+#vendaLabelEdit .editValue {
   border: 10px solid #00920F;
 }
 
@@ -615,7 +604,7 @@ body {
   width: 70px;
 }
 
-#valorFinal,
+#valor,
 .valorInicial {
   width: auto;
 }
@@ -631,8 +620,8 @@ body {
   width: 85vw;
 }
 
-#lucro,
-#deficit,
+#condicional,
+#diferenca,
 #jurosLs,
 #jurosMesLs,
 #parcelasTotal {
@@ -655,7 +644,7 @@ body {
 #categoria,
 #data,
 .valorFinal,
-.pix#nomeMov,
+.transferencia#nomeMov,
 .parcelas-venda#parcelasTotal {
   display: block;
   color: #939393 !important;

@@ -50,7 +50,7 @@
               </div>
 
               <div>
-                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
+                <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
               </div>
 
               <div>
@@ -106,7 +106,7 @@
                 <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome do Comprador" />
               </div>
               <div>
-                <input onkeypress="return onlynumber();" type="text" id="valor" name="valor" placeholder="Valor" />
+                <input onkeypress="return onlynumber();" type="text" id="valorInput" name="valor" placeholder="Valor" />
               </div>
               <div>
                 <input type="date" ;" id="dataInfo" name="data" />
@@ -154,12 +154,12 @@
                   <option selected value="" disabled style="display: none">
                     Enviou ou Recebeu?
                   </option>
-                  <option value="Enviou">Enviou</option>
-                  <option value="Recebeu">Recebeu</option>
+                  <option value="-">Enviou</option>
+                  <option value="+">Recebeu</option>
                 </select>
               </div>
               <div>
-                <input type="text" id="valor" name="valor" onkeypress="return onlynumber();" placeholder="Valor" />
+                <input type="text" id="valorInput" name="valor" onkeypress="return onlynumber();" placeholder="Valor" />
               </div>
               <div>
                 <input type="date" ;" id="dataInfo" name="data" />
@@ -189,12 +189,12 @@
                   <option selected value="" disabled style="display: none">
                     Tipo de emprestimo
                   </option>
-                  <option value="-">Peguei Emprestimo</option>
-                  <option value="+">Emprestei Dinheiro</option>
+                  <option value="+">Peguei Emprestimo</option>
+                  <option value="-">Emprestei Dinheiro</option>
                 </select>
               </div>
               <div>
-                <input type="text" onkeypress="return onlynumber();" id="valor" name="valor" placeholder="Valor" />
+                <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
               </div>
               <div>
                 <input type="date" ;" id="dataInfo" name="data" />
@@ -296,8 +296,12 @@
         </form>
       </div>
     </div>
+    </div>
   </section>
+  <div id="editores">
 </body>
 <script src="./script/movimentacoes.js"></script>
+<script src="./script/contas.js"></script>
+<script src="./script/ativarForm.js"></script>
 
 </html>

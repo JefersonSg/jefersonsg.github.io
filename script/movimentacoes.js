@@ -1,163 +1,61 @@
-const parcelas = document.querySelectorAll('#parcelas');
-const InputValor = document.querySelectorAll('#valor');
+const InputValor = document.querySelectorAll('#valorInput');
 const valor = document.querySelectorAll('#total');
-const categoria = document.querySelectorAll('#receita');
+const categoria = document.querySelectorAll('#categoriaInit');
 const adicionar = document.querySelectorAll('#botao-add');
 const jurosComp = document.getElementById('juros-compostos');
 const juros = document.getElementById('emprestimo-juros');
 const nomeMov = document.querySelectorAll('#movimentacao');
 const dataInfo = document.querySelectorAll('#dataInfo');
 const totalPago = document.getElementById('totalPago');
-const btnForm = document.querySelectorAll('.btnForm')
-const formularios = document.querySelectorAll('.transacao');
-const formVenda = document.querySelector('#venda-conteudo');
-const formPix = document.querySelector('#pix-conteudo');
-const formEmp = document.querySelector('#emprestimo-conteudo');
+const table = document.getElementById('tabela')
+const edits = document.getElementById('editores');
 
+// storages
 
-function addAtivo(item) {
-  btnForm.forEach((i)=>{ if (i !== item) { i.classList.remove('ativo') } })
-  item.classList.toggle('ativo')
+let ls = localStorage.transacoes ? JSON.parse(localStorage.transacoes) : false;
+let compraLs = localStorage.compras ? JSON.parse(localStorage.compras) : false;
+let vendaLs = localStorage.vendas ? JSON.parse(localStorage.vendas) : false;
+let transferenciaLs = localStorage.transferencias ? JSON.parse(localStorage.transferencias) : false;
+let emprestimoLs = localStorage.emprestimos ? JSON.parse(localStorage.emprestimos) : false;
 
-  formularios.forEach((i)=>{  
-    if (i.getAttribute('value') == item.value) {
-      i.classList.toggle('ativo')
-    } else {
-      i.classList.remove('ativo')
-    }
-  })
-}
-
-btnForm.forEach((item)=>{
-  item.addEventListener('click', ()=>{addAtivo(item)})
-})
-
-// Emprestimo
-
-function contaEmp() {
-  const jurosTotal =
-    (jurosComp.selectedIndex * parcelas[2].selectedIndex +
-      juros.selectedIndex) /
-    100;
-  const valorFim = InputValor[3].value * jurosTotal + +InputValor[3].value;
-
-  valor[3].value = `${parcelas[2].selectedIndex}x de R$ ${(
-    valorFim / parcelas[2].selectedIndex
-  ).toFixed(2)}`;
-
-  totalPago.value = `Total ${valorFim.toFixed(2)}`;
-}
-InputValor[3].addEventListener('keyup', contaEmp);
-parcelas[2].addEventListener('change', contaEmp);
-juros.addEventListener('change', contaEmp);
-jurosComp.addEventListener('change', contaEmp);
-
-//  COMPRA
-function contaCompra() {
-    valor[0].value = `${parcelas[0].value}x de R$ ${(
-      InputValor[0].value / parcelas[0].value
-    ).toFixed(2)}`;
-}
-InputValor[0].addEventListener('keyup', contaCompra);
-parcelas[0].addEventListener('change', contaCompra);
-
-// PIX
-InputValor[2].addEventListener(
-   'change',
-  () => (valor[2].value = `R$ ${(InputValor[2].value * 1).toFixed(2)}`),
-);
-
-// VENDAS
-
-function contaVenda() {
-  valor[1].value = `${parcelas[1].value}x de R$ ${(
-    InputValor[1].value / parcelas[1].value
-  ).toFixed(2)}`
-}
-InputValor[1].addEventListener('change',contaVenda);
-parcelas[1].addEventListener(
-  'change', contaVenda);
-
-// Movimentaçoes
-
-// Compra
+let number = ls ? ls.length : 0
 
 function novaDiv(type) {
   type = this.value
-  let div = document.createElement('div')
+  let div = document.createElement('li')
+  let edit = document.createElement('div')
   div.classList.add('movimentacoesLista');
-  const table = document.getElementById('tabela');
-     if (type === 'compra') {
+  div.setAttribute('label', number)
+  div.id = `${type}Label`
+  edit.id = `${type}LabelEdit`;
+  edit.classList.add('editValueBg')
+  console.log()
+
+  if (type === 'compra'
+    // && nomeMov[0].value !== ''
+    // && InputValor[0].value !== ''
+    // && categoria[0].selectedIndex !== 0
+    // && dataInfo[0].value !== ''
+  ) {
+
     div.innerHTML = `
     <div class='icon icon-transacao'>
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
-    <p id="nomeMov"></p>
-    <p id="valorFinal"></p>
-    <p id="categoria"></p>
-    <p id="data"></p>
-    <p id="parcelasTotal"></p>
+    <p id="nomeMov">${nomeMov[0].value}</p>
+    <p id="valor">-R$${(InputValor[0].value * 1).toFixed(2)}</p>
+    <p id="categoria">${categoria[0].value}</p>
+    <p id="data">${dataInfo[0].value}</p>
+    <p id="parcelasTotal">${valor[0].value}</p>
     `
-    table.insertBefore(div, table.firstChild);
-   } else if (type === 'venda') {
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-    <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
-    </div>
-
-    <p id="nomeMov"></p>
-    <p id="valorFinal"></p>
-    <p class='parcelas-venda' id="parcelasTotal"></p>
-    <p id="data"></p>
-    `
-    table.insertBefore(div, table.firstChild);
-   } else if (type === 'transferencia') {
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-      <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-    </div>
-
-    <p>Transferencia recebida</p>
-    <p id="valorFinal"></p>
-    <p class='pix' id="nomeMov"></p>
-    <p id="data"></p>
-    `
-    table.insertBefore(div, table.firstChild);
-   } else if (type === 'emprestimo') {
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-    </div>
-
-    <p id="nomeMov" class = "nomeMov"></p>
-    <p class="parcelasTotal" id="parcelasTotal"></p>
-    <p class = "deficit" id="deficit"></p>
-    <p id="valorInicial" class = "valorInicial"></p>
-    <p class = "valorFinal" id="valorFinal"></p>
-    <p class = "data"id="data"></p>
-    <p id='jurosLs'></p>
-    <p id='jurosMesLs'></p>
-    `
-    table.insertBefore(div, table.firstChild);
-   } else {
-    console.log('erro')
-   }
-} 
-function campoEditar(type) {
-  type = this.value
-  let edit = document.createElement('div')
-
-    if (type === 'compra') {
-    edit.id = 'compraEdit';
     edit.innerHTML = `
-    <div class="editValueBg">
-      <div class="editValue">
+      <div class="editValue" numero="${number}">
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="text" name='nome' id="nomeEdit">
 
         <label for="categoria">Categoria</label>
-        <select disabled id="categoriaEdit" name="categoria" >
+        <select disabled id="categoriaEdit" name="categoria">
         <option selected value=""  style="display: none">
           categoria da compra
         </option>
@@ -174,7 +72,6 @@ function campoEditar(type) {
         <label for="parcelas">Parcelas</label>
 
         <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
             <option value="1">Parcelas 1x</option>
             <option value="2">Parcelas 2x</option>
             <option value="3">Parcelas 3x</option>
@@ -202,130 +99,22 @@ function campoEditar(type) {
         <button type="button" id="sim">Sim</button>
         <button type="button" id="nao">Não</button>
       </div>
-    </div>
     `;
-    document.body.appendChild(edit)
-  } else if (type === 'venda') {
-    edit.id = 'vendaEdit';
-    edit.innerHTML = `
-      <div class="editValueBg">
-        <div class="editValue">
-          <span id="fecharEdit">X</span>
-          <label for="nome">Nome</label>
-          <input readonly type="nome" id="nomeEdit">
+    table.insertBefore(div, table.firstChild);
+    edits.appendChild(edit)
+    number++
+    storage()
 
-          <label for="data">Data</label>
-          <input readonly type="date" ;" id="dataInfo" name="data" />
+    nomeMov[0].value = ''
+    InputValor[0].value = ''
+    categoria[0].selectedIndex = 0
+    dataInfo[0].value = ''
+    this.offsetParent.classList.remove('ativo')
 
-          <label for="parcelas">Parcelas</label>
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-          <label for="valor">Valor</label>
-          <input readonly type="valor" id="valorEdit">
-          <div class='botaoEdit'>
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-        </div>
-        <div class="confirmar">
-          <span>Deseja mesmo deletar?</span>
-          <button type="button" id="sim">Sim</button>
-          <button type="button" id="nao">Não</button>
-        </div>
-    </div>
-    `;
-    document.body.appendChild(edit)
-  } else if (type === 'transferencia') {
-    edit.id = 'transferenciaEdit';
-    edit.innerHTML = `        
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-            <div class="botaoEdit">
-              <button type="button" id="editar"></button>
-              <button type="button" id="deletar">Deletar</button>
-            </div>
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-    `;
-    document.body.appendChild(edit)
-  } else if (type === 'emprestimo') {
-    edit.id = 'emprestimoEdit';
-    edit.innerHTML = `
-            <div class="editValueBg">
-              <div class="editValue">
-                <span id="fecharEdit">X</span>
-                <label for="nome">Nome</label>
-                <input readonly type="nome" id="nomeEdit">
-                
-                <label for="data">Data</label>
-                <input readonly type="date" ;" id="dataInfo" name="data" />
-
-                <label for="valor">Valor</label>
-                <input readonly type="valor" id="valorEdit">
-                <div class="botaoEdit">
-                  <button type="button" id="editar"></button>
-                  <button type="button" id="deletar">Deletar</button>
-                </div>
-              </div>
-              <div class="confirmar">
-                <span>Deseja mesmo deletar?</span>
-                <button type="button" id="sim">Sim</button>
-                <button type="button" id="nao">Não</button>
-              </div>
-            </div>
-    `;
-    document.body.appendChild(edit)
-  } else { console.log('erro')}
-}
-
-adicionar.forEach((i)=>{
-  i.addEventListener('click', novaDiv)
-  i.addEventListener('click', campoEditar)
-})
-
-// Venda
-adicionar[1].addEventListener('click', function () {
-  if (
-    InputValor[1].value &&
-    nomeMov[1].value &&
-    dataInfo[1].value != 0 &&
-    valor[1].value != 'R$0'
-  ) {
-    const table = document.getElementById('tabela');
-    const div = document.createElement('div');
-    div.classList.add('movimentacoesLista');
-    div.id = 'vendaLabel';
-    div.setAttribute('value', 'venda');
-
-    const edit = document.createElement('div');
-    edit.id = 'vendaEdit';
+  } else if (type === 'venda'
+    && nomeMov[1].value !== ''
+    && InputValor[1].value !== ''
+    && dataInfo[1].value !== '') {
 
     div.innerHTML = `
     <div class='icon icon-transacao'>
@@ -333,308 +122,79 @@ adicionar[1].addEventListener('click', function () {
     </div>
 
     <p id="nomeMov">${nomeMov[1].value}</p>
-    <p id="valorFinal">R$ ${(InputValor[1].value * 1).toFixed(2)}</p>
+    <p id="valor">+R$ ${(InputValor[1].value * 1).toFixed(2)}</p>
     <p class='parcelas-venda' id="parcelasTotal">${valor[1].value}</p>
-
-    <p id="data">${dataInfo[1].value * 1}</p>
-    `;
-
+    <p id="data">${dataInfo[1].value}</p>
+    `
     edit.innerHTML = `
-    <div class="editValueBg">
-      <div class="editValue">
-        <span id="fecharEdit">X</span>
-        <label for="nome">Nome</label>
-        <input readonly type="nome" id="nomeEdit">
+    <div class="editValue"  numero="${number}">
+      <span id="fecharEdit">X</span>
+      <label for="nome">Nome</label>
+      <input readonly type="nome" id="nomeEdit">
 
-        <label for="data">Data</label>
-        <input readonly type="date" ;" id="dataInfo" name="data" />
+      <label for="data">Data</label>
+      <input readonly type="date" ;" id="dataInfo" name="data" />
 
-        <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-        <label for="valor">Valor</label>
-        <input readonly type="valor" id="valorEdit">
-        <div class='botoesEdit'>
-          <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
-        </div>
-
-      </div>
-      <div class="confirmar">
-        <span>Deseja mesmo deletar?</span>
-        <button type="button" id="sim">Sim</button>
-        <button type="button" id="nao">Não</button>
+      <label for="parcelas">Parcelas</label>
+      <select disabled readonly name="parcelas" id="parcelasEdit">
+        <option  style="display:none ;" value="0">parcelas 0x</option>
+        <option value="1">Parcelas 1x</option>
+        <option value="2">Parcelas 2x</option>
+        <option value="3">Parcelas 3x</option>
+        <option value="4">Parcelas 4x</option>
+        <option value="5">Parcelas 5x</option>
+        <option value="6">Parcelas 6x</option>
+        <option value="7">Parcelas 7x</option>
+        <option value="8">Parcelas 8x</option>
+        <option value="9">Parcelas 9x</option>
+        <option value="10">Parcelas 10x</option>
+        <option value="11">Parcelas 11x</option>
+        <option value="12">Parcelas 12x</option>
+      </select>
+      <label for="valor">Valor</label>
+      <input readonly type="valor" id="valorEdit">
+      <div class='botaoEdit'>
+        <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
       </div>
     </div>
-    `;
-    let firstChild = table.firstChild;
-    table.insertBefore(div, firstChild);
-    document.body.appendChild(edit);
-    formVenda.classList.remove('ativo');
-    div.addEventListener('click', () => {
-      const editValueBg = edit.querySelector('.editValueBg');
-      editValueBg.classList.add('ativo');
-      const exit = editValueBg.querySelector('#fecharEdit');
-      const btnEditar = editValueBg.querySelector('#editar');
-      const btnDeletar = editValueBg.querySelector('#deletar');
-      const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataInfo');
-      const valorEdit = editValueBg.querySelector('#valorEdit');
-      const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
+    <div class="confirmar">
+      <span>Deseja mesmo deletar?</span>
+      <button type="button" id="sim">Sim</button>
+      <button type="button" id="nao">Não</button>
+    </div>
+`;
+    table.insertBefore(div, table.firstChild);
+    edits.appendChild(edit)
+    number++
+    storage()
 
-      const nome = div.querySelector('#nomeMov');
-      const data = div.querySelector('#data');
-      const parcelas = div.querySelector('#parcelasTotal');
-      const valor = div.querySelector('#valorFinal');
+    nomeMov[1].value = ''
+    InputValor[1].value = ''
+    dataInfo[1].value = ''
+    this.offsetParent.classList.remove('ativo')
 
-      function deletLabel() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        const sim = confirm.querySelector('#sim');
-        const nao = confirm.querySelector('#nao');
-        confirm.classList.add('ativo');
 
-        function removeAtivo() {
-          confirm.classList.remove('ativo');
-        }
-        function removeAll() {
-          editValueBg.classList.remove('ativo');
-          div.remove();
-          edit.remove();
-          storage();
-        }
+  } else
+    if (type === 'transferencia'
+      && nomeMov[2].value !== ''
+      && categoria[1].selectedIndex !== 0
+      && InputValor[2].value !== ''
+      && dataInfo[2].value !== ''
+    ) {
 
-        sim.addEventListener('click', removeAll);
-        nao.addEventListener('click', removeAtivo);
-      }
-
-      function changeValue() {
-        nomeEdit.value = nome.innerText;
-        dataEdit.value = data.innerText;
-        valorEdit.value = (+valor.innerText.replace('R$', '')).toFixed(2);
-        parcelasEdit.value = parcelas.innerText.slice(0, 1);
-      }
-      changeValue();
-
-      function EditValue() {
-        nome.innerText = nomeEdit.value;
-        data.innerText = dataEdit.value;
-        parcelas.innerText = `${parcelasEdit.value}x de R$${(
-          valorEdit.value / +parcelasEdit.value
-        ).toFixed(2)}`;
-        valor.innerText = (+valorEdit.value).toFixed(2);
-
-        storage();
-      }
-
-      function removeAtivoBg() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        editValueBg.classList.remove('ativo');
-        confirm.classList.remove('ativo');
-
-        if (btnEditar.classList.contains('ativo')) {
-          btnEditar.classList.remove('ativo');
-          readOnly();
-        }
-      }
-      function readOnly() {
-        nomeEdit.toggleAttribute('readonly');
-        dataEdit.toggleAttribute('readonly');
-        valorEdit.toggleAttribute('readonly');
-        parcelasEdit.toggleAttribute('disabled');
-      }
-      btnEditar.addEventListener('click', () =>
-        btnEditar.classList.toggle('ativo'),
-      );
-      btnEditar.addEventListener('click', readOnly);
-      exit.addEventListener('click', removeAtivoBg);
-      btnDeletar.addEventListener('click', deletLabel);
-      if (!btnEditar.classList.contains('ativo')) {
-        btnEditar.addEventListener('click', EditValue);
-      }
-    });
-    storage();
-
-    InputValor[1].value = '';
-    valor[1].value = '';
-    dataInfo[1].value = '';
-    nomeMov[1].value = '';
-  } else {
-    alert('Preencha todos os campos');
-  }
-});
-
-// Pix
-adicionar[2].addEventListener('click', function () {
-  const edit = document.createElement('div');
-  const table = document.getElementById('tabela');
-  const div = document.createElement('div');
-  div.classList.add('movimentacoesLista');
-  div.id = 'pixLabel';
-  edit.id = 'pixEdit';
-
-  if (
-    InputValor[2].value &&
-    nomeMov[2].value &&
-    dataInfo[2].value != 0 &&
-    categoria[1].value == '+' &&
-    valor[2].value != 'R$0'
-  ) {
-    div.setAttribute('value', 'pixRecebido');
-    div.innerHTML = `
+      div.innerHTML = `
     <div class='icon icon-transacao'>
       <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
     </div>
-
-    <p>Transferencia recebida</p>
-    <p id="valorFinal">+R$ ${(+InputValor[2].value).toFixed(2)}</p>
-    <p class='pix' id="nomeMov">${nomeMov[2].value}</p>
+    
+    <p>${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
+    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2)}</p>
+    <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
-    `;
-
-    edit.innerHTML = `
-    <div class="editValueBg">
-      <div class="editValue">
-        <span id="fecharEdit">X</span>
-        <label for="nome">Nome</label>
-        <input readonly type="nome" id="nomeEdit">
-
-        <label for="data">Data</label>
-        <input readonly type="date" ;" id="dataInfo" name="data" />
-
-        <label for="valor">Valor</label>
-        <input readonly type="valor" id="valorEdit">
-        <div class='botoesEdit'>
-          <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
-        </div>
-      </div>
-      <div class="confirmar">
-        <span>Deseja mesmo deletar?</span>
-        <button type="button" id="sim">Sim</button>
-        <button type="button" id="nao">Não</button>
-      </div>
-    </div>
-        `;
-    let firstChild = table.firstChild;
-    table.insertBefore(div, firstChild);
-    document.body.appendChild(edit);
-    formPix.classList.remove('ativo');
-
-    div.addEventListener('click', () => {
-      const editValueBg = edit.querySelector('.editValueBg');
-      editValueBg.classList.add('ativo');
-      const exit = editValueBg.querySelector('#fecharEdit');
-      const btnEditar = editValueBg.querySelector('#editar');
-      const btnDeletar = editValueBg.querySelector('#deletar');
-      const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataInfo');
-      const valorEdit = editValueBg.querySelector('#valorEdit');
-
-      const nome = div.querySelector('#nomeMov');
-      const data = div.querySelector('#data');
-      const valor = div.querySelector('#valorFinal');
-
-      function deletLabel() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        const sim = confirm.querySelector('#sim');
-        const nao = confirm.querySelector('#nao');
-        confirm.classList.add('ativo');
-
-        function removeAtivo() {
-          confirm.classList.remove('ativo');
-        }
-        function removeAll() {
-          editValueBg.classList.remove('ativo');
-          div.remove();
-          edit.remove();
-          storage();
-        }
-
-        sim.addEventListener('click', removeAll);
-        nao.addEventListener('click', removeAtivo);
-      }
-
-      function changeValue() {
-        nomeEdit.value = nome.innerText;
-        dataEdit.value = data.innerText;
-        valorEdit.value = (+valor.innerText.replace('+R$', '')).toFixed(2);
-      }
-      changeValue();
-
-      function EditValue() {
-        nome.innerText = nomeEdit.value;
-        data.innerText = dataEdit.value;
-        valor.innerText = `+R$ ${valorEdit.value}`;
-
-        storage();
-      }
-
-      function removeAtivoBg() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        editValueBg.classList.remove('ativo');
-        confirm.classList.remove('ativo');
-
-        if (btnEditar.classList.contains('ativo')) {
-          btnEditar.classList.remove('ativo');
-          readOnly();
-        }
-      }
-      function readOnly() {
-        nomeEdit.toggleAttribute('readonly');
-        dataEdit.toggleAttribute('readonly');
-        valorEdit.toggleAttribute('readonly');
-      }
-
-      btnEditar.addEventListener('click', readOnly);
-      exit.addEventListener('click', removeAtivoBg);
-      btnDeletar.addEventListener('click', deletLabel);
-      if (!btnEditar.classList.contains('ativo')) {
-        btnEditar.addEventListener('click', EditValue);
-      }
-    });
-    const editValueBg = edit.querySelector('.editValueBg');
-    const btnEditar = editValueBg.querySelector('#editar');
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    storage();
-    InputValor[2].value = '';
-    valor[2].value = '';
-    dataInfo[2].value = '';
-    nomeMov[2].value = '';
-    categoria[1].value = '';
-  } else if (
-    InputValor[2].value &&
-    nomeMov[2].value &&
-    dataInfo[2].value != 0 &&
-    categoria[1].value == '-' &&
-    valor[2].value != 'R$0'
-  ) {
-    div.setAttribute('value', 'pixEnviado');
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-      <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-    </div>
-    <p>Transferencia enviada</p>
-    <p id="valorFinal">-R$ ${(+InputValor[2].value).toFixed(2)}</p>
-    <p class='pix' id="nomeMov">${nomeMov[2].value}</p>
-    <p id="data">${dataInfo[2].value}</p>
-        `;
-    edit.innerHTML = `
-    <div class="editValueBg">
-      <div class="editValue">
+    `
+      edit.innerHTML = `
+      <div class="editValue" numero="${number}">
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
@@ -653,1210 +213,258 @@ adicionar[2].addEventListener('click', function () {
         <button type="button" id="sim">Sim</button>
         <button type="button" id="nao">Não</button>
       </div>
-    </div>
-        `;
-    let firstChild = table.firstChild;
-    table.insertBefore(div, firstChild);
-    document.body.appendChild(edit);
-    formPix.classList.remove('ativo');
-
-    div.addEventListener('click', () => {
-      const editValueBg = edit.querySelector('.editValueBg');
-      editValueBg.classList.add('ativo');
-      const exit = editValueBg.querySelector('#fecharEdit');
-      const btnEditar = editValueBg.querySelector('#editar');
-      const btnDeletar = editValueBg.querySelector('#deletar');
-      const nomeEdit = editValueBg.querySelector('#nomeEdit');
-      const dataEdit = editValueBg.querySelector('#dataInfo');
-      const valorEdit = editValueBg.querySelector('#valorEdit');
-
-      const nome = div.querySelector('#nomeMov');
-      const data = div.querySelector('#data');
-      const valor = div.querySelector('#valorFinal');
-
-      function deletLabel() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        const sim = confirm.querySelector('#sim');
-        const nao = confirm.querySelector('#nao');
-        confirm.classList.add('ativo');
-
-        function removeAtivo() {
-          confirm.classList.remove('ativo');
-        }
-        function removeAll() {
-          editValueBg.classList.remove('ativo');
-          div.remove();
-          edit.remove();
-          storage();
-        }
-
-        sim.addEventListener('click', removeAll);
-        nao.addEventListener('click', removeAtivo);
-      }
-
-      function changeValue() {
-        nomeEdit.value = nome.innerText;
-        dataEdit.value = data.innerText;
-        valorEdit.value = (+valor.innerText.replace('-R$', '')).toFixed(2);
-      }
-      changeValue();
-
-      function EditValue() {
-        nome.innerText = nomeEdit.value;
-        data.innerText = dataEdit.value;
-        valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`;
-
-        storage();
-      }
-
-      function removeAtivoBg() {
-        const confirm = editValueBg.querySelector('.confirmar');
-        editValueBg.classList.remove('ativo');
-        confirm.classList.remove('ativo');
-
-        if (btnEditar.classList.contains('ativo')) {
-          btnEditar.classList.remove('ativo');
-          readOnly();
-        }
-      }
-      function readOnly() {
-        nomeEdit.toggleAttribute('readonly');
-        dataEdit.toggleAttribute('readonly');
-        valorEdit.toggleAttribute('readonly');
-      }
-      btnEditar.addEventListener('click', () =>
-        btnEditar.classList.toggle('ativo'),
-      );
-      btnEditar.addEventListener('click', readOnly);
-      exit.addEventListener('click', removeAtivoBg);
-      btnDeletar.addEventListener('click', deletLabel);
-      if (!btnEditar.classList.contains('ativo')) {
-        btnEditar.addEventListener('click', EditValue);
-      }
-    });
-    storage();
-
-    InputValor[2].value = '';
-    valor[2].value = '';
-    dataInfo[2].value = '';
-    nomeMov[2].value = '';
-    categoria[1].value = '';
-  } else {
-    alert('preencha todos os campos');
-  }
-});
-
-// Emprestimo
-adicionar[3].addEventListener('click', function () {
-  const table = document.getElementById('tabela');
-
-  if (
-    InputValor[3].value &&
-    nomeMov[3].value &&
-    dataInfo[3].value &&
-    valor[3].value !== 0 &&
-    categoria[2].value == '-'
-  ) {
-    const div = document.createElement('div');
-    const edit = document.createElement('div');
-    div.classList.add('movimentacoesLista');
-    div.id = 'empPegoLabel';
-    div.setAttribute('value', 'emprestado');
-
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-    </div>
-
-    <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
-    <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
-    <p class = "deficit" id="deficit">-R$ ${(
-        totalPago.value.replace('Total ', '') - InputValor[3].value
-      ).toFixed(2)}</p>
-    <p id="valorInicial" class = "valorInicial">+R$ ${(
-        InputValor[3].value * 1
-      ).toFixed(2)}</p>
-    <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
-        'Total ',
-        '',
-      )).toFixed(2)}</p>
-    <p class = "data"id="data">${dataInfo[3].value}</p>
-    <p id='jurosLs'>${juros.value}</p>
-    <p id='jurosMesLs'>${jurosComp.value}</p>
-        `;
-    edit.innerHTML = `
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-          <select disabled name="juros" id="jurosEdit">
-            <option value="0">0% de juros</option>
-            <option value="1">1% de juros</option>
-            <option value="2">2% de juros</option>
-            <option value="3">3% de juros</option>
-            <option value="4">4% de juros</option>
-            <option value="5">5% de juros</option>
-            <option value="6">6% de juros</option>
-            <option value="7">7% de juros</option>
-            <option value="8">8% de juros</option>
-            <option value="9">9% de juros</option>
-            <option value="10">10% de juros</option>
-            <option value="11">11% de juros</option>
-            <option value="12">12% de juros</option>
-            <option value="13">13% de juros</option>
-            <option value="14">14% de juros</option>
-            <option value="15">15% de juros</option>
-            <option value="16">16% de juros</option>
-            <option value="17">17% de juros</option>
-            <option value="18">18% de juros</option>
-            <option value="19">19% de juros</option>
-            <option value="20">20% de juros</option>
-            <option value="21">21% de juros</option>
-            <option value="22">22% de juros</option>
-            <option value="23">23% de juros</option>
-            <option value="24">24% de juros</option>
-            <option value="25">25% de juros</option>
-            <option value="26">26% de juros</option>
-            <option value="27">27% de juros</option>
-            <option value="28">28% de juros</option>
-            <option value="29">29% de juros</option>
-            <option value="30">30% de juros</option>
-          </select>
-          <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mes</option>
-            <option value="1">1% ao Mês</option>
-            <option value="2">2% ao Mês</option>
-            <option value="3">3% ao Mês</option>
-            <option value="4">4% ao Mês</option>
-            <option value="5">5% ao Mês</option>
-            <option value="6">6% ao Mês</option>
-            <option value="7">7% ao Mês</option>
-            <option value="8">8% ao Mês</option>
-            <option value="9">9% ao Mês</option>
-            <option value="10">10% ao Mês</option>
-            <option value="11">11% ao Mês</option>
-            <option value="12">12% ao Mês</option>
-          </select>
-            <label for="deficit">Deficit</label>
-            <input readonly type="deficit" id="deficitEdit">
-            <label for="valor-final">Valor Final</label>
-            <input readonly type="valor-final" id="valorFinEdit">
-
-          <div class='botaoEdit'>
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-            
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-      `;
-    let firstChild = table.firstChild;
-
-    table.insertBefore(div, firstChild);
-    document.body.appendChild(edit);
-    formEmp.classList.remove('ativo');
-
-    const editValueBg = edit.querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-    const jurosEdit = editValueBg.querySelector('#jurosEdit');
-    const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit');
-    const deficitEdit = editValueBg.querySelector('#deficitEdit');
-    const valorFinalEdit = editValueBg.querySelector('#valorFinEdit');
-    const btnEditar = edit.querySelector('#editar');
-
-    const nome = div.querySelector('#nomeMov');
-    const data = div.querySelector('#data');
-    const valorInit = div.querySelector('#valorInicial');
-    const deficitInit = div.querySelector('#deficit');
-    const parcelasInit = div.querySelector('#parcelasTotal');
-    const valor = div.querySelector('#valorFinal');
-    const jurosInit = div.querySelector('#jurosLs');
-    const jurosMesInit = div.querySelector('#jurosMesLs');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        div.remove();
-        edit.remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valorInit.innerText.replace('+R$ ', '');
-      parcelasEdit.value = parcelasInit.innerText.slice(0, 1);
-      jurosEdit.value = jurosInit.innerText;
-      jurosMesEdit.value = jurosMesInit.innerText;
-      deficitEdit.value = deficitInit.innerText.replace('-R$ ', '');
-      valorFinalEdit.value = valor.innerText.replace('R$ ', '');
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valorInit.innerText = `+R$ ${valorEdit.value}`;
-      parcelasInit.innerText = `${parcelasEdit.value}x de R$${(
-        valorFinalEdit.value / +parcelasEdit.innerText
-      ).toFixed(2)}`;
-      jurosInit.innerText = jurosEdit.value;
-      jurosMesInit.innerText = jurosMesEdit.value;
-      deficitInit.innerText = deficitEdit.value;
-      valor.innerText = `R$ ${valorFinalEdit.value}`;
-      storage();
-    }
-    function conta() {
-      const jurosTotal =
-        (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100;
-      const deficitInit = valorEdit.value * jurosTotal;
-      const valorFim = deficitInit + +valorEdit.value;
-      valorFinalEdit.value = valorFim.toFixed(2);
-      deficitEdit.value = deficitInit.toFixed(2);
-    }
-
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-      jurosEdit.toggleAttribute('disabled');
-      jurosMesEdit.toggleAttribute('disabled');
-    }
-    valorEdit.addEventListener('keyup', conta);
-    parcelasEdit.addEventListener('click', conta);
-    jurosEdit.addEventListener('click', conta);
-    jurosMesEdit.addEventListener('click', conta);
-
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-
-    div.addEventListener('click', () => {
-      editValueBg.classList.add('ativo');
-    });
-
-    storage();
-
-    nomeMov[3].value = '';
-    categoria[2].value = '';
-    dataInfo[3].value = '';
-    InputValor[3].value = '';
-    parcelas[2].selectedIndex = '1';
-    valor[3].value = '';
-    jurosComp.selectedIndex = '';
-    juros.selectedIndex = '';
-    totalPago.value = '';
-  } else if (
-    InputValor[3].value &&
-    nomeMov[3].value &&
-    dataInfo[3].value &&
-    valor[3].value !== 0 &&
-    categoria[2].value == '+'
-  ) {
-    const div = document.createElement('div');
-    const edit = document.createElement('div');
-
-    div.classList.add('movimentacoesLista');
-    div.id = 'empLabel';
-    div.setAttribute('value', 'emprestei');
-    formEmp.classList.remove('ativo');
-
-    div.innerHTML = `
-    <div class='icon icon-transacao'>
-    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-    </div>
-
-    <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
-    <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
-    <p class = "lucro" id="lucro">+R$ ${(
-        totalPago.value.replace('Total ', '') - InputValor[3].value
-      ).toFixed(2)}</p>
-    <p id="valorInicial" class = "valorInicial">-R$ ${(
-        InputValor[3].value * 1
-      ).toFixed(2)}</p>
-    <p class = "valorFinal" id="valorFinal">R$ ${(+totalPago.value.replace(
-        'Total ',
-        '',
-      )).toFixed(2)}</p>
-    <p class = "data"id="data">${dataInfo[3].value}</p>
-    <p id='jurosLs'>${juros.value}</p>
-    <p id='jurosMesLs'>${jurosComp.value}</p>
-      `;
-    edit.innerHTML = `
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-          <select disabled name="juros" id="jurosEdit">
-            <option value="0">0% de juros</option>
-            <option value="1">1% de juros</option>
-            <option value="2">2% de juros</option>
-            <option value="3">3% de juros</option>
-            <option value="4">4% de juros</option>
-            <option value="5">5% de juros</option>
-            <option value="6">6% de juros</option>
-            <option value="7">7% de juros</option>
-            <option value="8">8% de juros</option>
-            <option value="9">9% de juros</option>
-            <option value="10">10% de juros</option>
-            <option value="11">11% de juros</option>
-            <option value="12">12% de juros</option>
-            <option value="13">13% de juros</option>
-            <option value="14">14% de juros</option>
-            <option value="15">15% de juros</option>
-            <option value="16">16% de juros</option>
-            <option value="17">17% de juros</option>
-            <option value="18">18% de juros</option>
-            <option value="19">19% de juros</option>
-            <option value="20">20% de juros</option>
-            <option value="21">21% de juros</option>
-            <option value="22">22% de juros</option>
-            <option value="23">23% de juros</option>
-            <option value="24">24% de juros</option>
-            <option value="25">25% de juros</option>
-            <option value="26">26% de juros</option>
-            <option value="27">27% de juros</option>
-            <option value="28">28% de juros</option>
-            <option value="29">29% de juros</option>
-            <option value="30">30% de juros</option>
-          </select>
-          <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mes</option>
-            <option value="1">1% ao Mês</option>
-            <option value="2">2% ao Mês</option>
-            <option value="3">3% ao Mês</option>
-            <option value="4">4% ao Mês</option>
-            <option value="5">5% ao Mês</option>
-            <option value="6">6% ao Mês</option>
-            <option value="7">7% ao Mês</option>
-            <option value="8">8% ao Mês</option>
-            <option value="9">9% ao Mês</option>
-            <option value="10">10% ao Mês</option>
-            <option value="11">11% ao Mês</option>
-            <option value="12">12% ao Mês</option>
-          </select>
-            <label for="lucro">Lucro</label>
-            <input readonly type="lucro" id="lucroEdit">
-            <label for="valor-final">Valor Final</label>
-            <input readonly type="valor-final" id="valorFinEdit">
-            
-            <div class='botaoEdit'>
-              <button type="button" id="editar"></button>
-              <button type="button" id="deletar">Deletar</button>
-            </div>
-
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-      `;
-    let firstChild = table.firstChild;
-    table.insertBefore(div, firstChild);
-    document.body.appendChild(edit);
-
-    const editValueBg = edit.querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-    const jurosEdit = editValueBg.querySelector('#jurosEdit');
-    const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit');
-    const lucroEdit = editValueBg.querySelector('#lucroEdit');
-    const valorFinalEdit = editValueBg.querySelector('#valorFinEdit');
-    const btnEditar = edit.querySelector('#editar');
-
-    const nome = div.querySelector('#nomeMov');
-    const data = div.querySelector('#data');
-    const valorInit = div.querySelector('#valorInicial');
-    const lucro = div.querySelector('#lucro');
-    const parcelasInit = div.querySelector('#parcelasTotal');
-    const valor = div.querySelector('#valorFinal');
-    const jurosInit = div.querySelector('#jurosLs');
-    const jurosMesInit = div.querySelector('#jurosMesLs');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        div.remove();
-        edit.remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valorInit.innerText;
-      parcelasEdit.value = parcelasInit.innerText;
-      jurosEdit.value = jurosInit.innerText;
-      jurosMesEdit.value = jurosMesInit.innerText;
-      lucroEdit.value = lucro.innerText;
-      valorFinalEdit.value = valor.innerText.replace('R$ ', '');
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valorInit.innerText = `${valorEdit.value}`;
-      parcelas.innerText = `${parcelasEdit.value}x de R$${(
-        valorFinalEdit.value / +parcelasEdit.innerText
-      ).toFixed(2)}`;
-      lucro.innerText = lucroEdit.value;
-      valor.innerText = valorFinalEdit.value;
-      storage();
-    }
-    function conta() {
-      const jurosTotal =
-        (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100;
-      const lucro = valorEdit.value * jurosTotal;
-      const valorFim = lucro + +valorEdit.value;
-      valorFinalEdit.value = valorFim.toFixed(2);
-      lucroEdit.value = lucro.toFixed(2);
-    }
-
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-      jurosEdit.toggleAttribute('disabled');
-      jurosMesEdit.toggleAttribute('disabled');
-    }
-    valorEdit.addEventListener('keyup', conta);
-    parcelasEdit.addEventListener('click', conta);
-    jurosEdit.addEventListener('click', conta);
-    jurosMesEdit.addEventListener('click', conta);
-
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-
-    div.addEventListener('click', () => {
-      editValueBg.classList.add('ativo');
-    });
-    storage();
-    nomeMov[3].value = '';
-    categoria[2].value = '';
-    dataInfo[3].value = '';
-    InputValor[3].value = '';
-    parcelas[2].selectedIndex = '0';
-    valor[3].value = '';
-    jurosComp.selectedIndex = '';
-    juros.selectedIndex = '';
-    totalPago.value = '';
-  } else {
-    alert('Preencha todos os campos');
-  }
-});
-
-// Storage
-function arrumarNome() {
-  const nomeLogin = document.querySelector('.nome-login');
-  const nomeUser = JSON.parse(localStorage.usuarios);
-  nomeLogin.innerText = `Olá, ${nomeUser[0].nome} ${nomeUser[0].sobrenome.slice(
-    0,
-    1,
-  )}.`;
-}
-function arrumarInputValor() {
-  if (localStorage.compras) {
-    const compra = JSON.parse(localStorage.compras);
-    const compraLabel = document.querySelectorAll('#compraLabel');
-
-    compraLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const categoria = i.querySelector('#categoria');
-      const data = i.querySelector('#data');
-      const parcelas = i.querySelector('#parcelasTotal');
-      const valor = i.querySelector('#valorFinal');
-
-      nome.innerText = `${compra[n].nome}`;
-      categoria.innerText = compra[n].categoria;
-      data.innerText = `${compra[n].data}`;
-      parcelas.innerText = compra[n].parcelas;
-      valor.innerText = compra[n].valor;
-    });
-  }
-  if (localStorage.vendas) {
-    const venda = JSON.parse(localStorage.vendas);
-    const vendaLabel = document.querySelectorAll('#vendaLabel');
-
-    vendaLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const data = i.querySelector('#data');
-      const parcelas = i.querySelector('#parcelasTotal');
-      const valor = i.querySelector('#valorFinal');
-
-      nome.innerText = `${venda[n].nome}`;
-      data.innerText = venda[n].data;
-      parcelas.innerText = venda[n].parcelas;
-      valor.innerText = venda[n].valor;
-    });
-  }
-  if (localStorage.pixEnviado) {
-    const pix = JSON.parse(localStorage.pixEnviado);
-    const pixLabel = document.querySelectorAll('[value="pixEnviado"]');
-
-    pixLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const data = i.querySelector('#data');
-      const valor = i.querySelector('#valorFinal');
-
-      nome.innerText = pix[n].nome;
-      data.innerText = pix[n].data;
-      valor.innerText = pix[n].valor;
-    });
-  }
-  if (localStorage.pixRecebido) {
-    const pix = JSON.parse(localStorage.pixRecebido);
-    const pixLabel = document.querySelectorAll('[value="pixRecebido"]');
-
-    pixLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const data = i.querySelector('#data');
-      const valor = i.querySelector('#valorFinal');
-
-      nome.innerText = pix[n].nome;
-      data.innerText = pix[n].data;
-      valor.innerText = pix[n].valor;
-    });
-  }
-  if (localStorage.empDevido) {
-    const empPego = JSON.parse(localStorage.empDevido);
-    const empPegoLabel = document.querySelectorAll('#empPegoLabel');
-
-    empPegoLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const data = i.querySelector('#data');
-      const valorInit = i.querySelector('#valorInicial');
-      const deficit = i.querySelector('#deficit');
-      const parcelas = i.querySelector('#parcelasTotal');
-      const valor = i.querySelector('#valorFinal');
-      const juros = i.querySelector('#jurosLs');
-      const jurosMes = i.querySelector('#jurosMesLs');
-
-      nome.innerText = empPego[n].nome;
-      data.innerText = empPego[n].data;
-      valorInit.innerText = empPego[n].valorInicial;
-      parcelas.innerText = empPego[n].parcelas;
-      deficit.innerText = empPego[n].deficit;
-      valor.innerText = empPego[n].valorFinal;
-      juros.innerText = empPego[n].juros;
-      jurosMes.innerText = empPego[n].jurosMes;
-    });
-  }
-  if (localStorage.empEnviado) {
-    const empEnviado = JSON.parse(localStorage.empEnviado);
-    const empLabel = document.querySelectorAll('#empLabel');
-
-    empLabel.forEach((i, n) => {
-      const nome = i.querySelector('#nomeMov');
-      const data = i.querySelector('#data');
-      const valorInit = i.querySelector('#valorInicial');
-      const lucro = i.querySelector('#lucro');
-      const parcelas = i.querySelector('#parcelasTotal');
-      const valor = i.querySelector('#valorFinal');
-      const juros = i.querySelector('#jurosLs');
-      const jurosMes = i.querySelector('#jurosMesLs');
-
-      nome.innerText = empEnviado[n].nome;
-      data.innerText = empEnviado[n].data;
-      valorInit.innerText = empEnviado[n].valorInicial;
-      parcelas.innerText = empEnviado[n].parcelas;
-      lucro.innerText = empEnviado[n].lucro;
-      valor.innerText = empEnviado[n].valorFinal;
-      juros.innerText = empEnviado[n].juros;
-      jurosMes.innerText = empEnviado[n].jurosMes;
-    });
-  }
-}
-
-function criarPaineis() {
-  const ls = JSON.parse(localStorage.transacoes);
-
-  ls.forEach((v) => {
-    const table = document.getElementById('tabela');
-    const div = document.createElement('div');
-    const edit = document.createElement('div');
-    div.classList.add('movimentacoesLista');
-
-    if (v === 'compra') {
-      edit.id = v + 'Edit';
-      div.id = 'compraLabel';
-      div.setAttribute('value', v);
+    `;
+      table.insertBefore(div, table.firstChild);
+      edits.appendChild(edit)
+      number++
+      storage()
+
+      nomeMov[2].value = ''
+      categoria[1].selectedIndex = 0
+      InputValor[2].value = ''
+      dataInfo[2].value = ''
+
+      this.offsetParent.classList.remove('ativo')
+
+
+    } else if (type === 'emprestimo'
+      && nomeMov[3].value !== ''
+      && categoria[2].selectedIndex !== 0
+      && InputValor[3].value !== ''
+      && dataInfo[3].value !== ''
+    ) {
       div.innerHTML = `
-            <div class='icon icon-transacao'>
-            <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
-            </div>
-            <p id="nomeMov"></p>
-            <p id="valorFinal"></p>
-            <p id="categoria"></p>
-            <p id="data"></p>
-            <p id="parcelasTotal"></p>
-      `;
-      edit.innerHTML = `
-      <div class="editValueBg">
-        <div class="editValue">
-          <span id="fecharEdit">X</span>
-          <label for="nome">Nome</label>
-          <input readonly type="text" name='nome' id="nomeEdit">
+    <div class='icon icon-transacao'>
+    <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+    </div>
 
-          <label for="categoria">Categoria</label>
-          <select disabled id="categoriaEdit" name="categoria" >
-          <option selected value=""  style="display: none">
-            categoria da compra
-          </option>
-          <option value="produto eletronico">Produto Eletronico</option>
-          <option value="roupa">Roupa</option>
-          <option value="remedio">Remedio</option>
-          <option value="comida">Comida</option>
-          <option value="cosmetico">Cosmeticos</option>
-        </select>
+    <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
+    <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
+    <p class = "diferenca" id="diferenca">R$ ${(
+          totalPago.value.replace('Total ', '') - InputValor[3].value
+        ).toFixed(2)}</p>
+    <p id="valor" class='valorInit'>${categoria[2].value}R$ ${(
+          InputValor[3].value * 1
+        ).toFixed(2)}</p>
+    <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
+          'Total ',
+          '',
+        )).toFixed(2)}</p>
+    <p class = "data"id="data">${dataInfo[3].value}</p>
+    <p id='jurosLs'>${juros.value}</p>
+    <p id='jurosMesLs'>${jurosComp.value}</p>
+    `
+      edit.innerHTML = `
+      <div class="editValue" numero="${number}">
+        <span id="fecharEdit">X</span>
+        <label for="nome">Nome</label>
+        <input readonly type="nome" id="nomeEdit">
 
         <label for="data">Data</label>
         <input readonly type="date" ;" id="dataInfo" name="data" />
 
-          <label for="parcelas">Parcelas</label>
+        <label for="valor">Valor</label>
+        <input readonly type="valor" id="valorEdit">
+      <select disabled readonly name="parcelas" id="parcelasEdit">
+        <option  style="display:none ;" value="0">parcelas 0x</option>
+        <option value="1">Parcelas 1x</option>
+        <option value="2">Parcelas 2x</option>
+        <option value="3">Parcelas 3x</option>
+        <option value="4">Parcelas 4x</option>
+        <option value="5">Parcelas 5x</option>
+        <option value="6">Parcelas 6x</option>
+        <option value="7">Parcelas 7x</option>
+        <option value="8">Parcelas 8x</option>
+        <option value="9">Parcelas 9x</option>
+        <option value="10">Parcelas 10x</option>
+        <option value="11">Parcelas 11x</option>
+        <option value="12">Parcelas 12x</option>
+      </select>
+      <select disabled name="juros" id="jurosEdit">
+        <option value="0">0% de juros</option>
+        <option value="1">1% de juros</option>
+        <option value="2">2% de juros</option>
+        <option value="3">3% de juros</option>
+        <option value="4">4% de juros</option>
+        <option value="5">5% de juros</option>
+        <option value="6">6% de juros</option>
+        <option value="7">7% de juros</option>
+        <option value="8">8% de juros</option>
+        <option value="9">9% de juros</option>
+        <option value="10">10% de juros</option>
+        <option value="11">11% de juros</option>
+        <option value="12">12% de juros</option>
+        <option value="13">13% de juros</option>
+        <option value="14">14% de juros</option>
+        <option value="15">15% de juros</option>
+        <option value="16">16% de juros</option>
+        <option value="17">17% de juros</option>
+        <option value="18">18% de juros</option>
+        <option value="19">19% de juros</option>
+        <option value="20">20% de juros</option>
+        <option value="21">21% de juros</option>
+        <option value="22">22% de juros</option>
+        <option value="23">23% de juros</option>
+        <option value="24">24% de juros</option>
+        <option value="25">25% de juros</option>
+        <option value="26">26% de juros</option>
+        <option value="27">27% de juros</option>
+        <option value="28">28% de juros</option>
+        <option value="29">29% de juros</option>
+        <option value="30">30% de juros</option>
+      </select>
+      <select disabled name="juros-compostos" id="jurosCompEdit">
+        <option value="0">0% ao mes</option>
+        <option value="1">1% ao Mês</option>
+        <option value="2">2% ao Mês</option>
+        <option value="3">3% ao Mês</option>
+        <option value="4">4% ao Mês</option>
+        <option value="5">5% ao Mês</option>
+        <option value="6">6% ao Mês</option>
+        <option value="7">7% ao Mês</option>
+        <option value="8">8% ao Mês</option>
+        <option value="9">9% ao Mês</option>
+        <option value="10">10% ao Mês</option>
+        <option value="11">11% ao Mês</option>
+        <option value="12">12% ao Mês</option>
+      </select>
+        <label for="diferenca">diferenca</label>
+        <input readonly type="diferenca" id="diferencaEdit">
+        <label for="valor-final">Valor Final</label>
+        <input readonly type="valor-final" id="valorFinEdit">
 
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-              <option  style="display:none ;" value="0">parcelas 0x</option>
-              <option value="1">Parcelas 1x</option>
-              <option value="2">Parcelas 2x</option>
-              <option value="3">Parcelas 3x</option>
-              <option value="4">Parcelas 4x</option>
-              <option value="5">Parcelas 5x</option>
-              <option value="6">Parcelas 6x</option>
-              <option value="7">Parcelas 7x</option>
-              <option value="8">Parcelas 8x</option>
-              <option value="9">Parcelas 9x</option>
-              <option value="10">Parcelas 10x</option>
-              <option value="11">Parcelas 11x</option>
-              <option value="12">Parcelas 12x</option>
-            </select>
-          <label for="valor">Valor</label>
-          <input readonly type="valor" id="valorEdit">
-
-          <div class='botaoEdit'>
-           <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-
-        </div>
-        <div class="confirmar">
-          <span>Deseja mesmo deletar?</span>
-          <button type="button" id="sim">Sim</button>
-          <button type="button" id="nao">Não</button>
-        </div>
+      <div class='botaoEdit'>
+        <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
+      </div>
+        
+      </div>
+      <div class="confirmar">
+        <span>Deseja mesmo deletar?</span>
+        <button type="button" id="sim">Sim</button>
+        <button type="button" id="nao">Não</button>
       </div>
   `;
-    } else if (v === 'venda') {
-      edit.id = v + 'Edit';
-      div.id = 'vendaLabel';
-      div.setAttribute('value', v);
-      div.innerHTML = `
-          <div class='icon icon-transacao'>
-            <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
-          </div> 
+      table.insertBefore(div, table.firstChild);
+      edits.appendChild(edit)
+      number++
+      storage()
 
-            <p id="nomeMov"></p>
-            <p id="valorFinal"></p>
-            <p class='parcelas-venda' id="parcelasTotal"></p>
-            <p id="data"></p>
+      nomeMov[3].value = ''
+      categoria[2].selectedIndex = 0
+      InputValor[3].value = ''
+      dataInfo[3].value = ''
 
-      `;
-      edit.innerHTML = `
-      <div class="editValueBg">
-        <div class="editValue">
-          <span id="fecharEdit">X</span>
-          <label for="nome">Nome</label>
-          <input readonly type="nome" id="nomeEdit">
+      this.offsetParent.classList.remove('ativo')
 
-          <label for="data">Data</label>
-          <input readonly type="date" ;" id="dataInfo" name="data" />
 
-          <label for="parcelas">Parcelas</label>
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-          <label for="valor">Valor</label>
-          <input readonly type="valor" id="valorEdit">
-          <div class='botaoEdit'>
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-        </div>
-        <div class="confirmar">
-          <span>Deseja mesmo deletar?</span>
-          <button type="button" id="sim">Sim</button>
-          <button type="button" id="nao">Não</button>
-        </div>
-    </div>
-  `;
-    } else if (v === 'pixEnviado') {
-      edit.id = 'pixEnvEdit';
-      div.id = 'pixLabel';
-      div.setAttribute('value', v);
-      div.innerHTML = `
-        <div class='icon icon-transacao'>
-        <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-        </div>
-
-        <p>Transferencia enviada</p>
-        <p id="valorFinal"></p>
-        <p class='pix' id="nomeMov"></p>
-        <p id="data"></p>
-            `;
-      edit.innerHTML = `        
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-            <div class="botaoEdit">
-              <button type="button" id="editar"></button>
-              <button type="button" id="deletar">Deletar</button>
-            </div>
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-            `;
-    } else if (v === 'pixRecebido') {
-      edit.id = 'pixEdit';
-      div.id = 'pixLabel';
-      div.setAttribute('value', v);
-      div.innerHTML = `
-
-        <div class='icon icon-transacao'>
-        <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
-        </div>
-
-        <p>Transferencia recebida</p>
-        <p id="valorFinal"></p>
-        <p class='pix' id="nomeMov"></p>
-        <p id="data"></p>
-            `;
-      edit.innerHTML = `
-            <div class="editValueBg">
-              <div class="editValue">
-                <span id="fecharEdit">X</span>
-                <label for="nome">Nome</label>
-                <input readonly type="nome" id="nomeEdit">
-                
-                <label for="data">Data</label>
-                <input readonly type="date" ;" id="dataInfo" name="data" />
-
-                <label for="valor">Valor</label>
-                <input readonly type="valor" id="valorEdit">
-                <div class="botaoEdit">
-                  <button type="button" id="editar"></button>
-                  <button type="button" id="deletar">Deletar</button>
-                </div>
-              </div>
-              <div class="confirmar">
-                <span>Deseja mesmo deletar?</span>
-                <button type="button" id="sim">Sim</button>
-                <button type="button" id="nao">Não</button>
-              </div>
-            </div>
-                `;
-    } else if (v === 'emprestei') {
-      edit.id = v + 'Edit';
-      div.id = 'empLabel';
-      div.setAttribute('value', v);
-      div.innerHTML = `
-        
-        <div class='icon icon-transacao'>
-        <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-        </div>
-
-        <p id="nomeMov" class = "nomeMov"></p>
-        <p class="parcelasTotal" id="parcelasTotal"></p>
-        <p class = "lucro" id="lucro"></p>
-        <p id="valorInicial" class = "valorInicial"></p>
-        <p class = "valorFinal" id="valorFinal"></p>
-        <p class = "data"id="data"></p>
-        <p id='jurosLs'></p>
-        <p id='jurosMesLs'></p>
-
-        `;
-      edit.innerHTML = `
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-
-          <label for="parcelas">Parcelas</label>
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-
-          <label for="juros">Juros</label>
-          <select disabled name="juros" id="jurosEdit">
-            <option value="0">0% de juros</option>
-            <option value="1">1% de juros</option>
-            <option value="2">2% de juros</option>
-            <option value="3">3% de juros</option>
-            <option value="4">4% de juros</option>
-            <option value="5">5% de juros</option>
-            <option value="6">6% de juros</option>
-            <option value="7">7% de juros</option>
-            <option value="8">8% de juros</option>
-            <option value="9">9% de juros</option>
-            <option value="10">10% de juros</option>
-            <option value="11">11% de juros</option>
-            <option value="12">12% de juros</option>
-            <option value="13">13% de juros</option>
-            <option value="14">14% de juros</option>
-            <option value="15">15% de juros</option>
-            <option value="16">16% de juros</option>
-            <option value="17">17% de juros</option>
-            <option value="18">18% de juros</option>
-            <option value="19">19% de juros</option>
-            <option value="20">20% de juros</option>
-            <option value="21">21% de juros</option>
-            <option value="22">22% de juros</option>
-            <option value="23">23% de juros</option>
-            <option value="24">24% de juros</option>
-            <option value="25">25% de juros</option>
-            <option value="26">26% de juros</option>
-            <option value="27">27% de juros</option>
-            <option value="28">28% de juros</option>
-            <option value="29">29% de juros</option>
-            <option value="30">30% de juros</option>
-          </select>
-
-          <label for="juros-compostos">Juros ao mês</label>
-          <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mês</option>
-            <option value="1">1% ao mês</option>
-            <option value="2">2% ao mês</option>
-            <option value="3">3% ao mês</option>
-            <option value="4">4% ao mês</option>
-            <option value="5">5% ao mês</option>
-            <option value="6">6% ao mês</option>
-            <option value="7">7% ao mês</option>
-            <option value="8">8% ao mês</option>
-            <option value="9">9% ao mês</option>
-            <option value="10">10% ao mês</option>
-            <option value="11">11% ao mês</option>
-            <option value="12">12% ao mês</option>
-          </select>
-            <label for="lucro">Lucro</label>
-            <input readonly type="lucro" id="lucroEdit">
-            <label for="valor-final">Valor Final</label>
-            <input readonly type="valor-final" id="valorFinEdit">
-          <div class='botaoEdit'>
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-      `;
-    } else if (v === 'emprestado') {
-      edit.id = v + 'Edit';
-      div.id = 'empPegoLabel';
-      div.setAttribute('value', v);
-      div.innerHTML = `
-        
-        <div class='icon icon-transacao'>
-        <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
-        </div>
-
-        <p id="nomeMov" class = "nomeMov"></p>
-        <p class="parcelasTotal" id="parcelasTotal"></p>
-        <p class = "deficit" id="deficit"></p>
-        <p id="valorInicial" class = "valorInicial"></p>
-        <p class = "valorFinal" id="valorFinal"></p>
-        <p class = "data"id="data"></p>
-        <p id='jurosLs'></p>
-        <p id='jurosMesLs'></p>
-    `;
-      edit.innerHTML = `
-        <div class="editValueBg">
-          <div class="editValue">
-            <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
-
-            <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
-
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
-
-            <label for="parcelas">Parcelas</label>
-          <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option  style="display:none ;" value="0">parcelas 0x</option>
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-
-          <label for="juros">Juros</label>
-          <select disabled name="juros" id="jurosEdit">
-            <option value="0">0% de juros</option>
-            <option value="1">1% de juros</option>
-            <option value="2">2% de juros</option>
-            <option value="3">3% de juros</option>
-            <option value="4">4% de juros</option>
-            <option value="5">5% de juros</option>
-            <option value="6">6% de juros</option>
-            <option value="7">7% de juros</option>
-            <option value="8">8% de juros</option>
-            <option value="9">9% de juros</option>
-            <option value="10">10% de juros</option>
-            <option value="11">11% de juros</option>
-            <option value="12">12% de juros</option>
-            <option value="13">13% de juros</option>
-            <option value="14">14% de juros</option>
-            <option value="15">15% de juros</option>
-            <option value="16">16% de juros</option>
-            <option value="17">17% de juros</option>
-            <option value="18">18% de juros</option>
-            <option value="19">19% de juros</option>
-            <option value="20">20% de juros</option>
-            <option value="21">21% de juros</option>
-            <option value="22">22% de juros</option>
-            <option value="23">23% de juros</option>
-            <option value="24">24% de juros</option>
-            <option value="25">25% de juros</option>
-            <option value="26">26% de juros</option>
-            <option value="27">27% de juros</option>
-            <option value="28">28% de juros</option>
-            <option value="29">29% de juros</option>
-            <option value="30">30% de juros</option>
-          </select>
-
-          <label for="juros-compostos">Juros ao mês</label>
-          <select disabled name="juros-compostos" id="jurosCompEdit">
-            <option value="0">0% ao mês</option>
-            <option value="1">1% ao mês</option>
-            <option value="2">2% ao mês</option>
-            <option value="3">3% ao mês</option>
-            <option value="4">4% ao mês</option>
-            <option value="5">5% ao mês</option>
-            <option value="6">6% ao mês</option>
-            <option value="7">7% ao mês</option>
-            <option value="8">8% ao mês</option>
-            <option value="9">9% ao mês</option>
-            <option value="10">10% ao mês</option>
-            <option value="11">11% ao mês</option>
-            <option value="12">12% ao mês</option>
-          </select>
-            <label for="deficit">Deficit</label>
-            <input readonly type="deficit" id="deficitEdit">
-            <label for="valor-final">Valor Final</label>
-            <input readonly type="valor-final" id="valorFinEdit">
-          <div class='botaoEdit'>
-            <button type="button" id="editar"></button>
-            <button type="button" id="deletar">Deletar</button>
-          </div>
-
-          </div>
-          <div class="confirmar">
-            <span>Deseja mesmo deletar?</span>
-            <button type="button" id="sim">Sim</button>
-            <button type="button" id="nao">Não</button>
-          </div>
-        </div>
-        `;
     } else {
-      console.log('erro');
+      alert('preencha todos os campos')
     }
 
-    table.appendChild(div);
-    document.body.appendChild(edit);
-  });
+  const nomeEditInit = edit.querySelector('#nomeEdit');
+  const dataEditInit = edit.querySelector('#dataInfo');
+  const valorEditInit = edit.querySelector('#valorEdit');
+  const categoriaEditInit = edit.querySelector('#categoriaEdit')
+  const diferencaeEditInit = edit.querySelector('#diferencaEdit')
+  const parcelasEditInit = edit.querySelector('#parcelasEdit');
+  const jurosEditInit = edit.querySelector('#jurosEdit');
+  const jurosMesEditInit = edit.querySelector('#jurosCompEdit');
+  const valorFinalEditInit = edit.querySelector('#valorFinEdit');
+  const btnEdit = edit.querySelector('#editar')
+
+
+  let Editar = {
+    nome: div.querySelector('#nomeMov'),
+    data: div.querySelector('#data'),
+    valor: div.querySelector('#valor'),
+    categoria: div.querySelector('#categoria'),
+    valorFinal: div.querySelector('#valorFinal'),
+    diferencaInit: div.querySelector('#diferenca'),
+    parcelasInit: div.querySelector('#parcelasTotal'),
+    jurosInit: div.querySelector('#jurosLs'),
+    jurosMesInit: div.querySelector('#jurosMesLs'),
+  }
+
+  function changeValue() {
+    nomeEditInit.value = Editar.nome.innerText
+    dataEditInit.value = Editar.data.innerText
+    valorEditInit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    if (categoriaEditInit && Editar.categoria) {
+      categoriaEditInit.value = Editar.categoria.innerText
+    }
+    if (parcelasEditInit && Editar.parcelas) {
+      parcelasEditInit.value = Editar.parcelas.innerText.slice(0, 1)
+    }
+    if (jurosEditInit && Editar.juros) {
+      jurosEditInit.value = Editar.juros.innerText
+    }
+    if (jurosMesEditInit && Editar.jurosMes) {
+      jurosMesEditInit.value = Editar.jurosMes.innerText
+    }
+    if (diferencaeEditInit && Editar.diferenca) {
+      diferencaeEditInit.value = Editar.diferenca.innerText
+    }
+    if (valorFinalEditInit && Editar.valorFinal) {
+      valorFinalEditInit.value = Editar.valorFinal.innerText
+    }
+  }
+
+  if (btnEdit) {
+    btnEdit.addEventListener('click', () => {
+      if (btnEdit.classList.contains('ativo')) {
+        Editar.nome.innerText = nomeEditInit.value
+        console.log(Editar.nome.innerText, nomeEditInit.value)
+        Editar.data.innerText = dataEditInit.value
+        Editar.valor.innerText = valorEditInit.value
+        if (Editar && Editar.categoria) {
+          Editar.categoria.innerText = categoriaEditInit.value
+        }
+        if (parcelasEditInit && Editar.parcelasInit) {
+          Editar.parcelasInit.innerText = parcelasEditInit.value
+        }
+        if (jurosEditInit && Editar.jurosInit) {
+          jurosEditInit.innerText = jurosEditInit.value
+        }
+        if (jurosMesEditInit && Editar.jurosMesInit) {
+          Editar.jurosMesInit.innerText = jurosMesEditInit.value
+        }
+        if (diferencaeEditInit && Editar.diferencaInit) {
+          Editar.diferencaInit.innerText = diferencaeEditInit.value
+        }
+        if (valorFinalEditInit && Editar.valorFinal) {
+          Editar.valorFinal.innerText = valorFinalEditInit.value
+        }
+        storage()
+      }
+    })
+  }
+
+  div.addEventListener('click', changeValue)
+}
+
+adicionar.forEach((i) => {
+  i.addEventListener('click', novaDiv)
+})
+
+function arrumarNome() {
+  const nomeLogin = document.querySelector('.nome-login');
+  const nomeUser = JSON.parse(localStorage.usuarios);
+  nomeLogin.innerText = `Olá, ${nomeUser[0].nome} ${nomeUser[0].sobrenome.slice(0, 1)}.`;
 }
 
 function storage() {
-  const transacao = document.querySelectorAll('.movimentacoesLista');
+  const transacoes = document.querySelectorAll('.movimentacoesLista');
   const compraLabel = document.querySelectorAll('#compraLabel');
   const vendaLabel = document.querySelectorAll('#vendaLabel');
-  const pixLabel = document.querySelectorAll('[value="pixRecebido"]');
-  const pixPegoLabel = document.querySelectorAll('[value="pixEnviado"]');
-  const empLabel = document.querySelectorAll('#empLabel');
-  const empPegoLabel = document.querySelectorAll('#empPegoLabel');
+  const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
+  const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
   const valorStatus = document.querySelector('.valor');
 
-  const compraArray = [];
-  const vendaArray = [];
-  const pixArray = [];
-  const pixEnviadoArray = [];
-  const EmprestimoEnviado = [];
-  const emprestimoDevido = [];
+  const comprasArray = [];
+  const vendasArray = [];
+  const transferenciasArray = [];
+  const EmprestimoArray = [];
   const InputValor = [];
 
   compraLabel.forEach((i) => {
@@ -1864,8 +472,7 @@ function storage() {
     const categoria = i.querySelector('#categoria');
     const data = i.querySelector('#data');
     const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-
+    const valor = i.querySelector('#valor');
     const compra = {
       nome: '',
       categoria: '',
@@ -1878,14 +485,15 @@ function storage() {
     compra['data'] = [data.innerText];
     compra['parcelas'] = [parcelas.innerText];
     compra['valor'] = [valor.innerText];
-    compraArray.push(compra);
+    comprasArray.push(compra);
     InputValor.push(+valor.innerText.replace('-R$', '') * -1);
   });
+
   vendaLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const data = i.querySelector('#data');
     const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
+    const valor = i.querySelector('#valor');
 
     const venda = {
       nome: '',
@@ -1893,92 +501,42 @@ function storage() {
       parcelas: '',
       valor: '',
     };
-    const valorPush = +valor.innerText.replace('R$', '');
+    const valorPush = +valor.innerText.replace('+R$', '');
 
     venda['nome'] = [nome.innerText];
     venda['data'] = [data.innerText];
     venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
-    vendaArray.push(venda);
+    vendasArray.push(venda);
     console.log();
     InputValor.push(valorPush);
   });
 
-  pixLabel.forEach((i) => {
+  transferenciaLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const data = i.querySelector('#data');
-    const valor = i.querySelector('#valorFinal');
+    const valor = i.querySelector('#valor');
 
-    const pix = {
+    const transf = {
       nome: '',
       data: '',
       valor: '',
     };
-    const pixEnvPush = +valor.innerText.replace('+R$', '');
-    pix['nome'] = [nome.innerText];
-    pix['data'] = [data.innerText];
-    pix['valor'] = [valor.innerText];
-    pixArray.push(pix);
-    InputValor.push(pixEnvPush);
-  });
+    const transferenciaPush = +valor.innerText.replace('R$ ', '')
 
-  pixPegoLabel.forEach((i) => {
+    transf['nome'] = [nome.innerText];
+    transf['data'] = [data.innerText];
+    transf['valor'] = [valor.innerText];
+    InputValor.push(transferenciaPush);
+    transferenciasArray.push(transf);
+  });
+  emprestimoLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const data = i.querySelector('#data');
-    const valor = i.querySelector('#valorFinal');
-
-    const pix = {
-      nome: '',
-      data: '',
-      valor: '',
-    };
-    const pixEnvPush = +valor.innerText.replace('-R$', '') * -1;
-    pix['nome'] = [nome.innerText];
-    pix['data'] = [data.innerText];
-    pix['valor'] = [valor.innerText];
-    pixEnviadoArray.push(pix);
-    InputValor.push(pixEnvPush);
-  });
-
-  empPegoLabel.forEach((i) => {
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valorInit = i.querySelector('#valorInicial');
-    const deficit = i.querySelector('#deficit');
+    const valor = i.querySelector('#valor');
+    const diferenca = i.querySelector('#diferenca');
     const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-    const juros = i.querySelector('#jurosLs');
-    const jurosMes = i.querySelector('#jurosMesLs');
-    const emprestimo = {
-      nome: '',
-      data: '',
-      valorInicial: '',
-      parcelas: '',
-      deficit: '',
-      valorFinal: '',
-      juros: '',
-      jurosMes: '',
-    };
-    const empPegoPush = +valorInit.innerText.replace('+R$', '');
-    emprestimo['nome'] = [nome.innerText];
-    emprestimo['data'] = [data.innerText];
-    emprestimo['parcelas'] = [parcelas.innerText];
-    emprestimo['valorInicial'] = [valorInit.innerText];
-    emprestimo['deficit'] = [deficit.innerText];
-    emprestimo['valorFinal'] = [valor.innerText];
-    emprestimo['juros'] = [juros.innerText];
-    emprestimo['jurosMes'] = [jurosMes.innerText];
-    emprestimoDevido.push(emprestimo);
-    InputValor.push(empPegoPush);
-  });
-
-  empLabel.forEach((i) => {
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valorInit = i.querySelector('#valorInicial');
-    const lucro = i.querySelector('#lucro');
-    const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
+    const valorFinal = i.querySelector('#valorFinal');
     const juros = i.querySelector('#jurosLs');
     const jurosMes = i.querySelector('#jurosMesLs');
 
@@ -1987,42 +545,40 @@ function storage() {
       data: '',
       valorInicial: '',
       parcelas: '',
-      lucro: '',
+      diferenca: '',
       valorFinal: '',
       juros: '',
       jurosMes: '',
     };
 
-    const empEnvPush = +valorInit.innerText.replace('-R$', '') * -1;
+    const emprestimoPush = +valor.innerText.replace('R$ ', '')
     emprestimo['nome'] = [nome.innerText];
     emprestimo['data'] = [data.innerText];
     emprestimo['parcelas'] = [parcelas.innerText];
-    emprestimo['valorInicial'] = [valorInit.innerText];
-    emprestimo['lucro'] = [lucro.innerText];
-    emprestimo['valorFinal'] = [valor.innerText];
+    emprestimo['valor'] = [valor.innerText];
+    emprestimo['diferenca'] = [diferenca.innerText];
+    emprestimo['valorFinal'] = [valorFinal.innerText];
     emprestimo['juros'] = [juros.innerText];
     emprestimo['jurosMes'] = [jurosMes.innerText];
-    EmprestimoEnviado.push(emprestimo);
-    InputValor.push(empEnvPush);
+    EmprestimoArray.push(emprestimo);
+    InputValor.push(emprestimoPush);
   });
 
-  const transacoes = [];
+  const transacao = [];
+  transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
+
+  localStorage.setItem('transacoes', JSON.stringify(transacao));
   localStorage.setItem('InputValor', JSON.stringify(InputValor));
-  transacao.forEach((t) => transacoes.push(t.getAttribute('value')));
-  localStorage.setItem('compras', JSON.stringify(compraArray));
-  localStorage.setItem('vendas', JSON.stringify(vendaArray));
-  localStorage.setItem('pixRecebido', JSON.stringify(pixArray));
-  localStorage.setItem('pixEnviado', JSON.stringify(pixEnviadoArray));
-  localStorage.setItem('empEnviado', JSON.stringify(EmprestimoEnviado));
-  localStorage.setItem('empDevido', JSON.stringify(emprestimoDevido));
-  localStorage.setItem('transacoes', JSON.stringify(transacoes));
+  localStorage.setItem('compras', JSON.stringify(comprasArray));
+  localStorage.setItem('vendas', JSON.stringify(vendasArray));
+  localStorage.setItem('transferencias', JSON.stringify(transferenciasArray));
+  localStorage.setItem('emprestimos', JSON.stringify(EmprestimoArray));
 
   const status = document.querySelector('.status');
 
-  const soma = InputValor.reduce(
-    (acumulador, valorAtual) => acumulador + valorAtual,
-    0,
-  );
+  // Valor Ao Vivo
+
+  const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
     status.innerHTML =
@@ -2040,12 +596,377 @@ function storage() {
 
   valorStatus.innerText = `R$ ${soma.toFixed(2).replace('.', ',')}`;
 }
+function criarPaineis() {
 
-if (localStorage.transacoes) {
+  ls.forEach((v, n) => {
+    const div = document.createElement('li');
+    const edit = document.createElement('div');
+    div.classList.add('movimentacoesLista');
+    div.setAttribute('label', n)
+
+    edit.id = v + 'Edit';
+    edit.classList.add('editValueBg')
+
+    if (v === 'compraLabel') {
+      div.id = 'compraLabel';
+
+      div.innerHTML = `
+              <div class='icon icon-transacao'>
+              <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
+              </div>
+              <p id="nomeMov"></p>
+              <p id="valor"></p>
+              <p id="categoria"></p>
+              <p id="data"></p>
+              <p id="parcelasTotal"></p>
+        `;
+      edit.innerHTML = `
+          <div class="editValue" numero="${n}">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="text" name='nome' id="nomeEdit">
+  
+            <label for="data">Data</label>
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+  
+            <label for="valor">Valor</label>
+            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+
+            <label for="categoria">Categoria</label>
+            <select disabled id="categoriaEdit" name="categoria" >
+            <option selected value=""  style="display: none">
+              categoria da compra
+            </option>
+            <option value="produto eletronico">Produto Eletronico</option>
+            <option value="roupa">Roupa</option>
+            <option value="remedio">Remedio</option>
+            <option value="comida">Comida</option>
+            <option value="cosmetico">Cosmeticos</option>
+            </select>
+
+            <label for="parcelas">Parcelas</label>
+            <select disabled readonly name="parcelas" id="parcelasEdit">
+                <option  style="display:none ;" value="0">parcelas 0x</option>
+                <option value="1">Parcelas 1x</option>
+                <option value="2">Parcelas 2x</option>
+                <option value="3">Parcelas 3x</option>
+                <option value="4">Parcelas 4x</option>
+                <option value="5">Parcelas 5x</option>
+                <option value="6">Parcelas 6x</option>
+                <option value="7">Parcelas 7x</option>
+                <option value="8">Parcelas 8x</option>
+                <option value="9">Parcelas 9x</option>
+                <option value="10">Parcelas 10x</option>
+                <option value="11">Parcelas 11x</option>
+                <option value="12">Parcelas 12x</option>
+              </select>
+  
+            <div class='botaoEdit'>
+             <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
+  
+          </div>
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
+          </div>
+    `;
+    } else if (v === 'vendaLabel') {
+      div.id = 'vendaLabel';
+
+      div.innerHTML = `
+            <div class='icon icon-transacao'>
+              <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
+            </div> 
+  
+              <p id="nomeMov"></p>
+              <p id="valor"></p>
+              <p class='parcelas-venda' id="parcelasTotal"></p>
+              <p id="data"></p>
+  
+        `;
+      edit.innerHTML = `
+          <div class="editValue"  numero="${n}">
+            <span id="fecharEdit">X</span>
+            <label for="nome">Nome</label>
+            <input readonly type="nome" id="nomeEdit">
+  
+            <label for="data">Data</label>
+            <input readonly type="date" ;" id="dataInfo" name="data" />
+  
+            <label for="valor">Valor</label>
+            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+
+            <label for="parcelas">Parcelas</label>
+            <select disabled readonly name="parcelas" id="parcelasEdit">
+              <option  style="display:none ;" value="0">parcelas 0x</option>
+              <option value="1">Parcelas 1x</option>
+              <option value="2">Parcelas 2x</option>
+              <option value="3">Parcelas 3x</option>
+              <option value="4">Parcelas 4x</option>
+              <option value="5">Parcelas 5x</option>
+              <option value="6">Parcelas 6x</option>
+              <option value="7">Parcelas 7x</option>
+              <option value="8">Parcelas 8x</option>
+              <option value="9">Parcelas 9x</option>
+              <option value="10">Parcelas 10x</option>
+              <option value="11">Parcelas 11x</option>
+              <option value="12">Parcelas 12x</option>
+            </select>
+
+            <div class='botaoEdit'>
+              <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
+          </div>
+          <div class="confirmar">
+            <span>Deseja mesmo deletar?</span>
+            <button type="button" id="sim">Sim</button>
+            <button type="button" id="nao">Não</button>
+          </div>
+    `;
+    } else if (v === 'transferenciaLabel') {
+      div.id = 'transferenciaLabel';
+
+      div.innerHTML = `
+          <div class='icon icon-transacao'>
+          <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
+          </div>
+  
+          <p id='condicao'></p>
+          <p id="valor"></p>
+          <p class='transferencia' id="nomeMov"></p>
+          <p id="data"></p>
+              `;
+      edit.innerHTML = `        
+            <div class="editValue"  numero="${n}">
+              <span id="fecharEdit">X</span>
+              <label for="nome">Nome</label>
+              <input readonly type="nome" id="nomeEdit">
+  
+              <label for="data">Data</label>
+              <input readonly type="date" ;" id="dataInfo" name="data" />
+  
+              <label for="valor">Valor</label>
+              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+              <div class="botaoEdit">
+                <button type="button" id="editar"></button>
+                <button type="button" id="deletar">Deletar</button>
+              </div>
+            </div>
+            <div class="confirmar">
+              <span>Deseja mesmo deletar?</span>
+              <button type="button" id="sim">Sim</button>
+              <button type="button" id="nao">Não</button>
+            </div>
+              `;
+    } else if (v === 'emprestimoLabel') {
+      div.id = 'emprestimoLabel';
+
+
+      div.innerHTML = `
+          
+          <div class='icon icon-transacao'>
+          <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
+          </div>
+  
+          <p id="nomeMov" class = "nomeMov"></p>
+          <p class="parcelasTotal" id="parcelasTotal"></p>
+          <p id="valor" class='valorInit'></p>
+          <p class = "diferenca" id="diferenca"></p>
+          <p class = "valorFinal" id="valorFinal"></p>
+          <p class = "data"id="data"></p>
+          <p id='jurosLs'></p>
+          <p id='jurosMesLs'></p>
+  
+          `;
+      edit.innerHTML = `
+            <div class="editValue"  numero="${n}">
+              <span id="fecharEdit">X</span>
+              <label for="nome">Nome</label>
+              <input readonly type="nome" id="nomeEdit">
+  
+              <label for="data">Data</label>
+              <input readonly type="date" ;" id="dataInfo" name="data" />
+  
+              <label for="valor">Valor</label>
+              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+  
+            <label for="parcelas">Parcelas</label>
+            <select disabled readonly name="parcelas" id="parcelasEdit">
+              <option  style="display:none ;" value="0">parcelas 0x</option>
+              <option value="1">Parcelas 1x</option>
+              <option value="2">Parcelas 2x</option>
+              <option value="3">Parcelas 3x</option>
+              <option value="4">Parcelas 4x</option>
+              <option value="5">Parcelas 5x</option>
+              <option value="6">Parcelas 6x</option>
+              <option value="7">Parcelas 7x</option>
+              <option value="8">Parcelas 8x</option>
+              <option value="9">Parcelas 9x</option>
+              <option value="10">Parcelas 10x</option>
+              <option value="11">Parcelas 11x</option>
+              <option value="12">Parcelas 12x</option>
+            </select>
+  
+            <label for="juros">Juros</label>
+            <select disabled name="juros" id="jurosEdit">
+              <option value="0">0% de juros</option>
+              <option value="1">1% de juros</option>
+              <option value="2">2% de juros</option>
+              <option value="3">3% de juros</option>
+              <option value="4">4% de juros</option>
+              <option value="5">5% de juros</option>
+              <option value="6">6% de juros</option>
+              <option value="7">7% de juros</option>
+              <option value="8">8% de juros</option>
+              <option value="9">9% de juros</option>
+              <option value="10">10% de juros</option>
+              <option value="11">11% de juros</option>
+              <option value="12">12% de juros</option>
+              <option value="13">13% de juros</option>
+              <option value="14">14% de juros</option>
+              <option value="15">15% de juros</option>
+              <option value="16">16% de juros</option>
+              <option value="17">17% de juros</option>
+              <option value="18">18% de juros</option>
+              <option value="19">19% de juros</option>
+              <option value="20">20% de juros</option>
+              <option value="21">21% de juros</option>
+              <option value="22">22% de juros</option>
+              <option value="23">23% de juros</option>
+              <option value="24">24% de juros</option>
+              <option value="25">25% de juros</option>
+              <option value="26">26% de juros</option>
+              <option value="27">27% de juros</option>
+              <option value="28">28% de juros</option>
+              <option value="29">29% de juros</option>
+              <option value="30">30% de juros</option>
+            </select>
+  
+            <label for="juros-compostos">Juros ao mês</label>
+            <select disabled name="juros-compostos" id="jurosCompEdit">
+              <option value="0">0% ao mês</option>
+              <option value="1">1% ao mês</option>
+              <option value="2">2% ao mês</option>
+              <option value="3">3% ao mês</option>
+              <option value="4">4% ao mês</option>
+              <option value="5">5% ao mês</option>
+              <option value="6">6% ao mês</option>
+              <option value="7">7% ao mês</option>
+              <option value="8">8% ao mês</option>
+              <option value="9">9% ao mês</option>
+              <option value="10">10% ao mês</option>
+              <option value="11">11% ao mês</option>
+              <option value="12">12% ao mês</option>
+            </select>
+              <label for="diferenca">Diferença</label>
+              <input readonly type="diferenca" id="diferencaEdit">
+              <label for="valor-final">Valor Final</label>
+              <input readonly type="valor-final" id="valorFinEdit">
+            <div class='botaoEdit'>
+              <button type="button" id="editar"></button>
+              <button type="button" id="deletar">Deletar</button>
+            </div>
+  
+            </div>
+            <div class="confirmar">
+              <span>Deseja mesmo deletar?</span>
+              <button type="button" id="sim">Sim</button>
+              <button type="button" id="nao">Não</button>
+            </div>
+        `;
+    } else {
+      console.log('erro');
+    }
+
+    table.appendChild(div);
+    edits.appendChild(edit);
+  });
+}
+function arrumarInputValor() {
+  if (compraLs) {
+    const compra = JSON.parse(localStorage.compras);
+    const compraLabel = document.querySelectorAll('#compraLabel');
+
+    compraLabel.forEach((i, n) => {
+      const nome = i.querySelector('#nomeMov');
+      const categoria = i.querySelector('#categoria');
+      const data = i.querySelector('#data');
+      const parcelas = i.querySelector('#parcelasTotal');
+      const valor = i.querySelector('#valor');
+
+      nome.innerText = `${compra[n].nome}`;
+      categoria.innerText = compra[n].categoria;
+      data.innerText = `${compra[n].data}`;
+      parcelas.innerText = compra[n].parcelas;
+      valor.innerText = compra[n].valor;
+    });
+  }
+  if (vendaLs) {
+    const venda = JSON.parse(localStorage.vendas);
+    const vendaLabel = document.querySelectorAll('#vendaLabel');
+
+    vendaLabel.forEach((i, n) => {
+      const nome = i.querySelector('#nomeMov');
+      const data = i.querySelector('#data');
+      const parcelas = i.querySelector('#parcelasTotal');
+      const valor = i.querySelector('#valor');
+
+      nome.innerText = `${venda[n].nome}`;
+      data.innerText = venda[n].data;
+      parcelas.innerText = venda[n].parcelas;
+      valor.innerText = venda[n].valor;
+    });
+  }
+
+  if (transferenciaLs) {
+    const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
+
+    transferenciaLabel.forEach((i, n) => {
+      const condicao = i.querySelector('#condicao')
+      const nome = i.querySelector('#nomeMov');
+      const data = i.querySelector('#data');
+      const valor = i.querySelector('#valor');
+      let teste = transferenciaLs[n].valor[0].slice(0, 1)
+
+      condicao.innerText = teste == '-' ? 'Transferencia enviada' : 'Transferencia recebida';
+      nome.innerText = transferenciaLs[n].nome;
+      data.innerText = transferenciaLs[n].data;
+      valor.innerText = transferenciaLs[n].valor;
+    });
+  }
+  if (emprestimoLs) {
+    const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
+    emprestimoLabel.forEach((i, n) => {
+      const nome = i.querySelector('#nomeMov');
+      const data = i.querySelector('#data');
+      const valor = i.querySelector('#valor');
+      const diferenca = i.querySelector('#diferenca');
+      const parcelas = i.querySelector('#parcelasTotal');
+      const valorFinal = i.querySelector('#valorFinal');
+      const juros = i.querySelector('#jurosLs');
+      const jurosMes = i.querySelector('#jurosMesLs');
+
+      nome.innerText = emprestimoLs[n].nome;
+      data.innerText = emprestimoLs[n].data;
+      valor.innerText = emprestimoLs[n].valor;
+      parcelas.innerText = emprestimoLs[n].parcelas;
+      diferenca.innerText = emprestimoLs[n].diferenca;
+      valorFinal.innerText = emprestimoLs[n].valorFinal;
+      juros.innerText = emprestimoLs[n].juros;
+      jurosMes.innerText = emprestimoLs[n].jurosMes;
+    });
+  }
+
+}
+if (ls) {
   criarPaineis();
 }
 
-if (localStorage.transacoes) {
+if (ls) {
   arrumarInputValor();
 }
 if (localStorage.usuarios) {
@@ -2053,569 +974,187 @@ if (localStorage.usuarios) {
 } else {
   window.open('index.html', '_top');
 }
-const empLabel = document.querySelectorAll('#empLabel');
-const compraLabel = document.querySelectorAll('#compraLabel');
-const vendaLabel = document.querySelectorAll('#vendaLabel');
-const PixEnviadoLabel = document.querySelectorAll('[value="pixEnviado"]');
-const PixRecebidoLabel = document.querySelectorAll('[value="pixRecebido"]');
-const empPegoLabel = document.querySelectorAll('#empPegoLabel');
+const editValue = document.querySelectorAll('.editValue')
+const movimentacoesLista = document.querySelectorAll('.movimentacoesLista')
 
-if (localStorage.empDevido) {
-  empPegoLabel.forEach((i, n) => {
-    const empLabelEdit = document.querySelectorAll('#emprestadoEdit');
-    const editValueBg = empLabelEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-    const jurosEdit = editValueBg.querySelector('#jurosEdit');
-    const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit');
-    const deficitEdit = editValueBg.querySelector('#deficitEdit');
-    const valorFinalEdit = editValueBg.querySelector('#valorFinEdit');
+editValue.forEach((item, n) => {
+  const nomeEdit = item.querySelector('#nomeEdit');
+  const dataEdit = item.querySelector('#dataInfo');
+  const valorEdit = item.querySelector('#valorEdit');
+  const categoriaEdit = item.querySelector('#categoriaEdit')
+  const diferencaeEdit = item.querySelector('#diferencaEdit')
+  const parcelasEdit = item.querySelector('#parcelasEdit');
+  const jurosEdit = item.querySelector('#jurosEdit');
+  const jurosMesEdit = item.querySelector('#jurosCompEdit');
+  const valorFinalEdit = item.querySelector('#valorFinEdit');
 
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valorInit = i.querySelector('#valorInicial');
-    const deficitInit = i.querySelector('#deficit');
-    const parcelasInit = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-    const jurosInit = i.querySelector('#jurosLs');
-    const jurosMesInit = i.querySelector('#jurosMesLs');
+  const btnEdit = item.querySelector('#editar')
 
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
+  const i = movimentacoesLista[n]
 
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
+  let Editar = {
+    nome: i.querySelector('#nomeMov'),
+    data: i.querySelector('#data'),
+    valor: i.querySelector('#valor'),
+    categoria: i.querySelector('#categoria'),
+    valorFinal: i.querySelector('#valorFinal'),
+    diferencaInit: i.querySelector('#diferenca'),
+    parcelasInit: i.querySelector('#parcelasTotal'),
+    jurosInit: i.querySelector('#jurosLs'),
+    jurosMesInit: i.querySelector('#jurosMesLs'),
+  }
+
+  function changeValue() {
+    nomeEdit.value = Editar.nome.innerText
+    dataEdit.value = Editar.data.innerText
+    valorEdit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    if (categoriaEdit && Editar.categoria) {
+      categoriaEdit.value = Editar.categoria.innerText
+    }
+    if (parcelasEdit && Editar.parcelasInit) {
+      parcelasEdit.value = Editar.parcelasInit.innerText.slice(0, 1)
+    }
+    if (jurosEdit && Editar.jurosInit) {
+      jurosEdit.value = Editar.jurosInit.innerText
+    }
+    if (jurosMesEdit && Editar.jurosMesInit) {
+      jurosMesEdit.value = Editar.jurosMesInit.innerText
+    }
+    if (diferencaeEdit && Editar.diferencaInit) {
+      diferencaeEdit.value = Editar.diferencaInit.innerText
+    }
+    if (valorFinalEdit && Editar.valorFinal) {
+      valorFinalEdit.value = Editar.valorFinal.innerText
+    }
+  }
+  changeValue()
+
+
+  btnEdit.addEventListener('click', () => {
+    if (btnEdit.classList.contains('ativo')) {
+      Editar.nome.innerText = nomeEdit.value
+      Editar.data.innerText = dataEdit.value
+      Editar.valor.innerText = valorEdit.value
+      if (Editar && Editar.categoria) {
+        Editar.categoria.innerText = categoriaEdit.value
       }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        empLabelEdit[n].remove();
-        i.remove();
-        storage();
+      if (parcelasEdit && Editar.parcelasInit) {
+        Editar.parcelasInit.innerText = parcelasEdit.value
       }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valorInit.innerText.replace('+R$ ', '');
-      parcelasEdit.value = parcelasInit.innerText.slice(0, 1);
-      jurosEdit.value = jurosInit.innerText;
-      jurosMesEdit.value = jurosMesInit.innerText;
-      deficitEdit.value = deficitInit.innerText.replace('-R$ ', '');
-      valorFinalEdit.value = valor.innerText.replace('R$ ', '');
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valorInit.innerText = `+R$ ${valorEdit.value}`;
-      parcelas.innerText = `${parcelasEdit.value}x de R$${(
-        valorFinalEdit.value / +parcelasEdit.value
-      ).toFixed(2)}`;
-      deficit.innerText = deficitEdit.value;
-      valor.innerText = valorFinalEdit.value.replace('R$', '');
-      storage();
-    }
-    function conta() {
-      const jurosTotal =
-        (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100;
-      const deficit = valorEdit.value * jurosTotal;
-      const valorFim = deficit + +valorEdit.value;
-      valorFinalEdit.value = valorFim.toFixed(2);
-      deficitEdit.value = deficit.toFixed(2);
-    }
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
+      if (jurosEdit && Editar.jurosInit) {
+        jurosEdit.innerText = jurosEdit.value
       }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-      jurosEdit.toggleAttribute('disabled');
-      jurosMesEdit.toggleAttribute('disabled');
-    }
-
-    valorEdit.addEventListener('keyup', conta);
-    parcelasEdit.addEventListener('click', conta);
-    jurosEdit.addEventListener('click', conta);
-    jurosMesEdit.addEventListener('click', conta);
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-if (localStorage.empEnviado) {
-  empLabel.forEach((i, n) => {
-    const empLabelEdit = document.querySelectorAll('#empresteiEdit');
-    const editValueBg = empLabelEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-    const jurosEdit = editValueBg.querySelector('#jurosEdit');
-    const jurosMesEdit = editValueBg.querySelector('#jurosCompEdit');
-    const lucroEdit = editValueBg.querySelector('#lucroEdit');
-    const valorFinalEdit = editValueBg.querySelector('#valorFinEdit');
-
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valorInit = i.querySelector('#valorInicial');
-    const lucro = i.querySelector('#lucro');
-    const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-    const juros = i.querySelector('#jurosLs');
-    const jurosMes = i.querySelector('#jurosMesLs');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
+      if (jurosMesEdit && Editar.jurosMesInit) {
+        Editar.jurosMesInit.innerText = jurosMesEdit.value
       }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        empLabelEdit[n].remove();
-        i.remove();
-        storage();
+      if (diferencaeEdit && Editar.diferencaInit) {
+        Editar.diferencaInit.innerText = diferencaeEdit.value
       }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valorInit.innerText.replace('R$ ', '');
-      parcelasEdit.value = parcelas.innerText.slice(0, 1);
-      jurosEdit.value = juros.innerText;
-      jurosMesEdit.value = jurosMes.innerText;
-      lucroEdit.value = lucro.innerText.replace('R$ ', '');
-      valorFinalEdit.value = valor.innerText.replace('R$ ', '');
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valorInit.innerText = `-R$ ${valorEdit.value}`;
-      parcelas.innerText = `${parcelasEdit.value}x de R$${(
-        valorFinalEdit.value / +parcelasEdit.value
-      ).toFixed(2)}`;
-      lucro.innerText = lucroEdit.value;
-      valor.innerText = valorFinalEdit.value;
-      storage();
-    }
-    function conta() {
-      const jurosTotal =
-        (+jurosEdit.value + jurosMesEdit.value * parcelasEdit.value) / 100;
-      const lucro = valorEdit.value * jurosTotal;
-      const valorFim = lucro + +valorEdit.value;
-      valorFinalEdit.value = valorFim.toFixed(2);
-      lucroEdit.value = lucro.toFixed(2);
-    }
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
+      if (valorFinalEdit && Editar.valorFinal) {
+        Editar.valorFinal.innerText = valorFinalEdit.value
       }
+      storage()
     }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-      jurosEdit.toggleAttribute('disabled');
-      jurosMesEdit.toggleAttribute('disabled');
+  })
+
+})
+edits.addEventListener('click', (event) => {
+  let numero = event.target.getAttribute('numero') ? event.target.getAttribute('numero') : event.target.parentNode.getAttribute('numero')
+  let numeroDois = event.target.childNodes[1] ? event.target.childNodes[1].getAttribute('numero') : false
+  let numeroTres = event.target.offsetParent ? event.target.offsetParent.getAttribute('numero') : false
+
+  const editValue = document.querySelector(`[numero="${numero}"]`)
+  const editValueBg = document.querySelectorAll('.editValueBg')
+
+  const itemClicado = event.target
+
+
+
+  // fechar aba de edicao
+  function removeAtivo(item1) {
+    item1.classList.remove('ativo')
+  }
+
+  if (numeroDois) {
+    {
+      removeAtivo(editValueBg[numeroDois])
     }
+  }
+  if (itemClicado.nodeName === 'SPAN' && itemClicado.id === 'fecharEdit') {
+    const editValue = document.querySelector(`[numero="${numero}"]`)
+    const editValueBg = editValue.parentNode
+    const btn = editValue.querySelector('#editar')
+    removeAtivo(editValueBg)
+    removeAtivo(btn)
+    btn.removeAttribute('class')
+  }
 
-    valorEdit.addEventListener('keyup', conta);
-    parcelasEdit.addEventListener('click', conta);
-    jurosEdit.addEventListener('click', conta);
-    jurosMesEdit.addEventListener('click', conta);
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
+  // ativar o botao edit 
+  if (event.target.id === 'editar') {
+    itemClicado.classList.toggle('ativo')
+    console.log(event)
+  }
+
+  // readOnly dos inputs
+  if (numeroTres) {
+    const editValue = document.querySelector(`[numero="${numeroTres}"]`)
+    const btn = editValue.querySelector('#editar')
+    const inputs = editValue.querySelectorAll('input')
+    const selects = editValue.querySelectorAll('select')
+
+    if (btn.classList.contains('ativo')) {
+      inputs.forEach(i => i.removeAttribute('readonly'))
+      selects.forEach(i => i.removeAttribute('disabled'))
+    } else if (!btn.classList.contains('ativo')) {
+      inputs.forEach(i => i.setAttribute('readonly', ''))
+      selects.forEach(i => i.setAttribute('disabled', ''))
     }
+  }
 
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-if (localStorage.compras) {
-  compraLabel.forEach((i, n) => {
-    const compraEdit = document.querySelectorAll('#compraEdit');
-    const editValueBg = compraEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-    const categoriaEdit = editValueBg.querySelector('#categoriaEdit');
+  // deletar itens
 
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-    const categoria = i.querySelector('#categoria');
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
+  if (numeroTres) {
+    const editValue = document.querySelector(`[numero="${numeroTres}"]`)
+    const editValueBg = editValue.parentNode
+    const btnDeletar = editValue.querySelector('#deletar')
+    const confirm = editValueBg.querySelector('.confirmar')
+    console.log(confirm)
 
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        i.remove();
-        compraEdit[n].remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
+    if (event.target === btnDeletar) {
+      confirm.classList.add('ativo')
     }
+  }
 
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valor.innerText.replace('-R$', '');
-      parcelasEdit.value = parcelas.innerText.slice(0, 1);
-      categoriaEdit.value = categoria.innerText;
-    }
-    changeValue();
+  if (event.target.id === 'nao') {
+    let confirmar = event.target.offsetParent
+    confirmar.classList.remove('ativo')
+  }
+  if (event.target.id === 'sim') {
+    let principal = event.target.offsetParent.offsetParent
+    let n = event.target.offsetParent.offsetParent.children[0].getAttribute('numero')
+    const movimentacoesLista = document.querySelector(`[label="${n}"]`)
 
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      parcelas.innerText = parcelasEdit.value;
-      valor.innerText = `-R$ ${valorEdit.value}`;
-      categoria.innerText = categoriaEdit.value;
-      storage();
-    }
+    movimentacoesLista.remove()
+    principal.remove()
+    console.log(n)
+    storage()
+    // window.location.reload(true)
+  }
+})
+table.addEventListener('click', (event) => {
+  const itemClicado = event.target
+  const itemPai = event.target.parentElement.nodeName
 
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
+  let numero = event.target.getAttribute('label') ? event.target.getAttribute('label') : event.target.parentElement.getAttribute('label');
 
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-      categoriaEdit.toggleAttribute('disabled');
-    }
-
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-if (localStorage.vendas) {
-  vendaLabel.forEach((i, n) => {
-    const vendaEdit = document.querySelectorAll('#vendaEdit');
-    const editValueBg = vendaEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-    const parcelasEdit = editValueBg.querySelector('#parcelasEdit');
-
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const parcelas = i.querySelector('#parcelasTotal');
-    const valor = i.querySelector('#valorFinal');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        i.remove();
-        vendaEdit[n].remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = valor.innerText.replace('R$', '');
-      parcelasEdit.value = parcelas.innerText.slice(0, 1);
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      parcelas.innerText = `${parcelasEdit.value}x de R$${(
-        valorEdit.value / +parcelasEdit.value
-      ).toFixed(2)}`;
-      valor.innerText = `R$ ${valorEdit.value}`;
-
-      storage();
-    }
-
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-      parcelasEdit.toggleAttribute('disabled');
-    }
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-if (localStorage.pixEnviado) {
-  PixEnviadoLabel.forEach((i, n) => {
-    const pixEdit = document.querySelectorAll('#pixEnvEdit');
-    const editValueBg = pixEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valor = i.querySelector('#valorFinal');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        pixEdit[n].remove();
-        i.remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = (+valor.innerText.replace('-R$', '')).toFixed(2);
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`;
-
-      storage();
-    }
-
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-    }
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-if (localStorage.pixRecebido) {
-  PixRecebidoLabel.forEach((i, n) => {
-    const pixEdit = document.querySelectorAll('#pixEdit');
-    const editValueBg = pixEdit[n].querySelector('.editValueBg');
-    const exit = editValueBg.querySelector('#fecharEdit');
-    const btnEditar = editValueBg.querySelector('#editar');
-    const btnDeletar = editValueBg.querySelector('#deletar');
-    const nomeEdit = editValueBg.querySelector('#nomeEdit');
-    const dataEdit = editValueBg.querySelector('#dataInfo');
-    const valorEdit = editValueBg.querySelector('#valorEdit');
-
-    const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const valor = i.querySelector('#valorFinal');
-
-    function deletLabel() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      const sim = confirm.querySelector('#sim');
-      const nao = confirm.querySelector('#nao');
-      confirm.classList.add('ativo');
-
-      function removeAtivo() {
-        confirm.classList.remove('ativo');
-      }
-      function removeAll() {
-        editValueBg.classList.remove('ativo');
-        pixEdit[n].remove();
-        i.remove();
-        storage();
-      }
-
-      sim.addEventListener('click', removeAll);
-      nao.addEventListener('click', removeAtivo);
-    }
-
-    function changeValue() {
-      nomeEdit.value = nome.innerText;
-      dataEdit.value = data.innerText;
-      valorEdit.value = (+valor.innerText.replace('+R$', '')).toFixed(2);
-    }
-    changeValue();
-
-    function EditValue() {
-      nome.innerText = nomeEdit.value;
-      data.innerText = dataEdit.value;
-      valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`;
-
-      storage();
-    }
-
-    function removeAtivoBg() {
-      const confirm = editValueBg.querySelector('.confirmar');
-      editValueBg.classList.remove('ativo');
-      confirm.classList.remove('ativo');
-
-      if (btnEditar.classList.contains('ativo')) {
-        btnEditar.classList.remove('ativo');
-        readOnly();
-      }
-    }
-    function readOnly() {
-      nomeEdit.toggleAttribute('readonly');
-      dataEdit.toggleAttribute('readonly');
-      valorEdit.toggleAttribute('readonly');
-    }
-    btnEditar.addEventListener('click', () =>
-      btnEditar.classList.toggle('ativo'),
-    );
-    btnEditar.addEventListener('click', readOnly);
-    exit.addEventListener('click', removeAtivoBg);
-    btnDeletar.addEventListener('click', deletLabel);
-    if (!btnEditar.classList.contains('ativo')) {
-      btnEditar.addEventListener('click', EditValue);
-    }
-
-    i.addEventListener('click', () => editValueBg.classList.add('ativo'));
-  });
-}
-
-storage();
-
-// onlyNumber
+  const li = document.querySelector(`[label="${numero}"]`)
+  if (itemClicado == li || itemPai === 'LI') {
+    const editor = document.querySelector(`[numero="${numero}"]`)
+    let editorBg = editor.parentNode
+    editorBg.classList.add('ativo')
+  }
+})
+storage()
 
 function onlynumber(evt) {
   var theEvent = evt || window.event;
