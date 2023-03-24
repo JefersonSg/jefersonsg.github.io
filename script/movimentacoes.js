@@ -17,7 +17,6 @@ let compraLs = localStorage.compras ? JSON.parse(localStorage.compras) : false;
 let vendaLs = localStorage.vendas ? JSON.parse(localStorage.vendas) : false;
 let transferenciaLs = localStorage.transferencias ? JSON.parse(localStorage.transferencias) : false;
 let emprestimoLs = localStorage.emprestimos ? JSON.parse(localStorage.emprestimos) : false;
-
 let number = ls ? ls.length : 0
 
 function novaDiv(type) {
@@ -611,6 +610,7 @@ function storage() {
   const incremento = Math.floor(soma / 40)
   let start = 0
 
+ if (soma !== 0) {
   const timer = setInterval(() => {
     start = start + incremento;
     numero = start;
@@ -620,6 +620,11 @@ function storage() {
     }
     valorStatus.innerText = `R$ ${numero.toFixed(2).replace('.', ',')}`
   }, 15)
+
+ } else {
+  valorStatus.innerText = `R$ ${soma.toFixed(2).replace('.', ',')}`
+ }
+
 
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
@@ -639,7 +644,6 @@ function storage() {
 function criarPaineis() {
 
   ls.forEach((v, n) => {
-
     const div = document.createElement('li');
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
