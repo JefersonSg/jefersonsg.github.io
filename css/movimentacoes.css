@@ -372,6 +372,7 @@ body {
 #movimentacao,
 #valorInput {
   width: 97%;
+  min-width: 97%;
 }
 
 #parcelas,
