@@ -1,5 +1,5 @@
 body {
-  background-color: #F0F0F0;
+  background-color: #FAFAFA;
   position: relative;
 }
 
@@ -92,7 +92,7 @@ body {
 }
 
 .valor {
-  font-size: 22px;
+  font-size: 26px;
   line-height: 1;
   margin-top: 8px;
   margin-bottom: 16px;
@@ -134,58 +134,50 @@ body {
   font-family: 'roboto', sans-serif;
 }
 
+
+
 .transacao {
+  position: fixed;
   display: none;
-}
-
-#compra-button:hover,
-#venda-button:hover,
-#pix-button:hover,
-#emprestimo-button:hover {
-  background: #d3d3d3;
-  border-color: #a5a5a5;
-}
-
-#compra-button,
-#venda-button,
-#pix-button,
-#emprestimo-button {
-
-  background: #EFEFEF;
-  color: black;
-  cursor: pointer;
-  display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0px 8px;
-  font-family: "roboto", serif;
-  font-weight: 500;
-  border-radius: 5px;
-  font-size: 12px;
-  width: 135px;
-  height: 50px;
-  border: 1px solid #C9C9C9;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.25);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2500;
 }
 
-#compra-button.ativo,
-#venda-button.ativo,
-#pix-button.ativo,
-#emprestimo-button.ativo {
-  background: #d3d3d3;
-  border: 1px solid #a5a5a5;
+.financas {
+  background-color: white;
+  border: 5px solid red;
+  box-shadow: 0 0 0 4px white;
+  padding: 10px 10px 0 10px;
+  width: 75%;
+  border-radius: 10%;
+}
+
+.form-img {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  margin-top: 10px;
 }
 
 .financas-formulario {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
-  align-items: center;
   padding-top: 8px;
   margin-top: 6px;
   border-top: 1px solid #D8D8D8;
-  display: grid;
-  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  padding: 10px 10px 20px 10px;
+  width: 93%;
 }
 
 .financas-formulario select,
@@ -225,7 +217,6 @@ body {
   text-transform: uppercase;
 }
 
-
 .div-total,
 .div-parcelas {
   grid-column: 1/-1;
@@ -236,13 +227,15 @@ body {
 }
 
 .div-total {
-  justify-self: center;
+  display: grid;
+  justify-content: center;
 }
 
 .div-botao {
+  display: grid;
+  justify-content: center;
   padding-top: 10px;
   grid-column: 1/-1;
-  justify-self: center;
 }
 
 .financas-formulario button:hover {
@@ -252,6 +245,43 @@ body {
 .financas-formulario button img {
   width: 15px;
   height: 15px;
+}
+
+#compra-button:hover,
+#venda-button:hover,
+#pix-button:hover,
+#emprestimo-button:hover {
+  background: #d3d3d3;
+  border-color: #a5a5a5;
+}
+
+#compra-button,
+#venda-button,
+#pix-button,
+#emprestimo-button {
+  background: #EFEFEF;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px 8px;
+  font-family: "roboto", serif;
+  font-weight: 500;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 135px;
+  height: 50px;
+  border: 1px solid #C9C9C9;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+#compra-button.ativo,
+#venda-button.ativo,
+#pix-button.ativo,
+#emprestimo-button.ativo {
+  background: #d3d3d3;
+  border: 1px solid #a5a5a5;
 }
 
 /* IDS */
@@ -324,7 +354,7 @@ body {
 #venda-conteudo.ativo,
 #compra-conteudo.ativo,
 #pix-conteudo.ativo {
-  display: block;
+  display: flex;
   animation: formulario .2s forwards;
 }
 
@@ -471,20 +501,24 @@ body {
 
 }
 
-#compraLabelEdit .editValue {
+#compraLabelEdit .editValue,
+#compra-conteudo .financas {
   border: 10px solid #F92828;
 }
 
-#emprestimoLabelEdit .editValue {
+#emprestimoLabelEdit .editValue,
+#emprestimo-conteudo .financas {
   border: 10px solid #6D29D3;
 }
 
-#transferenciaLabelEdit .editValue {
+#transferenciaLabelEdit .editValue,
+#pix-conteudo .financas {
   border: 10px solid #32BCAD;
 }
 
 
-#vendaLabelEdit .editValue {
+#vendaLabelEdit .editValue,
+#venda-conteudo .financas {
   border: 10px solid #00920F;
 }
 
@@ -562,7 +596,6 @@ body {
   margin-top: 8px;
   width: 100%;
   display: grid;
-  justify-items: center;
 }
 
 .movimentacoes-conteudo {

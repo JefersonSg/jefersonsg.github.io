@@ -1,6 +1,7 @@
 const btnForm = document.querySelectorAll('.btnForm')
 const formularios = document.querySelectorAll('.transacao');
 
+
 function addAtivo(item) {
   btnForm.forEach((i)=>{ if (i !== item) { i.classList.remove('ativo') } })
   item.classList.toggle('ativo')
@@ -15,5 +16,20 @@ function addAtivo(item) {
 }
 
 btnForm.forEach((item)=>{
-  item.addEventListener('click', ()=>{addAtivo(item)})
+  item.addEventListener('click', ()=> {
+    addAtivo(item)
+  })
+})
+
+// remover ativo 
+
+formularios.forEach((i,n)=>{
+  const formTransacao = document.querySelectorAll('.transacao')
+  const financas = formTransacao[n].querySelector('.financas')
+  formTransacao[n].addEventListener('click', (event)=>  {
+    const itemClicado = event.target
+    if (!financas.contains(event.target)) {
+      itemClicado.classList.remove('ativo')
+    }
+  })
 })

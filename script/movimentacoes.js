@@ -606,23 +606,40 @@ function storage() {
   // Valor Ao Vivo
 
   const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
+
   let numero = 0
+
   const incremento = Math.floor(soma / 40)
+
   let start = 0
 
- if (soma !== 0) {
+ if (soma > start) {
   const timer = setInterval(() => {
     start = start + incremento;
-    numero = start;
+    numero = start.toFixed(2);
     if (start > soma) {
       numero = soma
       clearInterval(timer)
     }
-    valorStatus.innerText = `R$ ${numero.toFixed(2).replace('.', ',')}`
+    valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
+  }, 15)
+ } 
+ if (soma < start) {
+  const timer = setInterval(() => {
+    start = start - (incremento * -1)
+    numero = start.toLocaleString('pt-BR')
+
+    if (soma > start) {
+      numero = soma
+      clearInterval(timer)
+    }
+    valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-','')}`
   }, 15)
  } else {
-  valorStatus.innerText = `R$ ${soma.toFixed(2).replace('.', ',')}`
+  valorStatus.innerText = `R$ ${soma.toLocaleString('pt-BR')}`
  }
+
+
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
     status.innerHTML =
