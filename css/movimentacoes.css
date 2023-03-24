@@ -381,6 +381,7 @@ body {
   cursor: pointer;
 }
 
+#emprestimoLabel #condicao,
 .parcelasTotal {
   display: none;
 }

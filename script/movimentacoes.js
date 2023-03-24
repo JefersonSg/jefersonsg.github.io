@@ -29,13 +29,12 @@ function novaDiv(type) {
   div.id = `${type}Label`
   edit.id = `${type}LabelEdit`;
   edit.classList.add('editValueBg')
-  console.log()
 
   if (type === 'compra'
-    // && nomeMov[0].value !== ''
-    // && InputValor[0].value !== ''
-    // && categoria[0].selectedIndex !== 0
-    // && dataInfo[0].value !== ''
+    && nomeMov[0].value !== ''
+    && InputValor[0].value !== ''
+    && categoria[0].selectedIndex !== 0
+    && dataInfo[0].value !== ''
   ) {
 
     div.innerHTML = `
@@ -43,7 +42,7 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
-    <p id="valor">-R$${(InputValor[0].value * 1).toFixed(2)}</p>
+    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2)}</p>
     <p id="categoria">${categoria[0].value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
@@ -188,7 +187,7 @@ function novaDiv(type) {
       <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
     </div>
     
-    <p>${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
+    <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
     <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2)}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
@@ -253,6 +252,7 @@ function novaDiv(type) {
     <p class = "data"id="data">${dataInfo[3].value}</p>
     <p id='jurosLs'>${juros.value}</p>
     <p id='jurosMesLs'>${jurosComp.value}</p>
+    <p id="condicao">${categoria[2].value}</p>
     `
       edit.innerHTML = `
       <div class="editValue" numero="${number}">
@@ -384,8 +384,8 @@ function novaDiv(type) {
     parcelasInit: div.querySelector('#parcelasTotal'),
     jurosInit: div.querySelector('#jurosLs'),
     jurosMesInit: div.querySelector('#jurosMesLs'),
+    condicao: div.querySelector('#condicao')
   }
-
   function changeValue() {
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
@@ -414,9 +414,20 @@ function novaDiv(type) {
     btnEdit.addEventListener('click', () => {
       if (btnEdit.classList.contains('ativo')) {
         Editar.nome.innerText = nomeEditInit.value
-        console.log(Editar.nome.innerText, nomeEditInit.value)
         Editar.data.innerText = dataEditInit.value
-        Editar.valor.innerText = valorEditInit.value
+        Editar.valor.innerText = (+valorEditInit.value).toFixed(2)
+
+        if (Editar.condicao.innerText == 'Transferencia enviada') {
+          Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+        } else if (Editar.condicao.innerText == 'Transferencia recebida') {
+          Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+        }
+        if (Editar.condicao.innerText == '-') {
+          Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+        } else if (Editar.condicao.innerText == '+') {
+          Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+        }
+
         if (Editar && Editar.categoria) {
           Editar.categoria.innerText = categoriaEditInit.value
         }
@@ -508,7 +519,6 @@ function storage() {
     venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
     vendasArray.push(venda);
-    console.log();
     InputValor.push(valorPush);
   });
 
@@ -539,6 +549,8 @@ function storage() {
     const valorFinal = i.querySelector('#valorFinal');
     const juros = i.querySelector('#jurosLs');
     const jurosMes = i.querySelector('#jurosMesLs');
+    const condicao = i.querySelector('#condicao')
+
 
     const emprestimo = {
       nome: '',
@@ -549,19 +561,35 @@ function storage() {
       valorFinal: '',
       juros: '',
       jurosMes: '',
+      condicao: ''
     };
 
-    const emprestimoPush = +valor.innerText.replace('R$ ', '')
-    emprestimo['nome'] = [nome.innerText];
+
+    if (condicao.innerText == '+') {
+      let emprestimoPush = +valor.innerText.replace('+R$ ', '')
+      InputValor.push(emprestimoPush);
+
+    } else if (condicao.innerText == '-') {
+      let emprestimoPush = +valor.innerText.replace('-R$ ', '') * -1
+      InputValor.push(emprestimoPush);
+
+    }
+
+    (condicao.innerText == '+' ? +valor.innerText.replace('+R$ ', '') : +valor.innerText.replace('-R$ ', '') * -1)
+    emprestimo['nome'] = [nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')];
     emprestimo['data'] = [data.innerText];
     emprestimo['parcelas'] = [parcelas.innerText];
-    emprestimo['valor'] = [valor.innerText];
+    if (condicao.innerText == '+') {
+      emprestimo['valor'] = [valor.innerText.replace('+R$ ', '')];
+    } else if (condicao.innerText == '-') {
+      emprestimo['valor'] = [valor.innerText.replace('-R$ ', '')];
+    }
     emprestimo['diferenca'] = [diferenca.innerText];
     emprestimo['valorFinal'] = [valorFinal.innerText];
     emprestimo['juros'] = [juros.innerText];
     emprestimo['jurosMes'] = [jurosMes.innerText];
+    emprestimo['condicao'] = [condicao.innerText];
     EmprestimoArray.push(emprestimo);
-    InputValor.push(emprestimoPush);
   });
 
   const transacao = [];
@@ -579,6 +607,20 @@ function storage() {
   // Valor Ao Vivo
 
   const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
+  let numero = 0
+  const incremento = Math.floor(soma / 40)
+  let start = 0
+
+  const timer = setInterval(() => {
+    start = start + incremento;
+    numero = start;
+    if (start > soma) {
+      numero = soma
+      clearInterval(timer)
+    }
+    valorStatus.innerText = `R$ ${numero.toFixed(2).replace('.', ',')}`
+  }, 15)
+
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
     status.innerHTML =
@@ -593,17 +635,18 @@ function storage() {
       '<img src="./img/Movimentacoes/negativo.svg" alt=""> Negativo';
     status.style.color = '#610000';
   }
-
-  valorStatus.innerText = `R$ ${soma.toFixed(2).replace('.', ',')}`;
 }
 function criarPaineis() {
 
   ls.forEach((v, n) => {
+
     const div = document.createElement('li');
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
-
+    if (n > 9) {
+      div.style.display = 'none'
+    }
     edit.id = v + 'Edit';
     edit.classList.add('editValueBg')
 
@@ -765,9 +808,7 @@ function criarPaineis() {
     } else if (v === 'emprestimoLabel') {
       div.id = 'emprestimoLabel';
 
-
       div.innerHTML = `
-          
           <div class='icon icon-transacao'>
           <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
           </div>
@@ -780,6 +821,7 @@ function criarPaineis() {
           <p class = "data"id="data"></p>
           <p id='jurosLs'></p>
           <p id='jurosMesLs'></p>
+          <p id="condicao"></p>
   
           `;
       edit.innerHTML = `
@@ -879,11 +921,12 @@ function criarPaineis() {
             </div>
         `;
     } else {
-      console.log('erro');
+      alert('erro');
     }
 
     table.appendChild(div);
     edits.appendChild(edit);
+
   });
 }
 function arrumarInputValor() {
@@ -949,15 +992,26 @@ function arrumarInputValor() {
       const valorFinal = i.querySelector('#valorFinal');
       const juros = i.querySelector('#jurosLs');
       const jurosMes = i.querySelector('#jurosMesLs');
+      const condicao = i.querySelector('#condicao')
 
-      nome.innerText = emprestimoLs[n].nome;
+      if (emprestimoLs[n].condicao == '-') {
+        nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
+      } else if (emprestimoLs[n].condicao == '+') {
+        nome.innerText = `Pegou de ${emprestimoLs[n].nome}`
+      }
       data.innerText = emprestimoLs[n].data;
       valor.innerText = emprestimoLs[n].valor;
+      if (emprestimoLs[n].condicao == '-') {
+        valor.innerText = `-R$ ${emprestimoLs[n].valor}`
+      } else {
+        valor.innerText = `+R$ ${emprestimoLs[n].valor}`
+      }
       parcelas.innerText = emprestimoLs[n].parcelas;
       diferenca.innerText = emprestimoLs[n].diferenca;
       valorFinal.innerText = emprestimoLs[n].valorFinal;
       juros.innerText = emprestimoLs[n].juros;
       jurosMes.innerText = emprestimoLs[n].jurosMes;
+      condicao.innerText = emprestimoLs[n].condicao
     });
   }
 
@@ -988,6 +1042,7 @@ editValue.forEach((item, n) => {
   const jurosMesEdit = item.querySelector('#jurosCompEdit');
   const valorFinalEdit = item.querySelector('#valorFinEdit');
 
+
   const btnEdit = item.querySelector('#editar')
 
   const i = movimentacoesLista[n]
@@ -1002,6 +1057,7 @@ editValue.forEach((item, n) => {
     parcelasInit: i.querySelector('#parcelasTotal'),
     jurosInit: i.querySelector('#jurosLs'),
     jurosMesInit: i.querySelector('#jurosMesLs'),
+    condicao: i.querySelector('#condicao')
   }
 
   function changeValue() {
@@ -1034,7 +1090,30 @@ editValue.forEach((item, n) => {
     if (btnEdit.classList.contains('ativo')) {
       Editar.nome.innerText = nomeEdit.value
       Editar.data.innerText = dataEdit.value
-      Editar.valor.innerText = valorEdit.value
+
+      if (i.id == 'vendaLabel') {
+        Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+      }
+      if (i.id == 'compraLabel') {
+        Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+      }
+
+      if (i.id == 'transferenciaLabel') {
+        if (Editar.condicao.innerText === 'Transferencia enviada') {
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+        } else if (Editar.condicao.innerText === 'Transferencia recebida') {
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}` }
+      }
+
+      if (i.id == 'emprestimoLabel') {
+        if (Editar.condicao.innerText === '-') {
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+        } else if (Editar.condicao.innerText === '+') {
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+        }
+      }
+
       if (Editar && Editar.categoria) {
         Editar.categoria.innerText = categoriaEdit.value
       }
@@ -1047,7 +1126,7 @@ editValue.forEach((item, n) => {
       if (jurosMesEdit && Editar.jurosMesInit) {
         Editar.jurosMesInit.innerText = jurosMesEdit.value
       }
-      if (diferencaeEdit && Editar.diferencaInit) {
+      if (i.id == 'emprestimoLabel') {
         Editar.diferencaInit.innerText = diferencaeEdit.value
       }
       if (valorFinalEdit && Editar.valorFinal) {
@@ -1092,7 +1171,6 @@ edits.addEventListener('click', (event) => {
   // ativar o botao edit 
   if (event.target.id === 'editar') {
     itemClicado.classList.toggle('ativo')
-    console.log(event)
   }
 
   // readOnly dos inputs
@@ -1118,7 +1196,6 @@ edits.addEventListener('click', (event) => {
     const editValueBg = editValue.parentNode
     const btnDeletar = editValue.querySelector('#deletar')
     const confirm = editValueBg.querySelector('.confirmar')
-    console.log(confirm)
 
     if (event.target === btnDeletar) {
       confirm.classList.add('ativo')
@@ -1136,11 +1213,10 @@ edits.addEventListener('click', (event) => {
 
     movimentacoesLista.remove()
     principal.remove()
-    console.log(n)
     storage()
-    // window.location.reload(true)
   }
 })
+
 table.addEventListener('click', (event) => {
   const itemClicado = event.target
   const itemPai = event.target.parentElement.nodeName
