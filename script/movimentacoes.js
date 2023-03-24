@@ -609,7 +609,7 @@ function storage() {
 
   let numero = 0
 
-  const incremento = Math.floor(soma / 40)
+  const incremento = Math.floor(soma / 70)
 
   let start = 0
 
@@ -622,7 +622,7 @@ function storage() {
       clearInterval(timer)
     }
     valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
-  }, 15)
+  }, 10)
  } 
  if (soma < start) {
   const timer = setInterval(() => {
