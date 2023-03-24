@@ -620,12 +620,9 @@ function storage() {
     }
     valorStatus.innerText = `R$ ${numero.toFixed(2).replace('.', ',')}`
   }, 15)
-
  } else {
   valorStatus.innerText = `R$ ${soma.toFixed(2).replace('.', ',')}`
  }
-
-
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
     status.innerHTML =
