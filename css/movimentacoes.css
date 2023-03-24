@@ -185,13 +185,19 @@ body {
   background: #d3b7ff;
   border: 1px solid #130031;
   border-radius: 5px;
-  height: 20px;
+  height: 25px;
   font-family: "roboto", sans-serif;
   text-align: center;
   font-size: 10px;
   text-align-last: center;
   color: black;
 }
+
+.financas-formulario select {
+  height: 29px;
+}
+
+
 
 
 .financas-formulario input::placeholder {
@@ -387,8 +393,6 @@ body {
 #parcelas,
 #juros-compostos,
 #emprestimo-juros {
-  width: 148px;
-  height: 24px;
   padding: 4px 6px;
   cursor: pointer;
   text-align: center;
