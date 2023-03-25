@@ -616,7 +616,7 @@ function storage() {
  if (soma > start) {
   const timer = setInterval(() => {
     start = start + incremento;
-    numero = start.toFixed(2);
+    numero = start.toLocaleString('pt-BR');
     if (start > soma) {
       numero = soma
       clearInterval(timer)

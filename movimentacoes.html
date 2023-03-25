@@ -45,6 +45,7 @@
   </section>
   <div class="transacao" value="compra" id="compra-conteudo">
     <div class="financas">
+      <span id="fecharForm">X</span>
       <div class="form-img"><img src="./img/Movimentacoes/compra.svg" alt="imagem da aba compra"> Nova Despesa</div>
       <form action="inserir-financas" class="financas-formulario">
         <div>
@@ -90,7 +91,7 @@
         </div>
 
         <div class="div-total">
-          <input type="text" id="total" name="total" disabled placeholder="Total" />
+          <input type="text" id="total" name="total" readonly placeholder="Total" />
         </div>
         <div class="div-botao">
           <button id="botao-add" value="compra" type="button">
@@ -103,6 +104,7 @@
   </div>
   <div class="transacao" value="venda" id="venda-conteudo">
     <div class="financas">
+      <span id="fecharEdit">X</span>
       <div class="form-img"><img src="./img/Movimentacoes/venda.svg" alt="imagem da aba compra"> Nova Receita</div>
       <form action="inserir-financas" class="financas-formulario">
         <div>
@@ -135,7 +137,7 @@
         </div>
 
         <div class="div-total">
-          <input type="text" id="total" name="total" disabled placeholder="Total" />
+          <input type="text" id="total" name="total" readonly placeholder="Total" />
         </div>
         <div class="div-botao">
           <button value="venda" id="botao-add" type="button">
@@ -148,6 +150,7 @@
   </div>
   <div class="transacao" value="transferencia" id="pix-conteudo">
     <div class="financas">
+      <span id="fecharEdit">X</span>
       <div class="form-img"><img src="./img/Movimentacoes/pix.svg" alt="imagem da aba compra"> Nova transferencia</div>
       <form action="inserir-financas" class="financas-formulario">
         <div>
@@ -171,7 +174,7 @@
 
 
         <div class="div-total">
-          <input type="text" id="total" name="total" disabled placeholder="Total" />
+          <input type="text" id="total" name="total" readonly placeholder="Total" />
         </div>
         <div class="div-botao">
           <button id="botao-add" type="button" value="transferencia">
@@ -184,6 +187,7 @@
   </div>
   <div class="transacao" value="emprestimo" id="emprestimo-conteudo">
     <div class="financas">
+      <span id="fecharEdit">X</span>
       <div class="form-img"><img src="./img/Movimentacoes/emprestimo.svg" alt="imagem da aba compra"> Emprestimo</div>
       <form action="inserir-financas" class="financas-formulario">
         <div>
@@ -275,9 +279,9 @@
         </div>
 
         <div class="div-total">
-          <input type="text" id="total" name="total" disabled placeholder="Total" />
+          <input type="text" id="total" name="total" readonly placeholder="Total" />
 
-          <input type="text" id="totalPago" name="total" disabled placeholder="Total" />
+          <input type="text" id="totalPago" name="total" readonly placeholder="Total" />
 
         </div>
         <div class="div-botao">

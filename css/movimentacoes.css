@@ -57,6 +57,7 @@ body {
 
 /* Financas */
 
+
 .financas-bg {
   width: 100%;
   background: linear-gradient(180.52deg, #009FE3 8.62%, rgba(240, 240, 240, 0) 45.11%);
@@ -78,14 +79,7 @@ body {
   position: relative;
 }
 
-.selecao-conteudo {
-  display: grid;
-  grid-template-columns: 135px 135px;
-  align-self: center;
-  gap: 16px 16px;
-  padding-bottom: 8px;
-}
-
+/* SALDO */
 .saldo {
   font-size: 12px;
   line-height: 1;
@@ -127,6 +121,8 @@ body {
   height: 10px;
 }
 
+/* BOTOES */
+
 .texto {
   text-align: center;
   margin-bottom: 16px;
@@ -134,6 +130,42 @@ body {
   font-family: 'roboto', sans-serif;
 }
 
+.selecao-conteudo {
+  display: grid;
+  grid-template-columns: 120px 120px;
+  align-self: center;
+  gap: 16px 16px;
+  padding-bottom: 8px;
+}
+
+#compra-button:hover,
+#venda-button:hover,
+#pix-button:hover,
+#emprestimo-button:hover {
+  background: #d3d3d3;
+  border-color: #a5a5a5;
+}
+
+#compra-button,
+#venda-button,
+#pix-button,
+#emprestimo-button {
+  background: #EFEFEF;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px 8px;
+  font-family: "roboto", serif;
+  font-weight: 500;
+  border-radius: 10px;
+  font-size: 12px;
+  width: 120px;
+  height: 50px;
+  border: 1px solid #C9C9C9;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
 
 
 .transacao {
@@ -150,12 +182,13 @@ body {
 }
 
 .financas {
+  position: relative;
   background-color: white;
   border: 5px solid red;
   box-shadow: 0 0 0 4px white;
   padding: 10px 10px 0 10px;
   width: 75%;
-  border-radius: 10%;
+  border-radius: 20px;
 }
 
 .form-img {
@@ -196,9 +229,6 @@ body {
 .financas-formulario select {
   height: 29px;
 }
-
-
-
 
 .financas-formulario input::placeholder {
   color: #545454;
@@ -253,45 +283,25 @@ body {
   height: 15px;
 }
 
-#compra-button:hover,
-#venda-button:hover,
-#pix-button:hover,
-#emprestimo-button:hover {
-  background: #d3d3d3;
-  border-color: #a5a5a5;
-}
+@media (min-width: 375px) {
+  .selecao-conteudo {
+    grid-template-columns: 140px 140px;
+    gap: 16px 32px;
+  }
 
-#compra-button,
-#venda-button,
-#pix-button,
-#emprestimo-button {
-  background: #EFEFEF;
-  color: black;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0px 8px;
-  font-family: "roboto", serif;
-  font-weight: 500;
-  border-radius: 5px;
-  font-size: 12px;
-  width: 135px;
-  height: 50px;
-  border: 1px solid #C9C9C9;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
-}
+  #compra-button,
+  #venda-button,
+  #pix-button,
+  #emprestimo-button {
+    width: 140px;
+    height: 50px;
+    border: 1px solid #C9C9C9;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  }
 
-#compra-button.ativo,
-#venda-button.ativo,
-#pix-button.ativo,
-#emprestimo-button.ativo {
-  background: #d3d3d3;
-  border: 1px solid #a5a5a5;
 }
 
 /* IDS */
-
 
 #compra-button::before {
   content: "";
@@ -378,16 +388,6 @@ body {
 
 /* ids formulario */
 
-#compra-button,
-#venda-button,
-#pix-button,
-#emprestimo-button {
-  gap: 0px 8px;
-  font-size: 14px;
-  width: 150px;
-  height: 50px;
-}
-
 #dataInfo,
 #categoriaInit,
 #parcelas,
@@ -447,12 +447,7 @@ body {
 
 /* Media do formulario */
 
-@media (min-width: 375px) {
-  .selecao-conteudo {
-    grid-template-columns: 150px 150px;
-    gap: 16px 32px;
-  }
-}
+
 
 /* MOVIMENTACOES */
 .organizaMov.jurosLs {
@@ -565,6 +560,7 @@ body {
     1/-1;
 }
 
+#fecharForm,
 #fecharEdit {
   position: absolute;
   display: flex;
@@ -636,8 +632,6 @@ body {
   grid-column: 3;
 }
 
-
-
 #categoria,
 #data {
   width: 70px;
@@ -646,14 +640,13 @@ body {
 #valor,
 .valorInicial {
   width: auto;
+  font-size: 12px;
 }
 
 
 #nomeMov {
   width: auto;
 }
-
-
 
 #tabela {
   width: 85vw;
@@ -667,8 +660,6 @@ body {
   display: none;
 }
 
-
-
 #tabela input {
   border: none;
   font-family: 'roboto', sans-serif;
@@ -679,7 +670,6 @@ body {
   font-size: 0.8rem
 }
 
-
 #categoria,
 #data,
 .valorFinal,
@@ -688,43 +678,4 @@ body {
   display: block;
   color: #939393 !important;
   font-size: 0.6rem !important;
-}
-
-
-
-/* Saldo */
-
-.saldo-bg {
-  border-bottom: 2px solid #6d29d3;
-  padding-bottom: 100px;
-  margin-bottom: 50px;
-}
-
-.saldo-bg {
-  padding-top: 90px;
-  max-width: 1600px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.saldo h2 {
-  font-size: 20px;
-}
-
-.saldo img {
-  margin-left: 180px;
-  margin-top: 84px;
-}
-
-.piechart {
-  margin-left: 365px;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-image: conic-gradient(#f92828 70deg, #7aff64 0 235deg, #6d29d3 0);
-}
-
-.saldo-grafico {
-  display: flex;
-  align-items: center;
 }
