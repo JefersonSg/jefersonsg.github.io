@@ -127,6 +127,23 @@ body {
   background-color: #E7E7E7;
 }
 
+/* Criar conta / Entrar */
+
+.formulario-entrar input,
+.conteudo-formulario input {
+  font-size: 16px;
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  height: 20px;
+  padding: 10px;
+}
+
+.conteudo-formulario input:focus {
+  border: 1px solid #A8A8A8;
+  background-color: #F0F0F0;
+
+}
+
 .botao-conta {
   background: linear-gradient(#38A1FF, #1F88E5);
   cursor: pointer;

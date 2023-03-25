@@ -11,8 +11,12 @@ const table = document.getElementById('tabela')
 const edits = document.getElementById('editores');
 
 // storages
+const usuarios = JSON.parse(localStorage.usuarios)
+const usuarioAtivo = JSON.parse(localStorage.usuarioAtivo)
 
-let ls = localStorage.transacoes ? JSON.parse(localStorage.transacoes) : false;
+const nomeUsuarioAtivo = usuarios.find(usuario => usuario.nomeUsuario === usuarioAtivo.nomeUsuario)
+
+let ls = nomeUsuarioAtivo ? JSON.parse(localStorage.transacoes) : false;
 let compraLs = localStorage.compras ? JSON.parse(localStorage.compras) : false;
 let vendaLs = localStorage.vendas ? JSON.parse(localStorage.vendas) : false;
 let transferenciaLs = localStorage.transferencias ? JSON.parse(localStorage.transferencias) : false;
@@ -459,8 +463,7 @@ adicionar.forEach((i) => {
 
 function arrumarNome() {
   const nomeLogin = document.querySelector('.nome-login');
-  const nomeUser = JSON.parse(localStorage.usuarios);
-  nomeLogin.innerText = `Olá, ${nomeUser[0].nome} ${nomeUser[0].sobrenome.slice(0, 1)}.`;
+  nomeLogin.innerText = `Olá, ${nomeUsuarioAtivo.nome} ${nomeUsuarioAtivo.sobrenome.slice(0, 1)}.`;
 }
 
 function storage() {
@@ -475,7 +478,7 @@ function storage() {
   const vendasArray = [];
   const transferenciasArray = [];
   const EmprestimoArray = [];
-  const InputValor = [];
+  const saldo = [];
 
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
@@ -496,7 +499,7 @@ function storage() {
     compra['parcelas'] = [parcelas.innerText];
     compra['valor'] = [valor.innerText];
     comprasArray.push(compra);
-    InputValor.push(+valor.innerText.replace('-R$', '') * -1);
+    saldo.push(+valor.innerText.replace('-R$', '') * -1);
   });
 
   vendaLabel.forEach((i) => {
@@ -518,7 +521,7 @@ function storage() {
     venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
     vendasArray.push(venda);
-    InputValor.push(valorPush);
+    saldo.push(valorPush);
   });
 
   transferenciaLabel.forEach((i) => {
@@ -536,7 +539,7 @@ function storage() {
     transf['nome'] = [nome.innerText];
     transf['data'] = [data.innerText];
     transf['valor'] = [valor.innerText];
-    InputValor.push(transferenciaPush);
+    saldo.push(transferenciaPush);
     transferenciasArray.push(transf);
   });
   emprestimoLabel.forEach((i) => {
@@ -566,12 +569,11 @@ function storage() {
 
     if (condicao.innerText == '+') {
       let emprestimoPush = +valor.innerText.replace('+R$ ', '')
-      InputValor.push(emprestimoPush);
+      saldo.push(emprestimoPush);
 
     } else if (condicao.innerText == '-') {
       let emprestimoPush = +valor.innerText.replace('-R$ ', '') * -1
-      InputValor.push(emprestimoPush);
-
+      saldo.push(emprestimoPush);
     }
 
     (condicao.innerText == '+' ? +valor.innerText.replace('+R$ ', '') : +valor.innerText.replace('-R$ ', '') * -1)
@@ -595,7 +597,7 @@ function storage() {
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
 
   localStorage.setItem('transacoes', JSON.stringify(transacao));
-  localStorage.setItem('InputValor', JSON.stringify(InputValor));
+  localStorage.setItem('saldo', JSON.stringify(saldo));
   localStorage.setItem('compras', JSON.stringify(comprasArray));
   localStorage.setItem('vendas', JSON.stringify(vendasArray));
   localStorage.setItem('transferencias', JSON.stringify(transferenciasArray));
@@ -604,13 +606,9 @@ function storage() {
   const status = document.querySelector('.status');
 
   // Valor Ao Vivo
-
-  const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
-
+  const soma = saldo.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
   let numero = 0
-
   const incremento = Math.floor(soma / 70)
-
   let start = 0
 
  if (soma > start) {
@@ -638,7 +636,6 @@ function storage() {
  } else {
   valorStatus.innerText = `R$ ${soma.toLocaleString('pt-BR')}`
  }
-
 
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
@@ -1041,7 +1038,7 @@ if (ls) {
 if (ls) {
   arrumarInputValor();
 }
-if (localStorage.usuarios) {
+if (localStorage.usuarioAtivo) {
   arrumarNome();
 } else {
   window.open('index.html', '_top');
