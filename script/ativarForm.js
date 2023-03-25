@@ -28,8 +28,11 @@ formularios.forEach((i,n)=>{
   const financas = formTransacao[n].querySelector('.financas')
   formTransacao[n].addEventListener('click', (event)=>  {
     const itemClicado = event.target
-    if (!financas.contains(event.target)) {
+    if (!financas.contains(itemClicado)) {
       itemClicado.classList.remove('ativo')
+    }
+    if (itemClicado.id === 'fecharForm') {
+      itemClicado.offsetParent.offsetParent.classList.remove('ativo')
     }
   })
 })
