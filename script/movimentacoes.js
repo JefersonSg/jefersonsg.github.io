@@ -65,7 +65,7 @@ function novaDiv(type) {
       </select>
 
       <label for="data">Data</label>
-      <input readonly type="date" ;" id="dataInfo" name="data" />
+      <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
         <label for="parcelas">Parcelas</label>
 
@@ -107,7 +107,8 @@ function novaDiv(type) {
     InputValor[0].value = ''
     categoria[0].selectedIndex = 0
     dataInfo[0].value = ''
-    this.offsetParent.classList.remove('ativo')
+    this.offsetParent.offsetParent.classList.remove('ativo')
+
 
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
@@ -131,7 +132,7 @@ function novaDiv(type) {
       <input readonly type="nome" id="nomeEdit">
 
       <label for="data">Data</label>
-      <input readonly type="date" ;" id="dataInfo" name="data" />
+      <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
       <label for="parcelas">Parcelas</label>
       <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -170,7 +171,8 @@ function novaDiv(type) {
     nomeMov[1].value = ''
     InputValor[1].value = ''
     dataInfo[1].value = ''
-    this.offsetParent.classList.remove('ativo')
+    this.offsetParent.offsetParent.classList.remove('ativo')
+
 
 
   } else
@@ -197,7 +199,7 @@ function novaDiv(type) {
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
         <label for="data">Data</label>
-        <input readonly type="date" ;" id="dataInfo" name="data" />
+        <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
@@ -222,7 +224,7 @@ function novaDiv(type) {
       InputValor[2].value = ''
       dataInfo[2].value = ''
 
-      this.offsetParent.classList.remove('ativo')
+      this.offsetParent.offsetParent.classList.remove('ativo')
 
 
     } else if (type === 'emprestimo'
@@ -236,7 +238,7 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
     </div>
 
-    <p id="nomeMov" class = "nomeMov">${nomeMov[3].value}</p>
+    <p id="nomeMov" class = "nomeMov">${(categoria[2].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
     <p class = "diferenca" id="diferenca">R$ ${(
           totalPago.value.replace('Total ', '') - InputValor[3].value
@@ -260,7 +262,7 @@ function novaDiv(type) {
         <input readonly type="nome" id="nomeEdit">
 
         <label for="data">Data</label>
-        <input readonly type="date" ;" id="dataInfo" name="data" />
+        <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
@@ -354,9 +356,7 @@ function novaDiv(type) {
       InputValor[3].value = ''
       dataInfo[3].value = ''
 
-      this.offsetParent.classList.remove('ativo')
-
-
+      this.offsetParent.offsetParent.classList.remove('ativo')
     } else {
       alert('preencha todos os campos')
     }
@@ -688,7 +688,7 @@ function criarPaineis() {
             <input readonly type="text" name='nome' id="nomeEdit">
   
             <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
+            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
             <label for="valor">Valor</label>
             <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
@@ -755,7 +755,7 @@ function criarPaineis() {
             <input readonly type="nome" id="nomeEdit">
   
             <label for="data">Data</label>
-            <input readonly type="date" ;" id="dataInfo" name="data" />
+            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
             <label for="valor">Valor</label>
             <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
@@ -808,7 +808,7 @@ function criarPaineis() {
               <input readonly type="nome" id="nomeEdit">
   
               <label for="data">Data</label>
-              <input readonly type="date" ;" id="dataInfo" name="data" />
+              <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
@@ -849,7 +849,7 @@ function criarPaineis() {
               <input readonly type="nome" id="nomeEdit">
   
               <label for="data">Data</label>
-              <input readonly type="date" ;" id="dataInfo" name="data" />
+              <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
@@ -1090,10 +1090,10 @@ editValue.forEach((item, n) => {
     }
     if (jurosEdit && Editar.jurosInit) {
       jurosEdit.value = Editar.jurosInit.innerText
-    }
-    if (jurosMesEdit && Editar.jurosMesInit) {
       jurosMesEdit.value = Editar.jurosMesInit.innerText
+      nomeEdit.value = Editar.nome.innerText.replace('Emprestou para ','').replace('Pegou de ','')
     }
+
     if (diferencaeEdit && Editar.diferencaInit) {
       diferencaeEdit.value = Editar.diferencaInit.innerText
     }
@@ -1115,7 +1115,7 @@ editValue.forEach((item, n) => {
       if (i.id == 'compraLabel') {
         Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
       }
-
+      console.log(i.id)
       if (i.id == 'transferenciaLabel') {
         if (Editar.condicao.innerText === 'Transferencia enviada') {
           Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
@@ -1126,6 +1126,7 @@ editValue.forEach((item, n) => {
 
       if (i.id == 'emprestimoLabel') {
         if (Editar.condicao.innerText === '-') {
+          Editar.nome.innerText = `Emprestou para ${nomeEdit.value}`
           Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
         } else if (Editar.condicao.innerText === '+') {
           Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`

@@ -4,7 +4,7 @@ const formularios = document.querySelectorAll('.transacao');
 
 function addAtivo(item) {
   btnForm.forEach((i)=>{ if (i !== item) { i.classList.remove('ativo') } })
-  item.classList.toggle('ativo')
+  item.classList.add('ativo')
 
   formularios.forEach((i)=>{  
     if (i.getAttribute('value') == item.value) {
