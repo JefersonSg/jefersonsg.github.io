@@ -1,23 +1,58 @@
 body {
-  /* background-color: #f3f4ef; */
+  height: 100vh;
   position: relative;
 }
 
 /* Header */
 
 .header {
-  margin-top: 34px;
   display: grid;
+  padding-top: 34px;
   justify-items: center;
 }
 
 .logo {
+  position: absolute;
   margin: 0 auto;
+  animation: logoOpacity 3s ease-in forwards;
 }
+
+@keyframes logoOpacity {
+  0% {
+    top: 45%;
+    opacity: 0;
+    width: 40px;
+  }
+
+  50% {
+    top: 45%;
+    rotate: 1440deg;
+    opacity: 1;
+    width: 130px;
+  }
+
+  70% {
+    top: 45%;
+    width: 130px;
+  }
+
+  90% {
+    top: 34px;
+    rotate: 1440deg;
+  }
+
+  100% {
+    rotate: 1440deg;
+  }
+
+
+}
+
+
 
 @media (min-width:400px) {
   .logo img {
-    width: 115px;
+    width: 130px;
   }
 }
 
@@ -31,6 +66,7 @@ body {
 }
 
 .principal-conteudo {
+  position: relative;
   text-align: center;
 }
 
@@ -39,6 +75,23 @@ body {
   font-size: 16px;
   max-width: 25ch;
   position: relative;
+  animation: moviLeft 6s ease-in forwards;
+}
+
+@keyframes moviLeft {
+  0% {
+    right: -110vw;
+  }
+
+  50% {
+    right: -110vw;
+  }
+
+  60% {
+    right: 0px;
+  }
+
+
 }
 
 .principal-conteudo h1::after {
@@ -67,11 +120,45 @@ body {
   right: -11px;
 }
 
-.ilustracao {
-  margin: 0 auto;
-  margin-top: 32px;
+
+.brilho {
+  display: block;
+  position: absolute;
+  top: 80px;
+  left: 10%;
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: -1;
 }
 
+.ilustracao {
+  position: absolute;
+  animation: moviRight 6s ease-in forwards;
+  width: 300px;
+}
+
+
+
+@keyframes moviRight {
+  0% {
+    left: -110vw;
+    top: 150px;
+  }
+
+  50% {
+    left: -110vw;
+  }
+
+  60% {
+    left: 0px;
+  }
+
+  100% {
+    top: 150px;
+  }
+}
 
 @media (min-width: 400px) {
   .principal-conteudo h1 {
@@ -94,10 +181,28 @@ body {
 
 /* Botoes */
 .botoes {
+  width: 100%;
+  position: absolute;
   display: grid;
+  top: 400px;
+  left: 0;
   justify-items: center;
-  margin-top: 32px;
   gap: 16px 0px;
+  animation: opacity 7s forwards;
+}
+
+@keyframes opacity {
+  0% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .botoes span {
@@ -134,6 +239,7 @@ body {
   font-size: 16px;
   border: 1px solid #A8A8A8;
   border-radius: 5px;
+  left: 0px;
   height: 20px;
   padding: 10px;
 }

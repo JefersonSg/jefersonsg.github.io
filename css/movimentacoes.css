@@ -191,6 +191,9 @@ body {
 }
 
 
+
+/* Formularios */
+
 .transacao {
   position: fixed;
   display: none;
@@ -206,6 +209,8 @@ body {
 
 .financas {
   position: relative;
+  display: grid;
+  justify-items: center;
   background-color: white;
   border: 5px solid red;
   box-shadow: 0 0 0 4px white;
@@ -238,25 +243,26 @@ body {
 
 .financas-formulario select,
 .financas-formulario input {
+  width: 100%;
   background: #d3b7ff;
   border: 1px solid #130031;
   border-radius: 5px;
-  height: 25px;
+  height: 28px;
   font-family: "roboto", sans-serif;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
   text-align-last: center;
   color: black;
 }
 
 .financas-formulario select {
-  height: 29px;
+  height: 32px;
 }
 
 .financas-formulario input::placeholder {
   color: #545454;
   text-align: center;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .financas-formulario button {
@@ -383,10 +389,7 @@ body {
 #compra-conteudo,
 #pix-conteudo {
   grid-column: 1 / -1;
-}
 
-#compra-conteudo {
-  display: none;
 }
 
 #emprestimo-conteudo.ativo,
@@ -394,7 +397,7 @@ body {
 #compra-conteudo.ativo,
 #pix-conteudo.ativo {
   display: flex;
-  animation: formulario .2s forwards;
+  animation: formulario .6s forwards;
 }
 
 @keyframes formulario {
@@ -428,7 +431,7 @@ body {
 #dataInfo,
 #movimentacao,
 #valorInput {
-  width: 97%;
+  width: 98%;
   min-width: 97%;
 }
 
@@ -444,9 +447,7 @@ body {
   display: none;
 }
 
-#categoriaInit {
-  width: 100%;
-}
+
 
 .icon.icon-transacao {
   display: grid;
@@ -655,9 +656,12 @@ body {
   grid-column: 3;
 }
 
-#categoria,
 #data {
   width: 70px;
+}
+
+#categoria {
+  width: 120px;
 }
 
 #valor,

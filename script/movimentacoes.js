@@ -21,7 +21,6 @@ const edits = document.getElementById('editores');
 
   let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
   let informacoesLs = JSON.parse(Ls)
-  console.log(informacoesLs[5])
 
 
 let ls = nomeUsuarioAtivo ? informacoesLs[5] : false;
