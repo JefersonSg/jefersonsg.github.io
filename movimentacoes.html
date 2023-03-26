@@ -17,10 +17,11 @@
 <body>
   <header class="header">
     <nav class="perfil">
-      <ul>
+      <ul class="perfil-ul">
         <img class="img-perfil" src="./img/Movimentacoes/account_circle_FILL0_wght300_GRAD0_opsz48.svg" />
         <li>
           <span class="font-p-m nome-login"></span>
+          <img class="setinha" src="./img/Movimentacoes/Arrow Fowards.svg" alt="seta">
         </li>
       </ul>
     </nav>
@@ -70,7 +71,7 @@
         </div>
 
         <div>
-          <input type="date" ;" id="dataInfo" name="data" />
+          <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
         <div class="div-parcelas">
           <select required name="parcelas" id="parcelas">
@@ -114,7 +115,7 @@
           <input onkeypress="return onlynumber();" type="text" id="valorInput" name="valor" placeholder="Valor" />
         </div>
         <div>
-          <input type="date" ;" id="dataInfo" name="data" />
+          <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
         </div>
 
@@ -169,7 +170,7 @@
           <input type="text" id="valorInput" name="valor" onkeypress="return onlynumber();" placeholder="Valor" />
         </div>
         <div>
-          <input type="date" ;" id="dataInfo" name="data" />
+          <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
 
 
@@ -206,7 +207,7 @@
           <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
         </div>
         <div>
-          <input type="date" ;" id="dataInfo" name="data" />
+          <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
         <div>
           <select required name="juros" id="emprestimo-juros">
@@ -310,5 +311,6 @@
 <script src="./script/movimentacoes.js"></script>
 <script src="./script/contas.js"></script>
 <script src="./script/ativarForm.js"></script>
+<script src="./script/returnIndex.js"></script>
 
 </html>

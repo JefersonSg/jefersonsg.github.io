@@ -11,16 +11,24 @@ const table = document.getElementById('tabela')
 const edits = document.getElementById('editores');
 
 // storages
-const usuarios = JSON.parse(localStorage.usuarios)
-const usuarioAtivo = JSON.parse(localStorage.usuarioAtivo)
+  if (!localStorage.usuarioAtivo) {
+      window.open('index.html', '_top');
+  }
 
-const nomeUsuarioAtivo = usuarios.find(usuario => usuario.nomeUsuario === usuarioAtivo.nomeUsuario)
+  const usuarioAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
 
-let ls = nomeUsuarioAtivo ? JSON.parse(localStorage.transacoes) : false;
-let compraLs = localStorage.compras ? JSON.parse(localStorage.compras) : false;
-let vendaLs = localStorage.vendas ? JSON.parse(localStorage.vendas) : false;
-let transferenciaLs = localStorage.transferencias ? JSON.parse(localStorage.transferencias) : false;
-let emprestimoLs = localStorage.emprestimos ? JSON.parse(localStorage.emprestimos) : false;
+  const nomeUsuarioAtivo = JSON.parse(localStorage.usuarios).find(usuario => usuario.nomeUsuario === usuarioAtivo.nomeUsuario)
+
+  let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
+  let informacoesLs = JSON.parse(Ls)
+  console.log(informacoesLs[5])
+
+
+let ls = nomeUsuarioAtivo ? informacoesLs[5] : false;
+let compraLs = informacoesLs[1] ? informacoesLs[1] : false;
+let vendaLs = informacoesLs[2] ? informacoesLs[2] : false;
+let transferenciaLs = informacoesLs[3] ? informacoesLs[3] : false;
+let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
 
 function novaDiv(type) {
@@ -112,7 +120,6 @@ function novaDiv(type) {
     categoria[0].selectedIndex = 0
     dataInfo[0].value = ''
     this.offsetParent.offsetParent.classList.remove('ativo')
-
 
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
@@ -420,9 +427,9 @@ function novaDiv(type) {
         Editar.data.innerText = dataEditInit.value
         Editar.valor.innerText = (+valorEditInit.value).toFixed(2)
 
-        if (Editar.condicao.innerText == 'Transferencia enviada') {
+        if (Editar.condicao.innerText === 'Transferencia enviada') {
           Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
-        } else if (Editar.condicao.innerText == 'Transferencia recebida') {
+        } else if (Editar.condicao.innerText === 'Transferencia recebida') {
           Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
         }
         if (Editar.condicao.innerText == '-') {
@@ -474,12 +481,15 @@ function storage() {
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
   const valorStatus = document.querySelector('.valor');
 
+
+  const informacoes = []
+
+
   const comprasArray = [];
   const vendasArray = [];
   const transferenciasArray = [];
   const EmprestimoArray = [];
-  const saldo = [];
-
+  const InputValor = [];
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const categoria = i.querySelector('#categoria');
@@ -499,7 +509,7 @@ function storage() {
     compra['parcelas'] = [parcelas.innerText];
     compra['valor'] = [valor.innerText];
     comprasArray.push(compra);
-    saldo.push(+valor.innerText.replace('-R$', '') * -1);
+    InputValor.push(+valor.innerText.replace('-R$', '') * -1);
   });
 
   vendaLabel.forEach((i) => {
@@ -521,7 +531,7 @@ function storage() {
     venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
     vendasArray.push(venda);
-    saldo.push(valorPush);
+    InputValor.push(valorPush);
   });
 
   transferenciaLabel.forEach((i) => {
@@ -539,7 +549,7 @@ function storage() {
     transf['nome'] = [nome.innerText];
     transf['data'] = [data.innerText];
     transf['valor'] = [valor.innerText];
-    saldo.push(transferenciaPush);
+    InputValor.push(transferenciaPush);
     transferenciasArray.push(transf);
   });
   emprestimoLabel.forEach((i) => {
@@ -569,11 +579,12 @@ function storage() {
 
     if (condicao.innerText == '+') {
       let emprestimoPush = +valor.innerText.replace('+R$ ', '')
-      saldo.push(emprestimoPush);
+      InputValor.push(emprestimoPush);
 
     } else if (condicao.innerText == '-') {
       let emprestimoPush = +valor.innerText.replace('-R$ ', '') * -1
-      saldo.push(emprestimoPush);
+      InputValor.push(emprestimoPush);
+
     }
 
     (condicao.innerText == '+' ? +valor.innerText.replace('+R$ ', '') : +valor.innerText.replace('-R$ ', '') * -1)
@@ -594,19 +605,20 @@ function storage() {
   });
 
   const transacao = [];
-  transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
+  informacoes.push(InputValor);
+  informacoes.push(comprasArray);
+  informacoes.push(vendasArray);
+  informacoes.push(transferenciasArray);
+  informacoes.push(EmprestimoArray);
+  informacoes.push(transacao)
 
-  localStorage.setItem('transacoes', JSON.stringify(transacao));
-  localStorage.setItem('saldo', JSON.stringify(saldo));
-  localStorage.setItem('compras', JSON.stringify(comprasArray));
-  localStorage.setItem('vendas', JSON.stringify(vendasArray));
-  localStorage.setItem('transferencias', JSON.stringify(transferenciasArray));
-  localStorage.setItem('emprestimos', JSON.stringify(EmprestimoArray));
+  transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
+  localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
 
   const status = document.querySelector('.status');
 
   // Valor Ao Vivo
-  const soma = saldo.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
+  const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
   let numero = 0
   const incremento = Math.floor(soma / 70)
   let start = 0
@@ -946,7 +958,6 @@ function criarPaineis() {
 }
 function arrumarInputValor() {
   if (compraLs) {
-    const compra = JSON.parse(localStorage.compras);
     const compraLabel = document.querySelectorAll('#compraLabel');
 
     compraLabel.forEach((i, n) => {
@@ -956,15 +967,14 @@ function arrumarInputValor() {
       const parcelas = i.querySelector('#parcelasTotal');
       const valor = i.querySelector('#valor');
 
-      nome.innerText = `${compra[n].nome}`;
-      categoria.innerText = compra[n].categoria;
-      data.innerText = `${compra[n].data}`;
-      parcelas.innerText = compra[n].parcelas;
-      valor.innerText = compra[n].valor;
+      nome.innerText = `${compraLs[n].nome}`;
+      categoria.innerText = compraLs[n].categoria;
+      data.innerText = `${compraLs[n].data}`;
+      parcelas.innerText = compraLs[n].parcelas;
+      valor.innerText = compraLs[n].valor;
     });
   }
   if (vendaLs) {
-    const venda = JSON.parse(localStorage.vendas);
     const vendaLabel = document.querySelectorAll('#vendaLabel');
 
     vendaLabel.forEach((i, n) => {
@@ -973,10 +983,10 @@ function arrumarInputValor() {
       const parcelas = i.querySelector('#parcelasTotal');
       const valor = i.querySelector('#valor');
 
-      nome.innerText = `${venda[n].nome}`;
-      data.innerText = venda[n].data;
-      parcelas.innerText = venda[n].parcelas;
-      valor.innerText = venda[n].valor;
+      nome.innerText = `${vendaLs[n].nome}`;
+      data.innerText = vendaLs[n].data;
+      parcelas.innerText = vendaLs[n].parcelas;
+      valor.innerText = vendaLs[n].valor;
     });
   }
 
