@@ -1,52 +1,54 @@
 body {
   height: 100vh;
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
 }
 
 /* Header */
 
 .header {
-  display: grid;
-  justify-items: center;
-  padding-top: 34px;
+  width: 100%;
 }
 
 .logo {
-  animation: logoOpacity 3s ease-out forwards;
-  margin: 0 auto;
-  opacity: 0;
+  width: 100%;
+  display: grid;
   position: absolute;
+  top: 40%;
+  opacity: 0;
+  justify-content: center;
+  animation: logoOpacity 3s 0.15s cubic-bezier(0, 0.55, 0.45, 1) forwards;
+}
+
+.logo img {
+  width: 130px;
 }
 
 @keyframes logoOpacity {
   0% {
     opacity: 0;
-    top: 45%;
-    width: 40px;
+    top: 40%;
   }
 
-  50% {
-    opacity: 0.7;
+  60% {
     rotate: 1440deg;
-    top: 45%;
-    width: 95px;
+    top: 40%;
   }
 
-  70% {
+  80% {
     opacity: 1;
-    top: 45%;
   }
 
   90% {
     rotate: 1440deg;
-    top: 34px;
+    top: 20px;
   }
 
   100% {
     rotate: 1440deg;
     opacity: 1;
+    top: 20px;
   }
 
 
@@ -54,24 +56,19 @@ body {
 
 
 
-@media (min-width:400px) {
-  .logo img {
-    width: 130px;
-  }
-}
+@media (min-width:400px) {}
 
 /* Main */
 
 .principal {
   display: grid;
   max-width: 100vw;
-  margin-top: 64px;
   position: relative;
 }
 
 .content-Titulo {
-  right: -100vw;
-  top: 50%;
+  right: -101vw;
+  top: 100px;
   position: absolute;
   width: 100%;
   animation: moviLeft 400ms 3s ease-in forwards;
@@ -137,7 +134,7 @@ body {
 .content-img {
   position: absolute;
   left: -101vw;
-  top: 50%;
+  top: 250px;
   width: 100%;
   animation: moviRight 400ms 3s forwards;
 }
@@ -149,11 +146,9 @@ body {
 @keyframes moviRight {
   from {
     left: -101vw;
-    top: 150px;
   }
 
   to {
-    top: 150px;
     left: 0px;
   }
 }
@@ -186,7 +181,7 @@ body {
   justify-items: center;
   left: 0;
   position: absolute;
-  top: 400px;
+  top: 500px;
   width: 100%;
 }
 

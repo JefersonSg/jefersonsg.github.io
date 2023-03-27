@@ -1066,9 +1066,7 @@ editValue.forEach((item, n) => {
   const jurosMesEdit = item.querySelector('#jurosCompEdit');
   const valorFinalEdit = item.querySelector('#valorFinEdit');
 
-
   const btnEdit = item.querySelector('#editar')
-
   const i = movimentacoesLista[n]
 
   let Editar = {
