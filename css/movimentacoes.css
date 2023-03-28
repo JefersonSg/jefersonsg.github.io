@@ -125,7 +125,7 @@ body {
   display: grid;
   grid-template-columns: 4px 1fr;
   padding: 2px 8px 2px 8px;
-  gap: 4px;
+  gap: 8px;
   font-size: 12px;
   line-height: 1;
   align-items: center;
@@ -133,6 +133,28 @@ body {
   width: auto;
   height: 11px;
   border-radius: 8px;
+}
+
+.status.positivo::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background-color: #2DAA70;
+  box-shadow: 0px 0px 6px #067240;
+  animation: brilho 5s ease-in infinite;
+}
+
+
+@keyframes brilho {
+  from {
+    box-shadow: 0px 0px 0px #15995C;
+  }
+
+  to {
+    box-shadow: 0px 0px 10px #15995C;
+  }
 }
 
 .menu {

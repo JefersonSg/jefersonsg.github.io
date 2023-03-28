@@ -650,8 +650,8 @@ function storage() {
 
   if (soma > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
-    status.innerHTML =
-      '<img src="./img/Movimentacoes/positivo.svg" alt=""> Positivo';
+    status.classList.add('positivo');
+    status.innerText = 'Positivo'
   } else if (soma === 0) {
     status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)';
     status.innerHTML =

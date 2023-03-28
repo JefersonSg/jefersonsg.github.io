@@ -10,7 +10,6 @@
   display: none;
   justify-content: center;
   align-items: center;
-  animation: modal .3s forwards;
 }
 
 .modal-container.ativo,
@@ -28,6 +27,7 @@
   box-shadow: 0 0 0 4px white;
   border-radius: 5px;
   position: relative;
+  animation: modal .4s ease-out forwards;
 }
 
 .fechar {
@@ -59,7 +59,7 @@
 @keyframes modal {
   from {
     opacity: 0;
-    transform: translate3d(0, -30px, 0);
+    transform: translate3d(0, -50px, 0);
   }
 
   to {
