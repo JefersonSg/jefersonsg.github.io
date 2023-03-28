@@ -140,20 +140,40 @@ body {
   display: block;
   width: 6px;
   height: 6px;
-  border-radius: 3px;
-  background-color: #2DAA70;
-  box-shadow: 0px 0px 6px #067240;
-  animation: brilho 5s ease-in infinite;
+  border-radius: 4px;
+  background: #84F0BE;
+  animation: brilhoPositivo 3s infinite alternate;
 }
 
 
-@keyframes brilho {
+@keyframes brilhoPositivo {
   from {
-    box-shadow: 0px 0px 0px #15995C;
+    box-shadow: 0px 0px 1px 1px #15995C;
   }
 
   to {
-    box-shadow: 0px 0px 10px #15995C;
+    box-shadow: 0px 0px 4px 2px #15995C;
+  }
+}
+
+.status.negativo::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 4px;
+  background: #F41414;
+  animation: brilhoNegativo 2s ease-in-out infinite alternate;
+}
+
+
+@keyframes brilhoNegativo {
+  from {
+    box-shadow: 0px 0px 0px 0px #E00D0D;
+  }
+
+  to {
+    box-shadow: 0px 0px 4px 2px #E00D0D;
   }
 }
 

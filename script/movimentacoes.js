@@ -658,9 +658,8 @@ function storage() {
       '<img src="./img/Movimentacoes/neutro.svg" alt=""> Neutro';
   } else if (soma < 0) {
     status.style.backgroundColor = ' rgba(255, 0, 0, 0.5)';
-    status.innerHTML =
-      '<img src="./img/Movimentacoes/negativo.svg" alt=""> Negativo';
-    status.style.color = '#610000';
+    status.classList.add('negativo');
+    status.innerText = 'Negativo';
   }
 }
 function criarPaineis() {
