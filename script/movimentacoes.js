@@ -11,16 +11,16 @@ const table = document.getElementById('tabela')
 const edits = document.getElementById('editores');
 
 // storages
-  if (!localStorage.usuarioAtivo) {
-      window.open('index.html', '_top');
-  }
+if (!localStorage.usuarioAtivo) {
+  window.open('index.html', '_top');
+}
 
-  const usuarioAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
+const usuarioAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
 
-  const nomeUsuarioAtivo = JSON.parse(localStorage.usuarios).find(usuario => usuario.nomeUsuario === usuarioAtivo.nomeUsuario)
+const nomeUsuarioAtivo = JSON.parse(localStorage.usuarios).find(usuario => usuario.nomeUsuario === usuarioAtivo.nomeUsuario)
 
-  let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
-  let informacoesLs = JSON.parse(Ls)
+let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
+let informacoesLs = JSON.parse(Ls)
 
 
 let ls = nomeUsuarioAtivo ? informacoesLs[5] : false;
@@ -29,6 +29,9 @@ let vendaLs = informacoesLs[2] ? informacoesLs[2] : false;
 let transferenciaLs = informacoesLs[3] ? informacoesLs[3] : false;
 let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
+
+let transacaoAtual = []
+
 
 function novaDiv(type) {
   type = this.value
@@ -44,7 +47,7 @@ function novaDiv(type) {
     && nomeMov[0].value !== ''
     && InputValor[0].value !== ''
     && categoria[0].selectedIndex !== 0
-    && dataInfo[0].value !== ''
+    // && dataInfo[0].value !== ''
   ) {
 
     div.innerHTML = `
@@ -68,11 +71,17 @@ function novaDiv(type) {
         <option selected value=""  style="display: none">
           categoria da compra
         </option>
-        <option value="produto eletronico">Produto Eletronico</option>
-        <option value="roupa">Roupa</option>
+        <option value="produto eletronico">Produtos Eletronicos</option>
+        <option value="roupa">Roupas</option>
+        <option value="contas">Contas</option>
+        <option value="transporte">Transporte</option>
+        <option value="despesas médicas">Despesas médicas</option>
+        <option value="cuidados pessoais">Cuidados pessoais</option>
+        <option value="entretenimento">Entretenimento</option>
         <option value="remedio">Remedio</option>
-        <option value="comida">Comida</option>
+        <option value="alimentação">Alimentação</option>
         <option value="cosmetico">Cosmeticos</option>
+        <option value="cosmetico">outros</option>
       </select>
 
       <label for="data">Data</label>
@@ -111,9 +120,9 @@ function novaDiv(type) {
     `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
+    transacaoAtual.push(+InputValor[0].value * -1)
     number++
     storage()
-
     nomeMov[0].value = ''
     InputValor[0].value = ''
     categoria[0].selectedIndex = 0
@@ -123,7 +132,8 @@ function novaDiv(type) {
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
     && InputValor[1].value !== ''
-    && dataInfo[1].value !== '') {
+    // && dataInfo[1].value !== ''
+  ) {
 
     div.innerHTML = `
     <div class='icon icon-transacao'>
@@ -175,6 +185,7 @@ function novaDiv(type) {
 `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
+    transacaoAtual.push(+InputValor[1].value)
     number++
     storage()
 
@@ -190,7 +201,7 @@ function novaDiv(type) {
       && nomeMov[2].value !== ''
       && categoria[1].selectedIndex !== 0
       && InputValor[2].value !== ''
-      && dataInfo[2].value !== ''
+      // && dataInfo[2].value !== ''
     ) {
 
       div.innerHTML = `
@@ -226,6 +237,7 @@ function novaDiv(type) {
     `;
       table.insertBefore(div, table.firstChild);
       edits.appendChild(edit)
+      transacaoAtual.push(categoria[1].value === '+' ? +InputValor[2].value : +InputValor[2].value * -1)
       number++
       storage()
 
@@ -241,7 +253,7 @@ function novaDiv(type) {
       && nomeMov[3].value !== ''
       && categoria[2].selectedIndex !== 0
       && InputValor[3].value !== ''
-      && dataInfo[3].value !== ''
+      // && dataInfo[3].value !== ''
     ) {
       div.innerHTML = `
     <div class='icon icon-transacao'>
@@ -358,6 +370,7 @@ function novaDiv(type) {
   `;
       table.insertBefore(div, table.firstChild);
       edits.appendChild(edit)
+      transacaoAtual.push(categoria[2].value === '+' ? +InputValor[3].value : +InputValor[3].value * -1)
       number++
       storage()
 
@@ -424,20 +437,27 @@ function novaDiv(type) {
       if (btnEdit.classList.contains('ativo')) {
         Editar.nome.innerText = nomeEditInit.value
         Editar.data.innerText = dataEditInit.value
-        Editar.valor.innerText = (+valorEditInit.value).toFixed(2)
 
-        if (Editar.condicao.innerText === 'Transferencia enviada') {
-          Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
-        } else if (Editar.condicao.innerText === 'Transferencia recebida') {
+
+        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}` } else if (btnEdit.offsetParent.offsetParent.id == 'vendaLabel') {
           Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
-        }
-        if (Editar.condicao.innerText == '-') {
-          Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
-        } else if (Editar.condicao.innerText == '+') {
-          Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+        } else if (btnEdit.offsetParent.offsetParent.id == 'transferenciaLabel') {
+          if (Editar.condicao.innerText === 'Transferencia enviada') {
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+          } else if (Editar.condicao.innerText === 'Transferencia recebida') {
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+          }
+        } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabel') {
+          if (Editar.condicao.innerText === '-') {
+            Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+          } else if (Editar.condicao.innerText === '+') {
+            Editar.nome.innerText = `Pegou de ${nomeEditInit.value}`
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+          }
         }
 
-        if (Editar && Editar.categoria) {
+        if (Editar.categoria) {
           Editar.categoria.innerText = categoriaEditInit.value
         }
         if (parcelasEditInit && Editar.parcelasInit) {
@@ -455,6 +475,7 @@ function novaDiv(type) {
         if (valorFinalEditInit && Editar.valorFinal) {
           Editar.valorFinal.innerText = valorFinalEditInit.value
         }
+        transacaoAtual.push(valorEditInit.value)
         storage()
       }
     })
@@ -480,9 +501,7 @@ function storage() {
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
   const valorStatus = document.querySelector('.valor');
 
-
   const informacoes = []
-
 
   const comprasArray = [];
   const vendasArray = [];
@@ -617,51 +636,71 @@ function storage() {
   const status = document.querySelector('.status');
 
   // Valor Ao Vivo
-  const soma = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
+  const valorAtual = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
   let numero = 0
-  const incremento = Math.floor(soma / 70)
-  let start = 0
+  const incremento = Math.floor(valorAtual > 50000 ? valorAtual / 150 : valorAtual / 100)
+  let valorAnterior = valorAtual - transacaoAtual.pop() || 0
+  let start = valorAnterior
 
- if (soma > start) {
-  const timer = setInterval(() => {
-    start = start + incremento;
-    numero = start.toLocaleString('pt-BR');
-    if (start > soma) {
-      numero = soma
-      clearInterval(timer)
+  //Efeitos Numericos
+  if (valorAtual > 0) {
+    if (valorAtual > start) {
+      const timer = setInterval(() => {
+        start += incremento
+        numero = start
+        if (start > valorAtual) {
+          numero = valorAtual
+          clearInterval(timer)
+        }
+        valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
+      }, 15)
+    } else if (valorAtual < start) {
+      const timer = setInterval(() => {
+        start += -incremento
+        numero = start
+
+        if (valorAtual > start) {
+          numero = valorAtual
+          clearInterval(timer)
+        }
+        valorStatus.innerText = `R$ ${(numero.toLocaleString('pt-BR'))}`
+      }, 15)
     }
-    valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
-  }, 10)
- } 
- if (soma < start) {
-  const timer = setInterval(() => {
-    start = start - (incremento * -1)
-    numero = start.toLocaleString('pt-BR')
+  } else if (valorAtual < 0) {
+    const timer = setInterval(() => {
+      start += -incremento * -1
+      numero = start
+      if (valorAtual > start) {
+        numero = valorAtual
+        clearInterval(timer)
+      }
+      valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-', '')}`
+    }, 15)
+  } else if (valorAtual === 0) {
+    valorStatus.innerText = `R$ ${valorAtual.toLocaleString('pt-BR')}`
+  } else (alert('erro'))
 
-    if (soma > start) {
-      numero = soma
-      clearInterval(timer)
-    }
-    valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-','')}`
-  }, 15)
- } else {
-  valorStatus.innerText = `R$ ${soma.toLocaleString('pt-BR')}`
- }
+  // Efeitos Visuais
 
-  if (soma > 0) {
+  if (valorAtual > 0) {
     status.style.backgroundColor = ' rgb(227, 247, 236)';
     status.classList.add('positivo');
+    status.classList.remove('negativo');
     status.innerText = 'Positivo'
-  } else if (soma === 0) {
+  } else if (valorAtual === 0) {
+    status.classList.remove('negativo');
+    status.classList.remove('positivo');
+    status.innerText = 'Neutro';
     status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)';
-    status.innerHTML =
-      '<img src="./img/Movimentacoes/neutro.svg" alt=""> Neutro';
-  } else if (soma < 0) {
-    status.style.backgroundColor = ' rgba(255, 0, 0, 0.5)';
+
+  } else if (valorAtual < 0) {
+    status.style.backgroundColor = 'rgba(239, 123, 123, 0.5)';
     status.classList.add('negativo');
+    status.classList.remove('positivo');
     status.innerText = 'Negativo';
   }
 }
+
 function criarPaineis() {
 
   ls.forEach((v, n) => {
@@ -705,11 +744,17 @@ function criarPaineis() {
             <option selected value=""  style="display: none">
               categoria da compra
             </option>
-            <option value="produto eletronico">Produto Eletronico</option>
-            <option value="roupa">Roupa</option>
+            <option value="produto eletronico">Produtos Eletronicos</option>
+            <option value="roupa">Roupas</option>
+            <option value="contas">Contas</option>
+            <option value="transporte">Transporte</option>
+            <option value="despesas médicas">Despesas médicas</option>
+            <option value="cuidados pessoais">Cuidados pessoais</option>
+            <option value="entretenimento">Entretenimento</option>
             <option value="remedio">Remedio</option>
-            <option value="comida">Comida</option>
+            <option value="alimentação">Alimentação</option>
             <option value="cosmetico">Cosmeticos</option>
+            <option value="cosmetico">outros</option>
             </select>
 
             <label for="parcelas">Parcelas</label>
@@ -954,6 +999,7 @@ function criarPaineis() {
 
   });
 }
+
 function arrumarInputValor() {
   if (compraLs) {
     const compraLabel = document.querySelectorAll('#compraLabel');
@@ -1048,7 +1094,7 @@ if (ls) {
 }
 if (localStorage.usuarioAtivo) {
   arrumarNome();
-} else {
+} else if (!localStorage.usuarioAtivo) {
   window.open('index.html', '_top');
 }
 const editValue = document.querySelectorAll('.editValue')
@@ -1064,7 +1110,6 @@ editValue.forEach((item, n) => {
   const jurosEdit = item.querySelector('#jurosEdit');
   const jurosMesEdit = item.querySelector('#jurosCompEdit');
   const valorFinalEdit = item.querySelector('#valorFinEdit');
-
   const btnEdit = item.querySelector('#editar')
   const i = movimentacoesLista[n]
 
@@ -1094,7 +1139,7 @@ editValue.forEach((item, n) => {
     if (jurosEdit && Editar.jurosInit) {
       jurosEdit.value = Editar.jurosInit.innerText
       jurosMesEdit.value = Editar.jurosMesInit.innerText
-      nomeEdit.value = Editar.nome.innerText.replace('Emprestou para ','').replace('Pegou de ','')
+      nomeEdit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
     }
 
     if (diferencaeEdit && Editar.diferencaInit) {
@@ -1114,29 +1159,25 @@ editValue.forEach((item, n) => {
 
       if (i.id == 'vendaLabel') {
         Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
-      }
-      if (i.id == 'compraLabel') {
+      } else if (i.id == 'compraLabel') {
         Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
-      }
-      console.log(i.id)
-      if (i.id == 'transferenciaLabel') {
+      } else if (i.id == 'transferenciaLabel') {
         if (Editar.condicao.innerText === 'Transferencia enviada') {
           Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
         } else if (Editar.condicao.innerText === 'Transferencia recebida') {
           Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
         } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}` }
-      }
-
-      if (i.id == 'emprestimoLabel') {
+      } else if (i.id == 'emprestimoLabel') {
         if (Editar.condicao.innerText === '-') {
           Editar.nome.innerText = `Emprestou para ${nomeEdit.value}`
           Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
         } else if (Editar.condicao.innerText === '+') {
+          Editar.nome.innerText = `Pegou de ${nomeEdit.value}`
           Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
         }
       }
 
-      if (Editar && Editar.categoria) {
+      if (Editar.categoria) {
         Editar.categoria.innerText = categoriaEdit.value
       }
       if (parcelasEdit && Editar.parcelasInit) {
@@ -1154,6 +1195,7 @@ editValue.forEach((item, n) => {
       if (valorFinalEdit && Editar.valorFinal) {
         Editar.valorFinal.innerText = valorFinalEdit.value
       }
+      transacaoAtual.push(valorEdit.value)
       storage()
     }
   })
@@ -1236,6 +1278,7 @@ edits.addEventListener('click', (event) => {
     movimentacoesLista.remove()
     principal.remove()
     storage()
+    location.reload()
   }
 })
 
