@@ -2,8 +2,7 @@ const btnCriar = document.querySelector('#botaoFormulario');
 const btnFormEntrar = document.querySelector('#botaoFormularioEntrar')
 
 let usuarios = localStorage.usuarios ? JSON.parse(localStorage.usuarios) : []
-function newUser(e) {
-  e.preventDefault();
+function newUser() {
 
   const nome = document.querySelector('#nome').value;
   const sobrenome = document.querySelector('#sobrenome').value;
@@ -39,15 +38,17 @@ btnFormEntrar.addEventListener('click', () => {
   const nome = nomeUser.value
   const senhaDigitada = senha.value
 
-  let teste = usuarios.find(usuario => usuario.nomeUsuario === nome)
+  let user = usuarios.find(usuario => usuario.nomeUsuario === nome) 
+  console.log(user)
 
-
-  if (teste.nomeUsuario === nome && teste.senha === senhaDigitada) {
-    localStorage.setItem('usuarioAtivo', JSON.stringify(teste))
+if (user) {
+  if (user.nomeUsuario === nome && user.senha === senhaDigitada) {
+    localStorage.setItem('usuarioAtivo', JSON.stringify(user))
     window.open('movimentacoes.html', '_top');
-  } else {
+  } else if (user.nomeUsuario !== nome || user.senha !== senhaDigitada){
     alert('o usuario ou senha estão errados')
-  }
+  } else {alert('erro')}
+} else {alert('o usuario ou senha estão errados')}
 })
 
 

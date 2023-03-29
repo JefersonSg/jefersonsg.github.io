@@ -47,7 +47,7 @@ function novaDiv(type) {
     && nomeMov[0].value !== ''
     && InputValor[0].value !== ''
     && categoria[0].selectedIndex !== 0
-    // && dataInfo[0].value !== ''
+    && dataInfo[0].value !== ''
   ) {
 
     div.innerHTML = `
@@ -132,7 +132,7 @@ function novaDiv(type) {
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
     && InputValor[1].value !== ''
-    // && dataInfo[1].value !== ''
+    && dataInfo[1].value !== ''
   ) {
 
     div.innerHTML = `
@@ -201,7 +201,7 @@ function novaDiv(type) {
       && nomeMov[2].value !== ''
       && categoria[1].selectedIndex !== 0
       && InputValor[2].value !== ''
-      // && dataInfo[2].value !== ''
+      && dataInfo[2].value !== ''
     ) {
 
       div.innerHTML = `
@@ -253,7 +253,7 @@ function novaDiv(type) {
       && nomeMov[3].value !== ''
       && categoria[2].selectedIndex !== 0
       && InputValor[3].value !== ''
-      // && dataInfo[3].value !== ''
+      && dataInfo[3].value !== ''
     ) {
       div.innerHTML = `
     <div class='icon icon-transacao'>
@@ -636,7 +636,7 @@ function storage() {
   const status = document.querySelector('.status');
 
   // Valor Ao Vivo
-  const valorAtual = InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,);
+  const valorAtual = Math.floor(InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,));
   let numero = 0
   const incremento = Math.floor(valorAtual > 50000 ? valorAtual / 150 : valorAtual / 100)
   let valorAnterior = valorAtual - transacaoAtual.pop() || 0
@@ -687,13 +687,16 @@ function storage() {
     status.classList.add('positivo');
     status.classList.remove('negativo');
     status.innerText = 'Positivo'
-  } else if (valorAtual === 0) {
+  }
+  console.log(valorAtual)
+  if (valorAtual === 0) {
     status.classList.remove('negativo');
     status.classList.remove('positivo');
     status.innerText = 'Neutro';
     status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)';
 
-  } else if (valorAtual < 0) {
+  }
+  if (valorAtual < 0) {
     status.style.backgroundColor = 'rgba(239, 123, 123, 0.5)';
     status.classList.add('negativo');
     status.classList.remove('positivo');
@@ -1227,6 +1230,8 @@ edits.addEventListener('click', (event) => {
     const editValue = document.querySelector(`[numero="${numero}"]`)
     const editValueBg = editValue.parentNode
     const btn = editValue.querySelector('#editar')
+    const confirmar = editValueBg.querySelector('.confirmar')
+    removeAtivo(confirmar)
     removeAtivo(editValueBg)
     removeAtivo(btn)
     btn.removeAttribute('class')

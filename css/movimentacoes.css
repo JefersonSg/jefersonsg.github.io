@@ -562,8 +562,8 @@ body {
 
 .editValue {
   position: relative;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 5px;
   width: 70%;
   background-color: white;
@@ -590,7 +590,6 @@ body {
   border: 10px solid #32BCAD;
 }
 
-
 #vendaLabelEdit .editValue,
 #venda-conteudo .financas {
   border: 10px solid #00920F;
@@ -598,7 +597,7 @@ body {
 
 .botaoEdit {
   display: flex;
-  justify-self: center;
+  margin: 0 auto;
   margin-top: 16px;
   gap: 16px;
 }
@@ -606,6 +605,14 @@ body {
 .editValue input,
 .editValue select {
   margin-bottom: 8px;
+}
+
+#deletar,
+#editar {
+  font-family: 'roboto', sans-serif;
+  padding: 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 
 #editar::before {

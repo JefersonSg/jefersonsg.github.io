@@ -67,20 +67,21 @@ body {
 }
 
 .content-Titulo {
-  /* right: -101vw; */
   top: 100px;
-  position: absolute;
-  transform: translate3d(101vw, 0, 0);
-  width: 100%;
-  animation: moviLeft 350ms 3s ease-in forwards;
+  position: relative;
+  width: 300px;
+  margin: 0 auto;
+  overflow-x: hidden;
 }
 
 .titulo {
+  transform: translate3d(101vw, 0, 0);
   position: relative;
   margin: 0 auto;
   font-size: 16px;
   max-width: 25ch;
   text-align: center;
+  animation: moviLeft 350ms 3s ease-in forwards;
 
 }
 
