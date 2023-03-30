@@ -34,7 +34,6 @@ function newUser() {
   } else { alert('Esse usuario já existe') }
 }
 
-
 btnCriar.addEventListener('click', newUser);
 btnFormEntrar.addEventListener('click', () => {
   const nomeUser = document.querySelector('#nomeUsuarioEntrar')

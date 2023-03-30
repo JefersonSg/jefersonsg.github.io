@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Poppins:wght@100;300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/style.css">
-  <link rel="stylesheet" href="./css/transferencia.css">
+  <link rel="stylesheet" href="./css/transacoes.css">
   <title>Transações</title>
 </head>
 
@@ -36,42 +36,46 @@
     <div class="resumo">
       <div class="resumo-ganhos">
         <div class="div-setaUp">
-          <img class="setaUp" src="./img/transferencias/setaUp.svg" alt="Seta para o auto">
+          <img class="setaUp" src="./img/transacoes/setaUp.svg" alt="Seta para o auto">
         </div>
         <div>
           <p>Ganhos</p>
-          <span class="ganho-span">R$0000,00</span>
+          <span class="ganho-span">R$0,00</span>
         </div>
       </div>
       <div class="resumo-gastos">
         <div class="div-setaDown">
-          <img class="setaDown" src="./img/transferencias/setaDown.svg" alt="Seta para baixo">
+          <img class="setaDown" src="./img/transacoes/setaDown.svg" alt="Seta para baixo">
         </div>
         <div>
           <p>Gastos</p>
-          <span class="gasto-span">R$0000,00</span>
+          <span class="gasto-span">R$0,00</span>
         </div>
       </div>
     </div>
   </section>
   <section class="transacoesTotais-bg">
+
+    <h2 class="h2-transacao">Todas as transações</h2>
     <div class="filtros">
       <div class="filtro-compra"><img src="./img/Movimentacoes/compra.svg" alt="imagem de compra"></div>
       <div class="filtro-venda"><img src="./img/Movimentacoes/venda.svg" alt="imagem de venda"></div>
       <div class="filtro-transferencia"><img src="./img/Movimentacoes/pix.svg" alt="imagem de transferencia"></div>
       <div class="filtro-emprestimo"><img src="./img/Movimentacoes/emprestimo.svg" alt="imagem de emprestimo"></div>
     </div>
-    <h2 class="h2-transacao">Todas as transações</h2>
     <div class="pesquisar">
       <input type="text" placeholder="       Buscar" class="pesquisa">
-      <img class="lupa" src="./img/transferencias/lupa.svg" alt="imagem de lupa">
+      <img class="lupa" src="./img/transacoes/lupa.svg" alt="imagem de lupa">
       <span>Fitrar</span>
-      <img class="filtrar" src="./img/transferencias/filtro.svg" alt="imagem de filtro">
+      <img class="filtrar" src="./img/transacoes/filtro.svg" alt="imagem de filtro">
     </div>
-    <ul class="tabela-transferencias">
+
+    <ul class="tabela-transacoes">
     </ul>
     </div>
   </section>
+  <div id="editores"></div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./script/transacoes.js"></script>
