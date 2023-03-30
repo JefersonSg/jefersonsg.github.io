@@ -34,9 +34,7 @@ function criarPaineis() {
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
-    if (n > 9) {
-      div.style.display = 'none'
-    }
+
     edit.id = v + 'Edit';
     edit.classList.add('editValueBg')
 
