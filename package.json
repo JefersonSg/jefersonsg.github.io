@@ -18,5 +18,8 @@
   "homepage": "https://github.com/JefersonSg/jefersonsg.github.io#readme",
   "devDependencies": {
     "eslint": "^8.35.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.2.1"
   }
 }

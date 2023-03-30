@@ -1018,7 +1018,7 @@ function arrumarInputValor() {
       categoria.innerText = compraLs[n].categoria;
       data.innerText = `${compraLs[n].data}`;
       parcelas.innerText = compraLs[n].parcelas;
-      valor.innerText = compraLs[n].valor;
+      valor.innerText = compraLs[n].valor
     });
   }
   if (vendaLs) {
