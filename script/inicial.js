@@ -1,6 +1,10 @@
 const btnCriar = document.querySelector('#botaoFormulario');
 const btnFormEntrar = document.querySelector('#botaoFormularioEntrar')
 
+if (localStorage.usuarioAtivo) {
+  window.open('movimentacoes.html', '_top');
+}
+
 let usuarios = localStorage.usuarios ? JSON.parse(localStorage.usuarios) : []
 function newUser() {
 
