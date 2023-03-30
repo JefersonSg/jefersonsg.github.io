@@ -1,4 +1,7 @@
-const userAtivo = JSON.parse(localStorage.usuarioAtivo)
+const userAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
+if (!localStorage.usuarioAtivo) {
+  window.open('index.html', '_top');
+}
 console.log(userAtivo.nome)
 function arrumarNome() {
   const nomeLogin = document.querySelector('.nome-login');
@@ -9,3 +12,4 @@ function arrumarNome() {
 if (userAtivo) {
   arrumarNome()
 }
+ 
