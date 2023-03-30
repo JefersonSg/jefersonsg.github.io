@@ -35,10 +35,10 @@ new Chart(ctx, {
   data: {
     datasets: [{
       label: 'R$',
-      data: [ganhosTotais, gastosTotais],
+      data: [gastosTotais,ganhosTotais],
       backgroundColor: [
+        '#F92828',
         '#00CF15',
-         '#F92828',
       ],
       borderWidth: 1
     }]
