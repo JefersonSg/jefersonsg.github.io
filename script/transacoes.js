@@ -2,10 +2,10 @@ const userAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAti
 const table = document.querySelector('.tabela-transacoes')
 const nomeUsuarioAtivo = JSON.parse(localStorage.usuarios).find(usuario => usuario.nomeUsuario === userAtivo.nomeUsuario)
 const edits = document.getElementById('editores');
+const transacoesTotaisBg = document.querySelector('.transacoesTotais-bg')
 
 let Ls = localStorage.getItem(`informacoes_id${userAtivo.ID}`)
 let informacoesLs = JSON.parse(Ls)
-console.log(table)
 
 let ls = nomeUsuarioAtivo ? informacoesLs[5] : false;
 let compraLs = informacoesLs[1] ? informacoesLs[1] : false;
@@ -25,7 +25,7 @@ function arrumarNome() {
 if (userAtivo) {
   arrumarNome()
 }
- 
+
 
 function criarPaineis() {
 
@@ -34,7 +34,6 @@ function criarPaineis() {
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
-
     edit.id = v + 'Edit';
     edit.classList.add('editValueBg')
 
@@ -110,29 +109,32 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
-    } else if (v === 'vendaLabel') {
+      table.appendChild(div);
+      edits.appendChild(edit);
+    }
+    else if (v === 'vendaLabel') {
       div.id = 'vendaLabel';
 
       div.innerHTML = `
             <div class='icon icon-transacao'>
               <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
             </div> 
-  
+
               <p id="nomeMov"></p>
               <p id="valor"></p>
               <p class='parcelas-venda' id="parcelasTotal"></p>
               <p id="data"></p>
-  
+
         `;
       edit.innerHTML = `
           <div class="editValue"  numero="${n}">
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
-  
+
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
+
             <label for="valor">Valor</label>
             <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
 
@@ -164,6 +166,8 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
+      table.appendChild(div);
+      edits.appendChild(edit);
     } else if (v === 'transferenciaLabel') {
       div.id = 'transferenciaLabel';
 
@@ -171,7 +175,7 @@ function criarPaineis() {
           <div class='icon icon-transacao'>
           <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
           </div>
-  
+
           <p id='condicao'></p>
           <p id="valor"></p>
           <p class='transferencia' id="nomeMov"></p>
@@ -182,10 +186,10 @@ function criarPaineis() {
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
-  
+
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
+
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
               <div class="botaoEdit">
@@ -199,6 +203,8 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
               `;
+      table.appendChild(div);
+      edits.appendChild(edit);
     } else if (v === 'emprestimoLabel') {
       div.id = 'emprestimoLabel';
 
@@ -206,7 +212,7 @@ function criarPaineis() {
           <div class='icon icon-transacao'>
           <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
           </div>
-  
+
           <p id="nomeMov" class = "nomeMov"></p>
           <p class="parcelasTotal" id="parcelasTotal"></p>
           <p id="valor" class='valorInit'></p>
@@ -216,20 +222,20 @@ function criarPaineis() {
           <p id='jurosLs'></p>
           <p id='jurosMesLs'></p>
           <p id="condicao"></p>
-  
+
           `;
       edit.innerHTML = `
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
-  
+
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
+
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
-  
+
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
               <option  style="display:none ;" value="0">parcelas 0x</option>
@@ -246,7 +252,7 @@ function criarPaineis() {
               <option value="11">Parcelas 11x</option>
               <option value="12">Parcelas 12x</option>
             </select>
-  
+
             <label for="juros">Juros</label>
             <select disabled name="juros" id="jurosEdit">
               <option value="0">0% de juros</option>
@@ -281,7 +287,7 @@ function criarPaineis() {
               <option value="29">29% de juros</option>
               <option value="30">30% de juros</option>
             </select>
-  
+
             <label for="juros-compostos">Juros ao mês</label>
             <select disabled name="juros-compostos" id="jurosCompEdit">
               <option value="0">0% ao mês</option>
@@ -306,7 +312,7 @@ function criarPaineis() {
               <button type="button" id="editar"></button>
               <button type="button" id="deletar">Deletar</button>
             </div>
-  
+
             </div>
             <div class="confirmar">
               <span>Deseja mesmo deletar?</span>
@@ -314,12 +320,11 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
         `;
-    } else {
-      alert('erro');
+      table.appendChild(div);
+      edits.appendChild(edit);
     }
 
-    table.appendChild(div);
-    edits.appendChild(edit);
+
 
   });
 }
@@ -410,7 +415,100 @@ function arrumarInputValor() {
 
 }
 
+
+// if (filtroVenda.contains(itemClicado)) {
+//   movimentacoesLista.forEach((i) => {
+//     if (i.id !== 'vendaLabel' && i.style.display !== 'none') {
+//       i.style.display = 'none'
+//     } else if (i.id !== 'vendaLabel' && i.style.display === 'none') {
+//       i.style.display = 'grid'
+//     }
+//   })
+// }
+
 if (ls) {
   criarPaineis()
   arrumarInputValor()
 }
+
+const filtroCompra = transacoesTotaisBg.querySelector('.filtro-compra')
+const filtroVenda = transacoesTotaisBg.querySelector('.filtro-venda')
+const filtroTransferencia = transacoesTotaisBg.querySelector('.filtro-transferencia')
+const filtroEmprestimo = transacoesTotaisBg.querySelector('.filtro-emprestimo')
+const movimentacoesLista = transacoesTotaisBg.querySelectorAll('.movimentacoesLista')
+
+let categoriaAtual = ''
+
+movimentacoesLista.forEach(i => i.style.display = 'grid')
+filtroCompra.addEventListener('click', () => {
+  console.log(categoriaAtual)
+
+  if (categoriaAtual !== 'compra') {
+    movimentacoesLista.forEach((i) => {
+      i.style.display = 'none'
+      if (i.id === 'compraLabel') {
+        i.style.display = 'grid';
+      }
+    })
+    categoriaAtual = 'compra'
+  } else if (categoriaAtual === 'compra') {
+    movimentacoesLista.forEach((i) => {
+      if (i.id !== 'compraLabel') {
+        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      }
+    })
+  }
+})
+
+
+filtroVenda.addEventListener('click', () => {
+  if (categoriaAtual !== 'venda') {
+    movimentacoesLista.forEach((i) => {
+      i.style.display = 'none'
+      if (i.id === 'vendaLabel') {
+        i.style.display = 'grid';
+      }
+    })
+    categoriaAtual = 'venda'
+  } else if (categoriaAtual === 'venda') {
+    movimentacoesLista.forEach((i) => {
+      if (i.id !== 'vendaLabel') {
+        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      }
+    })
+  }
+})
+filtroTransferencia.addEventListener('click', () => {
+  if (categoriaAtual !== 'transferencia') {
+    movimentacoesLista.forEach((i) => {
+      i.style.display = 'none'
+      if (i.id === 'transferenciaLabel') {
+        i.style.display = 'grid';
+      }
+    })
+    categoriaAtual = 'transferencia'
+  } else if (categoriaAtual === 'transferencia') {
+    movimentacoesLista.forEach((i) => {
+      if (i.id !== 'transferenciaLabel') {
+        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      }
+    })
+  }
+})
+filtroEmprestimo.addEventListener('click', () => {
+  if (categoriaAtual !== 'emprestimo') {
+    movimentacoesLista.forEach((i) => {
+      i.style.display = 'none'
+      if (i.id === 'emprestimoLabel') {
+        i.style.display = 'grid';
+      }
+    })
+    categoriaAtual = 'emprestimo'
+  } else if (categoriaAtual === 'emprestimo') {
+    movimentacoesLista.forEach((i) => {
+      if (i.id !== 'emprestimoLabel') {
+        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      }
+    })
+  }
+})
