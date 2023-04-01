@@ -416,15 +416,7 @@ function arrumarInputValor() {
 }
 
 
-// if (filtroVenda.contains(itemClicado)) {
-//   movimentacoesLista.forEach((i) => {
-//     if (i.id !== 'vendaLabel' && i.style.display !== 'none') {
-//       i.style.display = 'none'
-//     } else if (i.id !== 'vendaLabel' && i.style.display === 'none') {
-//       i.style.display = 'grid'
-//     }
-//   })
-// }
+
 
 if (ls) {
   criarPaineis()
@@ -436,12 +428,39 @@ const filtroVenda = transacoesTotaisBg.querySelector('.filtro-venda')
 const filtroTransferencia = transacoesTotaisBg.querySelector('.filtro-transferencia')
 const filtroEmprestimo = transacoesTotaisBg.querySelector('.filtro-emprestimo')
 const movimentacoesLista = transacoesTotaisBg.querySelectorAll('.movimentacoesLista')
+const barraPesquisa = document.querySelector('.pesquisa')
+const lupa = document.querySelector('.lupa ')
+
 
 let categoriaAtual = ''
 
-movimentacoesLista.forEach(i => i.style.display = 'grid')
+barraPesquisa.addEventListener('keydown', () => {
+  if (barraPesquisa.value === '') {
+    lupa.style.display = 'none'
+  }
+})
+barraPesquisa.addEventListener('keyup', () => {
+  let letras = barraPesquisa.value
+
+
+  if (barraPesquisa.value === '') {
+    lupa.style.display = 'block'
+    movimentacoesLista.forEach(i => i.style.display = 'grid')
+  } else if (barraPesquisa.value !== '') {
+    movimentacoesLista.forEach((i) => {
+
+      const nome = i.querySelector('#nomeMov').innerText
+
+      if (!nome.includes(letras)) {
+        i.style.display = 'none'
+      } else {
+        i.style.display = 'grid'
+      }
+    })
+  }
+})
+
 filtroCompra.addEventListener('click', () => {
-  console.log(categoriaAtual)
 
   if (categoriaAtual !== 'compra') {
     movimentacoesLista.forEach((i) => {
