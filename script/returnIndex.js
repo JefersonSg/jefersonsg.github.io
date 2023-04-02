@@ -1,4 +1,4 @@
-const perfil = document.querySelector('.perfil-ul')
+const perfil = document.querySelector('.sair')
 
 
 perfil.addEventListener('click',()=>{
