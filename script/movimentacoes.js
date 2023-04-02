@@ -55,7 +55,7 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
-    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2)}</p>
+    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2).replace(',','.')}</p>
     <p id="categoria">${categoria[0].value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
@@ -210,7 +210,7 @@ function novaDiv(type) {
     </div>
     
     <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2)}</p>
+    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',','.')}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -527,7 +527,7 @@ function storage() {
     compra['parcelas'] = [parcelas.innerText];
     compra['valor'] = [valor.innerText];
     comprasArray.push(compra);
-    InputValor.push(+valor.innerText.replace('-R$', '') * -1);
+    InputValor.push(-(+valor.innerText.replace('-R$', '')));
   });
 
   vendaLabel.forEach((i) => {
@@ -600,7 +600,7 @@ function storage() {
       InputValor.push(emprestimoPush);
 
     } else if (condicao.innerText == '-') {
-      let emprestimoPush = +valor.innerText.replace('-R$ ', '') * -1
+      let emprestimoPush = -(+valor.innerText.replace('-R$ ', ''))
       InputValor.push(emprestimoPush);
 
     }
@@ -636,9 +636,12 @@ function storage() {
   const status = document.querySelector('.status');
 
   // Valor Ao Vivo
-  const valorAtual = Math.floor(InputValor.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0,));
+  let soma = InputValor.reduce((acumulador, valorAtual) => +acumulador + valorAtual, 0,);
+
+  let valorAtual = +(soma.toFixed(2))
+  
   let numero = 0
-  const incremento = Math.floor(valorAtual > 50000 ? valorAtual / 150 : valorAtual / 100)
+  const incremento = Math.floor(valorAtual > 50000 ? valorAtual / 100 : valorAtual / 80)
   let valorAnterior = valorAtual - transacaoAtual.pop() || 0
   let start = valorAnterior
 
@@ -688,7 +691,6 @@ function storage() {
     status.classList.remove('negativo');
     status.innerText = 'Positivo'
   }
-  console.log(valorAtual)
   if (valorAtual === 0) {
     status.classList.remove('negativo');
     status.classList.remove('positivo');
@@ -1306,7 +1308,7 @@ function onlynumber(evt) {
   var theEvent = evt || window.event;
   var key = theEvent.keyCode || theEvent.which;
   key = String.fromCharCode(key);
-  //var regex = /^[0-9.,]+$/;
+  // var regex = /^[0-9.,]+$/;
   var regex = /^[0-9.]+$/;
   if (!regex.test(key)) {
     theEvent.returnValue = false;

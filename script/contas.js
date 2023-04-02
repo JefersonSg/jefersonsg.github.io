@@ -6,11 +6,13 @@ const jurosInit = document.getElementById('emprestimo-juros');
 const totalPagoInit = document.getElementById('totalPago');
 
 function contaEmp() {
-  const jurosTotal =
+  let valorReplaced = +(+(InputValorInit[3].value).replace(',','.')).toFixed(2)
+
+    const jurosTotal =
     (jurosCompInit.selectedIndex * parcelasInit[2].selectedIndex +
       jurosInit.selectedIndex) /
     100;
-  const valorFim = InputValorInit[3].value * jurosTotal + +InputValorInit[3].value;
+  const valorFim = valorReplaced * jurosTotal + valorReplaced;
 
   valorInit[3].value = `${parcelasInit[2].selectedIndex}x de R$ ${(
     valorFim / parcelasInit[2].selectedIndex
@@ -25,9 +27,12 @@ jurosCompInit.addEventListener('change', contaEmp);
 
 //  COMPRA
 function contaCompra() {
-    valorInit[0].value = `${parcelasInit[0].value}x de R$ ${(
-      InputValorInit[0].value / parcelasInit[0].value
-    ).toFixed(2)}`;
+  let valorReplaced = +(+(InputValorInit[0].value).replace(',','.')).toFixed(2)
+
+  let valorAtual = `${(parcelasInit[0].value)}x de R$ ${(valorReplaced / parcelasInit[0].value
+  ).toFixed(2)}`
+  console.log(valorAtual)
+    valorInit[0].value = valorAtual;
 }
 InputValorInit[0].addEventListener('keyup', contaCompra);
 parcelasInit[0].addEventListener('change', contaCompra);
@@ -36,17 +41,23 @@ InputValorInit[0].addEventListener('keyup', contaCompra);
 parcelasInit[0].addEventListener('change', contaCompra);
 
 // PIX
-InputValorInit[2].addEventListener(
-   'change',
-  () => (valorInit[2].value = `R$ ${(InputValorInit[2].value * 1).toFixed(2)}`),
+InputValorInit[2].addEventListener('keyup', () => {
+  let valorReplaced = +(+(InputValorInit[2].value).replace(',','.')).toFixed(2)
+  console.log(valorReplaced)
+
+    let valorAtual = `R$ ${valorReplaced}`
+    valorInit[2].value = valorAtual
+   },
 );
 
 // VENDAS
 function contaVenda() {
-  valorInit[1].value = `${parcelasInit[1].value}x de R$ ${(
-    InputValorInit[1].value / parcelasInit[1].value
+  let valorReplaced = +(+(InputValorInit[1].value).replace(',','.')).toFixed(2)
+
+  let valorAtual = `${parcelasInit[1].value}x de R$ ${(valorReplaced / parcelasInit[1].value
   ).toFixed(2)}`
+  valorInit[1].value = valorAtual
 }
-InputValorInit[1].addEventListener('change',contaVenda);
+InputValorInit[1].addEventListener('keyup',contaVenda);
 parcelasInit[1].addEventListener(
   'change', contaVenda);
