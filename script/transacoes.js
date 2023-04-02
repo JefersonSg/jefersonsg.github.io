@@ -433,6 +433,7 @@ const lupa = document.querySelector('.lupa ')
 
 
 let categoriaAtual = ''
+let ultimoDigito = ''
 
 barraPesquisa.addEventListener('keydown', () => {
   if (barraPesquisa.value === '') {
@@ -440,94 +441,92 @@ barraPesquisa.addEventListener('keydown', () => {
   }
 })
 barraPesquisa.addEventListener('keyup', () => {
-  let letras = barraPesquisa.value
+  ultimoDigito = barraPesquisa.value
 
 
-  if (barraPesquisa.value === '') {
-    lupa.style.display = 'block'
-    movimentacoesLista.forEach(i => i.style.display = 'grid')
-  } else if (barraPesquisa.value !== '') {
-    movimentacoesLista.forEach((i) => {
+  function filter(categoria, label) {
+    if (categoriaAtual === categoria && barraPesquisa.value !== '') {
+      movimentacoesLista.forEach((i) => {
+        if (i.id === label) {
+          const nome = i.querySelector('#nomeMov').innerText
 
-      const nome = i.querySelector('#nomeMov').innerText
+          if (!nome.includes(ultimoDigito)) {
+            i.style.display = 'none'
+          } else {
+            i.style.display = 'grid'
+          }
+        }
+      })
+    } else if (categoriaAtual === categoria && barraPesquisa.value === '') {
+      lupa.style.display = 'block'
+      movimentacoesLista.forEach((i) => {
+        if (i.id === label) {
+          i.style.display = 'grid'
+        }
+      })
+    }
+  }
+  function filterAll() {
+    if (barraPesquisa.value !== '') {
+      movimentacoesLista.forEach((i) => {
+        const nome = i.querySelector('#nomeMov').innerText
 
-      if (!nome.includes(letras)) {
-        i.style.display = 'none'
-      } else {
+        if (!nome.includes(ultimoDigito)) {
+          i.style.display = 'none'
+        } else {
+          i.style.display = 'grid'
+        }
+      })
+    } else if (categoriaAtual === '' && barraPesquisa.value === '') {
+      lupa.style.display = 'block'
+      movimentacoesLista.forEach((i) => {
         i.style.display = 'grid'
-      }
-    })
+      })
+    }
+  }
+
+  if (categoriaAtual === 'compra') {
+    filter('compra', 'compraLabel')
+  } else if (categoriaAtual === 'venda') {
+    filter('venda', 'vendaLabel')
+  } else if (categoriaAtual === 'transferencia') {
+    filter('transferencia', 'transferenciaLabel')
+  } else if (categoriaAtual === 'emprestimo') {
+    filter('emprestimo', 'emprestimoLabel')
+  } else {
+    filterAll()
   }
 })
+
+function filter(categoria, label) {
+  if (categoriaAtual !== categoria) {
+    movimentacoesLista.forEach((i) => {
+      i.style.display = 'none'
+      if (i.id === label) {
+        i.style.display = 'grid';
+      }
+    })
+    categoriaAtual = categoria
+  } else if (categoriaAtual === categoria) {
+    movimentacoesLista.forEach((i) => {
+      if (i.id !== label) {
+        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      }
+    })
+    categoriaAtual = ''
+  }
+}
 
 filtroCompra.addEventListener('click', () => {
-
-  if (categoriaAtual !== 'compra') {
-    movimentacoesLista.forEach((i) => {
-      i.style.display = 'none'
-      if (i.id === 'compraLabel') {
-        i.style.display = 'grid';
-      }
-    })
-    categoriaAtual = 'compra'
-  } else if (categoriaAtual === 'compra') {
-    movimentacoesLista.forEach((i) => {
-      if (i.id !== 'compraLabel') {
-        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
-      }
-    })
-  }
+  filter('compra', 'compraLabel')
 })
-
-
 filtroVenda.addEventListener('click', () => {
-  if (categoriaAtual !== 'venda') {
-    movimentacoesLista.forEach((i) => {
-      i.style.display = 'none'
-      if (i.id === 'vendaLabel') {
-        i.style.display = 'grid';
-      }
-    })
-    categoriaAtual = 'venda'
-  } else if (categoriaAtual === 'venda') {
-    movimentacoesLista.forEach((i) => {
-      if (i.id !== 'vendaLabel') {
-        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
-      }
-    })
-  }
+  filter('venda', 'vendaLabel')
+
 })
 filtroTransferencia.addEventListener('click', () => {
-  if (categoriaAtual !== 'transferencia') {
-    movimentacoesLista.forEach((i) => {
-      i.style.display = 'none'
-      if (i.id === 'transferenciaLabel') {
-        i.style.display = 'grid';
-      }
-    })
-    categoriaAtual = 'transferencia'
-  } else if (categoriaAtual === 'transferencia') {
-    movimentacoesLista.forEach((i) => {
-      if (i.id !== 'transferenciaLabel') {
-        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
-      }
-    })
-  }
+  filter('transferencia', 'transferenciaLabel')
 })
 filtroEmprestimo.addEventListener('click', () => {
-  if (categoriaAtual !== 'emprestimo') {
-    movimentacoesLista.forEach((i) => {
-      i.style.display = 'none'
-      if (i.id === 'emprestimoLabel') {
-        i.style.display = 'grid';
-      }
-    })
-    categoriaAtual = 'emprestimo'
-  } else if (categoriaAtual === 'emprestimo') {
-    movimentacoesLista.forEach((i) => {
-      if (i.id !== 'emprestimoLabel') {
-        i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
-      }
-    })
-  }
+  filter('emprestimo', 'emprestimoLabel')
 })
