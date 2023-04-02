@@ -617,7 +617,19 @@ body {
 
 .editValue input,
 .editValue select {
+  padding: 5px 5px;
+  font-size: 12px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   margin-bottom: 8px;
+}
+
+.editValue input:focus,
+.editValue select:focus {
+  box-shadow: 0 0 0 0;
+  outline: 0;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.8);
 }
 
 #deletar,
@@ -739,7 +751,6 @@ body {
   width: auto;
   font-size: 12px;
 }
-
 
 #nomeMov {
   width: auto;

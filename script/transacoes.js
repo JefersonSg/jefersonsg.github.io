@@ -518,7 +518,6 @@ function filter(categoria, label) {
 
 function addAtivo(item) {
   filtroBtn.forEach((i) => { if (i !== item) { i.classList.remove('ativo') } })
-  console.log(item)
   item.classList.toggle('ativo')
 }
 
