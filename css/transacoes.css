@@ -210,6 +210,28 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
+@media only screen and (max-width: 600px) {
+
+  .filtro-compra:hover,
+  .filtro-venda:hover,
+  .filtro-transferencia:hover,
+  .filtro-emprestimo:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    transform: translateY(0px);
+    border: 1px solid rgba(0, 0, 0, 0);
+  }
+
+  .filtro-compra.ativo,
+  .filtro-venda.ativo,
+  .filtro-transferencia.ativo,
+  .filtro-emprestimo.ativo {
+    background-color: rgba(0, 0, 0, 0.02);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+}
+
 .filtro-compra:active {
   transform: translateY(-1px);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
