@@ -32,23 +32,24 @@ body {
   0% {
     filter: blur(12px);
     opacity: 0;
-    top: 300px;
+    transform: translate3d(0, 0, 0);
   }
 
-  60% {
+  40% {
     filter: blur(0px);
     opacity: 1;
-    top: 300px;
+    transform: translate3d(0, 0, 0);
   }
 
+
   80% {
-    top: 300px;
+    transform: translate3d(0, 0, 0);
   }
 
   100% {
     filter: blur(0px);
     opacity: 1;
-    top: 30px;
+    transform: translate3d(0, -270px, 0);
   }
 }
 
@@ -78,8 +79,6 @@ body {
 
 
 }
-
-
 
 @media (min-width:400px) {}
 
