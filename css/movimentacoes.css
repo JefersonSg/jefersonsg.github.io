@@ -19,10 +19,7 @@ body {
 .perfil {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  gap: 8px;
-  width: 93%;
+  gap: 16px;
   margin: 0 auto;
   color: white;
   padding: 0px 20px;
@@ -76,6 +73,7 @@ body {
 }
 
 .links {
+  width: auto;
   display: flex;
   gap: 16px;
 }
@@ -84,9 +82,39 @@ body {
   color: white;
 }
 
+.inicial {
+  border-bottom: 2px solid white;
+}
+
 @media (min-width: 375px) {
   .header {
     font-size: 12px;
+  }
+
+  .links {
+    gap: 16px;
+  }
+
+  .perfil {
+    gap: 16px;
+  }
+
+  .nome-login {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 500px) {
+  .header {
+    font-size: 12px;
+  }
+
+  .links {
+    gap: 32px;
+  }
+
+  .perfil {
+    gap: 32px;
   }
 
   .nome-login {
