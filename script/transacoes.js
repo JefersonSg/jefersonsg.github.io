@@ -12,7 +12,6 @@ let compraLs = informacoesLs[1] ? informacoesLs[1] : false;
 let vendaLs = informacoesLs[2] ? informacoesLs[2] : false;
 let transferenciaLs = informacoesLs[3] ? informacoesLs[3] : false;
 let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
-let number = ls ? ls.length : 0
 
 if (!localStorage.usuarioAtivo) {
   window.open('index.html', '_top');
@@ -517,7 +516,21 @@ function filter(categoria, label) {
   }
 }
 
-filtroCompra.addEventListener('click', () => {
+function addAtivo(item) {
+  filtroBtn.forEach((i) => { if (i !== item) { i.classList.remove('ativo') } })
+  console.log(item)
+  item.classList.toggle('ativo')
+}
+
+const filtroBtn = document.querySelectorAll('.filtroBtn')
+
+filtroBtn.forEach((item) => {
+  item.addEventListener('click', () => {
+    addAtivo(item)
+  })
+})
+
+filtroCompra.addEventListener('click', function () {
   filter('compra', 'compraLabel')
 })
 filtroVenda.addEventListener('click', () => {
