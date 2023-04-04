@@ -641,12 +641,13 @@ function storage() {
   let valorAtual = +(soma.toFixed(2))
   
   let numero = 0
-  const incremento = Math.floor(valorAtual > 50000 ? valorAtual / 100 : valorAtual / 80)
+  const incremento = +(valorAtual / 100).toFixed(2)
   let valorAnterior = valorAtual - transacaoAtual.pop() || 0
   let start = valorAnterior
 
   //Efeitos Numericos
   if (valorAtual > 0) {
+    console.log(incremento)
     if (valorAtual > start) {
       const timer = setInterval(() => {
         start += incremento
