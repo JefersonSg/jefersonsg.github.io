@@ -127,7 +127,7 @@ body {
 
 .graficos-container {
   margin: 0 auto;
-  height: 260px;
+  height: auto;
   display: grid;
   justify-items: center;
   border-bottom: 1px solid #D9D9D9;
@@ -207,6 +207,7 @@ body {
   display: flex;
   gap: 30px;
   padding-top: 16px;
+  padding-bottom: 8px;
 }
 
 .filtro-compra,
@@ -301,13 +302,19 @@ body {
 .pesquisa {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  height: 20px;
+  padding: 6px;
+  padding-left: 30px;
   background-color: #F0F0F0;
+}
+
+.pesquisa:focus {
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  outline: 0;
 }
 
 .lupa {
   position: absolute;
-  top: 5px;
+  top: 8px;
   left: 14px;
 }
 
