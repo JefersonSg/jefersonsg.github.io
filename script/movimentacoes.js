@@ -413,7 +413,6 @@ function novaDiv(type) {
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
     valorEditInit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
-    console.log(div.id)
     if (div.id === 'emprestimoLabel') {
       nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
     }
