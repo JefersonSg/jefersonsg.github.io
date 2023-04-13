@@ -26,9 +26,9 @@ info.forEach((i)=>{
 
   let ganhosTotais = ganhos.reduce((acumulador, ganhosTotais) => acumulador + ganhosTotais, 0,);
   let gastosTotais = gastos.reduce((acumulador, gastosTotais) => acumulador + gastosTotais, 0,);
-
-gastoSpan.innerText = `R$ ${(gastosTotais + '').replace('-','')}`
-  ganhoSpan.innerText = `R$ ${ganhosTotais}`
+console.log(gastosTotais.toFixed(2))
+gastoSpan.innerText = `R$ ${(gastosTotais.toFixed(2) + '').replace('-','')}`
+  ganhoSpan.innerText = `R$ ${ganhosTotais.toFixed(2)}`
   
 new Chart(ctx, {
   type: 'doughnut',
