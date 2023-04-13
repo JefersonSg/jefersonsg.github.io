@@ -31,7 +31,6 @@ function contaCompra() {
 
   let valorAtual = `${(parcelasInit[0].value)}x de R$ ${(valorReplaced / parcelasInit[0].value
   ).toFixed(2)}`
-  console.log(valorAtual)
     valorInit[0].value = valorAtual;
 }
 InputValorInit[0].addEventListener('keyup', contaCompra);

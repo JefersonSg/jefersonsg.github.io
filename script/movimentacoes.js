@@ -55,68 +55,69 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
-    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2).replace(',','.')}</p>
+    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2).replace(',', '.')}</p>
     <p id="categoria">${categoria[0].value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
     `
     edit.innerHTML = `
       <div class="editValue" numero="${number}">
-        <span id="fecharEdit">X</span>
-        <label for="nome">Nome</label>
-        <input readonly type="text" name='nome' id="nomeEdit">
-
-        <label for="categoria">Categoria</label>
-        <select disabled id="categoriaEdit" name="categoria">
-        <option selected value=""  style="display: none">
-          categoria da compra
-        </option>
-        <option value="produto eletronico">Produtos Eletronicos</option>
-        <option value="roupa">Roupas</option>
-        <option value="contas">Contas</option>
-        <option value="transporte">Transporte</option>
-        <option value="despesas médicas">Despesas médicas</option>
-        <option value="cuidados pessoais">Cuidados pessoais</option>
-        <option value="entretenimento">Entretenimento</option>
-        <option value="remedio">Remedio</option>
-        <option value="alimentação">Alimentação</option>
-        <option value="cosmetico">Cosmeticos</option>
-        <option value="cosmetico">outros</option>
-      </select>
+      <span id="fecharEdit">X</span>
+      <label for="nome">Nome</label>
+      <input readonly type="text" name='nome' id="nomeEdit">
 
       <label for="data">Data</label>
       <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-        <label for="parcelas">Parcelas</label>
+      <label for="valor">Valor</label>
+      <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
 
-        <select disabled readonly name="parcelas" id="parcelasEdit">
-            <option value="1">Parcelas 1x</option>
-            <option value="2">Parcelas 2x</option>
-            <option value="3">Parcelas 3x</option>
-            <option value="4">Parcelas 4x</option>
-            <option value="5">Parcelas 5x</option>
-            <option value="6">Parcelas 6x</option>
-            <option value="7">Parcelas 7x</option>
-            <option value="8">Parcelas 8x</option>
-            <option value="9">Parcelas 9x</option>
-            <option value="10">Parcelas 10x</option>
-            <option value="11">Parcelas 11x</option>
-            <option value="12">Parcelas 12x</option>
-          </select>
-        <label for="valor">Valor</label>
-        <input readonly type="valor" id="valorEdit">
+      <label for="categoria">Categoria</label>
+      <select disabled id="categoriaEdit" name="categoria" >
+      <option selected value=""  style="display: none">
+        categoria da compra
+      </option>
+      <option value="produto eletronico">Produtos Eletronicos</option>
+      <option value="roupa">Roupas</option>
+      <option value="contas">Contas</option>
+      <option value="transporte">Transporte</option>
+      <option value="despesas médicas">Despesas médicas</option>
+      <option value="cuidados pessoais">Cuidados pessoais</option>
+      <option value="entretenimento">Entretenimento</option>
+      <option value="remedio">Remedio</option>
+      <option value="alimentação">Alimentação</option>
+      <option value="cosmetico">Cosmeticos</option>
+      <option value="cosmetico">outros</option>
+      </select>
 
-        <div class='botaoEdit'>
-         <button type="button" id="editar"></button>
-          <button type="button" id="deletar">Deletar</button>
-        </div>
+      <label for="parcelas">Parcelas</label>
+      <select disabled readonly name="parcelas" id="parcelasEdit">
+          <option  style="display:none ;" value="0">parcelas 0x</option>
+          <option value="1">Parcelas 1x</option>
+          <option value="2">Parcelas 2x</option>
+          <option value="3">Parcelas 3x</option>
+          <option value="4">Parcelas 4x</option>
+          <option value="5">Parcelas 5x</option>
+          <option value="6">Parcelas 6x</option>
+          <option value="7">Parcelas 7x</option>
+          <option value="8">Parcelas 8x</option>
+          <option value="9">Parcelas 9x</option>
+          <option value="10">Parcelas 10x</option>
+          <option value="11">Parcelas 11x</option>
+          <option value="12">Parcelas 12x</option>
+        </select>
 
+      <div class='botaoEdit'>
+       <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
       </div>
-      <div class="confirmar">
-        <span>Deseja mesmo deletar?</span>
-        <button type="button" id="sim">Sim</button>
-        <button type="button" id="nao">Não</button>
-      </div>
+
+    </div>
+    <div class="confirmar">
+      <span>Deseja mesmo deletar?</span>
+      <button type="button" id="sim">Sim</button>
+      <button type="button" id="nao">Não</button>
+    </div>
     `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
@@ -147,41 +148,42 @@ function novaDiv(type) {
     `
     edit.innerHTML = `
     <div class="editValue"  numero="${number}">
-      <span id="fecharEdit">X</span>
-      <label for="nome">Nome</label>
-      <input readonly type="nome" id="nomeEdit">
+    <span id="fecharEdit">X</span>
+    <label for="nome">Nome</label>
+    <input readonly type="nome" id="nomeEdit">
 
-      <label for="data">Data</label>
-      <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+    <label for="data">Data</label>
+    <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-      <label for="parcelas">Parcelas</label>
-      <select disabled readonly name="parcelas" id="parcelasEdit">
-        <option  style="display:none ;" value="0">parcelas 0x</option>
-        <option value="1">Parcelas 1x</option>
-        <option value="2">Parcelas 2x</option>
-        <option value="3">Parcelas 3x</option>
-        <option value="4">Parcelas 4x</option>
-        <option value="5">Parcelas 5x</option>
-        <option value="6">Parcelas 6x</option>
-        <option value="7">Parcelas 7x</option>
-        <option value="8">Parcelas 8x</option>
-        <option value="9">Parcelas 9x</option>
-        <option value="10">Parcelas 10x</option>
-        <option value="11">Parcelas 11x</option>
-        <option value="12">Parcelas 12x</option>
-      </select>
-      <label for="valor">Valor</label>
-      <input readonly type="valor" id="valorEdit">
-      <div class='botaoEdit'>
-        <button type="button" id="editar"></button>
-        <button type="button" id="deletar">Deletar</button>
-      </div>
+    <label for="valor">Valor</label>
+    <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+
+    <label for="parcelas">Parcelas</label>
+    <select disabled readonly name="parcelas" id="parcelasEdit">
+      <option value="1">Parcelas 1x</option>
+      <option value="2">Parcelas 2x</option>
+      <option value="3">Parcelas 3x</option>
+      <option value="4">Parcelas 4x</option>
+      <option value="5">Parcelas 5x</option>
+      <option value="6">Parcelas 6x</option>
+      <option value="7">Parcelas 7x</option>
+      <option value="8">Parcelas 8x</option>
+      <option value="9">Parcelas 9x</option>
+      <option value="10">Parcelas 10x</option>
+      <option value="11">Parcelas 11x</option>
+      <option value="12">Parcelas 12x</option>
+    </select>
+
+    <div class='botaoEdit'>
+      <button type="button" id="editar"></button>
+      <button type="button" id="deletar">Deletar</button>
     </div>
-    <div class="confirmar">
-      <span>Deseja mesmo deletar?</span>
-      <button type="button" id="sim">Sim</button>
-      <button type="button" id="nao">Não</button>
-    </div>
+  </div>
+  <div class="confirmar">
+    <span>Deseja mesmo deletar?</span>
+    <button type="button" id="sim">Sim</button>
+    <button type="button" id="nao">Não</button>
+  </div>
 `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
@@ -210,7 +212,7 @@ function novaDiv(type) {
     </div>
     
     <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',','.')}</p>
+    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',', '.')}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -289,7 +291,6 @@ function novaDiv(type) {
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
       <select disabled readonly name="parcelas" id="parcelasEdit">
-        <option  style="display:none ;" value="0">parcelas 0x</option>
         <option value="1">Parcelas 1x</option>
         <option value="2">Parcelas 2x</option>
         <option value="3">Parcelas 3x</option>
@@ -412,6 +413,10 @@ function novaDiv(type) {
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
     valorEditInit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    console.log(div.id)
+    if (div.id === 'emprestimoLabel') {
+      nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
+    }
     if (categoriaEditInit && Editar.categoria) {
       categoriaEditInit.value = Editar.categoria.innerText
     }
@@ -439,15 +444,16 @@ function novaDiv(type) {
         Editar.data.innerText = dataEditInit.value
 
 
-        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}` } else if (btnEdit.offsetParent.offsetParent.id == 'vendaLabel') {
+        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}` }
+        else if (btnEdit.offsetParent.offsetParent.id == 'vendaLabelEdit') {
           Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
-        } else if (btnEdit.offsetParent.offsetParent.id == 'transferenciaLabel') {
+        } else if (btnEdit.offsetParent.offsetParent.id == 'transferenciaLabelEdit') {
           if (Editar.condicao.innerText === 'Transferencia enviada') {
             Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
           } else if (Editar.condicao.innerText === 'Transferencia recebida') {
             Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
           }
-        } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabel') {
+        } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabelEdit') {
           if (Editar.condicao.innerText === '-') {
             Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
             Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
@@ -639,7 +645,7 @@ function storage() {
   let soma = InputValor.reduce((acumulador, valorAtual) => +acumulador + valorAtual, 0,);
 
   let valorAtual = +(soma.toFixed(2))
-  
+
   let numero = 0
   const incremento = +(valorAtual / 100).toFixed(2)
   let valorAnterior = valorAtual - transacaoAtual.pop() || 0
@@ -647,7 +653,6 @@ function storage() {
 
   //Efeitos Numericos
   if (valorAtual > 0) {
-    console.log(incremento)
     if (valorAtual > start) {
       const timer = setInterval(() => {
         start += incremento
@@ -820,7 +825,6 @@ function criarPaineis() {
 
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
-              <option  style="display:none ;" value="0">parcelas 0x</option>
               <option value="1">Parcelas 1x</option>
               <option value="2">Parcelas 2x</option>
               <option value="3">Parcelas 3x</option>
