@@ -193,6 +193,10 @@ body {
   background: #D1D1D1;
 }
 
+.status.positivo {
+  color: #5DC88F;
+}
+
 .status.positivo::before {
   content: '';
   display: block;
@@ -212,6 +216,10 @@ body {
   to {
     box-shadow: 0px 0px 4px 2px #2FCA82;
   }
+}
+
+.status.negativo {
+  color: #8C0000;
 }
 
 .status.negativo::before {
@@ -786,6 +794,11 @@ body {
 .valorInicial {
   width: auto;
   font-size: 12px;
+}
+
+#vendaLabel #valor {
+  color: green;
+  font-weight: 600;
 }
 
 #nomeMov {

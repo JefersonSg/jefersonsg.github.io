@@ -42,7 +42,6 @@ parcelasInit[0].addEventListener('change', contaCompra);
 // PIX
 InputValorInit[2].addEventListener('keyup', () => {
   let valorReplaced = +(+(InputValorInit[2].value).replace(',','.')).toFixed(2)
-  console.log(valorReplaced)
 
     let valorAtual = `R$ ${valorReplaced}`
     valorInit[2].value = valorAtual

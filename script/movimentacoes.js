@@ -187,6 +187,7 @@ function novaDiv(type) {
 `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
+
     transacaoAtual.push(+InputValor[1].value)
     number++
     storage()
@@ -212,7 +213,7 @@ function novaDiv(type) {
     </div>
     
     <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',', '.')}</p>
+    <p style="color: ${categoria[1].value === '+' ? 'green': ''}; font-weight: ${categoria[1].value === '+'? 'bold' : ''}" font id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',', '.')}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -267,7 +268,7 @@ function novaDiv(type) {
     <p class = "diferenca" id="diferenca">R$ ${(
           totalPago.value.replace('Total ', '') - InputValor[3].value
         ).toFixed(2)}</p>
-    <p id="valor" class='valorInit'>${categoria[2].value}R$ ${(
+    <p id="valor" class='valorInit' style="color: ${categoria[2].value === '+'? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold': ''}">${categoria[2].value}R$ ${(
           InputValor[3].value * 1
         ).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
@@ -808,7 +809,6 @@ function criarPaineis() {
               <p id="valor"></p>
               <p class='parcelas-venda' id="parcelasTotal"></p>
               <p id="data"></p>
-  
         `;
       edit.innerHTML = `
           <div class="editValue"  numero="${n}">
@@ -849,6 +849,10 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
+    const valor = div.querySelector('#valor')
+    valor.style.color = 'green'
+    valor.style.fontWeight = '600'
+
     } else if (v === 'transferenciaLabel') {
       div.id = 'transferenciaLabel';
 
@@ -862,6 +866,13 @@ function criarPaineis() {
           <p class='transferencia' id="nomeMov"></p>
           <p id="data"></p>
               `;
+              setTimeout(function name() {
+                const condicao = div.querySelector('#condicao').innerText
+                console.log(condicao)
+                const valor = div.querySelector('#valor')
+                valor.style.color = condicao === 'Transferencia recebida'? 'green' : ''
+                valor.style.fontWeight = condicao === 'Transferencia recebida'? '600' : ''
+              }) 
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
@@ -903,6 +914,7 @@ function criarPaineis() {
           <p id="condicao"></p>
   
           `;
+
       edit.innerHTML = `
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
@@ -983,7 +995,7 @@ function criarPaineis() {
               <option value="11">11% ao mês</option>
               <option value="12">12% ao mês</option>
             </select>
-              <label for="diferenca">Diferença</label>
+            <label class='diferencaLabel' for="diferenca">Diferença</label>
               <input readonly type="diferenca" id="diferencaEdit">
               <label for="valor-final">Valor Final</label>
               <input readonly type="valor-final" id="valorFinEdit">
@@ -999,6 +1011,14 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
         `;
+        setTimeout(function name() {
+          const condicao = div.querySelector('#condicao').innerText
+          const diferenca = edit.querySelector('.diferencaLabel')
+          const valor = div.querySelector('#valor')
+          diferenca.innerText = condicao === '+'? 'Deficit' : 'Lucro';
+          valor.style.color = condicao === '+'? 'green' : ''
+          valor.style.fontWeight = condicao === '+'? '600' : ''
+        })
     } else {
       alert('erro');
     }
@@ -1071,7 +1091,6 @@ function arrumarInputValor() {
       const juros = i.querySelector('#jurosLs');
       const jurosMes = i.querySelector('#jurosMesLs');
       const condicao = i.querySelector('#condicao')
-
       if (emprestimoLs[n].condicao == '-') {
         nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
       } else if (emprestimoLs[n].condicao == '+') {

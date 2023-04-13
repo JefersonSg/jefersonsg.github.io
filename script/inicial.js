@@ -42,7 +42,6 @@ btnFormEntrar.addEventListener('click', () => {
   const senhaDigitada = senha.value
 
   let user = usuarios.find(usuario => usuario.nomeUsuario === nome) 
-  console.log(user)
 
 if (user) {
   if (user.nomeUsuario === nome && user.senha === senhaDigitada) {
