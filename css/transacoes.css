@@ -333,7 +333,7 @@ body {
 .movimentacoesLista {
   display: grid;
   width: 100%;
-  grid-template-columns: 40px 60% auto;
+  grid-template-columns: 50px 60% auto;
   height: 40px;
   justify-content: center;
   font-family: 'roboto', sans-serif;
@@ -350,9 +350,9 @@ body {
   display: grid;
   align-items: center;
   justify-content: center;
-  background-color: #FFFDFF;
+  background: linear-gradient(180deg, #FDFDFD 0%, #F4F4F4 100%);
   padding: 5px;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #E0E0E0;
   width: 32px;
   height: 32px;
   border-radius: 50%;

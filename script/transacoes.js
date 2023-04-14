@@ -33,6 +33,7 @@ function criarPaineis() {
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
+
     edit.id = v + 'Edit';
     edit.classList.add('editValueBg')
 
@@ -108,38 +109,33 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
-      table.appendChild(div);
-      edits.appendChild(edit);
-    }
-    else if (v === 'vendaLabel') {
+    } else if (v === 'vendaLabel') {
       div.id = 'vendaLabel';
 
       div.innerHTML = `
             <div class='icon icon-transacao'>
               <img class='icon-transacao' src="./img/Movimentacoes/venda icon.svg">
             </div> 
-
+  
               <p id="nomeMov"></p>
               <p id="valor"></p>
               <p class='parcelas-venda' id="parcelasTotal"></p>
               <p id="data"></p>
-
         `;
       edit.innerHTML = `
           <div class="editValue"  numero="${n}">
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
-
+  
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-
+  
             <label for="valor">Valor</label>
             <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
 
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
-              <option  style="display:none ;" value="0">parcelas 0x</option>
               <option value="1">Parcelas 1x</option>
               <option value="2">Parcelas 2x</option>
               <option value="3">Parcelas 3x</option>
@@ -165,8 +161,10 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
-      table.appendChild(div);
-      edits.appendChild(edit);
+    const valor = div.querySelector('#valor')
+    valor.style.color = 'green'
+    valor.style.fontWeight = '600'
+
     } else if (v === 'transferenciaLabel') {
       div.id = 'transferenciaLabel';
 
@@ -174,21 +172,27 @@ function criarPaineis() {
           <div class='icon icon-transacao'>
           <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
           </div>
-
+  
           <p id='condicao'></p>
           <p id="valor"></p>
           <p class='transferencia' id="nomeMov"></p>
           <p id="data"></p>
               `;
+              setTimeout(function name() {
+                const condicao = div.querySelector('#condicao').innerText
+                const valor = div.querySelector('#valor')
+                valor.style.color = condicao === 'Transferencia recebida'? 'green' : ''
+                valor.style.fontWeight = condicao === 'Transferencia recebida'? '600' : ''
+              }) 
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
-
+  
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-
+  
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
               <div class="botaoEdit">
@@ -202,8 +206,6 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
               `;
-      table.appendChild(div);
-      edits.appendChild(edit);
     } else if (v === 'emprestimoLabel') {
       div.id = 'emprestimoLabel';
 
@@ -211,7 +213,7 @@ function criarPaineis() {
           <div class='icon icon-transacao'>
           <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
           </div>
-
+  
           <p id="nomeMov" class = "nomeMov"></p>
           <p class="parcelasTotal" id="parcelasTotal"></p>
           <p id="valor" class='valorInit'></p>
@@ -221,20 +223,21 @@ function criarPaineis() {
           <p id='jurosLs'></p>
           <p id='jurosMesLs'></p>
           <p id="condicao"></p>
-
+  
           `;
+
       edit.innerHTML = `
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
-
+  
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-
+  
               <label for="valor">Valor</label>
               <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
-
+  
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
               <option  style="display:none ;" value="0">parcelas 0x</option>
@@ -251,7 +254,7 @@ function criarPaineis() {
               <option value="11">Parcelas 11x</option>
               <option value="12">Parcelas 12x</option>
             </select>
-
+  
             <label for="juros">Juros</label>
             <select disabled name="juros" id="jurosEdit">
               <option value="0">0% de juros</option>
@@ -286,7 +289,7 @@ function criarPaineis() {
               <option value="29">29% de juros</option>
               <option value="30">30% de juros</option>
             </select>
-
+  
             <label for="juros-compostos">Juros ao mês</label>
             <select disabled name="juros-compostos" id="jurosCompEdit">
               <option value="0">0% ao mês</option>
@@ -303,7 +306,7 @@ function criarPaineis() {
               <option value="11">11% ao mês</option>
               <option value="12">12% ao mês</option>
             </select>
-              <label for="diferenca">Diferença</label>
+            <label class='diferencaLabel' for="diferenca">Diferença</label>
               <input readonly type="diferenca" id="diferencaEdit">
               <label for="valor-final">Valor Final</label>
               <input readonly type="valor-final" id="valorFinEdit">
@@ -311,7 +314,7 @@ function criarPaineis() {
               <button type="button" id="editar"></button>
               <button type="button" id="deletar">Deletar</button>
             </div>
-
+  
             </div>
             <div class="confirmar">
               <span>Deseja mesmo deletar?</span>
@@ -319,11 +322,20 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
         `;
-      table.appendChild(div);
-      edits.appendChild(edit);
+        setTimeout(function name() {
+          const condicao = div.querySelector('#condicao').innerText
+          const diferenca = edit.querySelector('.diferencaLabel')
+          const valor = div.querySelector('#valor')
+          diferenca.innerText = condicao === '+'? 'Deficit' : 'Lucro';
+          valor.style.color = condicao === '+'? 'green' : ''
+          valor.style.fontWeight = condicao === '+'? '600' : ''
+        })
+    } else {
+      alert('erro');
     }
 
-
+    table.appendChild(div);
+    edits.appendChild(edit);
 
   });
 }
@@ -413,7 +425,6 @@ function arrumarInputValor() {
   }
 
 }
-
 
 
 

@@ -3,8 +3,8 @@ const ctx = document.getElementById('myChart');
 const gastoSpan = document.querySelector('.gasto-span')
 const ganhoSpan = document.querySelector('.ganho-span')
 
-const usuarioAtivo = JSON.parse(localStorage.usuarioAtivo)
-const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`))
+const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
+const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
 
 
 let info = [...infos[0]]
@@ -26,7 +26,6 @@ info.forEach((i)=>{
 
   let ganhosTotais = ganhos.reduce((acumulador, ganhosTotais) => acumulador + ganhosTotais, 0,);
   let gastosTotais = gastos.reduce((acumulador, gastosTotais) => acumulador + gastosTotais, 0,);
-console.log(gastosTotais.toFixed(2))
 gastoSpan.innerText = `R$ ${(gastosTotais.toFixed(2) + '').replace('-','')}`
   ganhoSpan.innerText = `R$ ${ganhosTotais.toFixed(2)}`
   

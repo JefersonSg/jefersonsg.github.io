@@ -762,7 +762,7 @@ body {
 
 .movimentacoesLista {
   display: grid;
-  grid-template-columns: 40px 60% auto;
+  grid-template-columns: 50px 60% auto;
   max-width: 1200px;
   font-family: 'roboto', sans-serif;
   font-size: 0.8rem;
