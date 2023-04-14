@@ -140,6 +140,7 @@ body {
 
 .selecao-radio {
   width: 88%;
+  max-width: 1200px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -561,9 +562,9 @@ body {
   display: grid;
   align-items: center;
   justify-content: center;
-  background-color: #FFFDFF;
+  background: linear-gradient(180deg, #FDFDFD 0%, #F4F4F4 100%);
   padding: 5px;
-  border: 1px solid #EEEEEE;
+  border: 1px solid #E0E0E0;
   width: 32px;
   height: 32px;
   border-radius: 50%;
@@ -738,6 +739,7 @@ body {
 .movimentacoes-bg h3 {
   font-size: 14px;
   width: 90%;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -761,6 +763,7 @@ body {
 .movimentacoesLista {
   display: grid;
   grid-template-columns: 40px 60% auto;
+  max-width: 1200px;
   font-family: 'roboto', sans-serif;
   font-size: 0.8rem;
   align-items: center;
