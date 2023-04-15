@@ -10,6 +10,8 @@ body {
   user-select: none;
 }
 
+
+
 /* graficos */
 
 .graficos-container {
@@ -140,6 +142,10 @@ body {
   font-family: 'roboto', sans-serif;
   font-size: 14px;
   font-weight: 400;
+}
+
+.filtrar {
+  cursor: pointer;
 }
 
 .filtro-compra,
@@ -312,6 +318,8 @@ body {
 .editValueBg.ativo {
   display: flex;
 }
+
+
 
 @keyframes modal {
   from {

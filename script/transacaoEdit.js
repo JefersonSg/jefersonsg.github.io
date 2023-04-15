@@ -124,6 +124,8 @@ edit.addEventListener('click', (event) => {
   // fechar aba de edicao
   function removeAtivo(item1) {
     item1.classList.remove('ativo')
+    document.body.style.overflow = 'auto'
+
   }
 
   if (numeroDois) {
@@ -202,6 +204,7 @@ tables.addEventListener('click', (event) => {
     const editor = document.querySelector(`[numero="${numero}"]`)
     let editorBg = editor.parentNode
     editorBg.classList.add('ativo')
+    document.body.style.overflow = 'hidden'
   }
 })
 
