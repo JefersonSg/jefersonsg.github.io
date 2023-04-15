@@ -650,7 +650,6 @@ function storage() {
   const incremento = +(valorAtual / 100).toFixed(2)
   let valorAnterior = valorAtual - transacaoAtual.pop() || 0
   let start = valorAnterior
-
   //Efeitos Numericos
   if (valorAtual > 0) {
     if (valorAtual > start) {
@@ -868,7 +867,6 @@ function criarPaineis() {
               `;
               setTimeout(function name() {
                 const condicao = div.querySelector('#condicao').innerText
-                console.log(condicao)
                 const valor = div.querySelector('#valor')
                 valor.style.color = condicao === 'Transferencia recebida'? 'green' : ''
                 valor.style.fontWeight = condicao === 'Transferencia recebida'? '600' : ''

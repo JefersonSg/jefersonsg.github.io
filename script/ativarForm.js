@@ -5,6 +5,8 @@ const formularios = document.querySelectorAll('.transacao');
 function addAtivo(item) {
   btnForm.forEach((i)=>{ if (i !== item) { i.classList.remove('ativo') } })
   item.classList.add('ativo')
+  document.body.style.overflow = 'hidden'
+
 
   formularios.forEach((i)=>{  
     if (i.getAttribute('value') == item.value) {
@@ -30,9 +32,13 @@ formularios.forEach((i,n)=>{
     const itemClicado = event.target
     if (!financas.contains(itemClicado)) {
       itemClicado.classList.remove('ativo')
+      document.body.style.overflow = 'auto'
+
     }
     if (itemClicado.id === 'fecharForm') {
       itemClicado.offsetParent.offsetParent.classList.remove('ativo')
+      document.body.style.overflow = 'auto'
+
     }
   })
 })
