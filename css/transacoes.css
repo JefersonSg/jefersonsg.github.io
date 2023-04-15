@@ -7,6 +7,7 @@
 body {
   background-color: #FAFAFA;
   position: relative;
+  user-select: none;
 }
 
 /* graficos */
@@ -31,6 +32,7 @@ body {
   background-color: white;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
+
 }
 
 
@@ -132,6 +134,12 @@ body {
   gap: 30px;
   padding-top: 16px;
   padding-bottom: 8px;
+}
+
+.pesquisar span {
+  font-family: 'roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .filtro-compra,
