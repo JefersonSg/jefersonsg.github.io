@@ -1,4 +1,4 @@
-function onlynumber(evt) {
+export function onlynumber(evt) {
   var theEvent = evt || window.event;
   var key = theEvent.keyCode || theEvent.which;
   key = String.fromCharCode(key);
