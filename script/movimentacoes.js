@@ -1283,10 +1283,18 @@ edits.addEventListener('click', (event) => {
     const selects = editValue.querySelectorAll('select')
 
     if (btn.classList.contains('ativo')) {
-      inputs.forEach(i => i.removeAttribute('readonly'))
+      inputs.forEach((i) => {
+        i.removeAttribute('readonly')
+        i.style.pointerEvents = 'all'
+
+      })
       selects.forEach(i => i.removeAttribute('disabled'))
+      
     } else if (!btn.classList.contains('ativo')) {
-      inputs.forEach(i => i.setAttribute('readonly', ''))
+      inputs.forEach((i) => {
+        i.setAttribute('readonly', '')
+        i.style.pointerEvents = 'none'
+      })
       selects.forEach(i => i.setAttribute('disabled', ''))
     }
   }

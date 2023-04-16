@@ -319,7 +319,9 @@ body {
   display: flex;
 }
 
-
+#dataInfo {
+  pointer-events: none;
+}
 
 @keyframes modal {
   from {
