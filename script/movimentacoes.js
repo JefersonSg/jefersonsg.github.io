@@ -128,7 +128,8 @@ function novaDiv(type) {
     InputValor[0].value = ''
     categoria[0].selectedIndex = 0
     dataInfo[0].value = ''
-    this.offsetParent.offsetParent.classList.remove('ativo')
+    this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
+
     document.body.style.overflow = 'auto'
 
   } else if (type === 'venda'
@@ -196,7 +197,7 @@ function novaDiv(type) {
     nomeMov[1].value = ''
     InputValor[1].value = ''
     dataInfo[1].value = ''
-    this.offsetParent.offsetParent.classList.remove('ativo')
+    this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
     document.body.style.overflow = 'auto'
 
 
@@ -251,8 +252,9 @@ function novaDiv(type) {
       InputValor[2].value = ''
       dataInfo[2].value = ''
 
-      this.offsetParent.offsetParent.classList.remove('ativo')
-    document.body.style.overflow = 'auto'
+      this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
+
+      document.body.style.overflow = 'auto'
 
 
     } else if (type === 'emprestimo'
@@ -384,7 +386,8 @@ function novaDiv(type) {
       InputValor[3].value = ''
       dataInfo[3].value = ''
 
-      this.offsetParent.offsetParent.classList.remove('ativo')
+      this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
+
       document.body.style.overflow = 'auto'
 
     } else {

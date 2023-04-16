@@ -95,21 +95,14 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-
+  padding-bottom: 20px;
   justify-items: center;
-  gap: 8px;
-}
-
-.financas div {
-  position: relative;
-  width: 80%;
-  display: flex;
-  height: 34px;
   gap: 8px;
 }
 
 .financas-formulario select,
 .financas-formulario input {
+  min-width: 270px;
   width: 100%;
   background: #d3b7ff;
   border-radius: 8px;
@@ -123,6 +116,16 @@
   padding: 0px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
+}
+
+.financas-formulario div {
+  position: relative;
+  min-width: 270px;
+  width: 80%;
+  box-sizing: border-box;
+  display: flex;
+  height: 34px;
+  gap: 8px;
 }
 
 
@@ -161,7 +164,6 @@
   pointer-events: none;
 
 }
-
 
 .div-botao {
   display: grid;

@@ -6,17 +6,18 @@ const jurosInit = document.getElementById('emprestimo-juros');
 const totalPagoInit = document.getElementById('totalPago');
 
 function contaEmp() {
-  let valorReplaced = +(+(InputValorInit[3].value).replace(',','.')).toFixed(2)
 
     const jurosTotal =
     (jurosCompInit.selectedIndex * parcelasInit[2].selectedIndex +
       jurosInit.selectedIndex) /
     100;
-  const valorFim = valorReplaced * jurosTotal + valorReplaced;
+
+  const valorFim = +(InputValorInit[3].value) * jurosTotal + +(InputValorInit[3].value)
 
   valorInit[3].value = `${parcelasInit[2].selectedIndex}x de R$ ${(
     valorFim / parcelasInit[2].selectedIndex
   ).toFixed(2)}`;
+
 
   totalPagoInit.value = `Total ${valorFim.toFixed(2)}`;
 }
@@ -41,9 +42,9 @@ parcelasInit[0].addEventListener('change', contaCompra);
 
 // PIX
 InputValorInit[2].addEventListener('keyup', () => {
-  let valorReplaced = +(+(InputValorInit[2].value).replace(',','.')).toFixed(2)
+  let valorReplaced = +(+(InputValorInit[2].value).replace(',','.'))
 
-    let valorAtual = `R$ ${valorReplaced}`
+    let valorAtual = `R$ ${valorReplaced.toFixed(2)}`
     valorInit[2].value = valorAtual
    },
 );
