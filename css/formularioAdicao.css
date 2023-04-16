@@ -118,7 +118,7 @@
 
 .financas-formulario select,
 .financas-formulario input {
-  width: 100%;
+  width: 190px;
   height: 100%;
   background: #d3b7ff;
   border-radius: 8px;
@@ -130,6 +130,7 @@
   color: black;
   padding: 0px;
   border: 1px solid rgba(0, 0, 0, 0.5);
+  transition: all .3s;
   box-sizing: border-box;
 
 }
@@ -186,40 +187,75 @@
 
 @media (min-width:375px) {
   .financas {
-    width: 330px;
+    min-width: 330px;
   }
 
   .financas-formulario div {
+    min-width: 230px;
+  }
+
+  .financas-formulario select,
+  .financas-formulario input {
     width: 230px;
+  }
+}
+
+@media (min-width:400px) {
+  .financas {
+    min-width: 360px;
+  }
+
+  .financas-formulario div {
+    min-width: 260px;
+  }
+
+  .financas-formulario select,
+  .financas-formulario input {
+    width: 280px;
   }
 }
 
 @media (min-width:450px) {
   .financas {
-    width: 380px;
+    min-width: 380px;
   }
 
   .financas-formulario div {
+    min-width: 280px;
+  }
+
+  .financas-formulario select,
+  .financas-formulario input {
     width: 280px;
   }
 }
 
 @media (min-width:550px) {
   .financas {
-    width: 480px;
+    min-width: 480px;
   }
 
   .financas-formulario div {
+    min-width: 380px;
+  }
+
+  .financas-formulario select,
+  .financas-formulario input {
     width: 380px;
   }
 }
 
 @media (min-width:800px) {
   .financas {
-    width: 600px;
+    min-width: 600px;
   }
 
   .financas-formulario div {
+    min-width: 480px;
+  }
+
+  .financas-formulario select,
+  .financas-formulario input {
     width: 480px;
   }
 }
