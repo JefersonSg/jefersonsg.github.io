@@ -1,0 +1,128 @@
+#emprestimoLabel #condicao,
+.parcelasTotal {
+  display: none;
+}
+
+.icon.icon-transacao {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FDFDFD 0%, #F4F4F4 100%);
+  padding: 5px;
+  border: 1px solid #E0E0E0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+#data {
+  width: 97%;
+}
+
+.organizaMov.jurosLs {
+  display: none;
+}
+
+#data {
+  grid-column: 3;
+  width: 70px;
+}
+
+#categoria {
+  width: 120px;
+}
+
+#valor,
+.valorInicial {
+  width: auto;
+  font-size: 12px;
+}
+
+p#valor {
+  width: max-content;
+}
+
+#vendaLabel #valor {
+  color: green;
+  font-weight: 600;
+}
+
+#nomeMov {
+  width: auto;
+}
+
+#tabela {
+  width: 85vw;
+}
+
+#condicional,
+#diferenca,
+#jurosLs,
+#jurosMesLs,
+#parcelasTotal {
+  display: none;
+}
+
+#tabela input {
+  border: none;
+  font-family: 'roboto', sans-serif;
+  font-weight: 400;
+  text-align: start;
+  color: #313131;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 0.8rem
+}
+
+#categoria,
+#data,
+.valorFinal,
+.transferencia#nomeMov,
+.parcelas-venda#parcelasTotal {
+  display: block;
+  color: #939393 !important;
+  font-size: 0.6rem !important;
+}
+
+.movimentacoes-bg {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.movimentacoes-bg h3 {
+  font-size: 14px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.movimentacoes-conteudo {
+  display: grid;
+  justify-content: center;
+  border-radius: 5px;
+  background: white;
+  margin-top: 8px;
+  padding: 12px 0px 0px 0px;
+  max-width: 100vw;
+  filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.25));
+}
+
+.movimentacoesLista {
+  display: grid;
+  grid-template-columns: 50px 60% auto;
+  max-width: 1200px;
+  font-family: 'roboto', sans-serif;
+  font-size: 0.8rem;
+  align-items: center;
+  gap: 0px 8px;
+  margin: 0 auto;
+  margin-bottom: 8px;
+  cursor: pointer;
+  padding: 0px 0px 4px 0px;
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.icon-transacao {
+  grid-row: 1/3;
+  width: 26px;
+  height: 26px;
+}
