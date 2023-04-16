@@ -129,6 +129,7 @@ function novaDiv(type) {
     categoria[0].selectedIndex = 0
     dataInfo[0].value = ''
     this.offsetParent.offsetParent.classList.remove('ativo')
+    document.body.style.overflow = 'auto'
 
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
@@ -196,6 +197,7 @@ function novaDiv(type) {
     InputValor[1].value = ''
     dataInfo[1].value = ''
     this.offsetParent.offsetParent.classList.remove('ativo')
+    document.body.style.overflow = 'auto'
 
 
 
@@ -250,6 +252,7 @@ function novaDiv(type) {
       dataInfo[2].value = ''
 
       this.offsetParent.offsetParent.classList.remove('ativo')
+    document.body.style.overflow = 'auto'
 
 
     } else if (type === 'emprestimo'
@@ -382,6 +385,8 @@ function novaDiv(type) {
       dataInfo[3].value = ''
 
       this.offsetParent.offsetParent.classList.remove('ativo')
+      document.body.style.overflow = 'auto'
+
     } else {
       alert('preencha todos os campos')
     }

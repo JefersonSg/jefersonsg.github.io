@@ -1,0 +1,84 @@
+#emprestimoLabel #condicao,
+.parcelasTotal {
+  display: none;
+}
+
+.icon.icon-transacao {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FDFDFD 0%, #F4F4F4 100%);
+  padding: 5px;
+  border: 1px solid #E0E0E0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+#data {
+  width: 97%;
+}
+
+.organizaMov.jurosLs {
+  display: none;
+}
+
+#data {
+  grid-column: 3;
+  width: 70px;
+}
+
+#categoria {
+  width: 120px;
+}
+
+#valor,
+.valorInicial {
+  width: auto;
+  font-size: 12px;
+}
+
+p#valor {
+  width: max-content;
+}
+
+#vendaLabel #valor {
+  color: green;
+  font-weight: 600;
+}
+
+#nomeMov {
+  width: auto;
+}
+
+#tabela {
+  width: 85vw;
+}
+
+#condicional,
+#diferenca,
+#jurosLs,
+#jurosMesLs,
+#parcelasTotal {
+  display: none;
+}
+
+#tabela input {
+  border: none;
+  font-family: 'roboto', sans-serif;
+  font-weight: 400;
+  text-align: start;
+  color: #313131;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 0.8rem
+}
+
+#categoria,
+#data,
+.valorFinal,
+.transferencia#nomeMov,
+.parcelas-venda#parcelasTotal {
+  display: block;
+  color: #939393 !important;
+  font-size: 0.6rem !important;
+}

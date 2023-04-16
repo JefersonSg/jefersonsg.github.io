@@ -49,17 +49,20 @@
   <div class="transacao" value="compra" id="compra-conteudo">
     <div class="financas">
       <span id="fecharForm">X</span>
-      <div class="form-img"><img src="./img/Movimentacoes/compra.svg" alt="imagem da aba compra"> Nova Despesa</div>
+      <div class="form-img">
+        <p>Nova Despesa</p>
+      </div>
       <form action="inserir-financas" class="financas-formulario">
-        <div>
-          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da Loja" />
+
+        <div class="div-movimentacao">
+          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
         </div>
 
-        <div>
+        <div class="div-valor">
           <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
         </div>
 
-        <div>
+        <div class="div-categoria">
           <select required name="categoria" id="categoriaInit">
             <option selected value="" disabled style="display: none">
               categoria da compra
@@ -78,9 +81,10 @@
           </select>
         </div>
 
-        <div>
+        <div class="div-data">
           <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
+
         <div class="div-parcelas">
           <select required name="parcelas" id="parcelas">
             <option disabled style="display:none ;" value="0">parcelas 0x</option>
@@ -111,23 +115,28 @@
       </form>
     </div>
   </div>
+
   <div class="transacao" value="venda" id="venda-conteudo">
     <div class="financas">
       <span id="fecharForm">X</span>
-      <div class="form-img"><img src="./img/Movimentacoes/venda.svg" alt="imagem da aba compra"> Nova Receita</div>
+      <div class="form-img">
+        <p>Nova Receita</p>
+      </div>
       <form action="inserir-financas" class="financas-formulario">
-        <div>
-          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome do Comprador" />
+
+        <div class="div-movimentacao">
+          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
         </div>
-        <div>
-          <input onkeypress="return onlynumber();" type="text" id="valorInput" name="valor" placeholder="Valor" />
+
+        <div class="div-valor">
+          <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
         </div>
-        <div>
+
+        <div class="div-data">
           <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-
         </div>
 
-        <div>
+        <div class="div-parcelas">
           <select required name="parcelas" id="parcelas">
             <option disabled style="display:none ;" value="0">parcelas 0x</option>
             <option selected value="1">Parcelas 1x</option>
@@ -146,8 +155,9 @@
         </div>
 
         <div class="div-total">
-          <input type="text" id="total" name="total" readonly placeholder="Total" />
+          <input type="text" id="totalPago" name="total" readonly placeholder="Total" />
         </div>
+
         <div class="div-botao">
           <button value="venda" id="botao-add" type="button">
             Adicionar
@@ -157,15 +167,22 @@
       </form>
     </div>
   </div>
+
   <div class="transacao" value="transferencia" id="pix-conteudo">
+
     <div class="financas">
       <span id="fecharForm">X</span>
-      <div class="form-img"><img src="./img/Movimentacoes/pix.svg" alt="imagem da aba compra"> Nova transferencia</div>
+      <div class="form-img">
+        <p>Nova transferencia</p>
+      </div>
+
       <form action="inserir-financas" class="financas-formulario">
-        <div>
-          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da pessoa" />
+
+        <div class="div-movimentacao">
+          <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
         </div>
-        <div>
+
+        <div class="div-categoria">
           <select required name="categoria" id="categoriaInit">
             <option selected value="" disabled style="display: none">
               Enviou ou Recebeu?
@@ -174,17 +191,20 @@
             <option value="+">Recebeu</option>
           </select>
         </div>
-        <div>
-          <input type="text" id="valorInput" name="valor" onkeypress="return onlynumber();" placeholder="Valor" />
+
+        <div class="div-valor">
+          <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
         </div>
-        <div>
+
+        <div class="div-data">
           <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
 
 
         <div class="div-total">
-          <input type="text" id="total" name="total" readonly placeholder="Total" />
+          <input type="text" id="totalPago" name="total" readonly placeholder="Total" />
         </div>
+
         <div class="div-botao">
           <button id="botao-add" type="button" value="transferencia">
             Adicionar
@@ -197,27 +217,36 @@
   <div class="transacao" value="emprestimo" id="emprestimo-conteudo">
     <div class="financas">
       <span id="fecharForm">X</span>
-      <div class="form-img"><img src="./img/Movimentacoes/emprestimo.svg" alt="imagem da aba compra"> Emprestimo</div>
+
+      <div class="form-img">
+        <p>Emprestimo</p>
+      </div>
+
       <form action="inserir-financas" class="financas-formulario">
-        <div>
+        <!--  -->
+        <div class="div-movimentacao">
           <input type="text" id="movimentacao" name="movimentacoes" placeholder="Nome da movimentacao" />
         </div>
-        <div>
+
+        <div class="div-categoria">
           <select required name="categoria" id="categoriaInit">
             <option selected value="" disabled style="display: none">
               Tipo de emprestimo
             </option>
-            <option value="+">Peguei Emprestimo</option>
+            <option value="+">Peguei Dinheiro</option>
             <option value="-">Emprestei Dinheiro</option>
           </select>
         </div>
-        <div>
+
+        <div class="div-valor">
           <input type="text" onkeypress="return onlynumber();" id="valorInput" name="valor" placeholder="Valor" />
         </div>
-        <div>
+
+        <div class="div-data">
           <input type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
         </div>
-        <div>
+
+        <div class="div-juros">
           <select required name="juros" id="emprestimo-juros">
             <option value="0">0% de juros</option>
             <option value="1">1% de juros</option>
@@ -252,7 +281,8 @@
             <option value="30">30% de juros</option>
           </select>
         </div>
-        <div>
+
+        <div class="div-jurosMes">
           <select required name="juros-compostos" id="juros-compostos">
             <option value="0">0% ao mes</option>
             <option value="1">1% ao Mês</option>
@@ -269,6 +299,7 @@
             <option value="12">12% ao Mês</option>
           </select>
         </div>
+
         <div class="div-parcela-juros">
           <select required name="parcelas" id="parcelas">
             <option style="display: none;" disabled value="0">Parcelas 1x</option>
@@ -287,12 +318,14 @@
           </select>
         </div>
 
-        <div class="div-total">
-          <input type="text" id="total" name="total" readonly placeholder="Total" />
-
-          <input type="text" id="totalPago" name="total" readonly placeholder="Total" />
-
+        <div class="div-total emp">
+          <input type="text" id="total" name="total" readonly placeholder="Total parcelado" />
         </div>
+
+        <div class="div-total">
+          <input type="text" id="totalPago" name="total" readonly placeholder="Total" />
+        </div>
+
         <div class="div-botao">
           <button id="botao-add" type="button" value="emprestimo">
             Adicionar

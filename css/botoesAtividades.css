@@ -1,0 +1,118 @@
+/* estilos */
+/* BOTOES */
+
+.texto {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: 'roboto', sans-serif;
+}
+
+.selecao-conteudo {
+  display: grid;
+  grid-template-columns: 120px 120px;
+  align-self: center;
+  gap: 16px 16px;
+  padding-bottom: 8px;
+}
+
+#compra-button:hover,
+#venda-button:hover,
+#pix-button:hover,
+#emprestimo-button:hover {
+  background: #d3d3d3;
+  border-color: #a5a5a5;
+}
+
+#compra-button,
+#venda-button,
+#pix-button,
+#emprestimo-button {
+  background: #EFEFEF;
+  color: black;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0px 8px;
+  font-family: "roboto", serif;
+  font-weight: 500;
+  border-radius: 10px;
+  font-size: 12px;
+  width: 120px;
+  height: 50px;
+  border: 1px solid #C9C9C9;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+}
+
+
+#compra-button::before {
+  content: "";
+  display: block;
+  background-image: url("../img/Movimentacoes/compra.svg");
+  width: 22px;
+  height: 22px;
+}
+
+#compra-button::after {
+  content: "Despesa";
+  display: block;
+}
+
+#venda-button::before {
+  content: "";
+  display: block;
+  background-image: url("../img/Movimentacoes/venda.svg");
+  width: 22px;
+  height: 22px;
+}
+
+#venda-button::after {
+  content: "Receita";
+  display: block;
+}
+
+#pix-button::before {
+  content: "";
+  display: block;
+  background-image: url("../img/Movimentacoes/pix.svg");
+  width: 23px;
+  height: 22px;
+}
+
+#pix-button::after {
+  content: "Transferencia";
+  display: block;
+}
+
+#emprestimo-button::before {
+  content: "";
+  display: block;
+  background-image: url("../img/Movimentacoes/emprestimo.svg");
+  width: 23px;
+  height: 22px;
+}
+
+#emprestimo-button::after {
+  content: "Emprestimo";
+  display: block;
+}
+
+@media (min-width: 375px) {
+  .selecao-conteudo {
+    grid-template-columns: 140px 140px;
+    gap: 16px 32px;
+  }
+
+  #compra-button,
+  #venda-button,
+  #pix-button,
+  #emprestimo-button {
+    width: 140px;
+    height: 50px;
+    border: 1px solid #C9C9C9;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+  }
+
+}

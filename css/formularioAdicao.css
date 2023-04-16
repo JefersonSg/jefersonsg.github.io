@@ -1,0 +1,297 @@
+/* Formularios */
+
+.transacao {
+  position: fixed;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: calc(100% + 300px);
+  z-index: 2500;
+  overflow: hidden;
+}
+
+.transacao.ativo {
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .transacao {
+    overflow: scroll;
+  }
+}
+
+.financas .form-img {
+  min-width: max-content;
+  width: max-content;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 8px;
+  padding-top: 4px;
+}
+
+#compra-conteudo .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/compra.svg');
+  width: 22px;
+  height: 22px;
+  left: -34px;
+}
+
+#venda-conteudo .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/venda.svg');
+  width: 23px;
+  height: 22px;
+  left: -34px;
+}
+
+#pix-conteudo .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/pix.svg');
+  width: 24px;
+  height: 22px;
+  left: -34px;
+}
+
+#emprestimo-conteudo .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/emprestimo.svg');
+  width: 24px;
+  height: 22px;
+  left: -34px;
+}
+
+
+.financas {
+  position: absolute;
+  top: 59px;
+  display: grid;
+  justify-items: center;
+  background-color: white;
+  border: 5px solid red;
+  box-shadow: 0 0 0 4px white;
+  padding: 10px 10px 0 10px;
+  width: 85%;
+  max-width: 600px;
+  border-radius: 15px;
+  animation: formulario .6s forwards;
+}
+
+
+.financas-formulario {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  justify-items: center;
+  gap: 8px;
+}
+
+.financas div {
+  position: relative;
+  width: 80%;
+  display: flex;
+  height: 34px;
+  gap: 8px;
+}
+
+.financas-formulario select,
+.financas-formulario input {
+  width: 100%;
+  background: #d3b7ff;
+  border-radius: 8px;
+  height: 34px;
+  margin: 0;
+  font-family: "roboto", sans-serif;
+  text-align: center;
+  font-size: 14px;
+  text-align-last: center;
+  color: black;
+  padding: 0px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+
+.financas-formulario input::placeholder {
+  color: #545454;
+  text-align: center;
+  font-size: 12px;
+}
+
+.financas-formulario button {
+  display: flex;
+  align-items: center;
+  gap: 0px 8px;
+  width: 110px;
+  height: 30px;
+  padding: 5px 5px 5px 10px;
+  color: #130031;
+  background: linear-gradient(#ceaeff, #ac7df4);
+  border: 1px solid #130031;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+
+
+.financas div img {
+  width: 24px;
+}
+
+#totalPago,
+#total {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+
+}
+
+
+.div-botao {
+  display: grid;
+  justify-content: center;
+  padding-top: 10px;
+  grid-column: 1/-1;
+}
+
+.financas-formulario button:hover {
+  background: linear-gradient(#c8a6ff, #a372f0);
+}
+
+.financas-formulario button img {
+  width: 15px;
+  height: 15px;
+}
+
+/* icones formulario */
+
+
+.div-movimentacao::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/nomeDaMovimentacao.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-categoria::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/tag.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-valor::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/dinheiro.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-data::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/calendario.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-juros::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/juros.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-jurosMes::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/jurosMes.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-parcelas::before,
+.div-parcela-juros::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/parcelas.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-total.emp::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/totalParcelas.svg');
+  width: 24px;
+  height: 24px;
+}
+
+.div-total::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 5px;
+  display: block;
+  background-image: url('../img/Movimentacoes/formulario/total.svg');
+  width: 24px;
+  height: 24px;
+}
+
+
+
+@keyframes formulario {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0)
+  }
+}
