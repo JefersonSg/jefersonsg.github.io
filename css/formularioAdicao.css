@@ -91,16 +91,17 @@
   border: 5px solid red;
   box-shadow: 0 0 0 4px white;
   padding: 10px 10px 0 10px;
-  width: 85%;
+  width: 280px;
   max-width: 600px;
   box-sizing: border-box;
   border-radius: 15px;
+  transition: all .3s;
   animation: formulario .6s forwards;
 }
 
 
 .financas-formulario {
-  width: 80%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   padding-bottom: 20px;
@@ -108,13 +109,19 @@
   gap: 8px;
 }
 
+.financas-formulario div {
+  position: relative;
+  width: 190px;
+  height: 34px;
+  transition: all .3s;
+}
+
 .financas-formulario select,
 .financas-formulario input {
-  min-width: 280px;
   width: 100%;
+  height: 100%;
   background: #d3b7ff;
   border-radius: 8px;
-  height: 34px;
   margin: 0;
   font-family: "roboto", sans-serif;
   text-align: center;
@@ -124,17 +131,8 @@
   padding: 0px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-}
 
-.financas-formulario div {
-  position: relative;
-  min-width: 280px;
-  width: 100%;
-  display: flex;
-  height: 34px;
-  gap: 8px;
 }
-
 
 .financas-formulario input::placeholder {
   color: #545454;
@@ -159,8 +157,6 @@
   text-transform: uppercase;
 }
 
-
-
 .financas div img {
   width: 24px;
 }
@@ -169,7 +165,6 @@
 #total {
   border: 1px solid rgba(0, 0, 0, 0.5);
   pointer-events: none;
-
 }
 
 .div-botao {
@@ -186,6 +181,47 @@
 .financas-formulario button img {
   width: 15px;
   height: 15px;
+}
+
+
+@media (min-width:375px) {
+  .financas {
+    width: 330px;
+  }
+
+  .financas-formulario div {
+    width: 230px;
+  }
+}
+
+@media (min-width:450px) {
+  .financas {
+    width: 380px;
+  }
+
+  .financas-formulario div {
+    width: 280px;
+  }
+}
+
+@media (min-width:550px) {
+  .financas {
+    width: 480px;
+  }
+
+  .financas-formulario div {
+    width: 380px;
+  }
+}
+
+@media (min-width:800px) {
+  .financas {
+    width: 600px;
+  }
+
+  .financas-formulario div {
+    width: 480px;
+  }
 }
 
 /* icones formulario */

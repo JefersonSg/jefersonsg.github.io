@@ -29,9 +29,10 @@
 }
 
 .editValue {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
+  top: 100px;
   gap: 5px;
   width: 70%;
   background-color: white;
@@ -77,6 +78,7 @@
   border: 1px solid rgba(0, 0, 0, 0);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   margin-bottom: 8px;
+  border-radius: 0;
 }
 
 .editValue input:focus,
