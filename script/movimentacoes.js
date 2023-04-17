@@ -1285,7 +1285,9 @@ edits.addEventListener('click', (event) => {
     if (btn.classList.contains('ativo')) {
       inputs.forEach((i) => {
         i.removeAttribute('readonly')
-        i.style.pointerEvents = 'all'
+        if (i.getAttribute('type') === 'date') {
+          i.style.pointerEvents = 'all'
+        }
 
       })
       selects.forEach(i => i.removeAttribute('disabled'))
@@ -1293,7 +1295,9 @@ edits.addEventListener('click', (event) => {
     } else if (!btn.classList.contains('ativo')) {
       inputs.forEach((i) => {
         i.setAttribute('readonly', '')
-        i.style.pointerEvents = 'none'
+        if (i.getAttribute('type') === 'date') {
+          i.style.pointerEvents = 'none'
+        }
       })
       selects.forEach(i => i.setAttribute('disabled', ''))
     }

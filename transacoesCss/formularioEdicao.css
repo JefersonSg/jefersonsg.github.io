@@ -64,7 +64,7 @@
   border: 10px solid #00920F;
 }
 
-#dataInfo {
+.editValue #dataInfo {
   pointer-events: none;
 }
 
