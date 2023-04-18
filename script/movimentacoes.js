@@ -10,6 +10,8 @@ const totalPago = document.getElementById('totalPago');
 const table = document.getElementById('tabela')
 const edits = document.getElementById('editores');
 
+
+
 // storages
 if (!localStorage.usuarioAtivo) {
   window.open('index.html', '_top');
@@ -55,7 +57,7 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/compra icon.svg">
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
-    <p id="valor">-R$ ${(InputValor[0].value * 1).toFixed(2).replace(',', '.')}</p>
+    <p id="valor">-R$ ${(+InputValor[0].value).toFixed(2)}</p>
     <p id="categoria">${categoria[0].value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
@@ -144,7 +146,7 @@ function novaDiv(type) {
     </div>
 
     <p id="nomeMov">${nomeMov[1].value}</p>
-    <p id="valor">+R$ ${(InputValor[1].value * 1).toFixed(2)}</p>
+    <p id="valor">+R$ ${(+InputValor[1].value.replace(',','.')).toFixed(2)}</p>
     <p class='parcelas-venda' id="parcelasTotal">${valor[1].value}</p>
     <p id="data">${dataInfo[1].value}</p>
     `
@@ -216,7 +218,7 @@ function novaDiv(type) {
     </div>
     
     <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p style="color: ${categoria[1].value === '+' ? 'green': ''}; font-weight: ${categoria[1].value === '+'? 'bold' : ''}" font id="valor">${categoria[1].value}R$ ${(+InputValor[2].value).toFixed(2).replace(',', '.')}</p>
+    <p style="color: ${categoria[1].value === '+' ? 'green': ''}; font-weight: ${categoria[1].value === '+'? 'bold' : ''}" font id="valor">${categoria[1].value}R$ ${(+InputValor[2].value.replace(',','.')).toFixed(2)}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -271,11 +273,9 @@ function novaDiv(type) {
     <p id="nomeMov" class = "nomeMov">${(categoria[2].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
     <p class = "diferenca" id="diferenca">R$ ${(
-          totalPago.value.replace('Total ', '') - InputValor[3].value
+          totalPago.value.replace('Total ', '') - +InputValor[3].value.replace(',','.')
         ).toFixed(2)}</p>
-    <p id="valor" class='valorInit' style="color: ${categoria[2].value === '+'? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold': ''}">${categoria[2].value}R$ ${(
-          InputValor[3].value * 1
-        ).toFixed(2)}</p>
+    <p id="valor" class='valorInit' style="color: ${categoria[2].value === '+'? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold': ''}">${categoria[2].value}R$ ${(+InputValor[3].value.replace(',','.')).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
           'Total ',
           '',
@@ -447,27 +447,29 @@ function novaDiv(type) {
 
   if (btnEdit) {
     btnEdit.addEventListener('click', () => {
+      console.log(valorEditInit.value)
+
       if (btnEdit.classList.contains('ativo')) {
         Editar.nome.innerText = nomeEditInit.value
         Editar.data.innerText = dataEditInit.value
 
 
-        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}` }
+        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}` }
         else if (btnEdit.offsetParent.offsetParent.id == 'vendaLabelEdit') {
-          Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+          Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
         } else if (btnEdit.offsetParent.offsetParent.id == 'transferenciaLabelEdit') {
           if (Editar.condicao.innerText === 'Transferencia enviada') {
-            Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
           } else if (Editar.condicao.innerText === 'Transferencia recebida') {
-            Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
           }
         } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabelEdit') {
           if (Editar.condicao.innerText === '-') {
             Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
-            Editar.valor.innerText = `-R$ ${(+valorEditInit.value).toFixed(2)}`
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
           } else if (Editar.condicao.innerText === '+') {
             Editar.nome.innerText = `Pegou de ${nomeEditInit.value}`
-            Editar.valor.innerText = `+R$ ${(+valorEditInit.value).toFixed(2)}`
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
           }
         }
 
@@ -1163,7 +1165,7 @@ editValue.forEach((item, n) => {
   function changeValue() {
     nomeEdit.value = Editar.nome.innerText
     dataEdit.value = Editar.data.innerText
-    valorEdit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    valorEdit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '').replace(',','.') : Editar.valor.innerText.replace('-R$', '').replace(',','.'))
     if (categoriaEdit && Editar.categoria) {
       categoriaEdit.value = Editar.categoria.innerText
     }
@@ -1192,22 +1194,22 @@ editValue.forEach((item, n) => {
       Editar.data.innerText = dataEdit.value
 
       if (i.id == 'vendaLabel') {
-        Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+        Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'compraLabel') {
-        Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+        Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'transferenciaLabel') {
         if (Editar.condicao.innerText === 'Transferencia enviada') {
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         } else if (Editar.condicao.innerText === 'Transferencia recebida') {
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
-        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}` }
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
       } else if (i.id == 'emprestimoLabel') {
         if (Editar.condicao.innerText === '-') {
           Editar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         } else if (Editar.condicao.innerText === '+') {
           Editar.nome.innerText = `Pegou de ${nomeEdit.value}`
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         }
       }
 

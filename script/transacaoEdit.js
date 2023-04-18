@@ -56,7 +56,7 @@ editValue.forEach((item, n) => {
     }
   }
   changeValue()
-tables.addEventListener('click',(e)=>{
+tables.addEventListener('click',()=>{
   changeValue()
 })
 
@@ -66,22 +66,22 @@ btnEdit.addEventListener('click', () => {
       Editar.data.innerText = dataEdit.value
 
       if (i.id == 'vendaLabel') {
-        Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+        Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'compraLabel') {
-        Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+        Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'transferenciaLabel') {
         if (Editar.condicao.innerText === 'Transferencia enviada') {
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         } else if (Editar.condicao.innerText === 'Transferencia recebida') {
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
-        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}` }
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
       } else if (i.id == 'emprestimoLabel') {
         if (Editar.condicao.innerText === '-') {
           Editar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         } else if (Editar.condicao.innerText === '+') {
           Editar.nome.innerText = `Pegou de ${nomeEdit.value}`
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value).toFixed(2)}`
+          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         }
       }
 

@@ -12,7 +12,7 @@ function contaEmp() {
       jurosInit.selectedIndex) /
     100;
 
-  const valorFim = +(InputValorInit[3].value) * jurosTotal + +(InputValorInit[3].value)
+  const valorFim = +(InputValorInit[3].value.replace(',','.')) * jurosTotal + +(InputValorInit[3].value.replace(',','.'))
 
   valorInit[3].value = `${parcelasInit[2].selectedIndex}x de R$ ${(
     valorFim / parcelasInit[2].selectedIndex
@@ -42,7 +42,7 @@ parcelasInit[0].addEventListener('change', contaCompra);
 
 // PIX
 InputValorInit[2].addEventListener('keyup', () => {
-  let valorReplaced = +(+(InputValorInit[2].value).replace(',','.'))
+  let valorReplaced = +(InputValorInit[2].value).replace(',','.')
 
     let valorAtual = `R$ ${valorReplaced.toFixed(2)}`
     valorInit[2].value = valorAtual
