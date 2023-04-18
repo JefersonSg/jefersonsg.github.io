@@ -21,6 +21,9 @@ function contaEmp() {
 
   totalPagoInit.value = `Total ${valorFim.toFixed(2)}`;
 }
+InputValorInit[3].addEventListener('change', ()=>{
+  InputValorInit[3].value =  (+InputValorInit[3].value).toFixed(2)
+});
 InputValorInit[3].addEventListener('keyup', contaEmp);
 parcelasInit[2].addEventListener('change', contaEmp);
 jurosInit.addEventListener('change', contaEmp);
@@ -34,13 +37,19 @@ function contaCompra() {
   ).toFixed(2)}`
     valorInit[0].value = valorAtual;
 }
+
+InputValorInit[0].addEventListener('change', ()=>{
+  InputValorInit[0].value =  (+InputValorInit[0].value).toFixed(2)
+});
 InputValorInit[0].addEventListener('keyup', contaCompra);
 parcelasInit[0].addEventListener('change', contaCompra);
-
 InputValorInit[0].addEventListener('keyup', contaCompra);
 parcelasInit[0].addEventListener('change', contaCompra);
 
 // PIX
+InputValorInit[2].addEventListener('change', ()=>{
+  InputValorInit[2].value =  (+InputValorInit[2].value).toFixed(2)
+});
 InputValorInit[2].addEventListener('keyup', () => {
   let valorReplaced = +(InputValorInit[2].value).replace(',','.')
 
@@ -50,6 +59,9 @@ InputValorInit[2].addEventListener('keyup', () => {
 );
 
 // VENDAS
+InputValorInit[1].addEventListener('change', ()=>{
+  InputValorInit[1].value =  (+InputValorInit[1].value).toFixed(2)
+});
 function contaVenda() {
   let valorReplaced = +(+(InputValorInit[1].value).replace(',','.')).toFixed(2)
 
