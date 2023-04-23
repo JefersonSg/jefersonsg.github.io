@@ -28,6 +28,8 @@
   border-radius: 5px;
   position: relative;
   animation: modal .4s ease-out forwards;
+  width: 300px;
+  box-sizing: border-box;
 }
 
 .fechar {
@@ -78,11 +80,36 @@
 .conteudo-formulario,
 .formulario-entrar {
   font-family: 'roboto', sans-serif;
-  width: 18rem;
+  width: 240px;
+  box-sizing: border-box;
   margin: 0.7rem 0.5rem
 }
 
+@media (min-width:375px) {
 
+  #criarConta,
+  #entrar {
+    width: 330px;
+  }
+
+  .conteudo-formulario,
+  .formulario-entrar {
+    width: 260px;
+  }
+}
+
+@media (min-width:500px) {
+
+  #criarConta,
+  #entrar {
+    width: 380px;
+  }
+
+  .conteudo-formulario,
+  .formulario-entrar {
+    width: 300px;
+  }
+}
 
 #botaoFormulario,
 #botaoFormularioEntrar {

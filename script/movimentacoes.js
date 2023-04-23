@@ -72,7 +72,7 @@ function novaDiv(type) {
       <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
       <label for="valor">Valor</label>
-      <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+      <input readonly type="valor" id="valorEdit">
 
       <label for="categoria">Categoria</label>
       <select disabled id="categoriaEdit" name="categoria" >
@@ -160,7 +160,7 @@ function novaDiv(type) {
     <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
     <label for="valor">Valor</label>
-    <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+    <input readonly type="valor" id="valorEdit">
 
     <label for="parcelas">Parcelas</label>
     <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -404,7 +404,12 @@ function novaDiv(type) {
   const jurosMesEditInit = edit.querySelector('#jurosCompEdit');
   const valorFinalEditInit = edit.querySelector('#valorFinEdit');
   const btnEdit = edit.querySelector('#editar')
-
+  
+    valorEditInit.addEventListener('keydown',(event) => {
+      if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
+        event.preventDefault()
+      }
+    })
 
   let Editar = {
     nome: div.querySelector('#nomeMov'),
@@ -447,7 +452,6 @@ function novaDiv(type) {
 
   if (btnEdit) {
     btnEdit.addEventListener('click', () => {
-      console.log(valorEditInit.value)
 
       if (btnEdit.classList.contains('ativo')) {
         Editar.nome.innerText = nomeEditInit.value
@@ -757,7 +761,7 @@ function criarPaineis() {
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
             <label for="valor">Valor</label>
-            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+            <input readonly type="valor" id="valorEdit">
 
             <label for="categoria">Categoria</label>
             <select disabled id="categoriaEdit" name="categoria" >
@@ -829,7 +833,7 @@ function criarPaineis() {
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
             <label for="valor">Valor</label>
-            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+            <input readonly type="valor" id="valorEdit">
 
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -891,7 +895,7 @@ function criarPaineis() {
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
               <label for="valor">Valor</label>
-              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+              <input readonly type="valor" id="valorEdit">
               <div class="botaoEdit">
                 <button type="button" id="editar"></button>
                 <button type="button" id="deletar">Deletar</button>
@@ -933,7 +937,7 @@ function criarPaineis() {
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
               <label for="valor">Valor</label>
-              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+              <input readonly type="valor" id="valorEdit">
   
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -1148,6 +1152,12 @@ editValue.forEach((item, n) => {
   const valorFinalEdit = item.querySelector('#valorFinEdit');
   const btnEdit = item.querySelector('#editar')
   const i = movimentacoesLista[n]
+
+  valorEdit.addEventListener('keydown',(event) => {
+    if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
+      event.preventDefault()
+    }
+  })
 
   let Editar = {
     nome: i.querySelector('#nomeMov'),

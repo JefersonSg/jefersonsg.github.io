@@ -5,6 +5,15 @@ const jurosCompInit = document.getElementById('juros-compostos');
 const jurosInit = document.getElementById('emprestimo-juros');
 const totalPagoInit = document.getElementById('totalPago');
 
+InputValorInit.forEach((i)=>{
+  i.addEventListener('keydown',(event) => {
+    console.log(event.key)
+    if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
+      event.preventDefault()
+    }
+  })
+})
+
 
 //  COMPRA
 function contaCompra() {
