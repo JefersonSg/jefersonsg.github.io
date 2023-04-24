@@ -444,10 +444,10 @@ function novaDiv(type) {
     condicao: div.querySelector('#condicao')
   }
   function changeValue() {
-    console.log(valorEditInit)
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
-    valorEditInit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    let valorLimpo = Editar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    valorEditInit.value = (+valorLimpo).toFixed(2)
     if (div.id === 'emprestimoLabel') {
       nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
     }
@@ -1214,7 +1214,6 @@ editValue.forEach((item, n) => {
     nomeEdit.value = ValorAEditar.nome.innerText
     dataEdit.value = ValorAEditar.data.innerText
     let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
-    console.log(+valorLimpo)
     valorEdit.value = (+valorLimpo).toFixed(2)
     if (categoriaEdit && ValorAEditar.categoria) {
       categoriaEdit.value = ValorAEditar.categoria.innerText

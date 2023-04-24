@@ -35,7 +35,8 @@ editValue.forEach((item, n) => {
   function changeValue() {
     nomeEdit.value = Editar.nome.innerText
     dataEdit.value = Editar.data.innerText
-    valorEdit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
+    let valorLimpo = Editar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    valorEdit.value = (+valorLimpo).toFixed(2)
     if (categoriaEdit && Editar.categoria) {
       categoriaEdit.value = Editar.categoria.innerText
     }
@@ -259,22 +260,25 @@ function storage() {
 
   vendaLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const parcelas = i.querySelector('#parcelasTotal');
     const valor = i.querySelector('#valor');
+    const data = i.querySelector('#data');
+    const categoria = i.querySelector('#categoria');
+    const parcelas = i.querySelector('#parcelasTotal');
 
     const venda = {
       nome: '',
-      data: '',
-      parcelas: '',
       valor: '',
+      data: '',
+      categoria:'',
+      parcelas: '',
     };
     const valorPush = +valor.innerText.replace('+R$', '');
 
     venda['nome'] = [nome.innerText];
-    venda['data'] = [data.innerText];
-    venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
+    venda['data'] = [data.innerText];
+    venda['categoria'] = [categoria.innerText];
+    venda['parcelas'] = [parcelas.innerText];
     vendasArray.push(venda);
     InputValor.push(valorPush);
   });

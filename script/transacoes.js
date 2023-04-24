@@ -33,7 +33,9 @@ function criarPaineis() {
     const edit = document.createElement('div');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
-
+    if (n > 9) {
+      div.style.display = 'none'
+    }
     edit.id = v + 'Edit';
     edit.classList.add('editValueBg')
 
@@ -55,12 +57,12 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="text" name='nome' id="nomeEdit">
+            
+                      <label for="valor">Valor</label>
+                      <input readonly type="number" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-            <label for="valor">Valor</label>
-            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
 
             <label for="categoria">Categoria</label>
             <select disabled id="categoriaEdit" name="categoria" >
@@ -119,6 +121,7 @@ function criarPaineis() {
   
               <p id="nomeMov"></p>
               <p id="valor"></p>
+              <p id="categoria"></p>
               <p class='parcelas-venda' id="parcelasTotal"></p>
               <p id="data"></p>
         `;
@@ -127,12 +130,27 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+            
+            <label for="valor">Valor</label>
+            <input readonly type="number" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-            <label for="valor">Valor</label>
-            <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+
+            <label for="categoria">Categoria</label>
+            <select disabled id="categoriaEdit" name="categoria" >
+              <option selected value="" disabled style="display: none">
+              categoria da Receita
+              </option>
+              <option value="Salário">Salário</option>
+              <option value="Investimentos">Investimentos</option>
+              <option value="Vendas">Vendas</option>
+              <option value="Comissões">Comissões</option>
+              <option value="Aluguel">Aluguel</option>
+              <option value="Reembolso">Reembolso</option>
+              <option value="Juros">Juros</option>
+              <option value="alimentação">Outros</option>
+            </select>
 
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -189,12 +207,13 @@ function criarPaineis() {
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
+              
+              <label for="valor">Valor</label>
+              <input readonly type="number" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-              <label for="valor">Valor</label>
-              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
+
               <div class="botaoEdit">
                 <button type="button" id="editar"></button>
                 <button type="button" id="deletar">Deletar</button>
@@ -231,12 +250,12 @@ function criarPaineis() {
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
+              
+              <label for="valor">Valor</label>
+              <input readonly type="number" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-              <label for="valor">Valor</label>
-              <input readonly onkeypress="return onlynumber();" type="valor" id="valorEdit">
   
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -309,7 +328,7 @@ function criarPaineis() {
             <label class='diferencaLabel' for="diferenca">Diferença</label>
               <input readonly type="diferenca" id="diferencaEdit">
               <label for="valor-final">Valor Final</label>
-              <input readonly type="valor-final" id="valorFinEdit">
+              <input readonly type="number" id="valorFinEdit">
             <div class='botaoEdit'>
               <button type="button" id="editar"></button>
               <button type="button" id="deletar">Deletar</button>
@@ -365,12 +384,14 @@ function arrumarInputValor() {
       const nome = i.querySelector('#nomeMov');
       const data = i.querySelector('#data');
       const parcelas = i.querySelector('#parcelasTotal');
+      const categoria = i.querySelector('#categoria');
       const valor = i.querySelector('#valor');
 
       nome.innerText = `${vendaLs[n].nome}`;
-      data.innerText = vendaLs[n].data;
-      parcelas.innerText = vendaLs[n].parcelas;
       valor.innerText = vendaLs[n].valor;
+      data.innerText = vendaLs[n].data;
+      categoria.innerText = vendaLs[n].categoria;
+      parcelas.innerText = vendaLs[n].parcelas;
     });
   }
 
