@@ -33,7 +33,6 @@ let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
 
 let transacaoAtual = []
-console.log(categoria)
 
 function novaDiv(type) {
   type = this.value
@@ -445,6 +444,7 @@ function novaDiv(type) {
     condicao: div.querySelector('#condicao')
   }
   function changeValue() {
+    console.log(valorEditInit)
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
     valorEditInit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '') : Editar.valor.innerText.replace('-R$', ''))
@@ -1196,13 +1196,8 @@ editValue.forEach((item, n) => {
   const btnEdit = item.querySelector('#editar')
   const i = movimentacoesLista[n]
 
-  valorEdit.addEventListener('keydown',(event) => {
-    if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
-      event.preventDefault()
-    }
-  })
 
-  let Editar = {
+  let ValorAEditar = {
     nome: i.querySelector('#nomeMov'),
     data: i.querySelector('#data'),
     valor: i.querySelector('#valor'),
@@ -1216,72 +1211,73 @@ editValue.forEach((item, n) => {
   }
 
   function changeValue() {
-    nomeEdit.value = Editar.nome.innerText
-    dataEdit.value = Editar.data.innerText
-    valorEdit.value = (Editar.valor.innerText.slice(0, 1) === '+' ? Editar.valor.innerText.replace('+R$', '').replace(',','.') : Editar.valor.innerText.replace('-R$', '').replace(',','.'))
-    if (categoriaEdit && Editar.categoria) {
-      categoriaEdit.value = Editar.categoria.innerText
+    nomeEdit.value = ValorAEditar.nome.innerText
+    dataEdit.value = ValorAEditar.data.innerText
+    let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    console.log(+valorLimpo)
+    valorEdit.value = (+valorLimpo).toFixed(2)
+    if (categoriaEdit && ValorAEditar.categoria) {
+      categoriaEdit.value = ValorAEditar.categoria.innerText
     }
-    if (parcelasEdit && Editar.parcelasInit) {
-      parcelasEdit.value = Editar.parcelasInit.innerText.slice(0, 1)
+    if (parcelasEdit && ValorAEditar.parcelasInit) {
+      parcelasEdit.value = ValorAEditar.parcelasInit.innerText.slice(0, 1)
     }
-    if (jurosEdit && Editar.jurosInit) {
-      jurosEdit.value = Editar.jurosInit.innerText
-      jurosMesEdit.value = Editar.jurosMesInit.innerText
-      nomeEdit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
+    if (jurosEdit && ValorAEditar.jurosInit) {
+      jurosEdit.value = ValorAEditar.jurosInit.innerText
+      jurosMesEdit.value = ValorAEditar.jurosMesInit.innerText
+      nomeEdit.value = ValorAEditar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
     }
 
-    if (diferencaeEdit && Editar.diferencaInit) {
-      diferencaeEdit.value = Editar.diferencaInit.innerText
+    if (diferencaeEdit && ValorAEditar.diferencaInit) {
+      diferencaeEdit.value = ValorAEditar.diferencaInit.innerText
     }
-    if (valorFinalEdit && Editar.valorFinal) {
-      valorFinalEdit.value = Editar.valorFinal.innerText
+    if (valorFinalEdit && ValorAEditar.valorFinal) {
+      valorFinalEdit.value = ValorAEditar.valorFinal.innerText
     }
   }
-  changeValue()
-
+changeValue()
 
   btnEdit.addEventListener('click', () => {
     if (btnEdit.classList.contains('ativo')) {
-      Editar.nome.innerText = nomeEdit.value
-      Editar.data.innerText = dataEdit.value
+      ValorAEditar.nome.innerText = nomeEdit.value
+      ValorAEditar.data.innerText = dataEdit.value
 
       if (i.id == 'vendaLabel') {
-        Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'compraLabel') {
-        Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
       } else if (i.id == 'transferenciaLabel') {
-        if (Editar.condicao.innerText === 'Transferencia enviada') {
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-        } else if (Editar.condicao.innerText === 'Transferencia recebida') {
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-        } else { Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
+        if (ValorAEditar.condicao.innerText === 'Transferencia enviada') {
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        } else if (ValorAEditar.condicao.innerText === 'Transferencia recebida') {
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
       } else if (i.id == 'emprestimoLabel') {
-        if (Editar.condicao.innerText === '-') {
-          Editar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-          Editar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-        } else if (Editar.condicao.innerText === '+') {
-          Editar.nome.innerText = `Pegou de ${nomeEdit.value}`
-          Editar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        if (ValorAEditar.condicao.innerText === '-') {
+          ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        } else if (ValorAEditar.condicao.innerText === '+') {
+          ValorAEditar.nome.innerText = `Pegou de ${nomeEdit.value}`
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
         }
       }
 
-      if (Editar.categoria) {
-        Editar.categoria.innerText = categoriaEdit.value
+      if (ValorAEditar.categoria) {
+        ValorAEditar.categoria.innerText = categoriaEdit.value
       }
-      if (parcelasEdit && Editar.parcelasInit) {
-        Editar.parcelasInit.innerText = parcelasEdit.value
+      if (parcelasEdit && ValorAEditar.parcelasInit) {
+        ValorAEditar.parcelasInit.innerText = parcelasEdit.value
       }
-      if (jurosEdit && Editar.jurosInit) {
+      if (jurosEdit && ValorAEditar.jurosInit) {
         jurosEdit.innerText = jurosEdit.value
       }
-      if (jurosMesEdit && Editar.jurosMesInit) {
-        Editar.jurosMesInit.innerText = jurosMesEdit.value
+      if (jurosMesEdit && ValorAEditar.jurosMesInit) {
+        ValorAEditar.jurosMesInit.innerText = jurosMesEdit.value
       }
       if (i.id == 'emprestimoLabel') {
-        Editar.diferencaInit.innerText = diferencaeEdit.value
+        ValorAEditar.diferencaInit.innerText = diferencaeEdit.value
       }
-      if (valorFinalEdit && Editar.valorFinal) {
+      if (valorFinalEdit && ValorAEditar.valorFinal) {
         Editar.valorFinal.innerText = valorFinalEdit.value
       }
       transacaoAtual.push(valorEdit.value)
