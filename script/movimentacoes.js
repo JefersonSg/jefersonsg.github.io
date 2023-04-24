@@ -33,7 +33,7 @@ let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
 
 let transacaoAtual = []
-
+console.log(categoria)
 
 function novaDiv(type) {
   type = this.value
@@ -67,12 +67,12 @@ function novaDiv(type) {
       <span id="fecharEdit">X</span>
       <label for="nome">Nome</label>
       <input readonly type="text" name='nome' id="nomeEdit">
+      
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
 
       <label for="data">Data</label>
       <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-
-      <label for="valor">Valor</label>
-      <input readonly type="valor" id="valorEdit">
 
       <label for="categoria">Categoria</label>
       <select disabled id="categoriaEdit" name="categoria" >
@@ -137,6 +137,7 @@ function novaDiv(type) {
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
     && InputValor[1].value !== ''
+    && categoria[1].selectedIndex !== 0
     && dataInfo[1].value !== ''
   ) {
 
@@ -147,6 +148,7 @@ function novaDiv(type) {
 
     <p id="nomeMov">${nomeMov[1].value}</p>
     <p id="valor">+R$ ${(+InputValor[1].value.replace(',','.')).toFixed(2)}</p>
+    <p id="categoria">${categoria[1].value}</p>
     <p class='parcelas-venda' id="parcelasTotal">${valor[1].value}</p>
     <p id="data">${dataInfo[1].value}</p>
     `
@@ -156,11 +158,26 @@ function novaDiv(type) {
     <label for="nome">Nome</label>
     <input readonly type="nome" id="nomeEdit">
 
+    <label for="valor">Valor</label>
+    <input readonly type="valor" id="valorEdit">
+
     <label for="data">Data</label>
     <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-    <label for="valor">Valor</label>
-    <input readonly type="valor" id="valorEdit">
+    <label for="categoria">Categoria</label>
+    <select disabled id="categoriaEdit" name="categoria" >
+      <option selected value="" disabled style="display: none">
+      categoria da Receita
+      </option>
+      <option value="Salário">Salário</option>
+      <option value="Investimentos">Investimentos</option>
+      <option value="Vendas">Vendas</option>
+      <option value="Comissões">Comissões</option>
+      <option value="Aluguel">Aluguel</option>
+      <option value="Reembolso">Reembolso</option>
+      <option value="Juros">Juros</option>
+      <option value="alimentação">Outros</option>
+    </select>
 
     <label for="parcelas">Parcelas</label>
     <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -199,6 +216,7 @@ function novaDiv(type) {
     nomeMov[1].value = ''
     InputValor[1].value = ''
     dataInfo[1].value = ''
+    categoria[1].selectedIndex = 0;
     this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
     document.body.style.overflow = 'auto'
 
@@ -207,7 +225,7 @@ function novaDiv(type) {
   } else
     if (type === 'transferencia'
       && nomeMov[2].value !== ''
-      && categoria[1].selectedIndex !== 0
+      && categoria[2].selectedIndex !== 0
       && InputValor[2].value !== ''
       && dataInfo[2].value !== ''
     ) {
@@ -227,11 +245,13 @@ function novaDiv(type) {
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
-        <label for="data">Data</label>
-        <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
         <label for="valor">Valor</label>
         <input readonly type="valor" id="valorEdit">
+
+        <label for="data">Data</label>
+        <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+
         <div class='botaoEdit'>
           <button type="button" id="editar"></button>
           <button type="button" id="deletar">Deletar</button>
@@ -250,7 +270,7 @@ function novaDiv(type) {
       storage()
 
       nomeMov[2].value = ''
-      categoria[1].selectedIndex = 0
+      categoria[2].selectedIndex = 0
       InputValor[2].value = ''
       dataInfo[2].value = ''
 
@@ -261,7 +281,7 @@ function novaDiv(type) {
 
     } else if (type === 'emprestimo'
       && nomeMov[3].value !== ''
-      && categoria[2].selectedIndex !== 0
+      && categoria[3].selectedIndex !== 0
       && InputValor[3].value !== ''
       && dataInfo[3].value !== ''
     ) {
@@ -290,12 +310,13 @@ function novaDiv(type) {
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
+        
+                <label for="valor">Valor</label>
+                <input readonly type="valor" id="valorEdit">
 
         <label for="data">Data</label>
         <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-        <label for="valor">Valor</label>
-        <input readonly type="valor" id="valorEdit">
       <select disabled readonly name="parcelas" id="parcelasEdit">
         <option value="1">Parcelas 1x</option>
         <option value="2">Parcelas 2x</option>
@@ -382,7 +403,7 @@ function novaDiv(type) {
       storage()
 
       nomeMov[3].value = ''
-      categoria[2].selectedIndex = 0
+      categoria[3].selectedIndex = 0
       InputValor[3].value = ''
       dataInfo[3].value = ''
 
@@ -530,10 +551,10 @@ function storage() {
   const InputValor = [];
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
-    const categoria = i.querySelector('#categoria');
-    const data = i.querySelector('#data');
-    const parcelas = i.querySelector('#parcelasTotal');
     const valor = i.querySelector('#valor');
+    const data = i.querySelector('#data');
+    const categoria = i.querySelector('#categoria');
+    const parcelas = i.querySelector('#parcelasTotal');
     const compra = {
       nome: '',
       categoria: '',
@@ -552,22 +573,25 @@ function storage() {
 
   vendaLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
-    const data = i.querySelector('#data');
-    const parcelas = i.querySelector('#parcelasTotal');
     const valor = i.querySelector('#valor');
+    const data = i.querySelector('#data');
+    const categoria = i.querySelector('#categoria');
+    const parcelas = i.querySelector('#parcelasTotal');
 
     const venda = {
       nome: '',
-      data: '',
-      parcelas: '',
       valor: '',
+      data: '',
+      categoria:'',
+      parcelas: '',
     };
     const valorPush = +valor.innerText.replace('+R$', '');
 
     venda['nome'] = [nome.innerText];
-    venda['data'] = [data.innerText];
-    venda['parcelas'] = [parcelas.innerText];
     venda['valor'] = [valor.innerText];
+    venda['data'] = [data.innerText];
+    venda['categoria'] = [categoria.innerText];
+    venda['parcelas'] = [parcelas.innerText];
     vendasArray.push(venda);
     InputValor.push(valorPush);
   });
@@ -756,12 +780,12 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="text" name='nome' id="nomeEdit">
+            
+                      <label for="valor">Valor</label>
+                      <input readonly type="valor" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
 
             <label for="categoria">Categoria</label>
             <select disabled id="categoriaEdit" name="categoria" >
@@ -820,6 +844,7 @@ function criarPaineis() {
   
               <p id="nomeMov"></p>
               <p id="valor"></p>
+              <p id="categoria"></p>
               <p class='parcelas-venda' id="parcelasTotal"></p>
               <p id="data"></p>
         `;
@@ -828,12 +853,27 @@ function criarPaineis() {
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
+            
+            <label for="valor">Valor</label>
+            <input readonly type="valor" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-            <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
+
+            <label for="categoria">Categoria</label>
+            <select disabled id="categoriaEdit" name="categoria" >
+              <option selected value="" disabled style="display: none">
+              categoria da Receita
+              </option>
+              <option value="Salário">Salário</option>
+              <option value="Investimentos">Investimentos</option>
+              <option value="Vendas">Vendas</option>
+              <option value="Comissões">Comissões</option>
+              <option value="Aluguel">Aluguel</option>
+              <option value="Reembolso">Reembolso</option>
+              <option value="Juros">Juros</option>
+              <option value="alimentação">Outros</option>
+            </select>
 
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -890,12 +930,13 @@ function criarPaineis() {
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
+              
+              <label for="valor">Valor</label>
+              <input readonly type="valor" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-              <label for="valor">Valor</label>
-              <input readonly type="valor" id="valorEdit">
+
               <div class="botaoEdit">
                 <button type="button" id="editar"></button>
                 <button type="button" id="deletar">Deletar</button>
@@ -932,12 +973,12 @@ function criarPaineis() {
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
+              
+              <label for="valor">Valor</label>
+              <input readonly type="valor" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
-  
-              <label for="valor">Valor</label>
-              <input readonly type="valor" id="valorEdit">
   
             <label for="parcelas">Parcelas</label>
             <select disabled readonly name="parcelas" id="parcelasEdit">
@@ -1066,12 +1107,14 @@ function arrumarInputValor() {
       const nome = i.querySelector('#nomeMov');
       const data = i.querySelector('#data');
       const parcelas = i.querySelector('#parcelasTotal');
+      const categoria = i.querySelector('#categoria');
       const valor = i.querySelector('#valor');
 
       nome.innerText = `${vendaLs[n].nome}`;
-      data.innerText = vendaLs[n].data;
-      parcelas.innerText = vendaLs[n].parcelas;
       valor.innerText = vendaLs[n].valor;
+      data.innerText = vendaLs[n].data;
+      categoria.innerText = vendaLs[n].categoria;
+      parcelas.innerText = vendaLs[n].parcelas;
     });
   }
 
