@@ -69,7 +69,7 @@ function novaDiv(type) {
       <input readonly type="text" name='nome' id="nomeEdit">
       
             <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
+            <input readonly type="number" id="valorEdit">
 
       <label for="data">Data</label>
       <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -159,7 +159,7 @@ function novaDiv(type) {
     <input readonly type="nome" id="nomeEdit">
 
     <label for="valor">Valor</label>
-    <input readonly type="valor" id="valorEdit">
+    <input readonly type="number" id="valorEdit">
 
     <label for="data">Data</label>
     <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -247,7 +247,7 @@ function novaDiv(type) {
         <input readonly type="nome" id="nomeEdit">
 
         <label for="valor">Valor</label>
-        <input readonly type="valor" id="valorEdit">
+        <input readonly type="number" id="valorEdit">
 
         <label for="data">Data</label>
         <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -312,7 +312,7 @@ function novaDiv(type) {
         <input readonly type="nome" id="nomeEdit">
         
                 <label for="valor">Valor</label>
-                <input readonly type="valor" id="valorEdit">
+                <input readonly type="number" id="valorEdit">
 
         <label for="data">Data</label>
         <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -382,7 +382,7 @@ function novaDiv(type) {
         <label for="diferenca">diferenca</label>
         <input readonly type="diferenca" id="diferencaEdit">
         <label for="valor-final">Valor Final</label>
-        <input readonly type="valor-final" id="valorFinEdit">
+        <input readonly type="number" id="valorFinEdit">
 
       <div class='botaoEdit'>
         <button type="button" id="editar"></button>
@@ -782,7 +782,7 @@ function criarPaineis() {
             <input readonly type="text" name='nome' id="nomeEdit">
             
                       <label for="valor">Valor</label>
-                      <input readonly type="valor" id="valorEdit">
+                      <input readonly type="number" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -855,7 +855,7 @@ function criarPaineis() {
             <input readonly type="nome" id="nomeEdit">
             
             <label for="valor">Valor</label>
-            <input readonly type="valor" id="valorEdit">
+            <input readonly type="number" id="valorEdit">
   
             <label for="data">Data</label>
             <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -932,7 +932,7 @@ function criarPaineis() {
               <input readonly type="nome" id="nomeEdit">
               
               <label for="valor">Valor</label>
-              <input readonly type="valor" id="valorEdit">
+              <input readonly type="number" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -975,7 +975,7 @@ function criarPaineis() {
               <input readonly type="nome" id="nomeEdit">
               
               <label for="valor">Valor</label>
-              <input readonly type="valor" id="valorEdit">
+              <input readonly type="number" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
@@ -1051,7 +1051,7 @@ function criarPaineis() {
             <label class='diferencaLabel' for="diferenca">Diferença</label>
               <input readonly type="diferenca" id="diferencaEdit">
               <label for="valor-final">Valor Final</label>
-              <input readonly type="valor-final" id="valorFinEdit">
+              <input readonly type="number" id="valorFinEdit">
             <div class='botaoEdit'>
               <button type="button" id="editar"></button>
               <button type="button" id="deletar">Deletar</button>
