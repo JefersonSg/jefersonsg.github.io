@@ -24,7 +24,8 @@ function outsideClick(e) {
 html.addEventListener('click', handleOutsideClick)
   function handleOutsideClick(e) {
     if (!editarBotoes.contains(e.target)) {
-     return editarBotoes.classList.remove('ativo')
+      html.removeEventListener('click',handleOutsideClick)
+      editarBotoes.classList.remove('ativo')
     }
   }
 }
