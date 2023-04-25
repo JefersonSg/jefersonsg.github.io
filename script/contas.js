@@ -85,3 +85,6 @@ InputValorInit[3].addEventListener('keyup', contaEmp);
 parcelasInit[2].addEventListener('change', contaEmp);
 jurosInit.addEventListener('change', contaEmp);
 jurosCompInit.addEventListener('change', contaEmp);
+
+
+// contas Edit

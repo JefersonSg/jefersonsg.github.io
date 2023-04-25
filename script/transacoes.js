@@ -70,16 +70,16 @@ function criarPaineis() {
               categoria da compra
             </option>
             <option value="produto eletronico">Produtos Eletronicos</option>
-            <option value="roupa">Roupas</option>
-            <option value="contas">Contas</option>
-            <option value="transporte">Transporte</option>
-            <option value="despesas médicas">Despesas médicas</option>
-            <option value="cuidados pessoais">Cuidados pessoais</option>
-            <option value="entretenimento">Entretenimento</option>
-            <option value="remedio">Remedio</option>
-            <option value="alimentação">Alimentação</option>
-            <option value="cosmetico">Cosmeticos</option>
-            <option value="cosmetico">outros</option>
+            <option value="Roupas">Roupas</option>
+            <option value="Contas">Contas</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Despesas médicas">Despesas médicas</option>
+            <option value="Cuidados pessoais">Cuidados pessoais</option>
+            <option value="Entretenimento">Entretenimento</option>
+            <option value="Remédio ">Remédio </option>
+            <option value="Alimentação">Alimentação</option>
+            <option value="Cosméticos">Cosméticos</option>
+            <option value="Outros">Outros</option>
             </select>
 
             <label for="parcelas">Parcelas</label>
@@ -149,7 +149,7 @@ function criarPaineis() {
               <option value="Aluguel">Aluguel</option>
               <option value="Reembolso">Reembolso</option>
               <option value="Juros">Juros</option>
-              <option value="alimentação">Outros</option>
+              <option value="Outros">Outros</option>
             </select>
 
             <label for="parcelas">Parcelas</label>

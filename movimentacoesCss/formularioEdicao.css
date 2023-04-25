@@ -64,7 +64,9 @@
   border: 10px solid #00920F;
 }
 
-.editValue #dataInfo {
+.editValue #dataInfo,
+#valorFinEdit,
+#diferencaEdit {
   pointer-events: none;
 }
 
