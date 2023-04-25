@@ -15,6 +15,19 @@
   height: 25px;
   border-top: 3px solid gray;
   cursor: pointer;
+  user-select: none;
+}
+
+.menu::after,
+.menu::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 3px;
+  margin-top: 5px;
+  background-color: gray;
+  position: relative;
+  transition: transform .3s ease;
 }
 
 .menu.ativo {
@@ -38,24 +51,15 @@
   margin-top: 0px;
 }
 
-
-.menu::after,
-.menu::before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 3px;
-  margin-top: 5px;
-  background-color: gray;
-  position: relative;
-  transition: transform .3s ease;
-}
-
 .editarBotoes {
   display: none;
   position: relative;
-  top: 10px;
-  right: -5px;
+  font-family: 'roboto', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  user-select: none;
+  top: 4px;
+  right: -2px;
   padding: 5px;
   margin-top: 5px;
   background-color: aqua;

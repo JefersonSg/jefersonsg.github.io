@@ -1,0 +1,30 @@
+.editarCategoriasBg {
+  position: fixed;
+  display: none;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #FAFAFA;
+}
+
+.editarCategoriasBg.ativo {
+  display: block;
+  animation: showUp .4s forwards ease-in;
+}
+
+@keyframes showUp {
+  from {
+    transform: translate3d(0, 101vh, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0px, 0);
+  }
+}
+
+
+
+.fecharBg {
+  cursor: pointer;
+}

@@ -18,7 +18,6 @@ EmprestimoLabelEdicao.forEach((i)=>{
       
       diferenca.value = diferencaEdit
       valorFinal.value = valorTotal
-      console.log('ok')
     }
     valor.addEventListener('keyup', alterarValor)
     parcelas.addEventListener('change', alterarValor)

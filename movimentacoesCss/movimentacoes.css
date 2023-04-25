@@ -5,6 +5,7 @@
 @import url('./tabela.css');
 @import url('./formularioEdicao.css');
 @import url('./dropDownEdit.css');
+@import url('./categoriasEditor.css');
 
 .inicial {
   border-bottom: 2px solid white;

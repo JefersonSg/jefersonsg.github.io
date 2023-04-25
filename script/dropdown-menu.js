@@ -1,8 +1,3 @@
-function initDropDownMenu(){
-
-}
-
-const dropDownMenu = document.querySelector('.dropDownEdit')
 const editarBotoes = document.querySelector('.editarBotoes')
 const menu = document.querySelector('.menu')
 
@@ -14,14 +9,17 @@ function menuAtivo(e) {
   e.stopPropagation()
   outsideClick()
 }
-function outsideClick(e) {
+function outsideClick() {
   const html = document.documentElement
 html.addEventListener('click', handleOutsideClick)
   function handleOutsideClick(e) {
     if (!editarBotoes.contains(e.target)) {
       html.removeEventListener('click',handleOutsideClick)
       editarBotoes.classList.remove('ativo')
-      menu.classList.toggle('ativo')
+      menu.classList.remove('ativo')
+    } else if (editarBotoes.contains(e.target) && e.target.nodeName === 'LI') {
+      editarBotoes.classList.remove('ativo')
+      menu.classList.remove('ativo')
     }
   }
 }

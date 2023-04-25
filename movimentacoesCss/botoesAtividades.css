@@ -17,18 +17,12 @@
   padding-bottom: 8px;
 }
 
-#compra-button:hover,
-#venda-button:hover,
-#pix-button:hover,
-#emprestimo-button:hover {
+.btnForm:hover {
   background: #d3d3d3;
   border-color: #a5a5a5;
 }
 
-#compra-button,
-#venda-button,
-#pix-button,
-#emprestimo-button {
+.btnForm {
   background: #EFEFEF;
   color: black;
   cursor: pointer;
