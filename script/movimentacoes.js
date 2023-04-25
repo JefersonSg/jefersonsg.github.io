@@ -425,7 +425,7 @@ function novaDiv(type) {
   const valorFinalEditInit = edit.querySelector('#valorFinEdit');
   const btnEdit = edit.querySelector('#editar')
   
-    valorEditInit.addEventListener('keydown',(event) => {
+  valorEditInit.addEventListener('keydown',(event) => {
       if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
         event.preventDefault()
       }
@@ -1285,6 +1285,7 @@ changeValue()
   })
 
 })
+
 edits.addEventListener('click', (event) => {
   let numero = event.target.getAttribute('numero') ? event.target.getAttribute('numero') : event.target.parentNode.getAttribute('numero')
   let numeroDois = event.target.childNodes[1] ? event.target.childNodes[1].getAttribute('numero') : false
@@ -1296,19 +1297,28 @@ edits.addEventListener('click', (event) => {
   const itemClicado = event.target
 
 
-
   // fechar aba de edicao
-  function removeAtivo(item1) {
-    item1.classList.remove('ativo')
-    document.body.style.overflow = 'auto'
 
+  function removeAtivo(editBg) {
+    editBg.classList.remove('ativo')
+    document.body.style.overflow = 'auto'
   }
+
+
+  // remove Bg quando clicado fora do  modal
 
   if (numeroDois) {
     {
       removeAtivo(editValueBg[numeroDois])
+      const editValue = editValueBg[numeroDois].querySelector('.editValue')
+      const btn = editValue.querySelector('.botaoEdit')
+      const btnEdit = editValue.querySelector('#editar')
+      removeAtivo(btnEdit)
     }
   }
+  
+  // remove Bg quando clicado no X
+
   if (itemClicado.nodeName === 'SPAN' && itemClicado.id === 'fecharEdit') {
     const editValue = document.querySelector(`[numero="${numero}"]`)
     const editValueBg = editValue.parentNode
@@ -1394,9 +1404,6 @@ table.addEventListener('click', (event) => {
     let editorBg = editor.parentNode
     editorBg.classList.add('ativo')
     document.body.style.overflow = 'hidden'
-
   }
 })
 storage()
-
- 
