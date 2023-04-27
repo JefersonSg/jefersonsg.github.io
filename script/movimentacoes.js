@@ -33,7 +33,7 @@ let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
 
 let transacaoAtual = []
-
+console.log(categoria[2])
 function novaDiv(type) {
   type = this.value
   let div = document.createElement('li')
@@ -289,12 +289,12 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
     </div>
 
-    <p id="nomeMov" class = "nomeMov">${(categoria[2].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
+    <p id="nomeMov" class = "nomeMov">${(categoria[3].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
     <p class = "diferenca" id="diferenca">R$ ${(
           totalPago.value.replace('Total ', '') - +InputValor[3].value.replace(',','.')
         ).toFixed(2)}</p>
-    <p id="valor" class='valorInit' style="color: ${categoria[2].value === '+'? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold': ''}">${categoria[2].value}R$ ${(+InputValor[3].value.replace(',','.')).toFixed(2)}</p>
+    <p id="valor" class='valorInit' style="color: ${categoria[3].value === '+'? 'green': ''}; font-weight: ${categoria[3].value === '+'? 'bold': ''}">${categoria[3].value}R$ ${(+InputValor[3].value.replace(',','.')).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
           'Total ',
           '',
@@ -302,7 +302,7 @@ function novaDiv(type) {
     <p class = "data"id="data">${dataInfo[3].value}</p>
     <p id='jurosLs'>${juros.value}</p>
     <p id='jurosMesLs'>${jurosComp.value}</p>
-    <p id="condicao">${categoria[2].value}</p>
+    <p id="condicao">${categoria[3].value}</p>
     `
       edit.innerHTML = `
       <div class="editValue" numero="${number}">
@@ -397,7 +397,7 @@ function novaDiv(type) {
   `;
       table.insertBefore(div, table.firstChild);
       edits.appendChild(edit)
-      transacaoAtual.push(categoria[2].value === '+' ? +InputValor[3].value : +InputValor[3].value * -1)
+      transacaoAtual.push(categoria[3].value === '+' ? +InputValor[3].value : +InputValor[3].value * -1)
       number++
       storage()
 

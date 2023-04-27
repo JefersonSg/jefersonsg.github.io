@@ -86,13 +86,6 @@
 }
 
 
-
-@media (min-width:600px) {
-  .dropDownEdit:hover .editarBotoes {
-    display: block;
-  }
-}
-
 .editarBotoes li:hover {
   color: white;
   cursor: pointer;
