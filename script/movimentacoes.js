@@ -1,7 +1,7 @@
 const InputValor = document.querySelectorAll('#valorInput');
 const valor = document.querySelectorAll('#total');
 const categoria = document.querySelectorAll('#categoriaInit');
-const categoriaSelect = document.querySelector('.valorCategoria')
+const categoriaSelect = document.querySelectorAll('.valorCategoria')
 const adicionar = document.querySelectorAll('#botao-add');
 const jurosComp = document.getElementById('juros-compostos');
 const juros = document.getElementById('emprestimo-juros');
@@ -48,7 +48,7 @@ function novaDiv(type) {
   if (type === 'compra'
     && nomeMov[0].value !== ''
     && InputValor[0].value !== ''
-    && categoriaSelect.value !== 'Categoria'
+    && categoriaSelect[0].value !== 'Categoria'
     && dataInfo[0].value !== ''
   ) {
 
@@ -58,7 +58,7 @@ function novaDiv(type) {
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
     <p id="valor">-R$ ${(+InputValor[0].value).toFixed(2)}</p>
-    <p id="categoria">${categoriaSelect.value}</p>
+    <p id="categoria">${categoriaSelect[0].value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
     `
@@ -140,7 +140,7 @@ function novaDiv(type) {
   } else if (type === 'venda'
     && nomeMov[1].value !== ''
     && InputValor[1].value !== ''
-    && categoria[1].selectedIndex !== 0
+    && categoriaSelect[1].value !== 'Categoria'
     && dataInfo[1].value !== ''
   ) {
 
@@ -151,7 +151,7 @@ function novaDiv(type) {
 
     <p id="nomeMov">${nomeMov[1].value}</p>
     <p id="valor">+R$ ${(+InputValor[1].value.replace(',', '.')).toFixed(2)}</p>
-    <p id="categoria">${categoria[1].value}</p>
+    <p id="categoria">${categoriaSelect[1].value}</p>
     <p class='parcelas-venda' id="parcelasTotal">${valor[1].value}</p>
     <p id="data">${dataInfo[1].value}</p>
     `
