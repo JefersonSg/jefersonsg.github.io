@@ -35,7 +35,7 @@ editValue.forEach((item, n) => {
   function changeValue() {
     nomeEdit.value = ValorAEditar.nome.innerText
     dataEdit.value = ValorAEditar.data.innerText
-    let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ', '').replace('-R$ ', '')
     valorEdit.value = (+valorLimpo).toFixed(2)
     if (categoriaEdit && ValorAEditar.categoria) {
       categoriaEdit.value = ValorAEditar.categoria.innerText
@@ -56,57 +56,57 @@ editValue.forEach((item, n) => {
       valorFinalEdit.value = ValorAEditar.valorFinal.innerText
     }
   }
-changeValue()
-tables.addEventListener('click',()=>{
   changeValue()
-})
+  tables.addEventListener('click', () => {
+    changeValue()
+  })
 
-btnEdit.addEventListener('click', () => {
-  if (btnEdit.classList.contains('ativo')) {
-    ValorAEditar.nome.innerText = nomeEdit.value
-    ValorAEditar.data.innerText = dataEdit.value
+  btnEdit.addEventListener('click', () => {
+    if (btnEdit.classList.contains('ativo')) {
+      ValorAEditar.nome.innerText = nomeEdit.value
+      ValorAEditar.data.innerText = dataEdit.value
 
-    if (i.id == 'vendaLabel') {
-      ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-    } else if (i.id == 'compraLabel') {
-      ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-    } else if (i.id == 'transferenciaLabel') {
-      if (ValorAEditar.condicao.innerText === 'Transferencia enviada') {
-        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-      } else if (ValorAEditar.condicao.innerText === 'Transferencia recebida') {
-        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-      } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
-    } else if (i.id == 'emprestimoLabel') {
-      if (ValorAEditar.condicao.innerText === '-') {
-        ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-      } else if (ValorAEditar.condicao.innerText === '+') {
-        ValorAEditar.nome.innerText = `Pegou de ${nomeEdit.value}`
-        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+      if (i.id == 'vendaLabel') {
+        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+      } else if (i.id == 'compraLabel') {
+        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+      } else if (i.id == 'transferenciaLabel') {
+        if (ValorAEditar.condicao.innerText === 'Transferencia enviada') {
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+        } else if (ValorAEditar.condicao.innerText === 'Transferencia recebida') {
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+        } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}` }
+      } else if (i.id == 'emprestimoLabel') {
+        if (ValorAEditar.condicao.innerText === '-') {
+          ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+        } else if (ValorAEditar.condicao.innerText === '+') {
+          ValorAEditar.nome.innerText = `Pegou de ${nomeEdit.value}`
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+        }
       }
-    }
 
-    if (ValorAEditar.categoria) {
-      ValorAEditar.categoria.innerText = categoriaEdit.value
+      if (ValorAEditar.categoria) {
+        ValorAEditar.categoria.innerText = categoriaEdit.value
+      }
+      if (parcelasEdit && ValorAEditar.parcelasInit) {
+        ValorAEditar.parcelasInit.innerText = parcelasEdit.value
+      }
+      if (jurosEdit && ValorAEditar.jurosInit) {
+        ValorAEditar.jurosInit.innerText = jurosEdit.value
+      }
+      if (jurosMesEdit && ValorAEditar.jurosMesInit) {
+        ValorAEditar.jurosMesInit.innerText = jurosMesEdit.value
+      }
+      if (i.id == 'emprestimoLabel') {
+        ValorAEditar.diferencaInit.innerText = diferencaeEdit.value
+      }
+      if (valorFinalEdit && ValorAEditar.valorFinal) {
+        ValorAEditar.valorFinal.innerText = valorFinalEdit.value
+      }
+      storage()
     }
-    if (parcelasEdit && ValorAEditar.parcelasInit) {
-      ValorAEditar.parcelasInit.innerText = parcelasEdit.value
-    }
-    if (jurosEdit && ValorAEditar.jurosInit) {
-      ValorAEditar.jurosInit.innerText = jurosEdit.value
-    }
-    if (jurosMesEdit && ValorAEditar.jurosMesInit) {
-      ValorAEditar.jurosMesInit.innerText = jurosMesEdit.value
-    }
-    if (i.id == 'emprestimoLabel') {
-      ValorAEditar.diferencaInit.innerText = diferencaeEdit.value
-    }
-    if (valorFinalEdit && ValorAEditar.valorFinal) {
-      ValorAEditar.valorFinal.innerText = valorFinalEdit.value
-    }
-    storage()
-  }
-})
+  })
 
 })
 
@@ -276,7 +276,7 @@ function storage() {
       nome: '',
       valor: '',
       data: '',
-      categoria:'',
+      categoria: '',
       parcelas: '',
     };
     const valorPush = +valor.innerText.replace('+R$', '');

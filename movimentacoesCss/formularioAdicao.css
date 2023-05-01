@@ -142,7 +142,7 @@
 .categoriaEscolha {
   display: none;
   position: absolute;
-  border-radius: 0 0px 10px 10px;
+  border-radius: 0 0px 8px 8px;
   padding: 10px;
   width: 100%;
   min-height: 100%;
@@ -153,12 +153,33 @@
 }
 
 .valorCategoria.ativo {
-  border-radius: 10px 10px 0 0 !important;
+  border-radius: 8px 8px 0 0 !important;
   border-bottom: 0px solid black !important;
 }
 
 .categoriaEscolha.ativo {
   display: grid;
+  animation: show-down .3s ease forwards;
+}
+
+@keyframes show-down {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.novoValor {
+  width: 100% !important;
+  height: 0px !important;
+  border-radius: 5px !important;
+  padding: 15px !important;
+  margin-bottom: 8px !important;
 }
 
 #novaCategoria {

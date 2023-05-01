@@ -1,6 +1,7 @@
 const InputValor = document.querySelectorAll('#valorInput');
 const valor = document.querySelectorAll('#total');
 const categoria = document.querySelectorAll('#categoriaInit');
+const categoriaSelect = document.querySelector('.valorCategoria')
 const adicionar = document.querySelectorAll('#botao-add');
 const jurosComp = document.getElementById('juros-compostos');
 const juros = document.getElementById('emprestimo-juros');
@@ -9,7 +10,6 @@ const dataInfo = document.querySelectorAll('#dataInfo');
 const totalPago = document.getElementById('totalPago');
 const table = document.getElementById('tabela')
 const edits = document.getElementById('editores');
-
 
 
 // storages
@@ -48,7 +48,7 @@ function novaDiv(type) {
   if (type === 'compra'
     && nomeMov[0].value !== ''
     && InputValor[0].value !== ''
-    && categoria[0].selectedIndex !== 0
+    && categoriaSelect.value !== 'Categoria'
     && dataInfo[0].value !== ''
   ) {
 
@@ -58,7 +58,7 @@ function novaDiv(type) {
     </div>
     <p id="nomeMov">${nomeMov[0].value}</p>
     <p id="valor">-R$ ${(+InputValor[0].value).toFixed(2)}</p>
-    <p id="categoria">${categoria[0].value}</p>
+    <p id="categoria">${categoriaSelect.value}</p>
     <p id="data">${dataInfo[0].value}</p>
     <p id="parcelasTotal">${valor[0].value}</p>
     `
@@ -131,7 +131,7 @@ function novaDiv(type) {
 
     nomeMov[0].value = ''
     InputValor[0].value = ''
-    categoria[0].selectedIndex = 0
+    categoriaSelect.value = 'Categoria'
     dataInfo[0].value = ''
     this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
 
@@ -150,7 +150,7 @@ function novaDiv(type) {
     </div>
 
     <p id="nomeMov">${nomeMov[1].value}</p>
-    <p id="valor">+R$ ${(+InputValor[1].value.replace(',','.')).toFixed(2)}</p>
+    <p id="valor">+R$ ${(+InputValor[1].value.replace(',', '.')).toFixed(2)}</p>
     <p id="categoria">${categoria[1].value}</p>
     <p class='parcelas-venda' id="parcelasTotal">${valor[1].value}</p>
     <p id="data">${dataInfo[1].value}</p>
@@ -224,8 +224,6 @@ function novaDiv(type) {
     this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
     document.body.style.overflow = 'auto'
 
-
-
   } else
     if (type === 'transferencia'
       && nomeMov[2].value !== ''
@@ -240,7 +238,7 @@ function novaDiv(type) {
     </div>
     
     <p id="condicao">${categoria[2].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p style="color: ${categoria[2].value === '+' ? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold' : ''}" font id="valor">${categoria[2].value}R$ ${(+InputValor[2].value.replace(',','.')).toFixed(2)}</p>
+    <p style="color: ${categoria[2].value === '+' ? 'green' : ''}; font-weight: ${categoria[2].value === '+' ? 'bold' : ''}" font id="valor">${categoria[2].value}R$ ${(+InputValor[2].value.replace(',', '.')).toFixed(2)}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -298,9 +296,9 @@ function novaDiv(type) {
     <p id="nomeMov" class = "nomeMov">${(categoria[3].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
     <p class = "diferenca" id="diferenca">R$ ${(
-          totalPago.value.replace('Total ', '') - +InputValor[3].value.replace(',','.')
+          totalPago.value.replace('Total ', '') - +InputValor[3].value.replace(',', '.')
         ).toFixed(2)}</p>
-    <p id="valor" class='valorInit' style="color: ${categoria[3].value === '+'? 'green': ''}; font-weight: ${categoria[3].value === '+'? 'bold': ''}">${categoria[3].value}R$ ${(+InputValor[3].value.replace(',','.')).toFixed(2)}</p>
+    <p id="valor" class='valorInit' style="color: ${categoria[3].value === '+' ? 'green' : ''}; font-weight: ${categoria[3].value === '+' ? 'bold' : ''}">${categoria[3].value}R$ ${(+InputValor[3].value.replace(',', '.')).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
           'Total ',
           '',
@@ -433,12 +431,12 @@ function novaDiv(type) {
   const jurosMesEditInit = edit.querySelector('#jurosCompEdit');
   const valorFinalEditInit = edit.querySelector('#valorFinEdit');
   const btnEdit = edit.querySelector('#editar')
-  
-  valorEditInit.addEventListener('keydown',(event) => {
-      if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
-        event.preventDefault()
-      }
-    })
+
+  valorEditInit.addEventListener('keydown', (event) => {
+    if (!/[\d\s.,]/.test(event.key) && event.key !== "Backspace" && event.key !== "Delete") {
+      event.preventDefault()
+    }
+  })
 
   let Editar = {
     nome: div.querySelector('#nomeMov'),
@@ -455,7 +453,7 @@ function novaDiv(type) {
   function changeValue() {
     nomeEditInit.value = Editar.nome.innerText
     dataEditInit.value = Editar.data.innerText
-    let valorLimpo = Editar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    let valorLimpo = Editar.valor.innerText.replace('+R$ ', '').replace('-R$ ', '')
     valorEditInit.value = (+valorLimpo).toFixed(2)
     if (div.id === 'emprestimoLabel') {
       nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
@@ -488,22 +486,22 @@ function novaDiv(type) {
         Editar.data.innerText = dataEditInit.value
 
 
-        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}` }
+        if (btnEdit.offsetParent.offsetParent.id === 'compraLabelEdit') { Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}` }
         else if (btnEdit.offsetParent.offsetParent.id == 'vendaLabelEdit') {
-          Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
+          Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
         } else if (btnEdit.offsetParent.offsetParent.id == 'transferenciaLabelEdit') {
           if (Editar.condicao.innerText === 'Transferencia enviada') {
-            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
           } else if (Editar.condicao.innerText === 'Transferencia recebida') {
-            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
           }
         } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabelEdit') {
           if (Editar.condicao.innerText === '-') {
             Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
-            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
+            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
           } else if (Editar.condicao.innerText === '+') {
             Editar.nome.innerText = `Pegou de ${nomeEditInit.value}`
-            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',','.')).toFixed(2)}`
+            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
           }
         }
 
@@ -551,7 +549,7 @@ function valorAoVivo() {
   let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
   let informacoesLs = JSON.parse(Ls)
   let InputValor = informacoesLs[0]
-  
+
   let soma = InputValor.reduce((acumulador, valorAtual) => +acumulador + valorAtual, 0,);
 
 
@@ -628,6 +626,7 @@ function storage() {
   const vendaLabel = document.querySelectorAll('#vendaLabel');
   const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
+  const categoriasInfos = document.querySelectorAll('.valoresCategoria')
 
   const informacoes = []
 
@@ -636,6 +635,11 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
+  const categoriasAdd = []
+
+  categoriasInfos.forEach((categoria) => {
+    categoriasAdd.push(categoria.innerText)
+  })
 
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
@@ -670,7 +674,7 @@ function storage() {
       nome: '',
       valor: '',
       data: '',
-      categoria:'',
+      categoria: '',
       parcelas: '',
     };
     const valorPush = +valor.innerText.replace('+R$', '');
@@ -702,6 +706,7 @@ function storage() {
     InputValor.push(transferenciaPush);
     transferenciasArray.push(transf);
   });
+
   emprestimoLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const data = i.querySelector('#data');
@@ -761,6 +766,8 @@ function storage() {
   informacoes.push(transferenciasArray);
   informacoes.push(EmprestimoArray);
   informacoes.push(transacao)
+  informacoes.push(categoriasAdd)
+
 
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
   localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
@@ -919,9 +926,9 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
-    const valor = div.querySelector('#valor')
-    valor.style.color = 'green'
-    valor.style.fontWeight = '600'
+      const valor = div.querySelector('#valor')
+      valor.style.color = 'green'
+      valor.style.fontWeight = '600'
 
     } else if (v === 'transferenciaLabel') {
       div.id = 'transferenciaLabel';
@@ -936,12 +943,12 @@ function criarPaineis() {
           <p class='transferencia' id="nomeMov"></p>
           <p id="data"></p>
               `;
-              setTimeout(function name() {
-                const condicao = div.querySelector('#condicao').innerText
-                const valor = div.querySelector('#valor')
-                valor.style.color = condicao === 'Transferencia recebida'? 'green' : ''
-                valor.style.fontWeight = condicao === 'Transferencia recebida'? '600' : ''
-              }) 
+      setTimeout(function name() {
+        const condicao = div.querySelector('#condicao').innerText
+        const valor = div.querySelector('#valor')
+        valor.style.color = condicao === 'Transferencia recebida' ? 'green' : ''
+        valor.style.fontWeight = condicao === 'Transferencia recebida' ? '600' : ''
+      })
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
@@ -1081,14 +1088,14 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
         `;
-        setTimeout(function name() {
-          const condicao = div.querySelector('#condicao').innerText
-          const diferenca = edit.querySelector('.diferencaLabel')
-          const valor = div.querySelector('#valor')
-          diferenca.innerText = condicao === '+'? 'Deficit' : 'Lucro';
-          valor.style.color = condicao === '+'? 'green' : ''
-          valor.style.fontWeight = condicao === '+'? '600' : ''
-        })
+      setTimeout(function name() {
+        const condicao = div.querySelector('#condicao').innerText
+        const diferenca = edit.querySelector('.diferencaLabel')
+        const valor = div.querySelector('#valor')
+        diferenca.innerText = condicao === '+' ? 'Deficit' : 'Lucro';
+        valor.style.color = condicao === '+' ? 'green' : ''
+        valor.style.fontWeight = condicao === '+' ? '600' : ''
+      })
     } else {
       alert('erro');
     }
@@ -1230,7 +1237,7 @@ editValue.forEach((item, n) => {
   function changeValue() {
     nomeEdit.value = ValorAEditar.nome.innerText
     dataEdit.value = ValorAEditar.data.innerText
-    let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ','').replace('-R$ ','')
+    let valorLimpo = ValorAEditar.valor.innerText.replace('+R$ ', '').replace('-R$ ', '')
     valorEdit.value = (+valorLimpo).toFixed(2)
     if (categoriaEdit && ValorAEditar.categoria) {
       categoriaEdit.value = ValorAEditar.categoria.innerText
@@ -1251,30 +1258,30 @@ editValue.forEach((item, n) => {
       valorFinalEdit.value = ValorAEditar.valorFinal.innerText
     }
   }
-changeValue()
+  changeValue()
 
-  btnEdit.addEventListener('click', function() {
+  btnEdit.addEventListener('click', function () {
     if (btnEdit.classList.contains('ativo')) {
       ValorAEditar.nome.innerText = nomeEdit.value
       ValorAEditar.data.innerText = dataEdit.value
 
       if (i.id == 'vendaLabel') {
-        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
       } else if (i.id == 'compraLabel') {
-        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
       } else if (i.id == 'transferenciaLabel') {
         if (ValorAEditar.condicao.innerText === 'Transferencia enviada') {
-          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
         } else if (ValorAEditar.condicao.innerText === 'Transferencia recebida') {
-          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
-        } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}` }
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
+        } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}` }
       } else if (i.id == 'emprestimoLabel') {
         if (ValorAEditar.condicao.innerText === '-') {
           ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
         } else if (ValorAEditar.condicao.innerText === '+') {
           ValorAEditar.nome.innerText = `Pegou de ${nomeEdit.value}`
-          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',','.')).toFixed(2)}`
+          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
         }
       }
 
@@ -1335,7 +1342,7 @@ edits.addEventListener('click', (event) => {
       removeAtivo(btnEdit)
     }
   }
-  
+
   // remove Bg quando clicado no X
 
   if (itemClicado.nodeName === 'SPAN' && itemClicado.id === 'fecharEdit') {
@@ -1370,7 +1377,7 @@ edits.addEventListener('click', (event) => {
 
       })
       selects.forEach(i => i.removeAttribute('disabled'))
-      
+
     } else if (!btn.classList.contains('ativo')) {
       inputs.forEach((i) => {
         i.setAttribute('readonly', '')
@@ -1426,7 +1433,4 @@ table.addEventListener('click', (event) => {
   }
 })
 
-
-
-storage()
 valorAoVivo()

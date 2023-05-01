@@ -25,7 +25,6 @@ if (userAtivo) {
   arrumarNome()
 }
 
-
 function criarPaineis() {
 
   ls.forEach((v, n) => {
