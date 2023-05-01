@@ -68,22 +68,10 @@
         </div>
 
         <div class="div-categoria">
-          <select required name="categoria" id="categoriaInit">
-            <option selected value="" disabled style="display: none">
-              categoria da compra
-            </option>
-            <option value="produto eletronico">Produtos Eletronicos</option>
-            <option value="roupa">Roupas</option>
-            <option value="contas">Contas</option>
-            <option value="transporte">Transporte</option>
-            <option value="despesas médicas">Despesas médicas</option>
-            <option value="cuidados pessoais">Cuidados pessoais</option>
-            <option value="entretenimento">Entretenimento</option>
-            <option value="remedio">Remedio</option>
-            <option value="alimentação">Alimentação</option>
-            <option value="cosmetico">Cosmeticos</option>
-            <option value="cosmetico">outros</option>
-          </select>
+          <input type="text" class="valorCategoria" readonly>
+          <ul class="categoriaEscolha" id="categoriaInit">
+            <button id="novaCategoria" type="button"></button>
+          </ul>
         </div>
 
         <div class="div-data">

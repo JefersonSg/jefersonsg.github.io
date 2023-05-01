@@ -130,9 +130,64 @@
   color: black;
   padding: 0px;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  transition: all .3s;
   box-sizing: border-box;
 
+}
+
+.valorCategoria {
+  cursor: pointer;
+  outline: 0px;
+}
+
+.categoriaEscolha {
+  display: none;
+  position: absolute;
+  border-radius: 0 0px 10px 10px;
+  padding: 10px;
+  width: 100%;
+  min-height: 100%;
+  background-color: #d3b7ff;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.valorCategoria.ativo {
+  border-radius: 10px 10px 0 0 !important;
+  border-bottom: 0px solid black !important;
+}
+
+.categoriaEscolha.ativo {
+  display: grid;
+}
+
+#novaCategoria {
+  justify-self: center;
+  grid-row: 50;
+  width: 200px;
+  display: block;
+}
+
+#novaCategoria::before {
+  content: 'NOVA CATEGORIA';
+}
+
+#novaCategoria.ativo::before {
+  content: 'ADICIONAR';
+}
+
+.categoriaEscolha li {
+  display: block;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.categoriaEscolha li:hover {
+  color: white;
+}
+
+.categoriaEscolha:hover li {
+  display: block;
 }
 
 .financas-formulario input::placeholder {

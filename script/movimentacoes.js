@@ -13,6 +13,7 @@ const edits = document.getElementById('editores');
 
 
 // storages
+
 if (!localStorage.usuarioAtivo) {
   window.open('index.html', '_top');
 }
@@ -33,7 +34,7 @@ let emprestimoLs = informacoesLs[4] ? informacoesLs[4] : false;
 let number = ls ? ls.length : 0
 
 let transacaoAtual = []
-console.log(categoria[2])
+
 function novaDiv(type) {
   type = this.value
   let div = document.createElement('li')
@@ -124,7 +125,10 @@ function novaDiv(type) {
     edits.appendChild(edit)
     transacaoAtual.push(+InputValor[0].value * -1)
     number++
+
     storage()
+    valorAoVivo()
+
     nomeMov[0].value = ''
     InputValor[0].value = ''
     categoria[0].selectedIndex = 0
@@ -211,6 +215,7 @@ function novaDiv(type) {
     transacaoAtual.push(+InputValor[1].value)
     number++
     storage()
+    valorAoVivo()
 
     nomeMov[1].value = ''
     InputValor[1].value = ''
@@ -234,8 +239,8 @@ function novaDiv(type) {
       <img class='icon-transacao' src="./img/Movimentacoes/pix icon.svg">
     </div>
     
-    <p id="condicao">${categoria[1].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
-    <p style="color: ${categoria[1].value === '+' ? 'green': ''}; font-weight: ${categoria[1].value === '+'? 'bold' : ''}" font id="valor">${categoria[1].value}R$ ${(+InputValor[2].value.replace(',','.')).toFixed(2)}</p>
+    <p id="condicao">${categoria[2].value === '+' ? 'Transferencia recebida' : 'Transferencia enviada'}</p>
+    <p style="color: ${categoria[2].value === '+' ? 'green': ''}; font-weight: ${categoria[2].value === '+'? 'bold' : ''}" font id="valor">${categoria[2].value}R$ ${(+InputValor[2].value.replace(',','.')).toFixed(2)}</p>
     <p class='transferencia' id="nomeMov">${nomeMov[2].value}</p>
     <p id="data">${dataInfo[2].value}</p>
     `
@@ -264,9 +269,10 @@ function novaDiv(type) {
     `;
       table.insertBefore(div, table.firstChild);
       edits.appendChild(edit)
-      transacaoAtual.push(categoria[1].value === '+' ? +InputValor[2].value : +InputValor[2].value * -1)
+      transacaoAtual.push(categoria[2].value === '+' ? +InputValor[2].value : +InputValor[2].value * -1)
       number++
       storage()
+      valorAoVivo()
 
       nomeMov[2].value = ''
       categoria[2].selectedIndex = 0
@@ -399,7 +405,10 @@ function novaDiv(type) {
       edits.appendChild(edit)
       transacaoAtual.push(categoria[3].value === '+' ? +InputValor[3].value : +InputValor[3].value * -1)
       number++
+
       storage()
+      valorAoVivo()
+
 
       nomeMov[3].value = ''
       categoria[3].selectedIndex = 0
@@ -472,7 +481,7 @@ function novaDiv(type) {
   }
 
   if (btnEdit) {
-    btnEdit.addEventListener('click', () => {
+    btnEdit.addEventListener('click', function () {
 
       if (btnEdit.classList.contains('ativo')) {
         Editar.nome.innerText = nomeEditInit.value
@@ -518,6 +527,8 @@ function novaDiv(type) {
         }
         transacaoAtual.push(valorEditInit.value)
         storage()
+        valorAoVivo()
+        this.offsetParent.offsetParent.classList.remove('ativo')
       }
     })
   }
@@ -534,13 +545,89 @@ function arrumarNome() {
   nomeLogin.innerText = `Olá, ${nomeUsuarioAtivo.nome} ${nomeUsuarioAtivo.sobrenome.slice(0, 1)}.`;
 }
 
+function valorAoVivo() {
+  const valorStatus = document.querySelector('.valor');
+  const status = document.querySelector('.status');
+  let Ls = localStorage.getItem(`informacoes_id${usuarioAtivo.ID}`)
+  let informacoesLs = JSON.parse(Ls)
+  let InputValor = informacoesLs[0]
+  
+  let soma = InputValor.reduce((acumulador, valorAtual) => +acumulador + valorAtual, 0,);
+
+
+  let valorAtual = +(soma.toFixed(2))
+
+  let numero = 0
+  const incremento = +(valorAtual / 100).toFixed(2)
+  let valorAnterior = valorAtual - transacaoAtual.pop() || 0
+  let start = valorAnterior
+  //Efeitos Numericos
+  if (valorAtual > 0) {
+    if (valorAtual > start) {
+      const timer = setInterval(() => {
+        start += incremento
+        numero = start
+        if (start > valorAtual) {
+          numero = valorAtual
+          clearInterval(timer)
+        }
+        valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
+      }, 15)
+    } else if (valorAtual < start) {
+      const timer = setInterval(() => {
+        start += -incremento
+        numero = start
+
+        if (valorAtual > start) {
+          numero = valorAtual
+          clearInterval(timer)
+        }
+        valorStatus.innerText = `R$ ${(numero.toLocaleString('pt-BR'))}`
+      }, 15)
+    }
+  } else if (valorAtual < 0) {
+    const timer = setInterval(() => {
+      start += -incremento * -1
+      numero = start
+      if (valorAtual > start) {
+        numero = valorAtual
+        clearInterval(timer)
+      }
+      valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-', '')}`
+    }, 15)
+  } else if (valorAtual === 0) {
+    valorStatus.innerText = `R$ ${valorAtual.toLocaleString('pt-BR')}`
+  } else (alert('erro'))
+
+  // Efeitos Visuais
+
+  if (valorAtual > 0) {
+    status.style.backgroundColor = ' rgb(227, 247, 236)';
+    status.classList.add('positivo');
+    status.classList.remove('negativo');
+    status.innerText = 'Positivo'
+  }
+  if (valorAtual === 0) {
+    status.classList.remove('negativo');
+    status.classList.remove('positivo');
+    status.innerText = 'Neutro';
+    status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)';
+
+  }
+  if (valorAtual < 0) {
+    status.style.backgroundColor = 'rgba(239, 123, 123, 0.5)';
+    status.classList.add('negativo');
+    status.classList.remove('positivo');
+    status.innerText = 'Negativo';
+  }
+}
+
 function storage() {
   const transacoes = document.querySelectorAll('.movimentacoesLista');
   const compraLabel = document.querySelectorAll('#compraLabel');
   const vendaLabel = document.querySelectorAll('#vendaLabel');
   const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
-  const valorStatus = document.querySelector('.valor');
 
   const informacoes = []
 
@@ -549,6 +636,7 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
+
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const valor = i.querySelector('#valor');
@@ -676,77 +764,6 @@ function storage() {
 
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
   localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
-
-  const status = document.querySelector('.status');
-
-  // Valor Ao Vivo
-  let soma = InputValor.reduce((acumulador, valorAtual) => +acumulador + valorAtual, 0,);
-
-  let valorAtual = +(soma.toFixed(2))
-
-  let numero = 0
-  const incremento = +(valorAtual / 100).toFixed(2)
-  let valorAnterior = valorAtual - transacaoAtual.pop() || 0
-  let start = valorAnterior
-  //Efeitos Numericos
-  if (valorAtual > 0) {
-    if (valorAtual > start) {
-      const timer = setInterval(() => {
-        start += incremento
-        numero = start
-        if (start > valorAtual) {
-          numero = valorAtual
-          clearInterval(timer)
-        }
-        valorStatus.innerText = `R$ ${numero.toLocaleString('pt-BR')}`
-      }, 15)
-    } else if (valorAtual < start) {
-      const timer = setInterval(() => {
-        start += -incremento
-        numero = start
-
-        if (valorAtual > start) {
-          numero = valorAtual
-          clearInterval(timer)
-        }
-        valorStatus.innerText = `R$ ${(numero.toLocaleString('pt-BR'))}`
-      }, 15)
-    }
-  } else if (valorAtual < 0) {
-    const timer = setInterval(() => {
-      start += -incremento * -1
-      numero = start
-      if (valorAtual > start) {
-        numero = valorAtual
-        clearInterval(timer)
-      }
-      valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-', '')}`
-    }, 15)
-  } else if (valorAtual === 0) {
-    valorStatus.innerText = `R$ ${valorAtual.toLocaleString('pt-BR')}`
-  } else (alert('erro'))
-
-  // Efeitos Visuais
-
-  if (valorAtual > 0) {
-    status.style.backgroundColor = ' rgb(227, 247, 236)';
-    status.classList.add('positivo');
-    status.classList.remove('negativo');
-    status.innerText = 'Positivo'
-  }
-  if (valorAtual === 0) {
-    status.classList.remove('negativo');
-    status.classList.remove('positivo');
-    status.innerText = 'Neutro';
-    status.style.backgroundColor = ' rgba(142, 208, 236, 0.80)';
-
-  }
-  if (valorAtual < 0) {
-    status.style.backgroundColor = 'rgba(239, 123, 123, 0.5)';
-    status.classList.add('negativo');
-    status.classList.remove('positivo');
-    status.innerText = 'Negativo';
-  }
 }
 
 function criarPaineis() {
@@ -1236,7 +1253,7 @@ editValue.forEach((item, n) => {
   }
 changeValue()
 
-  btnEdit.addEventListener('click', () => {
+  btnEdit.addEventListener('click', function() {
     if (btnEdit.classList.contains('ativo')) {
       ValorAEditar.nome.innerText = nomeEdit.value
       ValorAEditar.data.innerText = dataEdit.value
@@ -1280,7 +1297,9 @@ changeValue()
         ValorAEditar.valorFinal.innerText = valorFinalEdit.value
       }
       transacaoAtual.push(valorEdit.value)
+      this.offsetParent.offsetParent.classList.remove('ativo')
       storage()
+      valorAoVivo()
     }
   })
 
@@ -1406,4 +1425,8 @@ table.addEventListener('click', (event) => {
     document.body.style.overflow = 'hidden'
   }
 })
+
+
+
 storage()
+valorAoVivo()
