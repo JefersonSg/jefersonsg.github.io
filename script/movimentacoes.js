@@ -626,7 +626,10 @@ function storage() {
   const vendaLabel = document.querySelectorAll('#vendaLabel');
   const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
-  const categoriasInfos = document.querySelectorAll('.valoresCategoria')
+  const DespesaUl = document.querySelector('.categoriaEscolhaDespesa')
+  const categoriasInfosDespesa = DespesaUl.querySelectorAll('.valoresCategoria')
+  const ReceitaUl = document.querySelector('.categoriaEscolhaReceita')
+  const categoriasInfosReceita = ReceitaUl.querySelectorAll('.valoresCategoria')
 
   const informacoes = []
 
@@ -635,18 +638,22 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
-  const categoriasAdd = []
+  const categoriasDespesaAdd = []
+  const categoriasReceitaAdd = []
 
-  categoriasInfos.forEach((categoria) => {
-    categoriasAdd.push(categoria.innerText)
+  categoriasInfosDespesa.forEach((categoria) => {
+    categoriasDespesaAdd.push(categoria.innerText)
+  })
+  categoriasInfosReceita.forEach((categoria) => {
+    categoriasReceitaAdd.push(categoria.innerText)
   })
 
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
-    const valor = i.querySelector('#valor');
-    const data = i.querySelector('#data');
     const categoria = i.querySelector('#categoria');
+    const data = i.querySelector('#data');
     const parcelas = i.querySelector('#parcelasTotal');
+    const valor = i.querySelector('#valor');
     const compra = {
       nome: '',
       categoria: '',
@@ -766,9 +773,8 @@ function storage() {
   informacoes.push(transferenciasArray);
   informacoes.push(EmprestimoArray);
   informacoes.push(transacao)
-  informacoes.push(categoriasAdd)
-
-
+  informacoes.push(categoriasDespesaAdd)
+  informacoes.push(categoriasReceitaAdd)
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
   localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
 }
@@ -1432,5 +1438,5 @@ table.addEventListener('click', (event) => {
     document.body.style.overflow = 'hidden'
   }
 })
-
+storage()
 valorAoVivo()

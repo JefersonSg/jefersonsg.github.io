@@ -4,12 +4,15 @@ const categoriaUl = document.querySelectorAll('.categoriaEscolha')
 let categoriasArrayDespesa = ["Produtos Eletronicos", "Roupas", "Contas", "Transporte", "Despesas médicas", "Cuidados pessoais", "Entretenimento", "Remédio", "Alimentação", "Cosmeticos"]
 let categoriasArrayReceita = ["Salário", "Investimentos", "Vendas", "Comissões", "Aluguel", "Reembolso", "Juros"]
 
-
-
-let ArraycategoriaDespesa = informacoesLs[6].length ? informacoesLs[6] : categoriasArrayDespesa
-let ArraycategoriaReceita = informacoesLs[7].length ? informacoesLs[7] : categoriasArrayReceita
-
 const usuarioAtiv = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
+
+let LocalStorag = localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`)
+let informacoesLocals = JSON.parse(LocalStorag)
+
+let ArraycategoriaDespesa = informacoesLocals[6].length ? informacoesLocals[6] : categoriasArrayDespesa
+let ArraycategoriaReceita = informacoesLocals[7].length ? informacoesLocals[7] : categoriasArrayReceita
+
+
 
 categoriaValor.forEach((i, n) => {
   i.addEventListener('click', function () {
