@@ -1,9 +1,10 @@
 const btnNovaCategoria = document.querySelectorAll('#novaCategoria')
 const categoriaValor = document.querySelectorAll('.valorCategoria')
 const categoriaUl = document.querySelectorAll('.categoriaEscolha')
+const btnDeletar = document.querySelectorAll('#ApagarCategoria')
+
 let categoriasArrayDespesa = ["Produtos Eletronicos", "Roupas", "Contas", "Transporte", "Despesas médicas", "Cuidados pessoais", "Entretenimento", "Remédio", "Alimentação", "Cosmeticos"]
 let categoriasArrayReceita = ["Salário", "Investimentos", "Vendas", "Comissões", "Aluguel", "Reembolso", "Juros"]
-
 const usuarioAtiv = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
 
 let LocalStorag = localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`)
@@ -12,7 +13,7 @@ let informacoesLocals = JSON.parse(LocalStorag)
 let ArraycategoriaDespesa = informacoesLocals[6].length ? informacoesLocals[6] : categoriasArrayDespesa
 let ArraycategoriaReceita = informacoesLocals[7].length ? informacoesLocals[7] : categoriasArrayReceita
 
-
+// adicionar novas categorias a despesas e receitas
 
 categoriaValor.forEach((i, n) => {
   i.addEventListener('click', function () {
@@ -96,6 +97,25 @@ categoriaUl.forEach((ul) => {
     }
   })
 })
+
+
+// apagar categorias
+
+// adicionar ativo
+btnDeletar.forEach((i)=>{
+  i.addEventListener('click', function(e){
+    this.classList.toggle('ativo')
+    const ulAtual = e.target.offsetParent.offsetParent
+    const Lis = ulAtual.querySelectorAll('li')
+    if (this.classList.contains('ativo')) {
+      Lis.forEach((i)=> i.classList.add('ativo'))
+    } else if (!this.classList.contains('ativo')) {
+      Lis.forEach((i)=> i.classList.remove('ativo'))
+    }
+  })
+
+})
+
 
 function storage() {
   const transacoes = document.querySelectorAll('.movimentacoesLista');

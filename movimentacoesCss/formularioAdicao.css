@@ -134,23 +134,52 @@
 
 }
 
-.valorCategoria {
-  cursor: pointer;
-  outline: 0px;
-}
-
 .categoriaEscolha {
   display: none;
   position: absolute;
   border-radius: 0 0px 8px 8px;
-  padding: 10px;
   width: 100%;
   min-height: 100%;
   background-color: #d3b7ff;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.5);
   z-index: 1000;
+  padding-bottom: 10px;
 }
+
+.valorCategoria {
+  cursor: pointer;
+  outline: 0px;
+}
+
+.valoresCategoria {
+  position: relative;
+  transition: all .2s;
+  cursor: pointer;
+  margin-bottom: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  box-sizing: border-box;
+  font-family: 'roboto', sans-serif;
+  font-size: 14px;
+}
+
+.valoresCategoria.ativo::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 0;
+  right: 80px;
+  display: block;
+  background: url('../img/Movimentacoes/formulario/lixeira.svg');
+}
+
+.categoriaEscolha li:hover {
+  background-color: #a372f0;
+  color: white;
+}
+
 
 .valorCategoria.ativo {
   border-radius: 8px 8px 0 0 !important;
@@ -182,11 +211,29 @@
   margin-bottom: 8px !important;
 }
 
+.botoesCategorias {
+  display: grid;
+  grid-template-columns: 150px 150px;
+  justify-content: center;
+  gap: 12px;
+  grid-row: 50;
+  width: 100%;
+}
+
+
+#ApagarCategoria,
 #novaCategoria {
   justify-self: center;
-  grid-row: 50;
-  width: 200px;
+  width: 150px;
   display: block;
+}
+
+#ApagarCategoria::before {
+  content: 'APAGAR CATEGORIA';
+}
+
+#ApagarCategoria.ativo::before {
+  content: 'CONCLUIR';
 }
 
 #novaCategoria::before {
@@ -197,19 +244,9 @@
   content: 'ADICIONAR';
 }
 
-.categoriaEscolha li {
-  display: block;
-  cursor: pointer;
-  margin-bottom: 5px;
-}
 
-.categoriaEscolha li:hover {
-  color: white;
-}
 
-.categoriaEscolha:hover li {
-  display: block;
-}
+
 
 .financas-formulario input::placeholder {
   color: #545454;

@@ -1438,5 +1438,4 @@ table.addEventListener('click', (event) => {
     document.body.style.overflow = 'hidden'
   }
 })
-storage()
 valorAoVivo()
