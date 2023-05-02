@@ -5,7 +5,6 @@ const movimentacoesList = document.querySelectorAll('.movimentacoesLista')
 const usuarioAtivo = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioAtivo) : []
 
 
-
 editValue.forEach((item, n) => {
   const nomeEdit = item.querySelector('#nomeEdit');
   const dataEdit = item.querySelector('#dataInfo');
@@ -243,8 +242,9 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
-  const categoriasDespesaAdd = []
-  const categoriasReceitaAdd = []
+  const categoriasDespesaAdd = informacoesLs[6]
+
+  const categoriasReceitaAdd = informacoesLs[7]
 
 
 
