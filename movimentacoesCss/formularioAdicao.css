@@ -138,7 +138,7 @@
   display: none;
   position: absolute;
   border-radius: 0 0px 8px 8px;
-  width: 100%;
+  width: 230px;
   min-height: 100%;
   background-color: #d3b7ff;
   box-sizing: border-box;
@@ -170,7 +170,7 @@
   height: 20px;
   position: absolute;
   top: 0;
-  right: 80px;
+  right: 10px;
   display: block;
   background: url('../img/Movimentacoes/formulario/lixeira.svg');
   animation: shakin .8s ease;
@@ -240,19 +240,21 @@
 
 .botoesCategorias {
   display: grid;
-  grid-template-columns: 150px 150px;
+  grid-template-columns: 80px 80px;
   justify-content: center;
   gap: 12px;
   grid-row: 50;
-  width: 100%;
+  width: 100% !important;
 }
 
 
 #ApagarCategoria,
 #novaCategoria {
   justify-self: center;
-  width: 150px;
+  width: 80px;
   display: block;
+  font-size: 10px;
+  padding: 0px;
 }
 
 #ApagarCategoria::before {
@@ -271,9 +273,53 @@
   content: 'ADICIONAR';
 }
 
+@media (min-width:400px) {
+  .categoriaEscolha {
+    width: 280px;
+  }
 
+  .botoesCategorias {
+    grid-template-columns: 120px 120px;
+  }
 
+  #novaCategoria,
+  #ApagarCategoria {
+    width: 120px;
+  }
+}
 
+@media (min-width:550px) {
+  .categoriaEscolha {
+    width: 380px;
+  }
+
+  .botoesCategorias {
+    margin-top: 12px;
+    grid-template-columns: 150px 150px;
+  }
+
+  #novaCategoria,
+  #ApagarCategoria {
+    width: 150px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width:800px) {
+  .categoriaEscolha {
+    width: 480px;
+  }
+
+  .botoesCategorias {
+    margin-top: 12px;
+    grid-template-columns: 150px 150px;
+  }
+
+  #novaCategoria,
+  #ApagarCategoria {
+    width: 150px;
+  }
+}
 
 .financas-formulario input::placeholder {
   color: #545454;
