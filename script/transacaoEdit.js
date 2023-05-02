@@ -235,10 +235,6 @@ function storage() {
   const vendaLabel = document.querySelectorAll('#vendaLabel');
   const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
-  const DespesaUl = document.querySelector('.categoriaEscolhaDespesa')
-  const categoriasInfosDespesa = DespesaUl.querySelectorAll('.valoresCategoria')
-  const ReceitaUl = document.querySelector('.categoriaEscolhaReceita')
-  const categoriasInfosReceita = ReceitaUl.querySelectorAll('.valoresCategoria')
 
   const informacoes = []
 
@@ -250,12 +246,7 @@ function storage() {
   const categoriasDespesaAdd = []
   const categoriasReceitaAdd = []
 
-  categoriasInfosDespesa.forEach((categoria) => {
-    categoriasDespesaAdd.push(categoria.innerText)
-  })
-  categoriasInfosReceita.forEach((categoria) => {
-    categoriasReceitaAdd.push(categoria.innerText)
-  })
+
 
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
@@ -387,4 +378,3 @@ function storage() {
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
   localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
 }
-storage()
