@@ -65,20 +65,7 @@ function criarPaineis() {
 
             <label for="categoria">Categoria</label>
             <select disabled id="categoriaEdit" name="categoria" >
-            <option selected value=""  style="display: none">
-              categoria da compra
-            </option>
-            <option value="produto eletronico">Produtos Eletronicos</option>
-            <option value="Roupas">Roupas</option>
-            <option value="Contas">Contas</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Despesas médicas">Despesas médicas</option>
-            <option value="Cuidados pessoais">Cuidados pessoais</option>
-            <option value="Entretenimento">Entretenimento</option>
-            <option value="Remédio ">Remédio </option>
-            <option value="Alimentação">Alimentação</option>
-            <option value="Cosméticos">Cosméticos</option>
-            <option value="Outros">Outros</option>
+
             </select>
 
             <label for="parcelas">Parcelas</label>
@@ -110,6 +97,13 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
+      const select = edit.querySelector('#categoriaEdit')
+      const options = informacoesLs[6]
+      options.forEach((i) => {
+        const opt = document.createElement('option')
+        opt.innerText = i
+        select.appendChild(opt)
+      })
     } else if (v === 'vendaLabel') {
       div.id = 'vendaLabel';
 
@@ -138,17 +132,7 @@ function criarPaineis() {
 
             <label for="categoria">Categoria</label>
             <select disabled id="categoriaEdit" name="categoria" >
-              <option selected value="" disabled style="display: none">
-              categoria da Receita
-              </option>
-              <option value="Salário">Salário</option>
-              <option value="Investimentos">Investimentos</option>
-              <option value="Vendas">Vendas</option>
-              <option value="Comissões">Comissões</option>
-              <option value="Aluguel">Aluguel</option>
-              <option value="Reembolso">Reembolso</option>
-              <option value="Juros">Juros</option>
-              <option value="Outros">Outros</option>
+
             </select>
 
             <label for="parcelas">Parcelas</label>
@@ -178,9 +162,16 @@ function criarPaineis() {
             <button type="button" id="nao">Não</button>
           </div>
     `;
-    const valor = div.querySelector('#valor')
-    valor.style.color = 'green'
-    valor.style.fontWeight = '600'
+      const select = edit.querySelector('#categoriaEdit')
+      const options = informacoesLs[7]
+      options.forEach((i) => {
+        const opt = document.createElement('option')
+        opt.innerText = i
+        select.appendChild(opt)
+      })
+      const valor = div.querySelector('#valor')
+      valor.style.color = 'green'
+      valor.style.fontWeight = '600'
 
     } else if (v === 'transferenciaLabel') {
       div.id = 'transferenciaLabel';
@@ -195,12 +186,12 @@ function criarPaineis() {
           <p class='transferencia' id="nomeMov"></p>
           <p id="data"></p>
               `;
-              setTimeout(function name() {
-                const condicao = div.querySelector('#condicao').innerText
-                const valor = div.querySelector('#valor')
-                valor.style.color = condicao === 'Transferencia recebida'? 'green' : ''
-                valor.style.fontWeight = condicao === 'Transferencia recebida'? '600' : ''
-              }) 
+      setTimeout(function name() {
+        const condicao = div.querySelector('#condicao').innerText
+        const valor = div.querySelector('#valor')
+        valor.style.color = condicao === 'Transferencia recebida' ? 'green' : ''
+        valor.style.fontWeight = condicao === 'Transferencia recebida' ? '600' : ''
+      })
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
               <span id="fecharEdit">X</span>
@@ -340,14 +331,14 @@ function criarPaineis() {
               <button type="button" id="nao">Não</button>
             </div>
         `;
-        setTimeout(function name() {
-          const condicao = div.querySelector('#condicao').innerText
-          const diferenca = edit.querySelector('.diferencaLabel')
-          const valor = div.querySelector('#valor')
-          diferenca.innerText = condicao === '+'? 'Deficit' : 'Lucro';
-          valor.style.color = condicao === '+'? 'green' : ''
-          valor.style.fontWeight = condicao === '+'? '600' : ''
-        })
+      setTimeout(function name() {
+        const condicao = div.querySelector('#condicao').innerText
+        const diferenca = edit.querySelector('.diferencaLabel')
+        const valor = div.querySelector('#valor')
+        diferenca.innerText = condicao === '+' ? 'Deficit' : 'Lucro';
+        valor.style.color = condicao === '+' ? 'green' : ''
+        valor.style.fontWeight = condicao === '+' ? '600' : ''
+      })
     } else {
       alert('erro');
     }

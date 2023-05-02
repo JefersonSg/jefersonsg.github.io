@@ -38,7 +38,7 @@ categoriaUl.forEach((i)=>{
   const botaoAdicionar = i.querySelector('#novaCategoria')
   const btnDeletar = i.querySelector('#ApagarCategoria')
   const Lis = i.querySelectorAll('li')
-
+// FUNCAO PARA ADICIONAR O INPUT DE TEXTO
   i.addEventListener('click', function(e){
 
     if (e.target.id === 'novaCategoria') {
@@ -54,7 +54,7 @@ categoriaUl.forEach((i)=>{
         const novoInput = this.querySelector('.novoValor')
 
         // REMOVE INPUT PREENCHIDO E ADICIONA A lI COM O VALOR
-        if (novoInput.value !== '') {
+        if (novoInput.value !== '' && novoInput.value !== ' ') {
           const li = document.createElement('li')
           li.classList.add('valoresCategoria')
           const valorDoInput = novoInput.value
@@ -62,7 +62,7 @@ categoriaUl.forEach((i)=>{
           this.appendChild(li)
           novoInput.remove()
           storage()
-        } else if (novoInput.value === '') {
+        } else {
           // REMOVE INPUT VAZIO
           novoInput.remove()
         }
@@ -72,6 +72,8 @@ categoriaUl.forEach((i)=>{
 
   // FUNCAO PARA ADICIONAR A LIXEIRA AO LADO DO LI
   i.addEventListener('click', function(e){
+  const Lis = i.querySelectorAll('li')
+
     if (e.target.id === 'ApagarCategoria') {
       btnDeletar.classList.toggle('ativo')
       Lis.forEach((i)=>{
