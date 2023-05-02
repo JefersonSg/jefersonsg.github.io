@@ -542,7 +542,6 @@ function arrumarNome() {
   const nomeLogin = document.querySelector('.nome-login');
   nomeLogin.innerText = `Olá, ${nomeUsuarioAtivo.nome} ${nomeUsuarioAtivo.sobrenome.slice(0, 1)}.`;
 }
-
 function valorAoVivo() {
   const valorStatus = document.querySelector('.valor');
   const status = document.querySelector('.status');
@@ -1438,4 +1437,7 @@ table.addEventListener('click', (event) => {
     document.body.style.overflow = 'hidden'
   }
 })
-valorAoVivo()
+
+if (informacoesLs[0]) {
+  valorAoVivo()
+}

@@ -10,8 +10,8 @@ const usuarioAtiv = localStorage.usuarioAtivo ? JSON.parse(localStorage.usuarioA
 let LocalStorag = localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`)
 let informacoesLocals = JSON.parse(LocalStorag)
 
-let ArraycategoriaDespesa = informacoesLocals[6].length ? informacoesLocals[6] : categoriasArrayDespesa
-let ArraycategoriaReceita = informacoesLocals[7].length ? informacoesLocals[7] : categoriasArrayReceita
+let ArraycategoriaDespesa = informacoesLocals[6] ? informacoesLocals[6] : categoriasArrayDespesa
+let ArraycategoriaReceita = informacoesLocals[7] ? informacoesLocals[7] : categoriasArrayReceita
 
 // adicionar novas categorias a despesas e receitas
 
@@ -35,86 +35,64 @@ ArraycategoriaReceita.forEach((i) => {
   categoriaUl[1].append(li)
 })
 
-btnNovaCategoria.forEach((botao) => {
-  botao.addEventListener('click', function () {
-    if (this.offsetParent.classList[1] === 'categoriaEscolhaDespesa') {
-      botao.classList.toggle('ativo')
-      const input = document.createElement('input')
-      input.classList.add('novoValor')
-      if (botao.classList.contains('ativo')) {
-        categoriaUl[0].appendChild(input)
-      }
-      if (!botao.classList.contains('ativo')) {
-        const novoInput = categoriaUl[0].querySelector('.novoValor')
-        if (novoInput.value !== '') {
-          const li = document.createElement('li')
-          li.classList.add('valoresCategoria')
-          const valorDoInput = novoInput.value
-          li.innerText = valorDoInput
-          categoriaUl[0].appendChild(li)
-          novoInput.remove()
-          storage()
-        }
-        novoInput.remove()
-      }
-    } else if (this.offsetParent.classList[1] === 'categoriaEscolhaReceita') {
-      botao.classList.toggle('ativo')
-      const input = document.createElement('input')
-      input.classList.add('novoValor')
-      if (botao.classList.contains('ativo')) {
-        categoriaUl[1].appendChild(input)
-      }
-      if (!botao.classList.contains('ativo')) {
-        const novoInput = categoriaUl[1].querySelector('.novoValor')
-        if (novoInput.value !== '') {
-          const li = document.createElement('li')
-          li.classList.add('valoresCategoria')
-          const valorDoInput = novoInput.value
-          li.innerText = valorDoInput
-          categoriaUl[1].appendChild(li)
-          novoInput.remove()
-          storage()
-        }
-        novoInput.remove()
-      }
-    }
-  })
-})
+categoriaUl.forEach((i)=>{
+  // FUNCAO PARA ADICIONAR UM NOVO LI NA CATEGORIA
+  const botaoAdicionar = i.querySelector('#novaCategoria')
+  const btnDeletar = i.querySelector('#ApagarCategoria')
+  const Lis = i.querySelectorAll('li')
 
-categoriaUl.forEach((ul) => {
-  ul.addEventListener('click', function (e) {
-    if (e.target.nodeName === 'LI' && this.classList[1] === 'categoriaEscolhaDespesa') {
-      const valorClicado = e.target.innerText
-      categoriaValor[0].value = valorClicado
-      categoriaUl[0].classList.remove('ativo')
-      categoriaValor[0].classList.remove('ativo')
-    }
-    if (e.target.nodeName === 'LI' && this.classList[1] === 'categoriaEscolhaReceita') {
-      const valorClicado = e.target.innerText
-      categoriaValor[1].value = valorClicado
-      categoriaUl[1].classList.remove('ativo')
-      categoriaValor[1].classList.remove('ativo')
-    }
-  })
-})
-
-
-// apagar categorias
-
-// adicionar ativo
-btnDeletar.forEach((i)=>{
   i.addEventListener('click', function(e){
-    this.classList.toggle('ativo')
-    const ulAtual = e.target.offsetParent.offsetParent
-    const Lis = ulAtual.querySelectorAll('li')
-    if (this.classList.contains('ativo')) {
-      Lis.forEach((i)=> i.classList.add('ativo'))
-    } else if (!this.classList.contains('ativo')) {
-      Lis.forEach((i)=> i.classList.remove('ativo'))
+
+    if (e.target.id === 'novaCategoria') {
+      const input = document.createElement('input')
+      input.classList.add('novoValor')
+
+      botaoAdicionar.classList.toggle('ativo')
+      btnDeletar.toggleAttribute('disabled')
+      if (botaoAdicionar.classList.contains('ativo')) {
+        this.appendChild(input)
+      }
+      if (!botaoAdicionar.classList.contains('ativo')) {
+        const novoInput = this.querySelector('.novoValor')
+
+        // REMOVE INPUT PREENCHIDO E ADICIONA A lI COM O VALOR
+        if (novoInput.value !== '') {
+          const li = document.createElement('li')
+          li.classList.add('valoresCategoria')
+          const valorDoInput = novoInput.value
+          li.innerText = valorDoInput
+          this.appendChild(li)
+          novoInput.remove()
+          storage()
+        } else if (novoInput.value === '') {
+          // REMOVE INPUT VAZIO
+          novoInput.remove()
+        }
+      }
     }
   })
 
+  // FUNCAO PARA ADICIONAR A LIXEIRA AO LADO DO LI
+  i.addEventListener('click', function(e){
+    if (e.target.id === 'ApagarCategoria') {
+      btnDeletar.classList.toggle('ativo')
+      Lis.forEach((i)=>{
+        i.classList.toggle('ativo')
+      })
+      botaoAdicionar.toggleAttribute('disabled')
+    }
+  })
+
+  // FUNCAO PARA APAGAR LIS
+  i.addEventListener('click', function(e){
+    if (btnDeletar.classList.contains('ativo') && e.target.nodeName === 'LI'){
+      e.target.remove()
+      storage()
+    }
+  })
 })
+
+
 
 
 function storage() {
@@ -135,8 +113,8 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
-  const categoriasDespesaAdd = []
-  const categoriasReceitaAdd = []
+  const categoriasDespesaAdd = [ ]
+  const categoriasReceitaAdd = [ ]
 
   categoriasInfosDespesa.forEach((categoria) => {
     categoriasDespesaAdd.push(categoria.innerText)

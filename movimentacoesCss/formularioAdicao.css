@@ -173,6 +173,33 @@
   right: 80px;
   display: block;
   background: url('../img/Movimentacoes/formulario/lixeira.svg');
+  animation: shakin .8s ease;
+}
+
+@keyframes shakin {
+
+  0%,
+  20%,
+  40%,
+  60%,
+  80% {
+    rotate: -15deg;
+  }
+
+  10%,
+  30%,
+  50%,
+  70% {
+    rotate: 15deg;
+  }
+
+  90% {
+    rotate: 10deg;
+  }
+
+  100% {
+    rotate: 0deg;
+  }
 }
 
 .categoriaEscolha li:hover {

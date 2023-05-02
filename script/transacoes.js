@@ -446,8 +446,6 @@ function arrumarInputValor() {
 
 }
 
-
-
 if (ls) {
   criarPaineis()
   arrumarInputValor()

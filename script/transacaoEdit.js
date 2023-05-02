@@ -235,6 +235,10 @@ function storage() {
   const vendaLabel = document.querySelectorAll('#vendaLabel');
   const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
   const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
+  const DespesaUl = document.querySelector('.categoriaEscolhaDespesa')
+  const categoriasInfosDespesa = DespesaUl.querySelectorAll('.valoresCategoria')
+  const ReceitaUl = document.querySelector('.categoriaEscolhaReceita')
+  const categoriasInfosReceita = ReceitaUl.querySelectorAll('.valoresCategoria')
 
   const informacoes = []
 
@@ -243,6 +247,16 @@ function storage() {
   const transferenciasArray = [];
   const EmprestimoArray = [];
   const InputValor = [];
+  const categoriasDespesaAdd = []
+  const categoriasReceitaAdd = []
+
+  categoriasInfosDespesa.forEach((categoria) => {
+    categoriasDespesaAdd.push(categoria.innerText)
+  })
+  categoriasInfosReceita.forEach((categoria) => {
+    categoriasReceitaAdd.push(categoria.innerText)
+  })
+
   compraLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const categoria = i.querySelector('#categoria');
@@ -308,6 +322,7 @@ function storage() {
     InputValor.push(transferenciaPush);
     transferenciasArray.push(transf);
   });
+
   emprestimoLabel.forEach((i) => {
     const nome = i.querySelector('#nomeMov');
     const data = i.querySelector('#data');
@@ -367,8 +382,9 @@ function storage() {
   informacoes.push(transferenciasArray);
   informacoes.push(EmprestimoArray);
   informacoes.push(transacao)
+  informacoes.push(categoriasDespesaAdd)
+  informacoes.push(categoriasReceitaAdd)
   transacoes.forEach((t) => transacao.push(t.getAttribute('id')));
   localStorage.setItem(`informacoes_id${usuarioAtivo.ID}`, JSON.stringify(informacoes))
-
 }
 storage()
