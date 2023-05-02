@@ -1,7 +1,5 @@
-const btnNovaCategoria = document.querySelectorAll('#novaCategoria')
 const categoriaValor = document.querySelectorAll('.valorCategoria')
 const categoriaUl = document.querySelectorAll('.categoriaEscolha')
-const btnDeletar = document.querySelectorAll('#ApagarCategoria')
 
 let categoriasArrayDespesa = ["Produtos Eletronicos", "Roupas", "Contas", "Transporte", "Despesas médicas", "Cuidados pessoais", "Entretenimento", "Remédio", "Alimentação", "Cosmeticos"]
 let categoriasArrayReceita = ["Salário", "Investimentos", "Vendas", "Comissões", "Aluguel", "Reembolso", "Juros"]
@@ -90,9 +88,20 @@ categoriaUl.forEach((i)=>{
       storage()
     }
   })
+
+  // FUNCAO PARA ADICIONAR O VALOR CLICADO NO INPUT
+  i.addEventListener('click', function(e){
+    if (!btnDeletar.classList.contains('ativo') && e.target.nodeName === 'LI'){
+      const input = e.target.offsetParent.offsetParent.querySelector('.valorCategoria')
+      const valorClicado = e.target.innerText
+      input.value = valorClicado
+
+      this.classList.remove('ativo')
+      input.classList.remove('ativo')
+    }
+  })
+
 })
-
-
 
 
 function storage() {
