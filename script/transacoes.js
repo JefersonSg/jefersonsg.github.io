@@ -455,6 +455,7 @@ barraPesquisa.addEventListener('keydown', () => {
     lupa.style.display = 'none'
   }
 })
+
 barraPesquisa.addEventListener('keyup', () => {
   ultimoDigito = barraPesquisa.value
 
@@ -517,15 +518,23 @@ function filter(categoria, label) {
   if (categoriaAtual !== categoria) {
     movimentacoesLista.forEach((i) => {
       i.style.display = 'none'
+      const digitos = i.querySelector('#nomeMov')
       if (i.id === label) {
         i.style.display = 'grid';
+        if (barraPesquisa.value !== '' && !digitos.innerText.includes(barraPesquisa.value)) {
+          i.style.display = 'none'
+        }
+
       }
     })
     categoriaAtual = categoria
   } else if (categoriaAtual === categoria) {
     movimentacoesLista.forEach((i) => {
-      if (i.id !== label) {
+      const digitos = i.querySelector('#nomeMov')
+      if (barraPesquisa.value === '' && i.id !== label) {
         i.style.display = i.style.display == 'grid' ? 'none' : 'grid';
+      } else if (barraPesquisa.value !== '' && i.id !== label && digitos.innerText.includes(barraPesquisa.value)) {
+        i.style.display = 'grid'
       }
     })
     categoriaAtual = ''

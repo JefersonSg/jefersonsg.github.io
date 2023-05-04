@@ -13,7 +13,6 @@ InputValorInit.forEach((i)=>{
   })
 })
 
-
 //  COMPRA
 function contaCompra() {
   let valorReplaced = +(+(InputValorInit[0].value).replace(',','.')).toFixed(2)
