@@ -98,6 +98,8 @@ editValue.forEach((item, n) => {
       }
       this.offsetParent.offsetParent.classList.remove('ativo')
       storage()
+      location.reload()
+
     }
   })
 
@@ -108,7 +110,6 @@ edit.addEventListener('click', (event) => {
   let numeroDois = event.target.childNodes[1] ? event.target.childNodes[1].getAttribute('numero') : false
   let numeroTres = event.target.offsetParent ? event.target.offsetParent.getAttribute('numero') : false
 
-  const editValue = document.querySelector(`[numero="${numero}"]`)
   const editValueBg = document.querySelectorAll('.editValueBg')
 
   const itemClicado = event.target
@@ -231,10 +232,6 @@ tables.addEventListener('click', (event) => {
     const vendaLabel = document.querySelectorAll('#vendaLabel');
     const transferenciaLabel = document.querySelectorAll('#transferenciaLabel');
     const emprestimoLabel = document.querySelectorAll('#emprestimoLabel');
-    const DespesaUl = document.querySelector('.categoriaEscolhaDespesa')
-    const categoriasInfosDespesa = DespesaUl.querySelectorAll('.valoresCategoria')
-    const ReceitaUl = document.querySelector('.categoriaEscolhaReceita')
-    const categoriasInfosReceita = ReceitaUl.querySelectorAll('.valoresCategoria')
   
     const informacoes = []
   
@@ -245,13 +242,6 @@ tables.addEventListener('click', (event) => {
     const InputValor = [];
     const categoriasDespesaAdd = informacoesLs[6]
     const categoriasReceitaAdd = informacoesLs[7]
-  
-    categoriasInfosDespesa.forEach((categoria) => {
-      categoriasDespesaAdd.push(categoria.innerText)
-    })
-    categoriasInfosReceita.forEach((categoria) => {
-      categoriasReceitaAdd.push(categoria.innerText)
-    })
   
     compraLabel.forEach((i) => {
       const nome = i.querySelector('#nomeMov');
