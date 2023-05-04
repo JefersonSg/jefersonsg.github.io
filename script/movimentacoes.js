@@ -739,8 +739,6 @@ function storage() {
     const valorFinal = i.querySelector('#valorFinal');
     const juros = i.querySelector('#jurosLs');
     const jurosMes = i.querySelector('#jurosMesLs');
-    const condicao = i.querySelector('#condicao')
-
 
     const emprestimo = {
       nome: '',
@@ -751,34 +749,21 @@ function storage() {
       valorFinal: '',
       juros: '',
       jurosMes: '',
-      condicao: ''
     };
 
 
-    if (condicao.innerText == '+') {
-      let emprestimoPush = +valor.innerText.replace('+R$ ', '')
-      InputValor.push(emprestimoPush);
-
-    } else if (condicao.innerText == '-') {
-      let emprestimoPush = -(+valor.innerText.replace('-R$ ', ''))
-      InputValor.push(emprestimoPush);
-
-    }
-
-    (condicao.innerText == '+' ? +valor.innerText.replace('+R$ ', '') : +valor.innerText.replace('-R$ ', '') * -1)
+    let emprestimoPush = -(+valor.innerText.replace('-R$ ', ''))
+    InputValor.push(emprestimoPush);
+    +valor.innerText.replace('-R$ ', '') * -1
     emprestimo['nome'] = [nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')];
     emprestimo['data'] = [data.innerText];
     emprestimo['parcelas'] = [parcelas.innerText];
-    if (condicao.innerText == '+') {
-      emprestimo['valor'] = [valor.innerText.replace('+R$ ', '')];
-    } else if (condicao.innerText == '-') {
-      emprestimo['valor'] = [valor.innerText.replace('-R$ ', '')];
-    }
+
+    emprestimo['valor'] = [valor.innerText.replace('-R$ ', '')];
     emprestimo['diferenca'] = [diferenca.innerText];
     emprestimo['valorFinal'] = [valorFinal.innerText];
     emprestimo['juros'] = [juros.innerText];
     emprestimo['jurosMes'] = [jurosMes.innerText];
-    emprestimo['condicao'] = [condicao.innerText];
     EmprestimoArray.push(emprestimo);
   });
 

@@ -418,26 +418,16 @@ function arrumarInputValor() {
       const valorFinal = i.querySelector('#valorFinal');
       const juros = i.querySelector('#jurosLs');
       const jurosMes = i.querySelector('#jurosMesLs');
-      const condicao = i.querySelector('#condicao')
 
-      if (emprestimoLs[n].condicao == '-') {
-        nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
-      } else if (emprestimoLs[n].condicao == '+') {
-        nome.innerText = `Pegou de ${emprestimoLs[n].nome}`
-      }
+      nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
       data.innerText = emprestimoLs[n].data;
       valor.innerText = emprestimoLs[n].valor;
-      if (emprestimoLs[n].condicao == '-') {
-        valor.innerText = `-R$ ${emprestimoLs[n].valor}`
-      } else {
-        valor.innerText = `+R$ ${emprestimoLs[n].valor}`
-      }
+      valor.innerText = `-R$ ${emprestimoLs[n].valor}`
       parcelas.innerText = emprestimoLs[n].parcelas;
       diferenca.innerText = emprestimoLs[n].diferenca;
       valorFinal.innerText = emprestimoLs[n].valorFinal;
       juros.innerText = emprestimoLs[n].juros;
       jurosMes.innerText = emprestimoLs[n].jurosMes;
-      condicao.innerText = emprestimoLs[n].condicao
     });
   }
 

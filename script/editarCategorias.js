@@ -227,7 +227,7 @@ function storage() {
       InputValor.push(emprestimoPush);
 
      +valor.innerText.replace('-R$ ', '') * -1
-    emprestimo['nome'] = [nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')];
+    emprestimo['nome'] = [nome.innerText.replace('Emprestou para ', '')]
     emprestimo['data'] = [data.innerText];
     emprestimo['parcelas'] = [parcelas.innerText];
     emprestimo['valor'] = [valor.innerText.replace('-R$ ', '')];
