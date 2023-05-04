@@ -51,6 +51,9 @@ function criarPaineis() {
         `;
       edit.innerHTML = `
           <div class="editValue" numero="${n}">
+            <div class="form-img">
+              <p>Editar Despesa</p>
+            </div>
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="text" name='nome' id="nomeEdit">
@@ -118,6 +121,9 @@ function criarPaineis() {
         `;
       edit.innerHTML = `
           <div class="editValue"  numero="${n}">
+            <div class="form-img">
+              <p>Editar Receita</p>
+            </div>
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
@@ -192,6 +198,9 @@ function criarPaineis() {
       })
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
+              <div class="form-img">
+                <p>Editar Transferencia</p>
+              </div>
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
@@ -235,6 +244,9 @@ function criarPaineis() {
 
       edit.innerHTML = `
             <div class="editValue"  numero="${n}">
+              <div class="form-img">
+                <p>Editar Emprestimo</p>
+              </div>
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
@@ -330,12 +342,8 @@ function criarPaineis() {
             </div>
         `;
       setTimeout(function name() {
-        const condicao = div.querySelector('#condicao').innerText
         const diferenca = edit.querySelector('.diferencaLabel')
-        const valor = div.querySelector('#valor')
-        diferenca.innerText = condicao === '+' ? 'Deficit' : 'Lucro';
-        valor.style.color = condicao === '+' ? 'green' : ''
-        valor.style.fontWeight = condicao === '+' ? '600' : ''
+        diferenca.innerText = 'Lucro';
       })
     } else {
       alert('erro');

@@ -63,22 +63,25 @@ function novaDiv(type) {
     `
     edit.innerHTML = `
       <div class="editValue" numero="${number}">
-      <span id="fecharEdit">X</span>
-      <label for="nome">Nome</label>
-      <input readonly type="text" name='nome' id="nomeEdit">
+        <div class="form-img">
+          <p>Editar Despesa</p>
+        </div>
+        <span id="fecharEdit">X</span>
+        <label for="nome">Nome</label>
+        <input readonly type="text" name='nome' id="nomeEdit">
       
             <label for="valor">Valor</label>
             <input readonly type="number" id="valorEdit">
 
-      <label for="data">Data</label>
-      <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+        <label for="data">Data</label>
+        <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-      <label for="categoria">Categoria</label>
-      <select disabled id="categoriaEdit" name="categoria" >
-      </select>
+        <label for="categoria">Categoria</label>
+        <select disabled id="categoriaEdit" name="categoria" >
+        </select>
 
-      <label for="parcelas">Parcelas</label>
-      <select disabled readonly name="parcelas" id="parcelasEdit">
+        <label for="parcelas">Parcelas</label>
+        <select disabled readonly name="parcelas" id="parcelasEdit">
           <option  style="display:none ;" value="0">parcelas 0x</option>
           <option value="1">Parcelas 1x</option>
           <option value="2">Parcelas 2x</option>
@@ -149,47 +152,50 @@ function novaDiv(type) {
     `
     edit.innerHTML = `
     <div class="editValue"  numero="${number}">
-    <span id="fecharEdit">X</span>
-    <label for="nome">Nome</label>
-    <input readonly type="nome" id="nomeEdit">
+      <div class="form-img">
+       <p>Editar Receita</p>
+      </div>
+      <span id="fecharEdit">X</span>
+      <label for="nome">Nome</label>
+      <input readonly type="nome" id="nomeEdit">
 
-    <label for="valor">Valor</label>
-    <input readonly type="number" id="valorEdit">
+      <label for="valor">Valor</label>
+      <input readonly type="number" id="valorEdit">
 
-    <label for="data">Data</label>
-    <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+      <label for="data">Data</label>
+      <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
 
-    <label for="categoria">Categoria</label>
-    <select disabled id="categoriaEdit" name="categoria" >
+      <label for="categoria">Categoria</label>
+      <select disabled id="categoriaEdit" name="categoria" >
 
-    </select>
+      </select>
 
-    <label for="parcelas">Parcelas</label>
-    <select disabled readonly name="parcelas" id="parcelasEdit">
-      <option value="1">Parcelas 1x</option>
-      <option value="2">Parcelas 2x</option>
-      <option value="3">Parcelas 3x</option>
-      <option value="4">Parcelas 4x</option>
-      <option value="5">Parcelas 5x</option>
-      <option value="6">Parcelas 6x</option>
-      <option value="7">Parcelas 7x</option>
-      <option value="8">Parcelas 8x</option>
-      <option value="9">Parcelas 9x</option>
-      <option value="10">Parcelas 10x</option>
-      <option value="11">Parcelas 11x</option>
-      <option value="12">Parcelas 12x</option>
-    </select>
+      <label for="parcelas">Parcelas</label>
+      <select disabled readonly name="parcelas" id="parcelasEdit">
+        <option value="1">Parcelas 1x</option>
+        <option value="2">Parcelas 2x</option>
+        <option value="3">Parcelas 3x</option>
+        <option value="4">Parcelas 4x</option>
+        <option value="5">Parcelas 5x</option>
+        <option value="6">Parcelas 6x</option>
+        <option value="7">Parcelas 7x</option>
+        <option value="8">Parcelas 8x</option>
+        <option value="9">Parcelas 9x</option>
+        <option value="10">Parcelas 10x</option>
+        <option value="11">Parcelas 11x</option>
+        <option value="12">Parcelas 12x</option>
+      </select>
 
-    <div class='botaoEdit'>
-      <button type="button" id="editar"></button>
-      <button type="button" id="deletar">Deletar</button>
+      <div class='botaoEdit'>
+        <button type="button" id="editar"></button>
+        <button type="button" id="deletar">Deletar</button>
+      </div>
     </div>
-  </div>
-  <div class="confirmar">
-    <span>Deseja mesmo deletar?</span>
-    <button type="button" id="sim">Sim</button>
-    <button type="button" id="nao">Não</button>
-  </div>
+    <div class="confirmar">
+      <span>Deseja mesmo deletar?</span>
+      <button type="button" id="sim">Sim</button>
+      <button type="button" id="nao">Não</button>
+    </div>
 `;
     table.insertBefore(div, table.firstChild);
     edits.appendChild(edit)
@@ -232,6 +238,9 @@ function novaDiv(type) {
     `
       edit.innerHTML = `
       <div class="editValue" numero="${number}">
+        <div class="form-img">
+          <p>Editar Transferencia</p>
+        </div>
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
@@ -272,7 +281,6 @@ function novaDiv(type) {
 
     } else if (type === 'emprestimo'
       && nomeMov[3].value !== ''
-      && categoria[3].selectedIndex !== 0
       && InputValor[3].value !== ''
       && dataInfo[3].value !== ''
     ) {
@@ -281,12 +289,12 @@ function novaDiv(type) {
     <img class='icon-transacao' src="./img/Movimentacoes/EmprestimoIcon 1.svg"alt="banco"> 
     </div>
 
-    <p id="nomeMov" class = "nomeMov">${(categoria[3].value === '-' ? 'Emprestou para ' : 'Pegou de ') + nomeMov[3].value}</p>
+    <p id="nomeMov" class = "nomeMov">${'Emprestou para ' + nomeMov[3].value}</p>
     <p class="parcelasTotal" id="parcelasTotal">${valor[3].value}</p>
     <p class = "diferenca" id="diferenca">R$ ${(
           totalPago.value.replace('Total ', '') - +InputValor[3].value.replace(',', '.')
         ).toFixed(2)}</p>
-    <p id="valor" class='valorInit' style="color: ${categoria[3].value === '+' ? 'green' : ''}; font-weight: ${categoria[3].value === '+' ? 'bold' : ''}">${categoria[3].value}R$ ${(+InputValor[3].value.replace(',', '.')).toFixed(2)}</p>
+    <p id="valor" class='valorInit'>-R$ ${(+InputValor[3].value.replace(',', '.')).toFixed(2)}</p>
     <p class = "valorFinal" id="valorFinal">${(+totalPago.value.replace(
           'Total ',
           '',
@@ -294,10 +302,12 @@ function novaDiv(type) {
     <p class = "data"id="data">${dataInfo[3].value}</p>
     <p id='jurosLs'>${juros.value}</p>
     <p id='jurosMesLs'>${jurosComp.value}</p>
-    <p id="condicao">${categoria[3].value}</p>
     `
       edit.innerHTML = `
       <div class="editValue" numero="${number}">
+        <div class="form-img">
+          <p>Editar Emprestimo</p>
+        </div>
         <span id="fecharEdit">X</span>
         <label for="nome">Nome</label>
         <input readonly type="nome" id="nomeEdit">
@@ -370,7 +380,7 @@ function novaDiv(type) {
         <option value="11">11% ao Mês</option>
         <option value="12">12% ao Mês</option>
       </select>
-        <label for="diferenca">diferenca</label>
+        <label for="diferenca">Lucro</label>
         <input readonly type="diferenca" id="diferencaEdit">
         <label for="valor-final">Valor Final</label>
         <input readonly type="number" id="valorFinEdit">
@@ -389,7 +399,7 @@ function novaDiv(type) {
   `;
       table.insertBefore(div, table.firstChild);
       edits.appendChild(edit)
-      transacaoAtual.push(categoria[3].value === '+' ? +InputValor[3].value : +InputValor[3].value * -1)
+      transacaoAtual.push(+InputValor[3].value * -1)
       number++
 
       storage()
@@ -397,9 +407,11 @@ function novaDiv(type) {
 
 
       nomeMov[3].value = ''
-      categoria[3].selectedIndex = 0
       InputValor[3].value = ''
       dataInfo[3].value = ''
+      jurosComp.selectedIndex = 0
+      juros.selectedIndex = 0
+
 
       this.offsetParent.offsetParent.offsetParent.classList.remove('ativo')
 
@@ -443,23 +455,20 @@ function novaDiv(type) {
     dataEditInit.value = Editar.data.innerText
     let valorLimpo = Editar.valor.innerText.replace('+R$ ', '').replace('-R$ ', '')
     valorEditInit.value = (+valorLimpo).toFixed(2)
-    if (div.id === 'emprestimoLabel') {
-      nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
-    }
     if (categoriaEditInit && Editar.categoria) {
       categoriaEditInit.value = Editar.categoria.innerText
     }
-    if (parcelasEditInit && Editar.parcelas) {
-      parcelasEditInit.value = Editar.parcelas.innerText.slice(0, 1)
+    if (parcelasEditInit && Editar.parcelasInit) {
+      parcelasEditInit.value = Editar.parcelasInit.innerText.slice(0, 1)
     }
-    if (jurosEditInit && Editar.juros) {
-      jurosEditInit.value = Editar.juros.innerText
+    if (jurosEditInit && Editar.jurosInit) {
+      jurosEditInit.value = Editar.jurosInit.innerText
+      jurosMesEditInit.value = Editar.jurosMesInit.innerText
+      nomeEditInit.value = Editar.nome.innerText.replace('Emprestou para ', '')
     }
-    if (jurosMesEditInit && Editar.jurosMes) {
-      jurosMesEditInit.value = Editar.jurosMes.innerText
-    }
-    if (diferencaeEditInit && Editar.diferenca) {
-      diferencaeEditInit.value = Editar.diferenca.innerText
+
+    if (diferencaeEditInit && Editar.diferencaInit) {
+      diferencaeEditInit.value = Editar.diferencaInit.innerText
     }
     if (valorFinalEditInit && Editar.valorFinal) {
       valorFinalEditInit.value = Editar.valorFinal.innerText
@@ -484,13 +493,8 @@ function novaDiv(type) {
             Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
           }
         } else if (btnEdit.offsetParent.offsetParent.id == 'emprestimoLabelEdit') {
-          if (Editar.condicao.innerText === '-') {
-            Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
-            Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
-          } else if (Editar.condicao.innerText === '+') {
-            Editar.nome.innerText = `Pegou de ${nomeEditInit.value}`
-            Editar.valor.innerText = `+R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
-          }
+          Editar.nome.innerText = `Emprestou para ${nomeEditInit.value}`
+          Editar.valor.innerText = `-R$ ${(+valorEditInit.value.replace(',', '.')).toFixed(2)}`
         }
 
         if (Editar.categoria) {
@@ -518,7 +522,32 @@ function novaDiv(type) {
       }
     })
   }
+  function alterarValor() {
+    const jurosTotal =
+      (jurosMesEditInit.selectedIndex * (parcelasEditInit.selectedIndex + 1) +
+        jurosEditInit.selectedIndex) /
+      100;
 
+    const valorJuros = +(valorEditInit.value * jurosTotal)
+    const valorTotal = (+(valorEditInit.value).replace(',', '.') + valorJuros).toFixed(2)
+    let diferencaEdit = (valorTotal - +(valorEditInit.value).replace(',', '.')).toFixed(2)
+
+    console.log(jurosMesEditInit.selectedIndex)
+    console.log(jurosEditInit.selectedIndex)
+    console.log(valorJuros)
+    console.log(valorTotal)
+    console.log(valorEditInit.value)
+    console.log(diferencaEdit)
+    diferencaeEditInit.value = diferencaEdit
+    valorFinalEditInit.value = valorTotal
+  }
+  if (edit.id === 'emprestimoLabelEdit') {
+    valorEditInit.addEventListener('keyup', alterarValor)
+    parcelasEditInit.addEventListener('change', alterarValor)
+    jurosEditInit.addEventListener('change', alterarValor)
+    jurosMesEditInit.addEventListener('change', alterarValor)
+
+  }
   div.addEventListener('click', changeValue)
 }
 
@@ -794,6 +823,9 @@ function criarPaineis() {
         `;
       edit.innerHTML = `
           <div class="editValue" numero="${n}">
+            <div class="form-img">
+              <p>Editar Despesa</p>
+            </div>
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="text" name='nome' id="nomeEdit">
@@ -861,6 +893,9 @@ function criarPaineis() {
         `;
       edit.innerHTML = `
           <div class="editValue"  numero="${n}">
+            <div class="form-img">
+              <p>Editar Receita</p>
+            </div>
             <span id="fecharEdit">X</span>
             <label for="nome">Nome</label>
             <input readonly type="nome" id="nomeEdit">
@@ -935,6 +970,9 @@ function criarPaineis() {
       })
       edit.innerHTML = `        
             <div class="editValue"  numero="${n}">
+              <div class="form-img">
+                <p>Editar Transferencia</p>
+              </div>
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
@@ -978,6 +1016,9 @@ function criarPaineis() {
 
       edit.innerHTML = `
             <div class="editValue"  numero="${n}">
+              <div class="form-img">
+                <p>Editar Emprestimo</p>
+              </div>
               <span id="fecharEdit">X</span>
               <label for="nome">Nome</label>
               <input readonly type="nome" id="nomeEdit">
@@ -1073,12 +1114,8 @@ function criarPaineis() {
             </div>
         `;
       setTimeout(function name() {
-        const condicao = div.querySelector('#condicao').innerText
         const diferenca = edit.querySelector('.diferencaLabel')
-        const valor = div.querySelector('#valor')
-        diferenca.innerText = condicao === '+' ? 'Deficit' : 'Lucro';
-        valor.style.color = condicao === '+' ? 'green' : ''
-        valor.style.fontWeight = condicao === '+' ? '600' : ''
+        diferenca.innerText = 'Lucro';
       })
     } else {
       alert('erro');
@@ -1153,25 +1190,16 @@ function arrumarInputValor() {
       const valorFinal = i.querySelector('#valorFinal');
       const juros = i.querySelector('#jurosLs');
       const jurosMes = i.querySelector('#jurosMesLs');
-      const condicao = i.querySelector('#condicao')
-      if (emprestimoLs[n].condicao == '-') {
-        nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
-      } else if (emprestimoLs[n].condicao == '+') {
-        nome.innerText = `Pegou de ${emprestimoLs[n].nome}`
-      }
+
+      nome.innerText = `Emprestou para ${emprestimoLs[n].nome}`
       data.innerText = emprestimoLs[n].data;
       valor.innerText = emprestimoLs[n].valor;
-      if (emprestimoLs[n].condicao == '-') {
-        valor.innerText = `-R$ ${emprestimoLs[n].valor}`
-      } else {
-        valor.innerText = `+R$ ${emprestimoLs[n].valor}`
-      }
+      valor.innerText = `-R$ ${emprestimoLs[n].valor}`
       parcelas.innerText = emprestimoLs[n].parcelas;
       diferenca.innerText = emprestimoLs[n].diferenca;
       valorFinal.innerText = emprestimoLs[n].valorFinal;
       juros.innerText = emprestimoLs[n].juros;
       jurosMes.innerText = emprestimoLs[n].jurosMes;
-      condicao.innerText = emprestimoLs[n].condicao
     });
   }
 
@@ -1232,7 +1260,7 @@ editValue.forEach((item, n) => {
     if (jurosEdit && ValorAEditar.jurosInit) {
       jurosEdit.value = ValorAEditar.jurosInit.innerText
       jurosMesEdit.value = ValorAEditar.jurosMesInit.innerText
-      nomeEdit.value = ValorAEditar.nome.innerText.replace('Emprestou para ', '').replace('Pegou de ', '')
+      nomeEdit.value = ValorAEditar.nome.innerText.replace('Emprestou para ', '')
     }
 
     if (diferencaeEdit && ValorAEditar.diferencaInit) {
@@ -1260,13 +1288,8 @@ editValue.forEach((item, n) => {
           ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
         } else { ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}` }
       } else if (i.id == 'emprestimoLabel') {
-        if (ValorAEditar.condicao.innerText === '-') {
-          ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
-          ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
-        } else if (ValorAEditar.condicao.innerText === '+') {
-          ValorAEditar.nome.innerText = `Pegou de ${nomeEdit.value}`
-          ValorAEditar.valor.innerText = `+R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
-        }
+        ValorAEditar.nome.innerText = `Emprestou para ${nomeEdit.value}`
+        ValorAEditar.valor.innerText = `-R$ ${(+valorEdit.value.replace(',', '.')).toFixed(2)}`
       }
 
       if (ValorAEditar.categoria) {

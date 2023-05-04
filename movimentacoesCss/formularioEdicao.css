@@ -30,8 +30,7 @@
 
 .editValue {
   position: absolute;
-  display: flex;
-  flex-direction: column;
+  display: grid;
   top: 100px;
   gap: 5px;
   width: 70%;
@@ -41,7 +40,6 @@
   height: auto;
   box-shadow: 0 0 0 4px white;
   animation: modal .4s forwards;
-
 }
 
 #compraLabelEdit .editValue,
@@ -69,6 +67,64 @@
 #diferencaEdit {
   pointer-events: none;
 }
+
+.editValue .form-img {
+  justify-self: center;
+  display: flex;
+  width: max-content;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 16px;
+  padding-top: 4px;
+}
+
+/* Imagens do cabeçalho de edição */
+
+#compraLabelEdit .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/compra.svg');
+  width: 22px;
+  height: 22px;
+  left: -34px;
+  top: 0;
+}
+
+#vendaLabelEdit .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/venda.svg');
+  width: 23px;
+  height: 22px;
+  left: -34px;
+  top: 0;
+}
+
+#transferenciaLabelEdit .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/pix.svg');
+  width: 23px;
+  height: 22px;
+  left: -34px;
+  top: 0;
+}
+
+#emprestimoLabelEdit .form-img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  background-image: url('../img/Movimentacoes/emprestimo.svg');
+  width: 23px;
+  height: 22px;
+  left: -34px;
+  top: 0;
+}
+
 
 .botaoEdit {
   display: flex;

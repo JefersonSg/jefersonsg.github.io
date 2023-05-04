@@ -1,4 +1,5 @@
 const EmprestimoLabelEdicao = document.querySelectorAll('#emprestimoLabelEdit')
+
 EmprestimoLabelEdicao.forEach((i)=>{
   const valor = i.querySelector('#valorEdit')
     let valorFinal = i.querySelector('#valorFinEdit')
@@ -18,11 +19,9 @@ EmprestimoLabelEdicao.forEach((i)=>{
       
       diferenca.value = diferencaEdit
       valorFinal.value = valorTotal
-      console.log('ok')
     }
     valor.addEventListener('keyup', alterarValor)
     parcelas.addEventListener('change', alterarValor)
     juros.addEventListener('change', alterarValor)
     jurosAoMes.addEventListener('change', alterarValor)
-
 })
