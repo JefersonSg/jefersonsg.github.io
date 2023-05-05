@@ -27,7 +27,8 @@ body {
 .grafico-bg {
   width: 88%;
   max-width: 1200px;
-  height: auto;
+  min-height: auto;
+  height: 250px;
   margin: 0 auto;
   display: grid;
   justify-items: center;
@@ -47,9 +48,7 @@ body {
   padding: 0 12px 0px 12px;
   justify-content: center;
   border-bottom: 1px solid #BBBEBF;
-  margin-bottom: 4px;
 }
-
 
 .botoes-filtro {
   color: #BBBEBF;
@@ -59,6 +58,7 @@ body {
   cursor: pointer;
   width: 70px;
   height: 100%;
+  font-size: 12px;
 }
 
 .botoes-filtro.ativo {
@@ -70,23 +70,36 @@ body {
   border-right: none;
 }
 
+@media (min-width:375px) {
+  .botoes-filtro-bg {
+    height: 30px;
+  }
+
+  .botoes-filtro {
+    font-size: 14px;
+  }
+}
+
 .resumo {
   display: grid;
   margin: 0 auto;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  grid-template-columns: 90px 90px 90px;
+  gap: 5px;
   padding-bottom: 10px;
 }
 
+.resumo-emprestimos,
 .resumo-gastos,
 .resumo-ganhos {
   display: flex;
+  font-size: 12px;
   font-family: "roboto", sans-serif;
   align-items: center;
   text-align: start;
-  gap: 10px;
+  gap: 5px;
 }
 
+.resumo-emprestimos p,
 .resumo-ganhos p,
 .resumo-gastos p {
   font-size: 12px;
@@ -97,23 +110,27 @@ body {
   color: #CF0032;
   font-family: "roboto", sans-serif;
   font-weight: 700;
-  font-size: 12px;
+}
+
+.resumo-emprestimos span {
+  color: #6D29D3;
+  font-family: "roboto", sans-serif;
+  font-weight: 700;
 }
 
 .resumo-ganhos span {
   color: #01CE16;
   font-family: "roboto", sans-serif;
   font-weight: 700;
-  font-size: 12px;
 }
 
 .div-setaUp {
   display: grid;
   align-items: center;
   justify-items: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
+  width: 25px;
+  height: 25px;
+  border-radius: 12px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: #00CF15;
 }
@@ -122,11 +139,17 @@ body {
   display: grid;
   align-items: center;
   justify-items: center;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 15px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background-color: #F92828;
+}
+
+.div-bloco {
+  width: 15px;
+  height: 15px;
+  background-color: #6D29D3;
 }
 
 /* transacoes */

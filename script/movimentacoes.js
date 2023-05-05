@@ -607,6 +607,7 @@ function valorAoVivo() {
         numero = valorAtual
         clearInterval(timer)
       }
+
       valorStatus.innerText = `-R$ ${(numero.toLocaleString('pt-BR')).replace('-', '')}`
     }, 15)
   } else if (valorAtual === 0) {
