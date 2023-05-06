@@ -12,43 +12,60 @@ const emprestimosLabel = document.querySelectorAll('#emprestimoLabel')
 const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
 const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
 
+const Data = new Date()
+Data.setDate(Data.getDate() - 30)
+const trintaDiasAtraz = Data.toISOString().slice(0, 10)
+
 let ganhos = []
 let gastos = []
 let emprestimos = []
-const Data = new Date()
 
-compraLabel.forEach((i) => {
-  const dataAtual = Data.toISOString().slice(0, 10)
-  const data = i.querySelector('#data').innerText
-  const ValorGastos = i.querySelector('#valor').innerText.replace('-R$ ', '')
-  gastos.push(-(+ValorGastos))
-})
-vendaLabel.forEach((i) => {
-  const dataAtual = Data.toISOString().slice(0, 10)
-  const data = i.querySelector('#data').innerText
-  const ValorRecebido = i.querySelector('#valor').innerText.replace('+R$ ', '')
-  ganhos.push(+ValorRecebido)
-})
-transferenciaLabel.forEach((i) => {
-  const dataAtual = Data.toISOString().slice(0, 10)
-  const data = i.querySelector('#data').innerText
-  const ValorRecebido = i.querySelector('#valor')
-
-  if (ValorRecebido.innerText.slice(0, 1) === '+') {
-    const valorLimpo = +ValorRecebido.innerText.replace('+R$ ', '')
-    ganhos.push(valorLimpo)
-  } else if (ValorRecebido.innerText.slice(0, 1) === '-') {
-    const valorLimpo = +ValorRecebido.innerText.replace('-R$ ', '')
-    gastos.push(-(valorLimpo))
+// valor dos emprestimos
+emprestimosLabel.forEach((i) => {
+  const dataDoEmprestimo = i.querySelector('.data').innerText
+  if (dataDoEmprestimo >= trintaDiasAtraz) {
+    const ValorEmprestimo = i.querySelector('.valorInit').innerText.replace('-R$ ', '')
+    emprestimos.push(+ValorEmprestimo)
   } else {
-    console.log('erro')
+    emprestimos.push(0)
   }
 })
-emprestimosLabel.forEach((i) => {
-  const dataLimpa = Data.toISOString().slice(0, 10)
-  const data = i.querySelector('.data').innerText
-  const ValorEmprestimo = i.querySelector('.valorInit').innerText.replace('-R$ ', '')
-  emprestimos.push(+ValorEmprestimo)
+
+// valor dos gastos
+compraLabel.forEach((i) => {
+  const dataDoGasto = i.querySelector('#data').innerText
+  if (dataDoGasto >= trintaDiasAtraz) {
+    const ValorGasto = i.querySelector('#valor').innerText.replace('-R$ ', '')
+    gastos.push(+ValorGasto)
+  } else {
+    gastos.push(0)
+  }
+})
+
+// valor dos Ganhos
+vendaLabel.forEach((i) => {
+  const dataDaReceita = i.querySelector('#data').innerText
+  if (dataDaReceita >= trintaDiasAtraz) {
+    const ValorRecebido = i.querySelector('#valor').innerText.replace('+R$ ', '')
+    ganhos.push(+ValorRecebido)
+  } else {
+    ganhos.push(0)
+  }
+})
+
+// valor das transferencias
+transferenciaLabel.forEach((i) => {
+  const dataDaTransferencia = i.querySelector('#data').innerText
+  if (dataDaTransferencia >= trintaDiasAtraz) {
+    const ValorTransferido = i.querySelector('#valor').innerText
+    if (ValorTransferido.slice(0, 1) === '+') {
+      ganhos.push(+ValorTransferido.replace('+R$ ', ''))
+    } else if (ValorTransferido.slice(0, 1) === '-')
+      gastos.push(+ValorTransferido.replace('-R$ ', ''))
+  } else {
+    gastos.push(0)
+    ganhos.push(0)
+  }
 })
 
 // valor dos ganhos
@@ -81,7 +98,6 @@ const chart = new Chart(ctx, {
 
   }
 });
-console.log(gastos)
 // botoes de 7/30 e 90 dias atualizando o grafico
 botoesBg.addEventListener('click', (e) => {
   const botoes = botoesBg.querySelectorAll('.botoes-filtro')
@@ -90,6 +106,7 @@ botoesBg.addEventListener('click', (e) => {
   if (!botaoClicado.classList.contains('ativo')) {
 
     if (botaoClicado.innerText === '7 dias') {
+      const Data = new Date()
 
       Data.setDate(Data.getDate() - 7)
       const seteDiasAtraz = Data.toISOString().slice(0, 10)
@@ -116,9 +133,10 @@ botoesBg.addEventListener('click', (e) => {
         const dataDoGasto = i.querySelector('#data').innerText
         if (dataDoGasto >= seteDiasAtraz) {
           const ValorGasto = i.querySelector('#valor').innerText.replace('-R$ ', '')
-          ganhos7dias.push(+ValorGasto)
+          gastos7dias.push(+ValorGasto)
+          console.log(ValorGasto)
         } else {
-          ganhos7dias.push(0)
+          gastos7dias.push(0)
         }
       })
 
@@ -128,6 +146,7 @@ botoesBg.addEventListener('click', (e) => {
         if (dataDaReceita >= seteDiasAtraz) {
           const ValorRecebido = i.querySelector('#valor').innerText.replace('+R$ ', '')
           ganhos7dias.push(+ValorRecebido)
+          console.log(ValorRecebido)
         } else {
           ganhos7dias.push(0)
         }
@@ -147,8 +166,6 @@ botoesBg.addEventListener('click', (e) => {
         }
       })
 
-      console.log(gastos7dias)
-
       let ganhosTotais = ganhos7dias.reduce((acumulador, ganhosTotais) => acumulador + ganhosTotais, 0,);
       chart.data.datasets[0].data[1] = ganhosTotais
       ganhoSpan.innerText = `R$ ${ganhosTotais.toFixed(2)}`
@@ -164,9 +181,14 @@ botoesBg.addEventListener('click', (e) => {
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`
       chart.update()
 
+      console.log(gastos7dias)
+      console.log(ganhos7dias)
+      console.log(emprestimos7dias)
+
 
     } else if (botaoClicado.innerText === '30 dias') {
 
+      const Data = new Date()
       Data.setDate(Data.getDate() - 30)
       const trintaDiasAtraz = Data.toISOString().slice(0, 10)
 
@@ -214,12 +236,12 @@ botoesBg.addEventListener('click', (e) => {
         if (dataDaTransferencia >= trintaDiasAtraz) {
           const ValorTransferido = i.querySelector('#valor').innerText
           if (ValorTransferido.slice(0, 1) === '+') {
-            ganhos.push(+ValorTransferido.replace('+R$ ', ''))
+            ganhos30dias.push(+ValorTransferido.replace('+R$ ', ''))
           } else if (ValorTransferido.slice(0, 1) === '-')
-            gastos.push(+ValorTransferido.replace('-R$ ', ''))
+            gastos30dias.push(+ValorTransferido.replace('-R$ ', ''))
         } else {
-          gastos.push(0)
-          ganhos.push(0)
+          gastos30dias.push(0)
+          ganhos30dias.push(0)
         }
       })
 
@@ -237,10 +259,11 @@ botoesBg.addEventListener('click', (e) => {
       chart.data.datasets[0].data[2] = emprestimoTotal
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`
       chart.update()
-      gastos = []
-      ganhos = []
-      emprestimos = []
+      gastos30dias = []
+      ganhos30dias = []
+      emprestimos30dias = []
     } else if (botaoClicado.innerText === '90 dias') {
+      const Data = new Date()
       Data.setDate(Data.getDate() - 90)
       const noventaDiasAtraz = Data.toISOString().slice(0, 10)
 
@@ -288,12 +311,12 @@ botoesBg.addEventListener('click', (e) => {
         if (dataDaTransferencia >= noventaDiasAtraz) {
           const ValorTransferido = i.querySelector('#valor').innerText
           if (ValorTransferido.slice(0, 1) === '+') {
-            ganhos.push(+ValorTransferido.replace('+R$ ', ''))
+            ganhos90dias.push(+ValorTransferido.replace('+R$ ', ''))
           } else if (ValorTransferido.slice(0, 1) === '-')
-            gastos.push(+ValorTransferido.replace('-R$ ', ''))
+            gastos90dias.push(+ValorTransferido.replace('-R$ ', ''))
         } else {
-          gastos.push(0)
-          ganhos.push(0)
+          gastos90dias.push(0)
+          ganhos90dias.push(0)
         }
       })
 
@@ -311,9 +334,6 @@ botoesBg.addEventListener('click', (e) => {
       chart.data.datasets[0].data[2] = emprestimoTotal
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`
       chart.update()
-      gastos = []
-      ganhos = []
-      emprestimos = []
     }
 
   }
