@@ -99,7 +99,6 @@
   animation: formulario .6s forwards;
 }
 
-
 .financas-formulario {
   width: 100%;
   display: grid;
@@ -138,7 +137,7 @@
   display: none;
   position: absolute;
   border-radius: 0 0px 8px 8px;
-  width: 230px;
+  width: 190px;
   min-height: 100%;
   background-color: #d3b7ff;
   box-sizing: border-box;
@@ -271,6 +270,21 @@
 
 #novaCategoria.ativo::before {
   content: 'ADICIONAR';
+}
+
+@media (min-width:375px) {
+  .categoriaEscolha {
+    width: 230px;
+  }
+
+  .botoesCategorias {
+    grid-template-columns: 90px 90px;
+  }
+
+  #novaCategoria,
+  #ApagarCategoria {
+    width: 90px;
+  }
 }
 
 @media (min-width:400px) {
