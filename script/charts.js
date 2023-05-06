@@ -8,6 +8,8 @@ const compraLabel = document.querySelectorAll('#compraLabel')
 const vendaLabel = document.querySelectorAll('#vendaLabel')
 const transferenciaLabel = document.querySelectorAll('#transferenciaLabel')
 const emprestimosLabel = document.querySelectorAll('#emprestimoLabel')
+const resumoEmprestimo = document.querySelector('.resumo-emprestimos')
+
 
 const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
 const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
@@ -80,6 +82,11 @@ gastoSpan.innerText = `R$ ${(gastosTotais.toFixed(2) + '').replace('-', '')}`
 let emprestimoTotal = emprestimos.reduce((acumulador, emprestimoTotal) => acumulador + emprestimoTotal, 0,);
 emprestimoSpan.innerText = `R$ ${(emprestimoTotal.toFixed(2) + '').replace('-', '')}`
 
+if (emprestimoTotal <= 0) {
+  resumoEmprestimo.style.display = 'none'
+} else {
+  resumoEmprestimo.style.display = 'flex'
+}
 const chart = new Chart(ctx, {
   type: 'doughnut',
   data: {
@@ -114,7 +121,6 @@ botoesBg.addEventListener('click', (e) => {
       let gastos7dias = []
       let ganhos7dias = []
       let emprestimos7dias = []
-
 
 
       // valor dos emprestimos
@@ -181,9 +187,11 @@ botoesBg.addEventListener('click', (e) => {
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`
       chart.update()
 
-      console.log(gastos7dias)
-      console.log(ganhos7dias)
-      console.log(emprestimos7dias)
+      if (emprestimoTotal <= 0) {
+        resumoEmprestimo.style.display = 'none'
+      } else {
+        resumoEmprestimo.style.display = 'flex'
+      }
 
 
     } else if (botaoClicado.innerText === '30 dias') {
@@ -255,6 +263,12 @@ botoesBg.addEventListener('click', (e) => {
       gastoSpan.innerText = `R$ ${gastosTotais.toFixed(2)}`
 
       let emprestimoTotal = emprestimos30dias.reduce((acumulador, emprestimoTotal) => acumulador + emprestimoTotal, 0,);
+
+      if (emprestimoTotal <= 0) {
+        resumoEmprestimo.style.display = 'none'
+      } else {
+        resumoEmprestimo.style.display = 'flex'
+      }
 
       chart.data.datasets[0].data[2] = emprestimoTotal
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`
@@ -330,6 +344,12 @@ botoesBg.addEventListener('click', (e) => {
       gastoSpan.innerText = `R$ ${gastosTotais.toFixed(2)}`
 
       let emprestimoTotal = emprestimos90dias.reduce((acumulador, emprestimoTotal) => acumulador + emprestimoTotal, 0,);
+
+      if (emprestimoTotal <= 0) {
+        resumoEmprestimo.style.display = 'none'
+      } else {
+        resumoEmprestimo.style.display = 'flex'
+      }
 
       chart.data.datasets[0].data[2] = emprestimoTotal
       emprestimoSpan.innerText = `R$ ${emprestimoTotal.toFixed(2)}`

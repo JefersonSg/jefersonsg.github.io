@@ -83,8 +83,8 @@ body {
 .resumo {
   display: grid;
   margin: 0 auto;
-  grid-template-columns: 90px 90px 90px;
-  gap: 5px;
+  grid-template-columns: 95px 95px 95px;
+  gap: 8px;
   padding-bottom: 10px;
 }
 
@@ -96,7 +96,19 @@ body {
   font-family: "roboto", sans-serif;
   align-items: center;
   text-align: start;
-  gap: 5px;
+  gap: 4px;
+}
+
+.resumo-ganhos {
+  grid-column: 1;
+}
+
+.resumo-emprestimos {
+  grid-column: 2;
+}
+
+.resumo-gastos {
+  grid-column: 3;
 }
 
 .resumo-emprestimos p,
@@ -147,8 +159,8 @@ body {
 }
 
 .div-bloco {
-  width: 15px;
-  height: 15px;
+  width: 8px;
+  height: 25px;
   background-color: #6D29D3;
 }
 
