@@ -10,10 +10,6 @@ const transferenciaLabel = document.querySelectorAll('#transferenciaLabel')
 const emprestimosLabel = document.querySelectorAll('#emprestimoLabel')
 const resumoEmprestimo = document.querySelector('.resumo-emprestimos')
 
-
-const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
-const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
-
 const Data = new Date()
 Data.setDate(Data.getDate() - 30)
 const trintaDiasAtraz = Data.toISOString().slice(0, 10)

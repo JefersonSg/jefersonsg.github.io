@@ -1,6 +1,8 @@
 @import url('../css/header.css');
 @import url('./formularioEdicao.css');
 @import url('./tabela.css');
+@import url('./resumoCategorias.css');
+@import url('./graficos.css');
 
 .atividades {
   border-bottom: 2px solid white;
@@ -14,155 +16,8 @@ body {
 
 
 
-/* graficos */
 
-.graficos-container {
-  width: 100%;
-  background: linear-gradient(180.52deg, #009FE3 8.62%, rgba(240, 240, 240, 0) 45.11%);
-  margin: 0 auto;
-  padding-top: 8px;
-  margin-top: -1px;
-}
 
-.grafico-bg {
-  width: 88%;
-  max-width: 1200px;
-  min-height: auto;
-  height: 250px;
-  margin: 0 auto;
-  display: grid;
-  justify-items: center;
-  padding: 0 12px 12px 12px;
-  border-radius: 10px;
-  background-color: white;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-
-}
-
-.botoes-filtro-bg {
-  font-family: 'roboto', sans-serif;
-  width: 100%;
-  height: 22px;
-  display: grid;
-  padding: 0 12px 0px 12px;
-  justify-content: center;
-  border-bottom: 1px solid #BBBEBF;
-}
-
-.botoes-filtro {
-  color: #BBBEBF;
-  border: none;
-  border-right: 1px solid #BBBEBF;
-  background-color: transparent;
-  cursor: pointer;
-  width: 70px;
-  height: 100%;
-  font-size: 12px;
-}
-
-.botoes-filtro.ativo {
-  color: black;
-  font-weight: 700;
-}
-
-.botoes-filtro:last-child {
-  border-right: none;
-}
-
-@media (min-width:375px) {
-  .botoes-filtro-bg {
-    height: 30px;
-  }
-
-  .botoes-filtro {
-    font-size: 14px;
-  }
-}
-
-.resumo {
-  display: grid;
-  margin: 0 auto;
-  grid-template-columns: 95px 95px 95px;
-  gap: 8px;
-  padding-bottom: 10px;
-}
-
-.resumo-emprestimos,
-.resumo-gastos,
-.resumo-ganhos {
-  display: flex;
-  font-size: 12px;
-  font-family: "roboto", sans-serif;
-  align-items: center;
-  text-align: start;
-  gap: 4px;
-}
-
-.resumo-ganhos {
-  grid-column: 1;
-}
-
-.resumo-emprestimos {
-  grid-column: 2;
-}
-
-.resumo-gastos {
-  grid-column: 3;
-}
-
-.resumo-emprestimos p,
-.resumo-ganhos p,
-.resumo-gastos p {
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.resumo-gastos span {
-  color: #CF0032;
-  font-family: "roboto", sans-serif;
-  font-weight: 700;
-}
-
-.resumo-emprestimos span {
-  color: #6D29D3;
-  font-family: "roboto", sans-serif;
-  font-weight: 700;
-}
-
-.resumo-ganhos span {
-  color: #01CE16;
-  font-family: "roboto", sans-serif;
-  font-weight: 700;
-}
-
-.div-setaUp {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  width: 25px;
-  height: 25px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: #00CF15;
-}
-
-.div-setaDown {
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  width: 25px;
-  height: 25px;
-  border-radius: 15px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  background-color: #F92828;
-}
-
-.div-bloco {
-  width: 8px;
-  height: 25px;
-  background-color: #6D29D3;
-}
 
 /* transacoes */
 

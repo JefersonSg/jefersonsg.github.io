@@ -1,0 +1,165 @@
+/* graficos */
+
+.graficos-container {
+  display: flex;
+  overflow: auto;
+  background: linear-gradient(180.52deg, #009FE3 8.62%, rgba(240, 240, 240, 0) 45.11%);
+  margin: 0 auto;
+  padding: 0 20px;
+  gap: 20px;
+  padding-top: 8px;
+  margin-top: -1px;
+}
+
+
+.grafico-bg {
+  width: 80vw;
+  min-height: auto;
+  height: 250px;
+  margin: 0 auto;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.botoes-filtro-bg {
+  font-family: 'roboto', sans-serif;
+  width: 80vw;
+  height: 22px;
+  display: grid;
+  justify-content: center;
+  border-bottom: 1px solid #BBBEBF;
+}
+
+.botoes-filtro {
+
+  color: #BBBEBF;
+  border: none;
+  border-right: 1px solid #BBBEBF;
+  background-color: transparent;
+  cursor: pointer;
+  height: 100%;
+  font-size: 12px;
+}
+
+.botoes-filtro.ativo {
+  color: black;
+  font-weight: 700;
+}
+
+.botoes-filtro:last-child {
+  border-right: none;
+}
+
+.resumo {
+  display: grid;
+  width: 100%;
+  margin: 0 auto;
+  grid-template-columns: 85px 85px 85px;
+  justify-content: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.resumo-emprestimos,
+.resumo-gastos,
+.resumo-ganhos {
+  display: flex;
+  font-size: 10px;
+  font-family: "roboto", sans-serif;
+  align-items: center;
+  text-align: start;
+  gap: 4px;
+}
+
+.resumo-ganhos {
+  grid-column: 1;
+}
+
+.resumo-emprestimos {
+  grid-column: 2;
+}
+
+.resumo-gastos {
+  grid-column: 3;
+}
+
+.resumo-emprestimos p,
+.resumo-ganhos p,
+.resumo-gastos p {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.resumo-gastos span {
+  color: #CF0032;
+  font-family: "roboto", sans-serif;
+  font-weight: 700;
+}
+
+.resumo-emprestimos span {
+  color: #6D29D3;
+  font-family: "roboto", sans-serif;
+  font-weight: 700;
+}
+
+.resumo-ganhos span {
+  color: #01CE16;
+  font-family: "roboto", sans-serif;
+  font-weight: 700;
+}
+
+.div-setaUp {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #00CF15;
+}
+
+.div-setaDown {
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background-color: #F92828;
+}
+
+.div-bloco {
+  width: 8px;
+  height: 25px;
+  background-color: #6D29D3;
+}
+
+@media (min-width:375px) {
+  .resumo {
+    grid-template-columns: 90px 90px 90px;
+  }
+}
+
+@media (min-width:400px) {
+
+  .resumo-emprestimos,
+  .resumo-gastos,
+  .resumo-ganhos {
+    font-size: 12px;
+    gap: 4px;
+    word-break: break-all;
+  }
+
+  .resumo-emprestimos p,
+  .resumo-gastos p,
+  .resumo-ganhos p {
+    font-size: 12px;
+  }
+}
