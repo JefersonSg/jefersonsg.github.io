@@ -8,12 +8,7 @@ const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`)
 
 
 const arrayResumoReceitas = infos[7] ? infos[7] : []
-const categorias = arrayResumoReceitas.map(categoria => {
-  return {
-    categoria,
-    valores: '',
-  };
-})
+
 const valoresTotais = []
 
 // função para adicionar valor a valoresTotais
@@ -52,86 +47,92 @@ function atualizaH3(dias) {
     }
   })
 }
-
-function criarDivResumos(dias) {
-
-  const divis = graficoResumo.querySelectorAll(".informacoesDaCategoria")
-  console.log(divis)
-  if (divis.length) {
-    divis.forEach((i) => {
-      i.style.display = 'none'
-      i.remove()
-    })
-  }
-  const valoresTotais = []
-
-  const Data = new Date()
-  Data.setDate(Data.getDate() - dias)
-  const diasInseridos = Data.toISOString().slice(0, 10)
-
-
-  // insere o valor de valoresTotais 
-  receitasLabel.forEach((receita) => {
-    const dataDaReceita = receita.querySelector('#data').innerText
+atualizaH3(30)
 
 
 
-    // separa os valores por dias
-    if (dataDaReceita > diasInseridos) {
-      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-      valoresTotais.push(+valor)
-    }
-  })
+// criar divis de resumos
+arrayResumoReceitas.forEach((categoria) => {
+  const divCategoria = document.createElement('div')
+  divCategoria.classList.add('informacoesDaCategoria')
 
-  receitasLabel.forEach((receita) => {
-    const dataDaReceita = receita.querySelector('#data').innerText
-
-
-
-    // separa os valores por dias
-    if (dataDaReceita > diasInseridos) {
-      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-      const comparador = receita.querySelector('#categoria').innerText
-      let valoresTotaisSomados = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
-
-      const itemAtual = categorias.find(categoria => categoria.categoria === comparador)
-
-      itemAtual.valores = +valor
-
-      const porcentagem = ((+valor / valoresTotaisSomados) * 100).toFixed(0)
-      const divCategoria = document.createElement('div')
-      divCategoria.classList.add('informacoesDaCategoria')
-
-      divCategoria.innerHTML = `
+  divCategoria.innerHTML = `
       <h4 class="nomeDaCategoria">
-        ${comparador}
+        ${categoria}
       </h4>
       <span class="graficoPorcentagem"></span>
-      <span class="porcentagemNumero">${porcentagem}%</span>
-      <span class="valorTotalDaCategoria">R$ ${+valor.toLocaleString('pt-BR')}</span>
+      <span class="porcentagemNumero">%</span>
+      <span class="valorTotalDaCategoria"></span>
       `
-      const barraVerde = divCategoria.querySelector('.graficoPorcentagem')
-      barraVerde.style.width = `${porcentagem}%`
+  graficoResumo.appendChild(divCategoria)
+})
 
 
-      // organizar 
-      const id = setInterval(() => {
-        valoresTotaisSomados -= 150;
-        if (+valor > valoresTotaisSomados) {
-          graficoResumo.appendChild(divCategoria)
-          clearInterval(id);
-        }
-        if (valoresTotaisSomados < 0) {
-          clearInterval(id);
-        }
-      }, 1);
-      graficoResumo.appendChild(divCategoria)
+function inserirValoresNaDiv(dias) {
+  const resumosCategorias = document.querySelectorAll('.informacoesDaCategoria')
+
+  resumosCategorias.forEach((categoria) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+
+    const valores = []
+    const valorTotal = []
+
+
+    // coletar os valores
+
+
+    receitasLabel.forEach((receita) => {
+      const data = receita.querySelector('#data').innerText
+      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
+
+      if (data > diasInseridos) {
+        valorTotal.push(+valor)
+      }
+    })
+
+    receitasLabel.forEach((receita) => {
+      const nomeDaCategoria = categoria.querySelector('.nomeDaCategoria').innerText
+      const comparador = receita.querySelector('#categoria').innerText
+      const data = receita.querySelector('#data').innerText
+      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
+
+      if (comparador === nomeDaCategoria && data > diasInseridos) {
+        valores.push(+valor)
+      }
+    })
+
+
+    // insere os valores
+
+    const valorTotalDaCategoria = categoria.querySelector('.valorTotalDaCategoria')
+    const graficoVerde = categoria.querySelector('.graficoPorcentagem')
+    const textoPorcentagem = categoria.querySelector('.porcentagemNumero')
+
+
+    let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+    let valorTotalSomado = valorTotal.reduce((acomulador, valorTotalSomado) => +acomulador + valorTotalSomado, 0,)
+    const porcentagem = ((valoresSomados / valorTotalSomado) * 100).toFixed(0)
+
+    console.log(valorTotal)
+    graficoVerde.style.width = `${porcentagem}%`
+
+
+    valorTotalDaCategoria.innerText = valoresSomados
+    textoPorcentagem.innerText = `${porcentagem}%`
+    console.log(porcentagem)
+    if (porcentagem === '0') {
+      categoria.style.display = 'none'
+    } else {
+      categoria.style.display = 'grid'
     }
   })
-  console.log(divis)
 }
 
-criarDivResumos(30)
+inserirValoresNaDiv(30)
+
+
 
 
 graficoResumo.addEventListener('click', function (e) {
@@ -150,20 +151,19 @@ graficoResumo.addEventListener('click', function (e) {
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
     atualizaH3(7)
-  }
-  else if (botaoClicado.innerText === '30 dias') {
+  } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3(30)
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3(90)
   }
 
   if (botaoClicado.innerText === '7 dias') {
-    criarDivResumos(7)
+    inserirValoresNaDiv(7)
   }
   else if (botaoClicado.innerText === '30 dias') {
-    criarDivResumos(30)
+    inserirValoresNaDiv(30)
   } else if (botaoClicado.innerText === '90 dias') {
-    criarDivResumos(90)
+    inserirValoresNaDiv(90)
   }
 
   // cria as divs de resumo de receitas
@@ -182,4 +182,3 @@ const objetos = nomes.map(nome => {
   };
 });
 
-atualizaH3(30)
