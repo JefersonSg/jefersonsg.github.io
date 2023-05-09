@@ -130,7 +130,6 @@ function trocarDatas(dias) {
     if (dataDoGasto >= seteDiasAtraz) {
       const ValorGasto = i.querySelector('#valor').innerText.replace('-R$ ', '')
       gastosDiasInseridos.push(+ValorGasto)
-      console.log(ValorGasto)
     } else {
       gastosDiasInseridos.push(0)
     }
@@ -142,7 +141,6 @@ function trocarDatas(dias) {
     if (dataDaReceita >= seteDiasAtraz) {
       const ValorRecebido = i.querySelector('#valor').innerText.replace('+R$ ', '')
       ganhosDiasInseridos.push(+ValorRecebido)
-      console.log(ValorRecebido)
     } else {
       ganhosDiasInseridos.push(0)
     }

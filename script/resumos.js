@@ -1,7 +1,7 @@
 const resumoReceita = document.querySelector('.valorResumoReceitas')
 const receitasLabel = document.querySelectorAll('#vendaLabel')
 const graficoResumo = document.querySelector('.grafico-resumo-bg')
-
+const divResumos = document.querySelector('.resumosDivs')
 
 const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
 const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
@@ -64,8 +64,13 @@ arrayResumoReceitas.forEach((categoria) => {
       <span class="porcentagemNumero">%</span>
       <span class="valorTotalDaCategoria"></span>
       `
-  graficoResumo.appendChild(divCategoria)
+
+
+
+  divResumos.appendChild(divCategoria)
 })
+
+
 
 
 function inserirValoresNaDiv(dias) {
@@ -115,23 +120,75 @@ function inserirValoresNaDiv(dias) {
     let valorTotalSomado = valorTotal.reduce((acomulador, valorTotalSomado) => +acomulador + valorTotalSomado, 0,)
     const porcentagem = ((valoresSomados / valorTotalSomado) * 100).toFixed(0)
 
-    console.log(valorTotal)
     graficoVerde.style.width = `${porcentagem}%`
 
 
     valorTotalDaCategoria.innerText = valoresSomados
     textoPorcentagem.innerText = `${porcentagem}%`
-    console.log(porcentagem)
-    if (porcentagem === '0') {
-      categoria.style.display = 'none'
-    } else {
-      categoria.style.display = 'grid'
+  })
+  esconderDivsZeradas()
+  organizaDivsValorCrescente()
+  ocultaroQuartoItem()
+}
+
+
+function esconderDivsZeradas() {
+  const divs = document.querySelectorAll('.informacoesDaCategoria')
+  divs.forEach((div) => {
+    const valor = div.querySelector('.valorTotalDaCategoria').innerText
+    if (valor === '0') {
+      div.classList.add('zero')
+    } else if (valor !== '0') {
+      div.classList.remove('zero')
+    }
+  })
+}
+
+function organizaDivsValorCrescente() {
+  // Seleciona todas as divs com a classe "valor"
+  const divs = document.querySelector('.resumosDivs')
+  const valores = divs.querySelectorAll('.valorTotalDaCategoria');
+  const categorias = divs.querySelectorAll('.informacoesDaCategoria')
+  // Converte os valores em números e ordena em ordem decrescente
+  const valoresOrdenados = Array.from(valores)
+    .map(valor => parseInt(valor.textContent))
+    .sort((a, b) => b - a);
+
+  // Cria um novo array com as divs reordenadas
+  const divsOrdenadas = valoresOrdenados.map(valo => {
+    return Array.from(valores).find(valor => parseInt(valor.textContent) === valo);
+  });
+
+
+  divsOrdenadas.forEach((div, n) => {
+    categorias.forEach((categoria) => {
+      if (categoria.contains(div)) {
+        categoria.style.gridRow = n + 1
+      }
+    })
+  });
+}
+
+function ocultaroQuartoItem() {
+  const divs = document.querySelector('.resumosDivs')
+  const categorias = divs.querySelectorAll('.informacoesDaCategoria')
+
+  categorias.forEach((categoria) => {
+    const atributo = categoria.getAttribute('style')
+    if (atributo) {
+
+      if (+atributo.slice(10, 11) > 4) {
+        categoria.classList.add('ocultar')
+      } else {
+        categoria.classList.remove('ocultar')
+      }
     }
   })
 }
 
 inserirValoresNaDiv(30)
-
+organizaDivsValorCrescente()
+ocultaroQuartoItem()
 
 
 
