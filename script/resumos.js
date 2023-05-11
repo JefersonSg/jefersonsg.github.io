@@ -33,10 +33,11 @@ function atualizaH3(dias) {
   receitasLabel.forEach((receita) => {
     const Data = new Date()
     Data.setDate(Data.getDate() - dias)
-    const noventaDiasAtraz = Data.toISOString().slice(0, 10)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+
     const dataDaReceita = receita.querySelector('#data').innerText
 
-    if (dataDaReceita > noventaDiasAtraz) {
+    if (dataDaReceita >= diasInseridos) {
       const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
       valoresTotais.push(+valor)
 
@@ -92,7 +93,7 @@ function inserirValoresNaDiv(dias) {
       const data = receita.querySelector('#data').innerText
       const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
 
-      if (data > diasInseridos) {
+      if (data >= diasInseridos) {
         valorTotal.push(+valor)
       }
     })
@@ -103,7 +104,7 @@ function inserirValoresNaDiv(dias) {
       const data = receita.querySelector('#data').innerText
       const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
 
-      if (comparador === nomeDaCategoria && data > diasInseridos) {
+      if (comparador === nomeDaCategoria && data >= diasInseridos) {
         valores.push(+valor)
       }
     })
@@ -177,7 +178,8 @@ function ocultaroQuartoItem() {
     const atributo = categoria.getAttribute('style')
     if (atributo) {
 
-      if (+atributo.slice(10, 11) > 4) {
+      const numeroDaColuna = atributo.match(/\d+/g)
+      if (numeroDaColuna > 4) {
         categoria.classList.add('ocultar')
       } else {
         categoria.classList.remove('ocultar')
@@ -186,9 +188,90 @@ function ocultaroQuartoItem() {
   })
 }
 
+// atualiza os valores dos spans de comparação
+
+function valoresComparados(dias) {
+  const valoresAtuais = +document.querySelector('.valorResumoReceitas').innerText.replace('R$ ', '').replace('.', '')
+  const diasComparados = dias * 2
+
+  const Data = new Date()
+  const DataComparativa = new Date()
+  Data.setDate(Data.getDate() - dias)
+  DataComparativa.setDate(DataComparativa.getDate() - diasComparados)
+  const diasInseridos = Data.toISOString().slice(0, 10)
+  const dataComparativaLimpa = DataComparativa.toISOString().slice(0, 10)
+
+
+  // coletar os valores 
+  const valores = []
+
+  receitasLabel.forEach((receita) => {
+    const data = receita.querySelector('#data').innerText
+    const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
+
+    if (data <= diasInseridos && data >= dataComparativaLimpa) {
+      valores.push(+valor)
+    } else {
+      valores.push(0)
+    }
+  })
+
+
+  // inserir os valores
+
+  let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+  if (valoresSomados < valoresAtuais) {
+    const porcentagem = +((valoresAtuais / valoresSomados) * 100).toFixed(0)
+
+    console.log(porcentagem)
+
+    const porcentagemComparada = document.querySelector('.porcentagemComparada')
+    const diasSpan = document.querySelector('.diasComparados')
+    const diferencaComparada = document.querySelector('.diferencaComparada')
+
+
+    const diferenca = valoresAtuais - valoresSomados
+
+    if (porcentagem !== Infinity) {
+      porcentagemComparada.innerText = `${porcentagem}% a mais nos últimos`
+    } else if (porcentagem === Infinity) {
+      porcentagemComparada.innerText = `100% a mais nos últimos`
+    }
+
+    diasSpan.innerText = `${dias} dias`
+    diferencaComparada.innerText = diferenca.toLocaleString('pt-BR')
+
+  } else if (valoresSomados > valoresAtuais) {
+    const porcentagem = +(valoresSomados / valoresAtuais * 100).toFixed(0)
+
+    console.log(porcentagem)
+
+
+    const porcentagemComparada = document.querySelector('.porcentagemComparada')
+    const diasSpan = document.querySelector('.diasComparados')
+    const diferencaComparada = document.querySelector('.diferencaComparada')
+
+
+    const diferenca = valoresAtuais - valoresSomados
+
+    if (porcentagem !== Infinity) {
+      porcentagemComparada.innerText = `${porcentagem}% a menos nos últimos`
+    } else if (porcentagem === Infinity) {
+      porcentagemComparada.innerText = `100% a mais nos últimos`
+    }
+
+    diasSpan.innerText = `${dias} dias`
+    diferencaComparada.innerText = diferenca.toLocaleString('pt-BR')
+  }
+
+
+
+}
+
 inserirValoresNaDiv(30)
 organizaDivsValorCrescente()
 ocultaroQuartoItem()
+valoresComparados(30)
 
 
 
@@ -208,10 +291,16 @@ graficoResumo.addEventListener('click', function (e) {
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
     atualizaH3(7)
+    valoresComparados(7)
+
   } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3(30)
+    valoresComparados(30)
+
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3(90)
+    valoresComparados(90)
+
   }
 
   if (botaoClicado.innerText === '7 dias') {
@@ -228,14 +317,4 @@ graficoResumo.addEventListener('click', function (e) {
 })
 
 
-
-const nomes = ['João', 'Maria', 'Pedro'];
-
-const objetos = nomes.map(nome => {
-  return {
-    nome: nome,
-    idade: 0,
-    cidade: ''
-  };
-});
 
