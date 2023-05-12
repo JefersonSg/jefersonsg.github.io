@@ -142,7 +142,7 @@ function organizaDivsValorCrescente() {
   
   // Converte os valores em números e ordena em ordem decrescente
   const valoresOrdenados = Array.from(valores)
-    .map(valor => parseInt(valor.textContent))
+    .map(valor => parseInt(valor.textContent.replace('.','')))
     .sort((a, b) => b - a);
 
   // Cria um novo array com as divs reordenadas
@@ -152,8 +152,10 @@ function organizaDivsValorCrescente() {
     const valores = graficoResumoReceita.querySelectorAll('.valorTotalDaCategoria')
     const topItens = Array.from(valores).find(valor => +valor.innerText === numero)
 
-    topItens.parentElement.style.gridRow = n + 1
-    topItens.parentElement.classList.remove('ocultar')
+    if (numero > 0) {
+      topItens.parentElement.style.gridRow = n + 1
+      topItens.parentElement.classList.remove('ocultar')
+    }
     })
 }
 
@@ -210,6 +212,7 @@ function valoresComparados(dias) {
   if (valoresAnteriores < valoresAtuais) {
     const porcentagem = +((valoresAtuais / valoresAnteriores) * 100).toFixed(0)
     const diferenca = valoresAtuais - valoresAnteriores
+    console.log(porcentagem)
 
     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a mais nos últimos` : porcentagemComparada.innerText = `100% a mais nos últimos`
 
@@ -217,10 +220,9 @@ function valoresComparados(dias) {
     diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
 
   } else if (valoresAnteriores > valoresAtuais) {
-
+    
     const porcentagem = +(valoresAnteriores / valoresAtuais * 100).toFixed(0)
     const diferenca = valoresAtuais - valoresAnteriores
-
     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a menos nos últimos` : porcentagemComparada.innerText = `100% a menos nos últimos`
 
     diasSpan.innerText = `${dias} dias`

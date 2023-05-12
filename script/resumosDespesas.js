@@ -50,6 +50,7 @@ atualizaH3Gastos(30)
 arrayResumoDespesa.forEach((categoria) => {
   const divCategoria = document.createElement('div')
   divCategoria.classList.add('informacoesDaCategoria')
+  divCategoria.classList.add('ocultar')
 
   divCategoria.innerHTML = `
       <h4 class="nomeDaCategoria">
@@ -115,76 +116,63 @@ function inserirValoresNaDivGastos(dias) {
     valorTotalDaCategoria.innerText = valoresAnteriores.toLocaleString('pt-BR')
     textoPorcentagem.innerText = `${porcentagem}%`
   })
-  esconderDivsZeradasGastos()
   organizaDivsValorCrescenteGastos()
-  ocultaroQuartoItemGastos()
 }
 
-// esconde as divs que tem valor 0
 
-function esconderDivsZeradasGastos() {
-  const divs = graficoResumoDespesa.querySelectorAll('.informacoesDaCategoria')
-  divs.forEach((div) => {
-    const valor = div.querySelector('.valorTotalDaCategoria').innerText
-    if (valor === '0') {
-      div.classList.add('zero')
-    } else if (valor !== '0') {
-      div.classList.remove('zero')
+function AddOcultoGasto(){
+  const categorias = graficoResumoDespesa.querySelectorAll('.informacoesDaCategoria')
+  categorias.forEach((categoria)=>{
+    if (!categoria.classList.contains('ocultar')) {
+      categoria.classList.add('ocultar')
     }
   })
 }
-
-// organiza do maior para o menor
 
 function organizaDivsValorCrescenteGastos() {
   // Seleciona todas as divs com a classe "valor"
   const divs = graficoResumoDespesa.querySelector('.resumosDivs')
   const valores = divs.querySelectorAll('.valorTotalDaCategoria');
-  const categorias = divs.querySelectorAll('.informacoesDaCategoria')
+  
+  
   // Converte os valores em números e ordena em ordem decrescente
   const valoresOrdenados = Array.from(valores)
-    .map(valor => parseInt(valor.textContent))
+    .map(valor => parseInt(valor.textContent.replace('.','')))
     .sort((a, b) => b - a);
 
-  // Cria um novo array com as divs reordenadas
-  const divsOrdenadas = valoresOrdenados.map(valo => {
-    return Array.from(valores).find(valor => parseInt(valor.textContent) === valo);
-  });
+    // Cria um novo array com as divs reordenadas
+  const apenasOs4Primeiros = valoresOrdenados.slice(0,4)
 
-
-  divsOrdenadas.forEach((div, n) => {
-    categorias.forEach((categoria) => {
-      if (categoria.contains(div)) {
-        categoria.style.gridRow = n + 1
-      }
-    })
-  });
-}
-
-// deixa a amostra apenas os 4 maiores valores gerais das categorias
-
-function ocultaroQuartoItemGastos() {
-  const divs = graficoResumoDespesa.querySelector('.resumosDivs')
-  const categorias = divs.querySelectorAll('.informacoesDaCategoria')
-
-  categorias.forEach((categoria) => {
-    const atributo = categoria.getAttribute('style')
-    if (atributo) {
-
-      const numeroDaColuna = atributo.match(/\d+/g)
-      if (numeroDaColuna > 4) {
-        categoria.classList.add('ocultar')
-      } else {
-        categoria.classList.remove('ocultar')
-      }
+  apenasOs4Primeiros.forEach((numero, n)=>{
+    const valores = graficoResumoDespesa.querySelectorAll('.valorTotalDaCategoria')
+    const topItens = Array.from(valores).find(valor => +valor.innerText.replace('.','') === numero)
+    if (numero > 0) {
+      topItens.parentElement.style.gridRow = n + 1
+      topItens.parentElement.classList.remove('ocultar')
     }
-  })
+
+    })
 }
 
 // atualiza os valores dos spans de comparação
 
 function valoresComparadosGastos(dias) {
-  const valoresAtuais = +graficoResumoDespesa.querySelector('.valorResumido').innerText.replace('R$ ', '').replace('.', '')
+  const valoresTotais = []
+
+  despesasLabel.forEach((receita) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+
+    const dataDaReceita = receita.querySelector('#data').innerText
+
+    if (dataDaReceita >= diasInseridos) {
+      const valor = receita.querySelector('#valor').innerText.replace('-R$ ', '')
+      valoresTotais.push(+valor)
+    }
+  })
+
+  let valoresAtuais = valoresTotais.reduce((acomulador, valoresAtuais) => +acomulador + valoresAtuais, 0,)
   const diasComparados = dias * 2
 
   const Data = new Date()
@@ -203,8 +191,6 @@ function valoresComparadosGastos(dias) {
 
     if (data <= diasInseridos && data >= dataComparativaLimpa) {
       valores.push(+valor)
-    } else {
-      valores.push(0)
     }
   })
 
@@ -248,7 +234,6 @@ function valoresComparadosGastos(dias) {
 
 inserirValoresNaDivGastos(30)
 organizaDivsValorCrescenteGastos()
-ocultaroQuartoItemGastos()
 valoresComparadosGastos(30)
 
 
