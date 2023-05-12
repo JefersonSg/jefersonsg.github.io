@@ -225,7 +225,7 @@ function valoresComparadosGastos(dias) {
     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a mais nos últimos` : porcentagemComparada.innerText = `100% a mais nos últimos`
 
     diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
+    diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
 
   } else if (valoresAnteriores > valoresAtuais) {
     const porcentagem = +(valoresAnteriores / valoresAtuais * 100).toFixed(0)
@@ -235,16 +235,14 @@ function valoresComparadosGastos(dias) {
     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a menos nos últimos` : porcentagemComparada.innerText = `100% a menos nos últimos`
 
     diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
+    diferencaComparada.innerText = `(-R$ ${diferenca.toLocaleString('pt-BR').replace('-','')})`
   } else if (valoresAnteriores === valoresAtuais) {
     const diferenca = valoresAtuais - valoresAnteriores
 
     porcentagemComparada.innerText = `0%  nos últimos`
     diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
+    diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
   }
-
-
 
 }
 
