@@ -1,8 +1,7 @@
-const resumoReceita = document.querySelector('.valorResumoReceitas')
 const receitasLabel = document.querySelectorAll('#vendaLabel')
-const graficoResumo = document.querySelector('.grafico-resumo-bg')
-const divResumos = document.querySelector('.resumosDivs')
-
+const graficoResumoReceita = document.getElementById('graficoReceita')
+const resumoReceita = graficoResumoReceita.querySelector('.valorResumido')
+const divResumos = graficoResumoReceita.querySelector('.resumosDivs')
 const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
 const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
 
@@ -11,8 +10,10 @@ const arrayResumoReceitas = infos[7] ? infos[7] : []
 
 const valoresTotais = []
 
+
 // função para adicionar valor a valoresTotais
 
+// RECEITA
 receitasLabel.forEach((receita) => {
   const Data = new Date()
   Data.setDate(Data.getDate() - 30)
@@ -72,10 +73,10 @@ arrayResumoReceitas.forEach((categoria) => {
 })
 
 
-
+// insere os valores coletados em suas respectivas categorias
 
 function inserirValoresNaDiv(dias) {
-  const resumosCategorias = document.querySelectorAll('.informacoesDaCategoria')
+  const resumosCategorias = graficoResumoReceita.querySelectorAll('.informacoesDaCategoria')
 
   resumosCategorias.forEach((categoria) => {
     const Data = new Date()
@@ -132,9 +133,10 @@ function inserirValoresNaDiv(dias) {
   ocultaroQuartoItem()
 }
 
+// esconde as divs que tem valor 0
 
 function esconderDivsZeradas() {
-  const divs = document.querySelectorAll('.informacoesDaCategoria')
+  const divs = graficoResumoReceita.querySelectorAll('.informacoesDaCategoria')
   divs.forEach((div) => {
     const valor = div.querySelector('.valorTotalDaCategoria').innerText
     if (valor === '0') {
@@ -145,9 +147,11 @@ function esconderDivsZeradas() {
   })
 }
 
+// organiza do maior para o menor
+
 function organizaDivsValorCrescente() {
   // Seleciona todas as divs com a classe "valor"
-  const divs = document.querySelector('.resumosDivs')
+  const divs = graficoResumoReceita.querySelector('.resumosDivs')
   const valores = divs.querySelectorAll('.valorTotalDaCategoria');
   const categorias = divs.querySelectorAll('.informacoesDaCategoria')
   // Converte os valores em números e ordena em ordem decrescente
@@ -170,8 +174,10 @@ function organizaDivsValorCrescente() {
   });
 }
 
+// deixa a amostra apenas os 4 maiores valores gerais das categorias
+
 function ocultaroQuartoItem() {
-  const divs = document.querySelector('.resumosDivs')
+  const divs = graficoResumoReceita.querySelector('.resumosDivs')
   const categorias = divs.querySelectorAll('.informacoesDaCategoria')
 
   categorias.forEach((categoria) => {
@@ -191,7 +197,7 @@ function ocultaroQuartoItem() {
 // atualiza os valores dos spans de comparação
 
 function valoresComparados(dias) {
-  const valoresAtuais = +document.querySelector('.valorResumoReceitas').innerText.replace('R$ ', '').replace('.', '')
+  const valoresAtuais = +graficoResumoReceita.querySelector('.valorResumido').innerText.replace('R$ ', '').replace('.', '')
   const diasComparados = dias * 2
 
   const Data = new Date()
@@ -220,15 +226,14 @@ function valoresComparados(dias) {
   // inserir os valores
 
   let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+
+  
+  const porcentagemComparada = graficoResumoReceita.querySelector('.porcentagemComparada')
+  const diasSpan = graficoResumoReceita.querySelector('.diasComparados')
+  const diferencaComparada = graficoResumoReceita.querySelector('.diferencaComparada')
+
   if (valoresSomados < valoresAtuais) {
     const porcentagem = +((valoresAtuais / valoresSomados) * 100).toFixed(0)
-
-    console.log(porcentagem)
-
-    const porcentagemComparada = document.querySelector('.porcentagemComparada')
-    const diasSpan = document.querySelector('.diasComparados')
-    const diferencaComparada = document.querySelector('.diferencaComparada')
-
 
     const diferenca = valoresAtuais - valoresSomados
 
@@ -244,14 +249,6 @@ function valoresComparados(dias) {
   } else if (valoresSomados > valoresAtuais) {
     const porcentagem = +(valoresSomados / valoresAtuais * 100).toFixed(0)
 
-    console.log(porcentagem)
-
-
-    const porcentagemComparada = document.querySelector('.porcentagemComparada')
-    const diasSpan = document.querySelector('.diasComparados')
-    const diferencaComparada = document.querySelector('.diferencaComparada')
-
-
     const diferenca = valoresAtuais - valoresSomados
 
     if (porcentagem !== Infinity) {
@@ -262,6 +259,9 @@ function valoresComparados(dias) {
 
     diasSpan.innerText = `${dias} dias`
     diferencaComparada.innerText = diferenca.toLocaleString('pt-BR')
+  } else if (valoresSomados === valoresAtuais) {
+    porcentagemComparada.innerText = `0%  nos últimos`
+    diasSpan.innerText = `${dias} dias`
   }
 
 
@@ -275,8 +275,8 @@ valoresComparados(30)
 
 
 
-graficoResumo.addEventListener('click', function (e) {
-  const botoes = graficoResumo.querySelectorAll('.botoes-filtro')
+graficoResumoReceita.addEventListener('click', function (e) {
+  const botoes = graficoResumoReceita.querySelectorAll('.botoes-filtro')
   const botaoClicado = e.target
   //  adiciona e remove class ativo
   if (botaoClicado.classList[0] === 'botoes-filtro') {

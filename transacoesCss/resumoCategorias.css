@@ -19,13 +19,21 @@
   display: grid;
 }
 
-.valorResumoReceitas {
+.valorResumido {
   display: block;
   margin-top: 8px;
   color: #01CE16;
   font-weight: 700;
   font-size: 14px;
   margin-left: 16px;
+}
+
+#graficoDespesa .valorResumido {
+  color: #CF0032;
+}
+
+#graficoDespesa .porcentagensAtuais::before {
+  background-color: #F92828;
 }
 
 .porcentagensAtuais {
@@ -96,7 +104,11 @@
   transition: all .3s;
 }
 
+#graficoDespesa .graficoPorcentagem {
+  background-color: #F92828;
+}
+
 .valorTotalDaCategoria {
-  margin-left: 4px;
+  margin-left: 16px;
   font-weight: 500;
 }

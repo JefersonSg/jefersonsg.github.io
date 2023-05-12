@@ -79,7 +79,7 @@
       </div>
     </div>
 
-    <div class="grafico-resumo-bg">
+    <div class="grafico-resumo-bg" id="graficoReceita">
       <div class="botoes-filtro-bg">
         <nav>
           <button class="botoes-filtro">
@@ -94,7 +94,30 @@
         </nav>
       </div>
       <p>Resumo de suas receitas</p>
-      <span class="valorResumoReceitas">R$ 00,00</span>
+      <span class="valorResumido">R$ 00,00</span>
+      <span class="porcentagensAtuais">
+        <span class="porcentagemComparada">0% nos ultimos dias</span><span class="diasComparados"></span> (R$<span class="diferencaComparada">00,00</span>)
+      </span>
+      <div class="resumosDivs">
+
+      </div>
+    </div>
+    <div class="grafico-resumo-bg" id="graficoDespesa">
+      <div class="botoes-filtro-bg">
+        <nav>
+          <button class="botoes-filtro">
+            7 dias
+          </button>
+          <button class="botoes-filtro ativo">
+            30 dias
+          </button>
+          <button class="botoes-filtro">
+            90 dias
+          </button>
+        </nav>
+      </div>
+      <p>Resumo de suas despesas</p>
+      <span class="valorResumido">R$ 00,00</span>
       <span class="porcentagensAtuais">
         <span class="porcentagemComparada">0% nos ultimos dias</span><span class="diasComparados"></span> (R$<span class="diferencaComparada">00,00</span>)
       </span>
@@ -134,7 +157,8 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="./script/transacoes.js"></script>
-<script src="./script/resumos.js"></script>
+<script src="./script/resumosReceitas.js"></script>
+<script src="./script/resumosDespesas.js"></script>
 <script src="./script/returnIndex.js"></script>
 <script src="./script/transacaoEdit.js"></script>
 <script src="./script/charts.js"></script>
