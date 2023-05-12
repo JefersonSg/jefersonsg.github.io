@@ -250,7 +250,6 @@ function valoresComparadosGastos(dias) {
   } else if (valoresSomados === valoresAtuais) {
     porcentagemComparada.innerText = `0%  nos últimos`
     diasSpan.innerText = `${dias} dias`
-    
   }
 
 

@@ -264,8 +264,6 @@ function valoresComparados(dias) {
     diasSpan.innerText = `${dias} dias`
   }
 
-
-
 }
 
 inserirValoresNaDiv(30)
