@@ -38,9 +38,9 @@ function atualizaH3Gastos(dias) {
       const valor = Despesa.querySelector('#valor').innerText.replace('-R$ ', '')
       valoresTotais.push(+valor)
 
-      let valoresTotaisSomados = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
+      let valoresTotaisAnvaloresAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
 
-      resumoDespesa.innerText = `R$ ${valoresTotaisSomados.toLocaleString('pt-BR')}`
+      resumoDespesa.innerText = `R$ ${valoresTotaisAnvaloresAnteriores.toLocaleString('pt-BR')}`
     }
   })
 }
@@ -59,9 +59,6 @@ arrayResumoDespesa.forEach((categoria) => {
       <span class="porcentagemNumero">%</span>
       <span class="valorTotalDaCategoria"></span>
       `
-
-
-
   divResumo.appendChild(divCategoria)
 })
 
@@ -109,13 +106,13 @@ function inserirValoresNaDivGastos(dias) {
     const textoPorcentagem = categoria.querySelector('.porcentagemNumero')
 
 
-    let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+    let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
     let valorTotalSomado = valorTotal.reduce((acomulador, valorTotalSomado) => +acomulador + valorTotalSomado, 0,)
-    const porcentagem = ((valoresSomados / valorTotalSomado) * 100).toFixed(0)
+    const porcentagem = ((valoresAnteriores / valorTotalSomado) * 100).toFixed(0)
     graficoVermelho.style.width = `${porcentagem}%`
 
 
-    valorTotalDaCategoria.innerText = valoresSomados.toLocaleString('pt-BR')
+    valorTotalDaCategoria.innerText = valoresAnteriores.toLocaleString('pt-BR')
     textoPorcentagem.innerText = `${porcentagem}%`
   })
   esconderDivsZeradasGastos()
@@ -213,43 +210,38 @@ function valoresComparadosGastos(dias) {
 
   // inserir os valores
 
-  let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+  let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
 
 
   const porcentagemComparada = graficoResumoDespesa.querySelector('.porcentagemComparada')
   const diasSpan = graficoResumoDespesa.querySelector('.diasComparados')
   const diferencaComparada = graficoResumoDespesa.querySelector('.diferencaComparada')
 
-  if (valoresSomados < valoresAtuais) {
-    const porcentagem = +((valoresAtuais / valoresSomados) * 100).toFixed(0)
+  if (valoresAnteriores < valoresAtuais) {
+    const porcentagem = +((valoresAtuais / valoresAnteriores) * 100).toFixed(0)
 
-    const diferenca = valoresAtuais - valoresSomados
+    const diferenca = valoresAtuais - valoresAnteriores
 
-    if (porcentagem !== Infinity) {
-      porcentagemComparada.innerText = `${porcentagem}% a mais nos últimos`
-    } else if (porcentagem === Infinity) {
-      porcentagemComparada.innerText = `100% a mais nos últimos`
-    }
+    porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a mais nos últimos` : porcentagemComparada.innerText = `100% a mais nos últimos`
 
     diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = diferenca.toLocaleString('pt-BR')
+    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
 
-  } else if (valoresSomados > valoresAtuais) {
-    const porcentagem = +(valoresSomados / valoresAtuais * 100).toFixed(0)
+  } else if (valoresAnteriores > valoresAtuais) {
+    const porcentagem = +(valoresAnteriores / valoresAtuais * 100).toFixed(0)
 
-    const diferenca = valoresAtuais - valoresSomados
+    const diferenca = valoresAtuais - valoresAnteriores
 
-    if (porcentagem !== Infinity) {
-      porcentagemComparada.innerText = `${porcentagem}% a menos nos últimos`
-    } else if (porcentagem === Infinity) {
-      porcentagemComparada.innerText = `100% a mais nos últimos`
-    }
+    porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a menos nos últimos` : porcentagemComparada.innerText = `100% a menos nos últimos`
 
     diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = diferenca.toLocaleString('pt-BR')
-  } else if (valoresSomados === valoresAtuais) {
+    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
+  } else if (valoresAnteriores === valoresAtuais) {
+    const diferenca = valoresAtuais - valoresAnteriores
+
     porcentagemComparada.innerText = `0%  nos últimos`
     diasSpan.innerText = `${dias} dias`
+    diferencaComparada.innerText = `(R$${diferenca.toLocaleString('pt-BR')})`
   }
 
 
