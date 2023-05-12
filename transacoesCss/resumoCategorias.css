@@ -7,6 +7,10 @@
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.grafico-resumo-bg:last-child {
+  margin-right: 20px;
+}
+
 .grafico-resumo-bg p {
   margin-top: 12px;
   font-weight: 700;
