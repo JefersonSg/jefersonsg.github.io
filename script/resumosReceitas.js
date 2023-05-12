@@ -157,40 +157,24 @@ function organizaDivsValorCrescente() {
     })
 }
 
-// deixa a amostra apenas os 4 maiores valores gerais das categorias
-
-// function ocultaroQuartoItem() {
-//   const divs = graficoResumoReceita.querySelector('.resumosDivs')
-//   const categorias = divs.querySelectorAll('.informacoesDaCategoria')
-
-//   categorias.forEach((categoria) => {
-
-//     const valor = +categoria.querySelector('.valorTotalDaCategoria').innerText
-//     const atributo = categoria.getAttribute('style')
-//     if (atributo) {
-//       const numeroDaColuna = atributo.match(/\d+/g)
-//       if (numeroDaColuna > 4) {
-//         categoria.classList.add('ocultar')
-//       } else {
-//         categoria.classList.remove('ocultar')
-//       }
-//     } else if (!atributo && !categoria.classList.contains('ocultar')) {
-//       categoria.classList.add('ocultar')
-//     }
-
-//     if (valor === 0) {
-//       categoria.classList.add('ocultar')
-//     } else {
-//       categoria.classList.remove('ocultar')
-//     }
-    
-//   })
-// }
-
-// atualiza os valores dos spans de comparação
-
 function valoresComparados(dias) {
-  const valoresAtuais = +graficoResumoReceita.querySelector('.valorResumido').innerText.replace('R$ ', '').replace('.', '')
+  const valoresTotais = []
+
+  receitasLabel.forEach((receita) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+
+    const dataDaReceita = receita.querySelector('#data').innerText
+
+    if (dataDaReceita >= diasInseridos) {
+      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
+      valoresTotais.push(+valor)
+    }
+  })
+
+  let valoresAtuais = valoresTotais.reduce((acomulador, valoresAtuais) => +acomulador + valoresAtuais, 0,)
+  
   const diasComparados = dias * 2
 
   const Data = new Date()
@@ -253,7 +237,6 @@ function valoresComparados(dias) {
 }
 
 inserirValoresNaDiv(30)
-// ocultaroQuartoItem()
 valoresComparados(30)
 
 
@@ -275,28 +258,19 @@ graficoResumoReceita.addEventListener('click', function (e) {
   if (botaoClicado.innerText === '7 dias') {
     atualizaH3(7)
     valoresComparados(7)
+    inserirValoresNaDiv(7)
 
   } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3(30)
     valoresComparados(30)
+    inserirValoresNaDiv(30)
 
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3(90)
     valoresComparados(90)
-
-  }
-
-  if (botaoClicado.innerText === '7 dias') {
-    inserirValoresNaDiv(7)
-  }
-  else if (botaoClicado.innerText === '30 dias') {
-    inserirValoresNaDiv(30)
-  } else if (botaoClicado.innerText === '90 dias') {
     inserirValoresNaDiv(90)
+
   }
-
-  // cria as divs de resumo de receitas
-
 })
 
 
