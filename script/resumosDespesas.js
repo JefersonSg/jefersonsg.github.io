@@ -3,9 +3,12 @@ const graficoResumoDespesa = document.getElementById('graficoDespesa')
 const resumoDespesa = graficoResumoDespesa.querySelector('.valorResumido')
 const divResumo = graficoResumoDespesa.querySelector('.resumosDivs')
 const dives = divResumo.querySelectorAll('.informacoesDaCategoria')
+const usuarioAti = JSON.parse(localStorage.usuarioAtivo)
+const info = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAti.ID}`))
 
 
-const arrayResumoDespesa = infos[6] ? infos[6] : []
+
+const arrayResumoDespesa = info[6] ? info[6] : []
 
 
 let valoresTotaisGastos = []
@@ -46,7 +49,6 @@ function ValoresFiltradosPorDiasGasto(dias) {
     })
     let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
     arrayValoresColetadosGastos.push(valoresSomados)
-    console.log(valores)
   })
 }
 
@@ -202,90 +204,7 @@ function inserirValoresNaDivGastos(dias) {
   })
 }
 
-
-
-
-// atualiza os valores dos spans de comparação
-
-// function valoresComparadosGastos(dias) {
-//   const valoresTotais = []
-
-//   despesasLabel.forEach((despesa) => {
-//     const Data = new Date()
-//     Data.setDate(Data.getDate() - dias)
-//     const diasInseridos = Data.toISOString().slice(0, 10)
-
-//     const dataDadespesa = despesa.querySelector('#data').innerText
-
-//     if (dataDadespesa >= diasInseridos) {
-//       const valor = despesa.querySelector('#valor').innerText.replace('-R$ ', '')
-//       valoresTotais.push(+valor)
-//     }
-//   })
-
-//   let valoresAtuais = valoresTotais.reduce((acomulador, valoresAtuais) => +acomulador + valoresAtuais, 0,)
-//   const diasComparados = dias * 2
-
-//   const Data = new Date()
-//   const DataComparativa = new Date()
-//   Data.setDate(Data.getDate() - dias)
-//   DataComparativa.setDate(DataComparativa.getDate() - diasComparados)
-//   const diasInseridos = Data.toISOString().slice(0, 10)
-//   const dataComparativaLimpa = DataComparativa.toISOString().slice(0, 10)
-
-//   // coletar os valores 
-//   const valores = []
-
-//   despesasLabel.forEach((despesa) => {
-//     const data = despesa.querySelector('#data').innerText
-//     const valor = despesa.querySelector('#valor').innerText.replace('-R$ ', '')
-
-//     if (data <= diasInseridos && data >= dataComparativaLimpa) {
-//       valores.push(+valor)
-//     }
-//   })
-
-//   // inserir os valores
-
-//   let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
-
-
-//   const porcentagemComparada = graficoResumoDespesa.querySelector('.porcentagemComparada')
-//   const diasSpan = graficoResumoDespesa.querySelector('.diasComparados')
-//   const diferencaComparada = graficoResumoDespesa.querySelector('.diferencaComparada')
-
-//   if (valoresAnteriores < valoresAtuais) {
-//     const porcentagem = +((valoresAtuais / valoresAnteriores) * 100).toFixed(0)
-
-//     const diferenca = valoresAtuais - valoresAnteriores
-
-//     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a mais nos últimos` : porcentagemComparada.innerText = `100% a mais nos últimos`
-
-//     diasSpan.innerText = `${dias} dias`
-//     diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
-
-//   } else if (valoresAnteriores > valoresAtuais) {
-//     const porcentagem = +(valoresAnteriores / valoresAtuais * 100).toFixed(0)
-
-//     const diferenca = valoresAtuais - valoresAnteriores
-
-//     porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a menos nos últimos` : porcentagemComparada.innerText = `100% a menos nos últimos`
-
-//     diasSpan.innerText = `${dias} dias`
-//     diferencaComparada.innerText = `(-R$ ${diferenca.toLocaleString('pt-BR').replace('-','')})`
-//   } else if (valoresAnteriores === valoresAtuais) {
-//     const diferenca = valoresAtuais - valoresAnteriores
-
-//     porcentagemComparada.innerText = `0%  nos últimos`
-//     diasSpan.innerText = `${dias} dias`
-//     diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
-//   }
-
-// }
-
 inserirValoresNaDivGastos(30)
-// valoresComparadosGastos(30)
-
 
 graficoResumoDespesa.addEventListener('click', function (e) {
   const botoes = graficoResumoDespesa.querySelectorAll('.botoes-filtro')
