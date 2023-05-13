@@ -2,30 +2,142 @@ const receitasLabel = document.querySelectorAll('#vendaLabel')
 const graficoResumoReceita = document.getElementById('graficoReceita')
 const resumoReceita = graficoResumoReceita.querySelector('.valorResumido')
 const divResumos = graficoResumoReceita.querySelector('.resumosDivs')
+const divs = divResumos.querySelectorAll('.informacoesDaCategoria')
 const usuarioAtiv = JSON.parse(localStorage.usuarioAtivo)
 const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`))
 
 
 const arrayResumoReceitas = infos[7] ? infos[7] : []
 
-const valoresTotais = []
+let valoresTotais = []
 
 
 // função para adicionar valor a valoresTotais
+let arrayValoresColetados = []
+function coletarValores(dias) {
+  receitasLabel.forEach((receita) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+    const dataDaReceita = receita.querySelector('#data').innerText
 
-// RECEITA
-receitasLabel.forEach((receita) => {
-  const Data = new Date()
-  Data.setDate(Data.getDate() - 30)
-  const trintaDiasAtraz = Data.toISOString().slice(0, 10)
-  const dataDaReceita = receita.querySelector('#data').innerText
+    if (dataDaReceita >= diasInseridos) {
+      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
 
-  if (dataDaReceita > trintaDiasAtraz) {
-    const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
+      valoresTotais.push(+valor)
+    }
+  })
+}
 
-    valoresTotais.push(+valor)
-  }
-})
+function ValoresFiltradosPorDias(dias) {
+  arrayResumoReceitas.forEach((categoria) => {
+    const valores = []
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+
+    receitasLabel.forEach((receita) => {
+      const valor = +receita.querySelector('#valor').innerText.replace('+R$ ', '')
+      const comparador = receita.querySelector('#categoria').innerText
+      const dataDaReceita = receita.querySelector('#data').innerText
+
+      if (comparador === categoria && dataDaReceita >= diasInseridos) {
+        valores.push(valor)
+      }
+    })
+    let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+    arrayValoresColetados.push(valoresSomados)
+  })
+}
+
+// setar os valores
+function setarValores() {
+  arrayValoresColetados.sort((a, b) => b - a)
+  arrayValoresColetados.length = 4
+  divs.forEach((div, n) => {
+
+    const valorDiv = div.querySelector('.valorTotalDaCategoria')
+    const graficoVerde = div.querySelector('.graficoPorcentagem')
+    const porcentagemNumerica = div.querySelector('.porcentagemNumero')
+
+    let valoresSomados = valoresTotais.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+    const porcentagem = ((arrayValoresColetados[n] / valoresSomados) * 100).toFixed(0)
+    valorDiv.innerText = arrayValoresColetados[n]
+    graficoVerde.style.width = `${porcentagem}%`
+    porcentagemNumerica.innerText = `${porcentagem}%`
+  })
+  arrayValoresColetados = []
+  valoresTotais = []
+  escondeDivZerada()
+
+}
+
+// inserir o nome da categoria na div]
+
+
+function inserirCategoriaNaDiv(dias) {
+  let valores = []
+  let numero = 0
+
+  arrayResumoReceitas.forEach((categoria) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
+    receitasLabel.forEach((receita) => {
+      const dataDaReceita = receita.querySelector('#data').innerText
+      const comparador = receita.querySelector('#categoria').innerText
+      const valor = +receita.querySelector('#valor').innerText.replace('+R$ ', '')
+
+
+      if (comparador === categoria && dataDaReceita > diasInseridos) {
+        valores.push(valor)
+      }
+    })
+
+    let valoresTotais = valores.reduce((acomulador, valoresTotais) => +acomulador + valoresTotais, 0,)
+
+    if (valoresTotais !== 0) {
+
+      const nomePraAlterar = graficoResumoReceita.querySelectorAll('.nomeDaCategoria')
+
+      if (nomePraAlterar[numero]) {
+        nomePraAlterar[numero].innerText = categoria
+        numero++
+      }
+    }
+
+    valores = []
+  })
+  // if (categorias.length) {
+  //   let categoriasLimpa = [...new Set(categorias)];
+  //   categoriasLimpa.forEach((categoria, n) => {
+  //     const nome = graficoResumoReceita.querySelectorAll('.nomeDaCategoria')
+  //     if (nome[n]) {
+  //       nome[n].innerText = categoria
+  //     }
+  //   })
+  // }
+}
+
+// esconde div zerada
+
+function escondeDivZerada() {
+  const valores = graficoResumoReceita.querySelectorAll('.valorTotalDaCategoria')
+
+  valores.forEach((valor) => {
+    if (+valor.innerText === 0) {
+      valor.parentElement.classList.add('ocultar')
+    } else {
+      valor.parentElement.classList.remove('ocultar')
+    }
+  })
+}
+
+
+coletarValores(30)
+ValoresFiltradosPorDias(30)
+setarValores()
+inserirCategoriaNaDiv(30)
 
 // ao Click mudar as informacoes na tela por dias
 function atualizaH3(dias) {
@@ -51,198 +163,6 @@ function atualizaH3(dias) {
 }
 atualizaH3(30)
 
-
-
-// criar divis de resumos
-arrayResumoReceitas.forEach((categoria) => {
-  const divCategoria = document.createElement('div')
-  divCategoria.classList.add('informacoesDaCategoria')
-  divCategoria.classList.add('ocultar')
-  divCategoria.innerHTML = `
-      <h4 class="nomeDaCategoria">
-        ${categoria}
-      </h4>
-      <span class="graficoPorcentagem"></span>
-      <span class="porcentagemNumero">%</span>
-      <span id='${categoria}' class="valorTotalDaCategoria"></span>
-      `
-  divResumos.appendChild(divCategoria)
-})
-
-
-// insere os valores coletados em suas respectivas categorias
-
-function inserirValoresNaDiv(dias) {
-  const resumosCategorias = graficoResumoReceita.querySelectorAll('.informacoesDaCategoria')
-
-  resumosCategorias.forEach((categoria) => {
-    const Data = new Date()
-    Data.setDate(Data.getDate() - dias)
-    const diasInseridos = Data.toISOString().slice(0, 10)
-
-    const valores = []
-    const valorTotal = []
-
-
-    // coletar os valores
-
-    receitasLabel.forEach((receita) => {
-      const data = receita.querySelector('#data').innerText
-      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-
-      if (data >= diasInseridos) {
-        valorTotal.push(+valor)
-      }
-    })
-
-    receitasLabel.forEach((receita) => {
-      const nomeDaCategoria = categoria.querySelector('.nomeDaCategoria').innerText
-      const comparador = receita.querySelector('#categoria').innerText
-      const data = receita.querySelector('#data').innerText
-      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-
-      if (comparador === nomeDaCategoria && data >= diasInseridos) {
-        valores.push(+valor)
-      }
-    })
-
-    // insere os valores
-
-    const valorTotalDaCategoria = categoria.querySelector('.valorTotalDaCategoria')
-    const graficoVerde = categoria.querySelector('.graficoPorcentagem')
-    const textoPorcentagem = categoria.querySelector('.porcentagemNumero')
-
-    let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
-    let valorTotalSomado = valorTotal.reduce((acomulador, valorTotalSomado) => +acomulador + valorTotalSomado, 0,)
-    const porcentagem = ((valoresAnteriores / valorTotalSomado) * 100).toFixed(0)
-    graficoVerde.style.width = `${porcentagem}%`
-    valorTotalDaCategoria.innerText = valoresAnteriores
-    textoPorcentagem.innerText = `${porcentagem}%`
-  })
-  AddOculto()
-  organizaDivsValorCrescente()
-}
-
-// organiza do maior para o menor
-
-function AddOculto(){
-  const categorias = graficoResumoReceita.querySelectorAll('.informacoesDaCategoria')
-  categorias.forEach((categoria)=>{
-    if (!categoria.classList.contains('ocultar')) {
-      categoria.classList.add('ocultar')
-    }
-  })
-}
-
-function organizaDivsValorCrescente() {
-  // Seleciona todas as divs com a classe "valor"
-  const divs = graficoResumoReceita.querySelector('.resumosDivs')
-  const valores = divs.querySelectorAll('.valorTotalDaCategoria');
-  
-  
-  // Converte os valores em números e ordena em ordem decrescente
-  const valoresOrdenados = Array.from(valores)
-    .map(valor => parseInt(valor.textContent.replace('.','')))
-    .sort((a, b) => b - a);
-
-  // Cria um novo array com as divs reordenadas
-  const apenasOs4Primeiros = valoresOrdenados.slice(0,4)
-
-  apenasOs4Primeiros.forEach((numero, n)=>{
-    const valores = graficoResumoReceita.querySelectorAll('.valorTotalDaCategoria')
-    const topItens = Array.from(valores).find(valor => +valor.innerText === numero)
-
-    if (numero > 0) {
-      topItens.parentElement.style.gridRow = n + 1
-      topItens.parentElement.classList.remove('ocultar')
-    }
-    })
-}
-
-function valoresComparados(dias) {
-  const valoresTotais = []
-
-  receitasLabel.forEach((receita) => {
-    const Data = new Date()
-    Data.setDate(Data.getDate() - dias)
-    const diasInseridos = Data.toISOString().slice(0, 10)
-
-    const dataDaReceita = receita.querySelector('#data').innerText
-
-    if (dataDaReceita >= diasInseridos) {
-      const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-      valoresTotais.push(+valor)
-    }
-  })
-
-  let valoresAtuais = valoresTotais.reduce((acomulador, valoresAtuais) => +acomulador + valoresAtuais, 0,)
-  
-  const diasComparados = dias * 2
-
-  const Data = new Date()
-  const DataComparativa = new Date()
-  Data.setDate(Data.getDate() - dias)
-  DataComparativa.setDate(DataComparativa.getDate() - diasComparados)
-  const diasInseridos = Data.toISOString().slice(0, 10)
-  const dataComparativaLimpa = DataComparativa.toISOString().slice(0, 10)
-
-  // coletar os valores 
-  const valores = []
-
-  receitasLabel.forEach((receita) => {
-    const data = receita.querySelector('#data').innerText
-    const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
-
-    if (data <= diasInseridos && data >= dataComparativaLimpa) {
-      valores.push(+valor)
-    } else {
-      valores.push(0)
-    }
-  })
-
-
-  // inserir os valores
-
-  let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
-
-  const porcentagemComparada = graficoResumoReceita.querySelector('.porcentagemComparada')
-  const diasSpan = graficoResumoReceita.querySelector('.diasComparados')
-  const diferencaComparada = graficoResumoReceita.querySelector('.diferencaComparada')
-
-  if (valoresAnteriores < valoresAtuais) {
-    const porcentagem = +((valoresAtuais / valoresAnteriores) * 100).toFixed(0)
-    const diferenca = valoresAtuais - valoresAnteriores
-    console.log(porcentagem)
-
-    porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a mais nos últimos` : porcentagemComparada.innerText = `100% a mais nos últimos`
-
-    diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
-
-  } else if (valoresAnteriores > valoresAtuais) {
-    
-    const porcentagem = +(valoresAnteriores / valoresAtuais * 100).toFixed(0)
-    const diferenca = valoresAtuais - valoresAnteriores
-    porcentagemComparada.innerText = porcentagem !== Infinity ? `${porcentagem}% a menos nos últimos` : porcentagemComparada.innerText = `100% a menos nos últimos`
-
-    diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(-R$ ${diferenca.toLocaleString('pt-BR').replace('-', '')})`
-
-  } else if (valoresAnteriores === valoresAtuais) {
-    const diferenca = valoresAtuais - valoresAnteriores
-
-    porcentagemComparada.innerText = `0%  nos últimos`
-    diasSpan.innerText = `${dias} dias`
-    diferencaComparada.innerText = `(R$ ${diferenca.toLocaleString('pt-BR')})`
-
-  }
-}
-
-inserirValoresNaDiv(30)
-valoresComparados(30)
-
-
-
 graficoResumoReceita.addEventListener('click', function (e) {
   const botoes = graficoResumoReceita.querySelectorAll('.botoes-filtro')
   const botaoClicado = e.target
@@ -259,18 +179,25 @@ graficoResumoReceita.addEventListener('click', function (e) {
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
     atualizaH3(7)
-    valoresComparados(7)
-    inserirValoresNaDiv(7)
+    coletarValores(7)
+    ValoresFiltradosPorDias(7)
+    setarValores()
+    inserirCategoriaNaDiv(7)
 
   } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3(30)
-    valoresComparados(30)
-    inserirValoresNaDiv(30)
+    coletarValores(30)
+    ValoresFiltradosPorDias(30)
+    setarValores()
+    inserirCategoriaNaDiv(30)
+
 
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3(90)
-    valoresComparados(90)
-    inserirValoresNaDiv(90)
+    coletarValores(90)
+    ValoresFiltradosPorDias(90)
+    setarValores()
+    inserirCategoriaNaDiv(90)
 
   }
 })
