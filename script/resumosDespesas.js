@@ -24,9 +24,9 @@ function coletarValoresGasto(dias) {
     const dataDadespesa = despesa.querySelector('#data').innerText
 
     if (dataDadespesa >= diasInseridos) {
-      const valor = despesa.querySelector('#valor').innerText.replace('-R$ ', '')
+      const valor = +despesa.querySelector('#valor').innerText.replace('-R$ ', '')
 
-      valoresTotaisGastos.push(+valor)
+      valoresTotaisGastos.push(valor)
     }
   })
 }
@@ -48,23 +48,26 @@ function ValoresFiltradosPorDiasGasto(dias) {
       }
     })
     let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
-    arrayValoresColetadosGastos.push(valoresSomados)
+    arrayValoresColetadosGastos.push([valoresSomados, categoria])
   })
 }
-
 // setar os valores
 function setarValoresGasto() {
-  arrayValoresColetadosGastos.sort((a, b) => b - a)
+  arrayValoresColetadosGastos.sort((a, b) => b[0] - a[0])
   arrayValoresColetadosGastos.length = 4
+
   dives.forEach((div, n) => {
 
     const valorDiv = div.querySelector('.valorTotalDaCategoria')
     const graficoVerde = div.querySelector('.graficoPorcentagem')
     const porcentagemNumerica = div.querySelector('.porcentagemNumero')
+    const nomeDaCategoria = div.querySelector('.nomeDaCategoria')
 
     let valoresSomados = valoresTotaisGastos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
-    const porcentagem = ((arrayValoresColetadosGastos[n] / valoresSomados) * 100).toFixed(0)
-    valorDiv.innerText = arrayValoresColetadosGastos[n]
+    const porcentagem = ((arrayValoresColetadosGastos[n][0] / valoresSomados) * 100).toFixed(0)
+
+    nomeDaCategoria.innerText = arrayValoresColetadosGastos[n][1]
+    valorDiv.innerText = arrayValoresColetadosGastos[n][0]
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
   })
@@ -73,47 +76,13 @@ function setarValoresGasto() {
   escondeDivZeradaGasto()
 }
 
-// inserir o nome da categoria na div
-function inserirCategoriaNaDivGasto(dias) {
-  let valores = []
-  let numero = 0
-
-  arrayResumoDespesa.forEach((categoria) => {
-    const Data = new Date()
-    Data.setDate(Data.getDate() - dias)
-    const diasInseridos = Data.toISOString().slice(0, 10)
-    despesasLabel.forEach((despesa) => {
-      const dataDadespesa = despesa.querySelector('#data').innerText
-      const comparador = despesa.querySelector('#categoria').innerText
-      const valor = +despesa.querySelector('#valor').innerText.replace('+R$ ', '')
-
-
-      if (comparador === categoria && dataDadespesa > diasInseridos) {
-        valores.push(valor)
-      }
-    })
-
-    let valoresTotais = valores.reduce((acomulador, valoresTotais) => +acomulador + valoresTotais, 0,)
-
-    if (valoresTotais !== 0) {
-
-      const nomePraAlterar = graficoResumoDespesa.querySelectorAll('.nomeDaCategoria')
-
-      if (nomePraAlterar[numero]) {
-        nomePraAlterar[numero].innerText = categoria
-        numero++
-      }
-    }
-    valores = []
-  })
-}
-
 // esconde div zerada
 
 function escondeDivZeradaGasto() {
   const valores = graficoResumoDespesa.querySelectorAll('.valorTotalDaCategoria')
 
   valores.forEach((valor) => {
+    console.log(valor.innerText)
     if (+valor.innerText === 0) {
       valor.parentElement.classList.add('ocultar')
     } else {
@@ -125,7 +94,6 @@ function escondeDivZeradaGasto() {
 coletarValoresGasto(30)
 ValoresFiltradosPorDiasGasto(30)
 setarValoresGasto()
-inserirCategoriaNaDivGasto(30)
 
 // ao Click mudar as informacoes na tela por dias
 function atualizaH3Gastos(dias) {
@@ -149,62 +117,6 @@ function atualizaH3Gastos(dias) {
 }
 atualizaH3Gastos(30)
 
-// insere os valores coletados em suas respectivas categorias
-
-function inserirValoresNaDivGastos(dias) {
-  const resumosCategorias = graficoResumoDespesa.querySelectorAll('.informacoesDaCategoria')
-
-  resumosCategorias.forEach((categoria) => {
-    const Data = new Date()
-    Data.setDate(Data.getDate() - dias)
-    const diasInseridos = Data.toISOString().slice(0, 10)
-
-    const valores = []
-    const valorTotal = []
-
-
-    // coletar os valores
-
-    despesasLabel.forEach((despesa) => {
-      const data = despesa.querySelector('#data').innerText
-      const valor = despesa.querySelector('#valor').innerText.replace('-R$ ', '')
-
-      if (data >= diasInseridos) {
-        valorTotal.push(+valor)
-      }
-    })
-
-    despesasLabel.forEach((despesa) => {
-      const nomeDaCategoria = categoria.querySelector('.nomeDaCategoria').innerText
-      const comparador = despesa.querySelector('#categoria').innerText
-      const data = despesa.querySelector('#data').innerText
-      const valor = despesa.querySelector('#valor').innerText.replace('-R$ ', '')
-
-      if (comparador === nomeDaCategoria && data >= diasInseridos) {
-        valores.push(+valor)
-      }
-    })
-
-
-    // insere os valores
-
-    const valorTotalDaCategoria = categoria.querySelector('.valorTotalDaCategoria')
-    const graficoVermelho = categoria.querySelector('.graficoPorcentagem')
-    const textoPorcentagem = categoria.querySelector('.porcentagemNumero')
-
-
-    let valoresAnteriores = valores.reduce((acomulador, valoresAnteriores) => +acomulador + valoresAnteriores, 0,)
-    let valorTotalSomado = valorTotal.reduce((acomulador, valorTotalSomado) => +acomulador + valorTotalSomado, 0,)
-    const porcentagem = ((valoresAnteriores / valorTotalSomado) * 100).toFixed(0)
-    graficoVermelho.style.width = `${porcentagem}%`
-
-
-    valorTotalDaCategoria.innerText = valoresAnteriores.toLocaleString('pt-BR')
-    textoPorcentagem.innerText = `${porcentagem}%`
-  })
-}
-
-inserirValoresNaDivGastos(30)
 
 graficoResumoDespesa.addEventListener('click', function (e) {
   const botoes = graficoResumoDespesa.querySelectorAll('.botoes-filtro')
@@ -225,31 +137,19 @@ graficoResumoDespesa.addEventListener('click', function (e) {
     coletarValoresGasto(7)
     ValoresFiltradosPorDiasGasto(7)
     setarValoresGasto()
-    inserirCategoriaNaDivGasto(7)
 
   } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3Gastos(30)
     coletarValoresGasto(30)
     ValoresFiltradosPorDiasGasto(30)
     setarValoresGasto()
-    inserirCategoriaNaDivGasto(30)
 
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3Gastos(90)
     coletarValoresGasto(90)
     ValoresFiltradosPorDiasGasto(90)
     setarValoresGasto()
-    inserirCategoriaNaDivGasto(90)
 
-  }
-
-  if (botaoClicado.innerText === '7 dias') {
-    inserirValoresNaDivGastos(7)
-  }
-  else if (botaoClicado.innerText === '30 dias') {
-    inserirValoresNaDivGastos(30)
-  } else if (botaoClicado.innerText === '90 dias') {
-    inserirValoresNaDivGastos(90)
   }
 
   // cria as divs de resumo de despesas
