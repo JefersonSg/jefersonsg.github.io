@@ -31,199 +31,201 @@
   </header>
   <section class="graficos-container">
 
-    <div class="grafico-bg">
-      <div class="botoes-filtro-bg">
-        <nav>
-          <button class="botoes-filtro">
-            7 dias
-          </button>
-          <button class="botoes-filtro ativo">
-            30 dias
-          </button>
-          <button class="botoes-filtro">
-            90 dias
-          </button>
-        </nav>
-      </div>
-      <div class="gragico" style="width: 150px;">
-        <canvas id="myChart"></canvas>
-      </div>
-      <div class="resumo">
-        <div class="resumo-ganhos">
-          <div class="div-setaUp">
-            <img class="setaUp" src="./img/transacoes/setaUp.svg" alt="Seta para o auto">
+    <div class="slide">
+      <div class="grafico-bg">
+        <div class="botoes-filtro-bg">
+          <nav>
+            <button class="botoes-filtro">
+              7 dias
+            </button>
+            <button class="botoes-filtro ativo">
+              30 dias
+            </button>
+            <button class="botoes-filtro">
+              90 dias
+            </button>
+          </nav>
+        </div>
+        <div class="gragico" style="width: 150px;">
+          <canvas id="myChart"></canvas>
+        </div>
+        <div class="resumo">
+          <div class="resumo-ganhos">
+            <div class="div-setaUp">
+              <img class="setaUp" src="./img/transacoes/setaUp.svg" alt="Seta para o auto">
+            </div>
+            <div>
+              <p>Ganhos</p>
+              <span class="ganho-span">R$ 0,00</span>
+            </div>
           </div>
-          <div>
-            <p>Ganhos</p>
-            <span class="ganho-span">R$ 0,00</span>
+          <div class="resumo-emprestimos">
+            <div class="div-bloco">
+            </div>
+            <div>
+              <p>Emprestimos</p>
+              <span class="emprestimo-span">R$ 0,00</span>
+            </div>
+          </div>
+          <div class="resumo-gastos">
+            <div class="div-setaDown">
+              <img class="setaDown" src="./img/transacoes/setaDown.svg" alt="Seta para baixo">
+            </div>
+            <div>
+              <p>Gastos</p>
+              <span class="gasto-span">R$ 0,00</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="grafico-resumo-bg" id="graficoReceita">
+        <div class="botoes-filtro-bg">
+          <nav>
+            <button class="botoes-filtro">
+              7 dias
+            </button>
+            <button class="botoes-filtro ativo">
+              30 dias
+            </button>
+            <button class="botoes-filtro">
+              90 dias
+            </button>
+          </nav>
+        </div>
+        <p>Resumo de suas receitas</p>
+        <span class="valorResumido">R$ 00,00</span>
+        <span class="porcentagensAtuais">
+          <span class="porcentagemComparada">0% nos ultimos dias</span><span class="diasComparados"></span>
+          <span class="diferencaComparada">(R$00,00)</span>
+        </span>
+        <div class="resumosDivs">
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
           </div>
         </div>
-        <div class="resumo-emprestimos">
-          <div class="div-bloco">
+      </div>
+
+      <div class="grafico-resumo-bg" id="graficoDespesa">
+        <div class="botoes-filtro-bg">
+          <nav>
+            <button class="botoes-filtro">
+              7 dias
+            </button>
+            <button class="botoes-filtro ativo">
+              30 dias
+            </button>
+            <button class="botoes-filtro">
+              90 dias
+            </button>
+          </nav>
+        </div>
+        <p>Resumo de suas despesas</p>
+        <span class="valorResumido">R$ 00,00</span>
+        <span class="porcentagensAtuais">
+          <span class="porcentagemComparada">0% nos ultimos dias</span>
+          <span class="diasComparados"></span>
+          <span class="diferencaComparada">(R$00,00)</span>
+        </span>
+        <div class="resumosDivs">
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
           </div>
-          <div>
-            <p>Emprestimos</p>
-            <span class="emprestimo-span">R$ 0,00</span>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
           </div>
         </div>
-        <div class="resumo-gastos">
-          <div class="div-setaDown">
-            <img class="setaDown" src="./img/transacoes/setaDown.svg" alt="Seta para baixo">
+      </div>
+
+
+      <div class="grafico-resumo-bg" id="graficoEmprestimo">
+        <div class="botoes-filtro-bg">
+          <nav>
+            <button class="botoes-filtro">
+              7 dias
+            </button>
+            <button class="botoes-filtro ativo">
+              30 dias
+            </button>
+            <button class="botoes-filtro">
+              90 dias
+            </button>
+          </nav>
+        </div>
+        <p>Resumo de seus Emprestimos</p>
+        <span class="valorResumido">R$ 00,00</span>
+        <span class="porcentagensAtuais">
+          <span class="lucrosSomados">Lucrou R$ 0,00 nos últimos 30 dias</span>
+          <span class="diasComparados"></span>
+        </span>
+        <div class="resumosDivs">
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
           </div>
-          <div>
-            <p>Gastos</p>
-            <span class="gasto-span">R$ 0,00</span>
+
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
           </div>
-        </div>
 
-      </div>
-    </div>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
 
-    <div class="grafico-resumo-bg" id="graficoReceita">
-      <div class="botoes-filtro-bg">
-        <nav>
-          <button class="botoes-filtro">
-            7 dias
-          </button>
-          <button class="botoes-filtro ativo">
-            30 dias
-          </button>
-          <button class="botoes-filtro">
-            90 dias
-          </button>
-        </nav>
-      </div>
-      <p>Resumo de suas receitas</p>
-      <span class="valorResumido">R$ 00,00</span>
-      <span class="porcentagensAtuais">
-        <span class="porcentagemComparada">0% nos ultimos dias</span><span class="diasComparados"></span>
-        <span class="diferencaComparada">(R$00,00)</span>
-      </span>
-      <div class="resumosDivs">
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-      </div>
-    </div>
-
-    <div class="grafico-resumo-bg" id="graficoDespesa">
-      <div class="botoes-filtro-bg">
-        <nav>
-          <button class="botoes-filtro">
-            7 dias
-          </button>
-          <button class="botoes-filtro ativo">
-            30 dias
-          </button>
-          <button class="botoes-filtro">
-            90 dias
-          </button>
-        </nav>
-      </div>
-      <p>Resumo de suas despesas</p>
-      <span class="valorResumido">R$ 00,00</span>
-      <span class="porcentagensAtuais">
-        <span class="porcentagemComparada">0% nos ultimos dias</span>
-        <span class="diasComparados"></span>
-        <span class="diferencaComparada">(R$00,00)</span>
-      </span>
-      <div class="resumosDivs">
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="grafico-resumo-bg" id="graficoEmprestimo">
-      <div class="botoes-filtro-bg">
-        <nav>
-          <button class="botoes-filtro">
-            7 dias
-          </button>
-          <button class="botoes-filtro ativo">
-            30 dias
-          </button>
-          <button class="botoes-filtro">
-            90 dias
-          </button>
-        </nav>
-      </div>
-      <p>Resumo de seus Emprestimos</p>
-      <span class="valorResumido">R$ 00,00</span>
-      <span class="porcentagensAtuais">
-        <span class="lucrosSomados">Lucrou R$ 0,00 nos últimos 30 dias</span>
-        <span class="diasComparados"></span>
-      </span>
-      <div class="resumosDivs">
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
-        </div>
-
-        <div class="informacoesDaCategoria">
-          <h4 class="nomeDaCategoria"></h4>
-          <span class="graficoPorcentagem"></span>
-          <span class="porcentagemNumero"></span>
-          <span class="valorTotalDaCategoria"></span>
+          <div class="informacoesDaCategoria">
+            <h4 class="nomeDaCategoria"></h4>
+            <span class="graficoPorcentagem"></span>
+            <span class="porcentagemNumero"></span>
+            <span class="valorTotalDaCategoria"></span>
+          </div>
         </div>
       </div>
     </div>
@@ -264,6 +266,7 @@
 <script src="./script/resumosDespesas.js"></script>
 <script src="./script/resumoEmprestimos.js"></script>
 <script src="./script/transacaoEdit.js"></script>
+<script src="./script/slide.js"></script>
 <script src="./script/charts.js"></script>
 <script src="./script/contaTransacaoEdit.js"></script>
 

@@ -1,16 +1,11 @@
 /* graficos */
 
 .graficos-container {
-  display: flex;
-  overflow: auto;
+  overflow: hidden;
   background: linear-gradient(180.52deg, #009FE3 8.62%, rgba(240, 240, 240, 0) 45.11%);
   margin: 0 auto;
-  padding: 10px 0px;
-  gap: 20px;
-  padding-top: 8px;
-  margin-top: -1px;
+  padding: 10px 0;
 }
-
 
 .grafico-bg {
   width: 80vw;
