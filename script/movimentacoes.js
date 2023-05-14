@@ -785,7 +785,7 @@ function criarPaineis() {
 
   ls.forEach((v, n) => {
     const div = document.createElement('li');
-    const edit = document.createElement('div');
+    const edit = document.createElement('form');
     div.classList.add('movimentacoesLista');
     div.setAttribute('label', n)
     if (n > 9) {
@@ -813,22 +813,22 @@ function criarPaineis() {
               <p>Editar Despesa</p>
             </div>
             <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="text" name='nome' id="nomeEdit">
+            <label for="nomeEdit">Nome</label>
+            <input readonly type="text" name='nomeEdit' id="nomeEdit">
             
-                      <label for="valor">Valor</label>
-                      <input readonly type="number" id="valorEdit">
+                      <label for="valorEdit">Valor</label>
+                      <input readonly name="valorEdit" type="number" id="valorEdit">
   
-            <label for="data">Data</label>
-            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+            <label for="dataInfo">Data</label>
+            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="dataInfo" />
 
-            <label for="categoria">Categoria</label>
-            <select disabled id="categoriaEdit" name="categoria" >
+            <label for="categoriaEdit">Categoria</label>
+            <select disabled id="categoriaEdit" name="categoriaEdit" >
 
             </select>
 
-            <label for="parcelas">Parcelas</label>
-            <select disabled readonly name="parcelas" id="parcelasEdit">
+            <label for="parcelasEdit">Parcelas</label>
+            <select disabled readonly name="parcelasEdit" id="parcelasEdit">
                 <option  style="display:none ;" value="0">parcelas 0x</option>
                 <option value="1">Parcelas 1x</option>
                 <option value="2">Parcelas 2x</option>
@@ -883,22 +883,22 @@ function criarPaineis() {
               <p>Editar Receita</p>
             </div>
             <span id="fecharEdit">X</span>
-            <label for="nome">Nome</label>
-            <input readonly type="nome" id="nomeEdit">
+            <label for="nomeEdit">Nome</label>
+            <input name="nome" readonly type="nomeEdit" id="nomeEdit">
             
-            <label for="valor">Valor</label>
-            <input readonly type="number" id="valorEdit">
+            <label for="valorEdit">Valor</label>
+            <input readonly name="valorEdit" type="number" id="valorEdit">
   
-            <label for="data">Data</label>
-            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+            <label for="dataInfo">Data</label>
+            <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="dataInfo" />
 
-            <label for="categoria">Categoria</label>
-            <select disabled id="categoriaEdit" name="categoria" >
+            <label for="categoriaEdit">Categoria</label>
+            <select disabled id="categoriaEdit" name="categoriaEdit" >
 
             </select>
 
-            <label for="parcelas">Parcelas</label>
-            <select disabled readonly name="parcelas" id="parcelasEdit">
+            <label for="parcelasEdit">Parcelas</label>
+            <select disabled readonly name="parcelasEdit" id="parcelasEdit">
               <option value="1">Parcelas 1x</option>
               <option value="2">Parcelas 2x</option>
               <option value="3">Parcelas 3x</option>
@@ -954,20 +954,20 @@ function criarPaineis() {
         valor.style.color = condicao === 'Transferencia recebida' ? 'green' : ''
         valor.style.fontWeight = condicao === 'Transferencia recebida' ? '600' : ''
       })
-      edit.innerHTML = `        
+      edit.innerHTML = `
             <div class="editValue"  numero="${n}">
               <div class="form-img">
                 <p>Editar Transferencia</p>
               </div>
               <span id="fecharEdit">X</span>
-              <label for="nome">Nome</label>
-              <input readonly type="nome" id="nomeEdit">
+              <label for="nomeEdit">Nome</label>
+              <input readonly name="nomeEdit" type="nome" id="nomeEdit">
               
-              <label for="valor">Valor</label>
-              <input readonly type="number" id="valorEdit">
+              <label for="valorEdit">Valor</label>
+              <input readonly name="valorEdit" type="number" id="valorEdit">
   
-              <label for="data">Data</label>
-              <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
+              <label for="dataInfo">Data</label>
+              <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="dataInfo" />
 
               <div class="botaoEdit">
                 <button type="button" id="editar"></button>
@@ -1006,17 +1006,17 @@ function criarPaineis() {
                 <p>Editar Emprestimo</p>
               </div>
               <span id="fecharEdit">X</span>
-              <label for="nome">Nome</label>
-              <input readonly type="nome" id="nomeEdit">
+              <label for="nomeEdit">Nome</label>
+              <input readonly name="nomeEdit" type="nome" id="nomeEdit">
               
-              <label for="valor">Valor</label>
-              <input readonly type="number" id="valorEdit">
+              <label for="valorEdit">Valor</label>
+              <input readonly name="valorEdit" type="number" id="valorEdit">
   
               <label for="data">Data</label>
               <input readonly type="date" lang="pt-BR" format="dd/mm/yyyy" ;" id="dataInfo" name="data" />
   
-            <label for="parcelas">Parcelas</label>
-            <select disabled readonly name="parcelas" id="parcelasEdit">
+            <label for="parcelasEdit">Parcelas</label>
+            <select disabled readonly name="parcelasEdit" id="parcelasEdit">
               <option  style="display:none ;" value="0">parcelas 0x</option>
               <option value="1">Parcelas 1x</option>
               <option value="2">Parcelas 2x</option>
