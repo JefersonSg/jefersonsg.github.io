@@ -36,6 +36,14 @@
   color: #CF0032;
 }
 
+#graficoEmprestimo .valorResumido {
+  color: #6D29D3;
+}
+
+#graficoEmprestimo .porcentagensAtuais::before {
+  background-color: #6D29D3;
+}
+
 #graficoDespesa .porcentagensAtuais::before {
   background-color: #F92828;
 }
@@ -71,15 +79,6 @@
   margin-left: 16px;
 }
 
-.informacoesDaCategoria.zero {
-  position: absolute;
-  z-index: -1000;
-  opacity: 0;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-}
 
 .informacoesDaCategoria.ocultar {
   position: absolute;
@@ -110,6 +109,10 @@
 
 #graficoDespesa .graficoPorcentagem {
   background-color: #F92828;
+}
+
+#graficoEmprestimo .graficoPorcentagem {
+  background-color: #6D29D3;
 }
 
 .valorTotalDaCategoria {

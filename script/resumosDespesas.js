@@ -79,7 +79,6 @@ function valoresComparadosGasto(dias) {
   const diasSpan = graficoResumoDespesa.querySelector('.diasComparados')
   const diferencaComparada = graficoResumoDespesa.querySelector('.diferencaComparada')
   const porcentagem = +((valoresAtuaisSomados / valoresAnterioresSomados) * 100).toFixed(0)
-  console.log(valoresAtuaisSomados, valoresAnterioresSomados)
 
   if (valoresAnterioresSomados < valoresAtuaisSomados) {
     const diferenca = valoresAtuaisSomados - valoresAnterioresSomados
