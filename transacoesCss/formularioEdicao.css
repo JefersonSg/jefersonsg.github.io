@@ -172,6 +172,7 @@
 
 .confirmar {
   position: absolute;
+  top: 30%;
   display: none;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
