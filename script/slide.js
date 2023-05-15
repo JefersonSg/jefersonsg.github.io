@@ -97,4 +97,4 @@ class Slide {
 const slide = new Slide('.slide', '.graficos-container')
 
 slide.init()
-slide.changeSlide(3)
+slide.changeSlide(0)
