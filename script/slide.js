@@ -70,11 +70,7 @@ class Slide {
     this.wrapper.addEventListener("touchend", this.onEnd)
   }
 
-  bindEvents(){
-    this.onStart = this.onStart.bind(this)
-    this.onMove = this.onMove.bind(this)
-    this.onEnd = this.onEnd.bind(this)
-  }
+
 
   slidePosition(slide){
     const margin = (this.wrapper.offsetWidth - slide.offsetWidth) / 2
@@ -115,11 +111,30 @@ class Slide {
     }
   }
   
+  onResize(){
+    setTimeout(()=>{
+      this.slidesConfig()
+      this.changeSlide(this.index.active);
+    },1000)
+  }
+
+  addResizeEvent(){
+    window.addEventListener('resize',this.onResize);
+  }
+
+  bindEvents(){
+    this.onStart = this.onStart.bind(this)
+    this.onMove = this.onMove.bind(this)
+    this.onEnd = this.onEnd.bind(this)
+    this.onResize = this.onResize.bind(this)
+  }
+
   init() {
     this.bindEvents();
     this.transiton(true)
     this.addSlideEvents();
     this.slidesConfig()
+    this.addResizeEvent()
     return this;
   }
 }
