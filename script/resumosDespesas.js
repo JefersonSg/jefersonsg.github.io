@@ -177,9 +177,11 @@ function setarValoresGasto() {
     porcentagemNumerica.innerText = `${porcentagem}%`
 
 
+    // deixar divs zeradas ocultas
+
     valorDiv.parentElement.classList.remove('ocultar')
     if (valorDiv.innerText == 0) {
-      console.log(valorDiv.parentElement.classList.add('ocultar'))
+      valorDiv.parentElement.classList.add('ocultar')
     }
   })
   arrayValoresColetadosGastos = []
@@ -187,20 +189,6 @@ function setarValoresGasto() {
 
 }
 
-// esconde div zerada
-
-// function escondeDivZeradaGasto() {
-//   const valores = graficoResumoDespesa.querySelectorAll('.valorTotalDaCategoria')
-
-//   setTimeout(() => {
-//     valores.forEach((valor) => {
-//       console.log(valor)
-//       if (+valor.innerText === 0) {
-//         valor.parentElement.classList.add('ocultar')
-//       }
-//     })
-//   }, 200)
-// }
 atualizaH3Gastos(30)
 valoresComparadosGasto(30)
 coletarValoresGasto(30)

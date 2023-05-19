@@ -112,7 +112,7 @@ function setarValoresEmprestimos(dias) {
 
     valorDiv.parentElement.classList.remove('ocultar')
     if (valorDiv.innerText == 0) {
-      console.log(valorDiv.parentElement.classList.add('ocultar'))
+      valorDiv.parentElement.classList.add('ocultar')
     }
   })
 
