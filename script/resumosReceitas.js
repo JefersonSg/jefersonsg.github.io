@@ -176,25 +176,18 @@ function setarValores() {
     valorDiv.innerText = arrayValoresColetados[n][0]
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
+
+    
+    // deixar divs zeradas ocultas
+
+    valorDiv.parentElement.classList.remove('ocultar')
+    if (valorDiv.innerText == 0) {
+      console.log(valorDiv.parentElement.classList.add('ocultar'))
+    }
   })
   arrayValoresColetados = []
   valoresTotais = []
-  escondeDivZerada()
 
-}
-
-// esconde div zerada
-
-function escondeDivZerada() {
-  const valores = graficoResumoReceita.querySelectorAll('.valorTotalDaCategoria')
-
-  valores.forEach((valor) => {
-    if (+valor.innerText === 0) {
-      valor.parentElement.classList.add('ocultar')
-    } else {
-      valor.parentElement.classList.remove('ocultar')
-    }
-  })
 }
 
 atualizaH3(30)

@@ -171,35 +171,42 @@ function setarValoresGasto() {
 
     let valoresSomados = valoresTotaisGastos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
     const porcentagem = ((arrayValoresColetadosGastos[n][0] / valoresSomados) * 100).toFixed(0)
-
     nomeDaCategoria.innerText = arrayValoresColetadosGastos[n][1]
     valorDiv.innerText = arrayValoresColetadosGastos[n][0]
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
+
+
+    valorDiv.parentElement.classList.remove('ocultar')
+    if (valorDiv.innerText == 0) {
+      console.log(valorDiv.parentElement.classList.add('ocultar'))
+    }
   })
   arrayValoresColetadosGastos = []
   valoresTotaisGastos = []
-  escondeDivZeradaGasto()
+
 }
 
 // esconde div zerada
 
-function escondeDivZeradaGasto() {
-  const valores = graficoResumoDespesa.querySelectorAll('.valorTotalDaCategoria')
+// function escondeDivZeradaGasto() {
+//   const valores = graficoResumoDespesa.querySelectorAll('.valorTotalDaCategoria')
 
-  valores.forEach((valor) => {
-    if (+valor.innerText === 0) {
-      valor.parentElement.classList.add('ocultar')
-    } else {
-      valor.parentElement.classList.remove('ocultar')
-    }
-  })
-}
+//   setTimeout(() => {
+//     valores.forEach((valor) => {
+//       console.log(valor)
+//       if (+valor.innerText === 0) {
+//         valor.parentElement.classList.add('ocultar')
+//       }
+//     })
+//   }, 200)
+// }
 atualizaH3Gastos(30)
 valoresComparadosGasto(30)
 coletarValoresGasto(30)
 ValoresFiltradosPorDiasGasto(30)
 setarValoresGasto()
+
 
 graficoResumoDespesa.addEventListener('click', function (e) {
   const botoes = graficoResumoDespesa.querySelectorAll('.botoes-filtro')
@@ -229,12 +236,14 @@ graficoResumoDespesa.addEventListener('click', function (e) {
     ValoresFiltradosPorDiasGasto(30)
     setarValoresGasto()
 
+
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3Gastos(90)
     valoresComparadosGasto(90)
     coletarValoresGasto(90)
     ValoresFiltradosPorDiasGasto(90)
     setarValoresGasto()
+
 
   }
 

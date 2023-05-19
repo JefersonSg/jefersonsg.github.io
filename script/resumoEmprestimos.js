@@ -46,25 +46,25 @@ function coletarValoresEmprestimos(dias) {
 // atualiza o span de lucros
 
 function atualizaLucros() {
-  
+
 }
 
 function ValoresFiltradosPorDiasEmprestimos(dias) {
-    emprestimosLabels.forEach((emprestimo) => {
-      const Data = new Date()
-      Data.setDate(Data.getDate() - dias)
-      const diasInseridos = Data.toISOString().slice(0, 10)
+  emprestimosLabels.forEach((emprestimo) => {
+    const Data = new Date()
+    Data.setDate(Data.getDate() - dias)
+    const diasInseridos = Data.toISOString().slice(0, 10)
 
 
-      const nomeDoEmprestimo = emprestimo.querySelector('#nomeMov').innerText.replace('Emprestou para ','')
-      const valor = +emprestimo.querySelector('#valor').innerText.replace('-R$ ', '')
-      const dataDoEmprestimo = emprestimo.querySelector('#data').innerText
-      const lucro = emprestimo.querySelector('.diferenca').innerText.replace('R$ ', '')
+    const nomeDoEmprestimo = emprestimo.querySelector('#nomeMov').innerText.replace('Emprestou para ', '')
+    const valor = +emprestimo.querySelector('#valor').innerText.replace('-R$ ', '')
+    const dataDoEmprestimo = emprestimo.querySelector('#data').innerText
+    const lucro = emprestimo.querySelector('.diferenca').innerText.replace('R$ ', '')
 
-      if (dataDoEmprestimo >= diasInseridos) {
-        arrayValoresColetadosEmprestimos.push([valor,nomeDoEmprestimo,lucro])
-      }
-    })
+    if (dataDoEmprestimo >= diasInseridos) {
+      arrayValoresColetadosEmprestimos.push([valor, nomeDoEmprestimo, lucro])
+    }
+  })
 }
 
 // setar os valores
@@ -78,7 +78,7 @@ function setarValoresEmprestimos(dias) {
   } else {
     lucrosDiv.innerText = `Lucrou R$ 0,00  nos últimos ${dias} dias`
   }
-  
+
   arrayValoresColetadosEmprestimos.sort((a, b) => b[0] - a[0])
   arrayValoresColetadosEmprestimos.length = 4
 
@@ -92,40 +92,34 @@ function setarValoresEmprestimos(dias) {
     const nomeDaCategoria = div.querySelector('.nomeDaCategoria')
 
     let valoresSomados = valoresTotaisEmprestimos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
-    
 
-if (arrayValoresColetadosEmprestimos[n] !== undefined) {
+
+    if (arrayValoresColetadosEmprestimos[n] !== undefined) {
       const porcentagem = ((arrayValoresColetadosEmprestimos[n][0] / valoresSomados) * 100).toFixed(0)
-    porcentagemNumerica.innerText = `${porcentagem}%`
-    graficoRocho.style.width = `${porcentagem}%`
-    valorDiv.innerText = arrayValoresColetadosEmprestimos[n][0]
-    nomeDaCategoria.innerText = arrayValoresColetadosEmprestimos[n][1]
+      porcentagemNumerica.innerText = `${porcentagem}%`
+      graficoRocho.style.width = `${porcentagem}%`
+      valorDiv.innerText = arrayValoresColetadosEmprestimos[n][0]
+      nomeDaCategoria.innerText = arrayValoresColetadosEmprestimos[n][1]
 
-} else if (!arrayValoresColetadosEmprestimos[n] !== undefined){
-  porcentagemNumerica.innerText = '0%'
-  graficoRocho.style.width = `0%`
-  valorDiv.innerText = 0
-  nomeDaCategoria.innerText = ''
+    } else if (!arrayValoresColetadosEmprestimos[n] !== undefined) {
+      porcentagemNumerica.innerText = '0%'
+      graficoRocho.style.width = `0%`
+      valorDiv.innerText = 0
+      nomeDaCategoria.innerText = ''
+    }
 
-}
+    // deixar divs zeradas ocultas
 
-    
-  })
-  arrayValoresColetadosEmprestimos = []
-  valoresTotaisEmprestimos = []
-  escondeDivZeradaGasto()
-}
-// esconde div zerada
-function escondeDivZeradaGasto() {
-  const valores = graficoResumoEmprestimos.querySelectorAll('.valorTotalDaCategoria')
-  valores.forEach((valor) => {
-    if (+valor.innerText === 0) {
-      valor.parentElement.classList.add('ocultar')
-    } else {
-      valor.parentElement.classList.remove('ocultar')
+    valorDiv.parentElement.classList.remove('ocultar')
+    if (valorDiv.innerText == 0) {
+      console.log(valorDiv.parentElement.classList.add('ocultar'))
     }
   })
+
+  arrayValoresColetadosEmprestimos = []
+  valoresTotaisEmprestimos = []
 }
+
 
 atualizaH3Emprestimos(30)
 coletarValoresEmprestimos(30)
@@ -149,22 +143,22 @@ graficoResumoEmprestimos.addEventListener('click', function (e) {
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
     atualizaH3Emprestimos(7)
-coletarValoresEmprestimos(7)
-ValoresFiltradosPorDiasEmprestimos(7)
-setarValoresEmprestimos(7)
-atualizaLucros()
+    coletarValoresEmprestimos(7)
+    ValoresFiltradosPorDiasEmprestimos(7)
+    setarValoresEmprestimos(7)
+    atualizaLucros()
   } else if (botaoClicado.innerText === '30 dias') {
     atualizaH3Emprestimos(30)
-coletarValoresEmprestimos(30)
-ValoresFiltradosPorDiasEmprestimos(30)
-setarValoresEmprestimos(30)
-atualizaLucros()
+    coletarValoresEmprestimos(30)
+    ValoresFiltradosPorDiasEmprestimos(30)
+    setarValoresEmprestimos(30)
+    atualizaLucros()
   } else if (botaoClicado.innerText === '90 dias') {
     atualizaH3Emprestimos(90)
-coletarValoresEmprestimos(90)
-ValoresFiltradosPorDiasEmprestimos(90)
-setarValoresEmprestimos(90)
-atualizaLucros()
+    coletarValoresEmprestimos(90)
+    ValoresFiltradosPorDiasEmprestimos(90)
+    setarValoresEmprestimos(90)
+    atualizaLucros()
   }
 
   // cria as divs de resumo de despesas
