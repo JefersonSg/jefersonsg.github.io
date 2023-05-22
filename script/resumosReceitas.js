@@ -81,10 +81,9 @@ function valoresComparados(dias) {
   const diasSpan = graficoResumoReceita.querySelector('.diasComparados')
   const diferencaComparada = graficoResumoReceita.querySelector('.diferencaComparada')
   const porcentagem = +((valoresAtuaisSomados / valoresAnterioresSomados) * 100).toFixed(0)
-
   if (valoresAnterioresSomados < valoresAtuaisSomados) {
     const diferenca = valoresAtuaisSomados - valoresAnterioresSomados
-
+    
     if (porcentagem !== Infinity) {
       porcentagemComparada.innerText = `${porcentagem}% a mais nos últimos`
     } else if (porcentagem === Infinity) {
