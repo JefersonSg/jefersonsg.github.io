@@ -23,11 +23,10 @@ function atualizaH3Gastos(dias) {
     if (dataDaDespesa >= diasInseridos) {
       const valor = Despesa.querySelector('#valor').innerText.replace('-R$ ', '')
       valoresTotais.push(+valor)
-
-      let valoresTotaisAnvaloresAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
-
-      resumoDespesa.innerText = `R$ ${valoresTotaisAnvaloresAnteriores.toLocaleString('pt-BR')}`
     }
+    let valoresTotaisAnvaloresAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
+
+    resumoDespesa.innerText = `R$ ${valoresTotaisAnvaloresAnteriores.toLocaleString('pt-BR')}`
   })
 }
 

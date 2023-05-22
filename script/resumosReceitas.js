@@ -25,12 +25,10 @@ function atualizaH3(dias) {
     if (dataDaReceita >= diasInseridos) {
       const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
       valoresTotais.push(+valor)
-
-
-      let valoresTotaisAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
-
-      resumoReceita.innerText = `R$ ${valoresTotaisAnteriores.toLocaleString('pt-BR')}`
     }
+    let valoresTotaisAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
+
+    resumoReceita.innerText = `R$ ${valoresTotaisAnteriores.toLocaleString('pt-BR')}`
   })
 }
 

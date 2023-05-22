@@ -7,7 +7,6 @@ const divsEmprestimo = divResumoEmprestimo.querySelectorAll('.informacoesDaCateg
 // ao Click mudar as informacoes na tela por dias
 function atualizaH3Emprestimos(dias) {
   const valoresTotais = []
-
   emprestimosLabels.forEach((Emprestimo) => {
     const Data = new Date()
     Data.setDate(Data.getDate() - dias)
@@ -16,11 +15,9 @@ function atualizaH3Emprestimos(dias) {
     if (dataDoEmprestimo >= diasInseridos) {
       const valor = Emprestimo.querySelector('#valor').innerText.replace('-R$ ', '')
       valoresTotais.push(+valor)
-
-      let valoresTotaisAnvaloresAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
-
-      resumoEmprestimos.innerText = `R$ ${valoresTotaisAnvaloresAnteriores.toLocaleString('pt-BR')}`
     }
+    let valoresTotaisAnvaloresAnteriores = valoresTotais.reduce((acomulador, valorAtual) => +acomulador + valorAtual, 0,)
+    resumoEmprestimos.innerText = `R$ ${(valoresTotaisAnvaloresAnteriores).toLocaleString('pt-BR')}`
   })
 }
 let valoresTotaisEmprestimos = []
@@ -37,7 +34,6 @@ function coletarValoresEmprestimos(dias) {
 
     if (dataDaEmprestimo >= diasInseridos) {
       const valor = +Emprestimo.querySelector('#valor').innerText.replace('-R$ ', '')
-
       valoresTotaisEmprestimos.push(valor)
     }
   })
@@ -85,7 +81,6 @@ function setarValoresEmprestimos(dias) {
 
 
   divsEmprestimo.forEach((div, n) => {
-
     const valorDiv = div.querySelector('.valorTotalDaCategoria')
     const graficoRocho = div.querySelector('.graficoPorcentagem')
     const porcentagemNumerica = div.querySelector('.porcentagemNumero')
@@ -160,7 +155,4 @@ graficoResumoEmprestimos.addEventListener('click', function (e) {
     setarValoresEmprestimos(90)
     atualizaLucros()
   }
-
-  // cria as divs de resumo de despesas
-
 })
