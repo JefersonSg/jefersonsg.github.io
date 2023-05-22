@@ -28,6 +28,7 @@ class Slide {
       movetype = 'touchmove';
     }
 
+
     this.wrapper.addEventListener(movetype, this.onMove)
     this.transiton(false)
   }
@@ -38,10 +39,12 @@ class Slide {
   }
 
   onMove(event) {
-    const pointerPosition = (event.type === 'mousemove') ? event.clientX : event.changedTouches[0].clientX;
 
+    const pointerPosition = (event.type === 'mousemove') ? event.clientX : event.changedTouches[0].clientX;
     const finalPosition = this.updatePosition(pointerPosition)
-    if (this.index.prev && this.index.next < 3) {
+
+
+    if (finalPosition < this.slideArray[0].position && finalPosition > this.slideArray[3].position) {
       this.moveSlide(finalPosition)
     }
   }
@@ -63,6 +66,7 @@ class Slide {
         this.activePrevSlide()
       }
     }
+    this.dist.movement = 0
   }
 
   addSlideEvents() {
