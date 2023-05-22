@@ -5,6 +5,8 @@ class Slide {
     this.dist = {
       finalPosition: 0, startX: 0, movement: 0
     }
+    this.activeClass = 'active'
+    this.changeEvent = new Event('changeEvent')
   }
 
   transiton(active) {
@@ -39,7 +41,6 @@ class Slide {
   }
 
   onMove(event) {
-
     const pointerPosition = (event.type === 'mousemove') ? event.clientX : event.changedTouches[0].clientX;
     const finalPosition = this.updatePosition(pointerPosition)
 
@@ -103,6 +104,8 @@ class Slide {
     this.moveSlide(activeSlide.position)
     this.slideIndexNav(index)
     this.dist.finalPosition = activeSlide.position
+    this.wrapper.dispatchEvent(this.changeEvent);
+
   }
 
   activePrevSlide() {
@@ -123,6 +126,8 @@ class Slide {
     }, 1000)
   }
 
+
+
   addResizeEvent() {
     window.addEventListener('resize', this.onResize);
   }
@@ -134,17 +139,62 @@ class Slide {
     this.onResize = this.onResize.bind(this)
   }
 
+  createControl() {
+    const control = document.createElement('ul')
+    control.dataset.control = 'slide'
+
+    this.slideArray.forEach((item, index) => {
+      control.innerHTML += `<li><a href="#slide${index}">${index}</a></li>`
+    })
+
+    this.wrapper.appendChild(control)
+    return control
+  }
+  eventControl(item, index) {
+    item.addEventListener('click', (event) => {
+      event.preventDefault()
+      this.changeSlide(index)
+      this.activeControlItem()
+    });
+    this.wrapper.addEventListener('changeEvent', this.activeControlItem);
+  }
+
+  activeControlItem() {
+    this.controlArray.forEach((item) => {
+      item.classList.remove(this.activeClass)
+    })
+    this.controlArray[this.index.active].classList.add(this.activeClass)
+  }
+
+  addControl() {
+    this.control = this.createControl()
+    this.controlArray = [...this.control.children]
+    this.activeControlItem()
+    this.controlArray.forEach(this.eventControl)
+  }
+
+  bindControlEvents() {
+    this.eventControl = this.eventControl.bind(this)
+    this.activeControlItem = this.activeControlItem.bind(this)
+  }
+
   init() {
     this.bindEvents();
     this.transiton(true)
     this.addSlideEvents();
     this.slidesConfig()
     this.addResizeEvent()
+    this.bindControlEvents()
     return this;
   }
 }
 
 const slide = new Slide('.slide', '.graficos-container')
 
+
+
+
+
 slide.init()
 slide.changeSlide(0)
+slide.addControl()
