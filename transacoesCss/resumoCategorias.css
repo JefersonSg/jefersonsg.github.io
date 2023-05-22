@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 .grafico-resumo-bg {
   width: 80vw;
   height: 250px;
@@ -91,6 +95,7 @@
 }
 
 
+
 .informacoesDaCategoria.ocultar {
   position: absolute;
   z-index: -1000;
@@ -118,10 +123,12 @@
   transition: all .3s;
 }
 
+#todasAsAtividadesDespesa .graficoPorcentagem,
 #graficoDespesa .graficoPorcentagem {
   background-color: #F92828;
 }
 
+#todasAsAtividadesEmprestimo .graficoPorcentagem,
 #graficoEmprestimo .graficoPorcentagem {
   background-color: #6D29D3;
 }
@@ -151,4 +158,51 @@
 [data-control="slide"] li.active a,
 [data-control="slide"] li a:hover {
   background-color: #595959;
+}
+
+.todasAsAtividadesBg {
+  display: none;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 20000;
+  backdrop-filter: blur(2px);
+}
+
+.todasAsAtividadesBg.ativo {
+  display: grid;
+}
+
+.todasAsAtividades {
+  position: absolute;
+  left: 50%;
+  transform: translate3d(-50%, 100px, 0);
+  height: auto;
+  min-height: 300px;
+  padding: 20px;
+  width: 80vw;
+  width: 80vw;
+  font-family: 'roboto', sans-serif;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  top: 40px;
+}
+
+.todasAsAtividades .fechar {
+  display: grid;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  border-radius: 13px;
+  border: 1px solid black;
+
 }

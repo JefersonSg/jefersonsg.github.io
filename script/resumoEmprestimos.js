@@ -21,9 +21,11 @@ function atualizaH3Emprestimos(dias) {
   })
 }
 let valoresTotaisEmprestimos = []
+let valoresTotaisEmprestimosResumoTotal = []
 
 // função para adicionar valor a valoresTotais
 let arrayValoresColetadosEmprestimos = []
+let arrayValoresColetadosEmprestimoResumoTotal =[]
 
 function coletarValoresEmprestimos(dias) {
   emprestimosLabels.forEach((Emprestimo) => {
@@ -35,6 +37,7 @@ function coletarValoresEmprestimos(dias) {
     if (dataDaEmprestimo >= diasInseridos) {
       const valor = +Emprestimo.querySelector('#valor').innerText.replace('-R$ ', '')
       valoresTotaisEmprestimos.push(valor)
+      valoresTotaisEmprestimosResumoTotal.push(valor)
     }
   })
 }
@@ -59,6 +62,7 @@ function ValoresFiltradosPorDiasEmprestimos(dias) {
 
     if (dataDoEmprestimo >= diasInseridos) {
       arrayValoresColetadosEmprestimos.push([valor, nomeDoEmprestimo, lucro])
+      arrayValoresColetadosEmprestimoResumoTotal.push([valor, nomeDoEmprestimo, lucro])
     }
   })
 }
@@ -76,9 +80,8 @@ function setarValoresEmprestimos(dias) {
   }
 
   arrayValoresColetadosEmprestimos.sort((a, b) => b[0] - a[0])
-  arrayValoresColetadosEmprestimos.length = 4
-
-
+  const novoArrayValoresTop4 = arrayValoresColetadosEmprestimos.map(item => item)
+  novoArrayValoresTop4.length = 4
 
   divsEmprestimo.forEach((div, n) => {
     const valorDiv = div.querySelector('.valorTotalDaCategoria')
@@ -89,14 +92,14 @@ function setarValoresEmprestimos(dias) {
     let valoresSomados = valoresTotaisEmprestimos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
 
 
-    if (arrayValoresColetadosEmprestimos[n] !== undefined) {
-      const porcentagem = ((arrayValoresColetadosEmprestimos[n][0] / valoresSomados) * 100).toFixed(0)
+    if (novoArrayValoresTop4[n] !== undefined) {
+      const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
       porcentagemNumerica.innerText = `${porcentagem}%`
       graficoRocho.style.width = `${porcentagem}%`
-      valorDiv.innerText = arrayValoresColetadosEmprestimos[n][0]
-      nomeDaCategoria.innerText = arrayValoresColetadosEmprestimos[n][1]
+      valorDiv.innerText = novoArrayValoresTop4[n][0]
+      nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
 
-    } else if (!arrayValoresColetadosEmprestimos[n] !== undefined) {
+    } else if (!novoArrayValoresTop4[n] !== undefined) {
       porcentagemNumerica.innerText = '0%'
       graficoRocho.style.width = `0%`
       valorDiv.innerText = 0
@@ -115,12 +118,82 @@ function setarValoresEmprestimos(dias) {
   valoresTotaisEmprestimos = []
 }
 
+// cria as divs
+function criaAsDivsEmprestimo() {
+  const divPaiEmprestimo = document.querySelector('#todasAsAtividadesEmprestimo')
+  valoresTotaisEmprestimosResumoTotal.forEach(()=>{
+    const div = document.createElement('div')
+    div.classList.add('informacoesDaCategoria')
+  
+    div.innerHTML = `<h4 class="nomeDaCategoria"></h4>
+    <span class="graficoPorcentagem"></span>
+    <span class="porcentagemNumero"></span>
+    <span class="valorTotalDaCategoria"></span>`
+    divPaiEmprestimo.appendChild(div)
+  })
+}
+
+// adiciona ativo e abre o bg
+const divPaiEmprestimo = document.querySelector('#todasAsAtividadesEmprestimo')
+
+function addAtivoEmprestimo() {
+  divPaiEmprestimo.parentElement.classList.add('ativo')
+  criaAsDivsEmprestimo()
+  adicionaValoresATodasAsAtividadesEmprestimo()
+}
+
+  // fechar o bg
+  const fecharEmprestimo = divPaiEmprestimo.querySelector('.fechar')
+
+  fecharEmprestimo.addEventListener('click', ()=>{
+      const divPaiEmprestimo = document.querySelector('#todasAsAtividadesEmprestimo')
+      const divs = divPaiEmprestimo.querySelectorAll('.informacoesDaCategoria')
+      divs.forEach((div)=>{
+        div.remove()
+      })
+        divPaiEmprestimo.parentElement.classList.remove('ativo')
+    })
+
+
+// adiciona os valores nas suas divs
+function adicionaValoresATodasAsAtividadesEmprestimo() {
+  arrayValoresColetadosEmprestimoResumoTotal.sort((a, b) => b[0] - a[0])
+  console.log(arrayValoresColetadosEmprestimoResumoTotal)
+  const novoArrayValores =  arrayValoresColetadosEmprestimoResumoTotal.map(item => item)
+  let valoresSomados = valoresTotaisEmprestimosResumoTotal.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+
+  // setar valores
+  novoArrayValores.forEach((valor,n)=>{
+    const divs = divPaiEmprestimo.querySelectorAll('.informacoesDaCategoria')
+    const nomeCategoria = divs[n].querySelector('.nomeDaCategoria')
+    const valorCategoria = divs[n].querySelector('.valorTotalDaCategoria')
+    const graficoPorcentagem = divs[n].querySelector('.graficoPorcentagem')
+    const porcentagemNumero = divs[n].querySelector('.porcentagemNumero')
+    
+
+  const porcentagem = +((valor[0] / valoresSomados) * 100).toFixed(0)
+
+    nomeCategoria.innerText = valor[1]
+    graficoPorcentagem.style.width = `${porcentagem}%`
+    porcentagemNumero.innerText = `${porcentagem}%`
+    valorCategoria.innerText = valor[0]
+
+    // esconder divs zeradas
+    if (valor[0] === 0) {
+      divs[n].classList.add('ocultar')
+    } else {
+      divs[n].classList.remove('ocultar')
+    }
+  })
+ }
+
 
 atualizaH3Emprestimos(30)
 coletarValoresEmprestimos(30)
 ValoresFiltradosPorDiasEmprestimos(30)
 setarValoresEmprestimos(30)
 atualizaLucros()
+
 
 graficoResumoEmprestimos.addEventListener('click', function (e) {
   const botoes = graficoResumoEmprestimos.querySelectorAll('.botoes-filtro')
@@ -137,22 +210,36 @@ graficoResumoEmprestimos.addEventListener('click', function (e) {
 
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
+    valoresTotaisEmprestimosResumoTotal = []
+    arrayValoresColetadosEmprestimoResumoTotal = []
     atualizaH3Emprestimos(7)
     coletarValoresEmprestimos(7)
     ValoresFiltradosPorDiasEmprestimos(7)
     setarValoresEmprestimos(7)
     atualizaLucros()
   } else if (botaoClicado.innerText === '30 dias') {
+    valoresTotaisEmprestimosResumoTotal = []
+    arrayValoresColetadosEmprestimoResumoTotal = []
     atualizaH3Emprestimos(30)
     coletarValoresEmprestimos(30)
     ValoresFiltradosPorDiasEmprestimos(30)
     setarValoresEmprestimos(30)
     atualizaLucros()
   } else if (botaoClicado.innerText === '90 dias') {
+    valoresTotaisEmprestimosResumoTotal = []
+    arrayValoresColetadosEmprestimoResumoTotal = []
     atualizaH3Emprestimos(90)
     coletarValoresEmprestimos(90)
     ValoresFiltradosPorDiasEmprestimos(90)
     setarValoresEmprestimos(90)
     atualizaLucros()
   }
+})
+
+graficoResumoEmprestimos.addEventListener('click', function (event) {
+  const botoesFiltros = graficoResumoEmprestimos.querySelectorAll('.botoes-filtro')
+  const botaoClicado = [...botoesFiltros].filter(botao => botao === event.target)
+  if (!botaoClicado.length) {
+    addAtivoEmprestimo()
+  } 
 })

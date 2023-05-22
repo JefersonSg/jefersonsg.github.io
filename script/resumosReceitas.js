@@ -9,6 +9,7 @@ const infos = JSON.parse(localStorage.getItem(`informacoes_id${usuarioAtiv.ID}`)
 const arrayResumoReceitas = infos[7] ? infos[7] : []
 
 let valoresTotais = []
+let valoresTotaisResumoTotal = []
 
 
 // ao Click mudar as informacoes na tela por dias
@@ -118,6 +119,8 @@ function valoresComparados(dias) {
 
 // função para adicionar valor a valoresTotais
 let arrayValoresColetados = []
+let arrayValoresColetadosResumoTotal = []
+
 function coletarValores(dias) {
   receitasLabel.forEach((receita) => {
     const Data = new Date()
@@ -128,6 +131,7 @@ function coletarValores(dias) {
     if (dataDaReceita >= diasInseridos) {
       const valor = receita.querySelector('#valor').innerText.replace('+R$ ', '')
       valoresTotais.push(+valor)
+      valoresTotaisResumoTotal.push(+valor)
     }
   })
 }
@@ -150,27 +154,27 @@ function ValoresFiltradosPorDias(dias) {
     })
     let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
     arrayValoresColetados.push([valoresSomados, categoria])
+    arrayValoresColetadosResumoTotal.push([valoresSomados, categoria])
   })
 }
 
 // setar os valores
-
 function setarValores() {
   arrayValoresColetados.sort((a, b) => b[0] - a[0])
-  arrayValoresColetados.length = 4
+ const novoArrayValoresTop4 = arrayValoresColetados.map(item => item)
+ novoArrayValoresTop4.length = 4
 
   divs.forEach((div, n) => {
-
     const valorDiv = div.querySelector('.valorTotalDaCategoria')
     const graficoVerde = div.querySelector('.graficoPorcentagem')
     const porcentagemNumerica = div.querySelector('.porcentagemNumero')
     const nomeDaCategoria = div.querySelector('.nomeDaCategoria')
 
     let valoresSomados = valoresTotais.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
-    const porcentagem = ((arrayValoresColetados[n][0] / valoresSomados) * 100).toFixed(0)
+    const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
 
-    nomeDaCategoria.innerText = arrayValoresColetados[n][1]
-    valorDiv.innerText = arrayValoresColetados[n][0]
+    nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
+    valorDiv.innerText = novoArrayValoresTop4[n][0]
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
 
@@ -182,18 +186,85 @@ function setarValores() {
       valorDiv.parentElement.classList.add('ocultar')
     }
   })
+
   arrayValoresColetados = []
   valoresTotais = []
 
 }
 
-atualizaH3(30)
-coletarValores(30)
-ValoresFiltradosPorDias(30)
-setarValores()
-valoresComparados(30)
+// cria as divs
+function criaAsDivs() {
+  const novoArrayValores =  arrayResumoReceitas.map(item => item)
+  novoArrayValores.forEach(()=>{
+  const divPai = document.querySelector('#todasAsAtividadesReceita')
+
+    const div = document.createElement('div')
+    div.classList.add('informacoesDaCategoria')
+  
+    div.innerHTML = `<h4 class="nomeDaCategoria"></h4>
+    <span class="graficoPorcentagem"></span>
+    <span class="porcentagemNumero"></span>
+    <span class="valorTotalDaCategoria"></span>`
+    divPai.appendChild(div)
+
+  })
+}
+criaAsDivs()
+
+// adiciona ativo e abre o bg
+const divPai = document.querySelector('#todasAsAtividadesReceita')
+
+function addAtivoReceita() {
+  divPai.parentElement.classList.add('ativo')
+  adicionaValores()
+}
 
 
+
+// fechar o bg
+const fechar = divPai.querySelector('.fechar')
+
+fechar.addEventListener('click', ()=>{
+    divPai.parentElement.classList.remove('ativo')
+  })
+
+// adiciona os valores nas suas divs
+function adicionaValores() {
+  arrayValoresColetadosResumoTotal.sort((a, b) => b[0] - a[0])
+  
+  const novoArrayValores =  arrayValoresColetadosResumoTotal.map(item => item)
+  let valoresSomados = valoresTotaisResumoTotal.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+
+  // setar valores
+  novoArrayValores.forEach((valor,n)=>{
+    const divs = divPai.querySelectorAll('.informacoesDaCategoria')
+    const nomeCategoria = divs[n].querySelector('.nomeDaCategoria')
+    const valorCategoria = divs[n].querySelector('.valorTotalDaCategoria')
+    const graficoPorcentagem = divs[n].querySelector('.graficoPorcentagem')
+    const porcentagemNumero = divs[n].querySelector('.porcentagemNumero')
+    
+
+  const porcentagem = +((valor[0] / valoresSomados) * 100).toFixed(0)
+
+    nomeCategoria.innerText = valor[1]
+    graficoPorcentagem.style.width = `${porcentagem}%`
+    porcentagemNumero.innerText = `${porcentagem}%`
+    valorCategoria.innerText = valor[0]
+
+    // esconder divs zeradas
+    if (valor[0] === 0) {
+      divs[n].classList.add('ocultar')
+    } else {
+      divs[n].classList.remove('ocultar')
+    }
+  })
+ }
+ 
+ atualizaH3(30)
+ coletarValores(30)
+ ValoresFiltradosPorDias(30)
+ setarValores()
+ valoresComparados(30)
 
 graficoResumoReceita.addEventListener('click', function (e) {
   const botoes = graficoResumoReceita.querySelectorAll('.botoes-filtro')
@@ -210,6 +281,8 @@ graficoResumoReceita.addEventListener('click', function (e) {
 
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
+    arrayValoresColetadosResumoTotal = []
+    valoresTotaisResumoTotal = []
     atualizaH3(7)
     valoresComparados(7)
     coletarValores(7)
@@ -217,6 +290,8 @@ graficoResumoReceita.addEventListener('click', function (e) {
     setarValores()
 
   } else if (botaoClicado.innerText === '30 dias') {
+    arrayValoresColetadosResumoTotal = []
+    valoresTotaisResumoTotal = []
     atualizaH3(30)
     valoresComparados(30)
     coletarValores(30)
@@ -225,6 +300,8 @@ graficoResumoReceita.addEventListener('click', function (e) {
 
 
   } else if (botaoClicado.innerText === '90 dias') {
+    arrayValoresColetadosResumoTotal = []
+    valoresTotaisResumoTotal = []
     atualizaH3(90)
     valoresComparados(90)
     coletarValores(90)
@@ -232,3 +309,13 @@ graficoResumoReceita.addEventListener('click', function (e) {
     setarValores()
   }
 })
+graficoResumoReceita.addEventListener('click', function (event) {
+  const botoesFiltros = graficoResumoReceita.querySelectorAll('.botoes-filtro')
+  const botaoClicado = [...botoesFiltros].filter(botao => botao === event.target)
+  if (!botaoClicado.length) {
+    addAtivoReceita()
+  } 
+})
+
+
+

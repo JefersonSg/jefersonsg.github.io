@@ -14,6 +14,24 @@
 </head>
 
 <body>
+  <div class="todasAsAtividadesBg">
+    <div id="todasAsAtividadesReceita" class="todasAsAtividades">
+      <span class="fechar">X</span>
+    </div>
+  </div>
+
+  <div class="todasAsAtividadesBg">
+    <div id="todasAsAtividadesDespesa" class="todasAsAtividades">
+      <span class="fechar">X</span>
+    </div>
+  </div>
+  <div class="todasAsAtividadesBg">
+    <div id="todasAsAtividadesEmprestimo" class="todasAsAtividades">
+      <span class="fechar">X</span>
+    </div>
+  </div>
+
+
   <header class="header">
     <nav class="perfil">
       <ul class="perfil-ul">
@@ -29,6 +47,7 @@
       </li>
     </nav>
   </header>
+
   <section class="graficos-container">
 
     <div class="slide">
@@ -49,6 +68,7 @@
         <div class="gragico" style="width: 150px;">
           <canvas id="myChart"></canvas>
         </div>
+
         <div class="resumo">
           <div class="resumo-ganhos">
             <div class="div-setaUp">
@@ -59,6 +79,7 @@
               <span class="ganho-span">R$ 0,00</span>
             </div>
           </div>
+
           <div class="resumo-emprestimos">
             <div class="div-bloco">
             </div>
@@ -67,6 +88,7 @@
               <span class="emprestimo-span">R$ 0,00</span>
             </div>
           </div>
+
           <div class="resumo-gastos">
             <div class="div-setaDown">
               <img class="setaDown" src="./img/transacoes/setaDown.svg" alt="Seta para baixo">
@@ -125,6 +147,7 @@
             <span class="valorTotalDaCategoria"></span>
           </div>
         </div>
+
       </div>
 
       <div class="grafico-resumo-bg" id="graficoDespesa">
@@ -174,8 +197,8 @@
             <span class="valorTotalDaCategoria"></span>
           </div>
         </div>
-      </div>
 
+      </div>
 
       <div class="grafico-resumo-bg" id="graficoEmprestimo">
         <div class="botoes-filtro-bg">
@@ -256,6 +279,7 @@
     </div>
   </section>
   <div id="editores"></div>
+
 
 </body>
 <script src="./script/returnIndex.js"></script>

@@ -117,9 +117,11 @@ function valoresComparadosGasto(dias) {
 }
 
 let valoresTotaisGastos = []
+let valoresTotaisGastosResumoTotal = []
 
 // função para adicionar valor a valoresTotais
 let arrayValoresColetadosGastos = []
+let arrayValoresColetadosGastosResumoTotal = []
 
 function coletarValoresGasto(dias) {
   despesasLabel.forEach((despesa) => {
@@ -132,6 +134,7 @@ function coletarValoresGasto(dias) {
       const valor = +despesa.querySelector('#valor').innerText.replace('-R$ ', '')
 
       valoresTotaisGastos.push(valor)
+      valoresTotaisGastosResumoTotal.push(valor)
     }
   })
 }
@@ -154,12 +157,15 @@ function ValoresFiltradosPorDiasGasto(dias) {
     })
     let valoresSomados = valores.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
     arrayValoresColetadosGastos.push([valoresSomados, categoria])
+    arrayValoresColetadosGastosResumoTotal.push([valoresSomados, categoria])
+
   })
 }
 // setar os valores
 function setarValoresGasto() {
   arrayValoresColetadosGastos.sort((a, b) => b[0] - a[0])
-  arrayValoresColetadosGastos.length = 4
+  const novoArrayValoresTop4 = arrayValoresColetadosGastos.map(item => item)
+  novoArrayValoresTop4.length = 4
 
   dives.forEach((div, n) => {
 
@@ -169,9 +175,9 @@ function setarValoresGasto() {
     const nomeDaCategoria = div.querySelector('.nomeDaCategoria')
 
     let valoresSomados = valoresTotaisGastos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
-    const porcentagem = ((arrayValoresColetadosGastos[n][0] / valoresSomados) * 100).toFixed(0)
-    nomeDaCategoria.innerText = arrayValoresColetadosGastos[n][1]
-    valorDiv.innerText = arrayValoresColetadosGastos[n][0]
+    const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
+    nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
+    valorDiv.innerText = novoArrayValoresTop4[n][0]
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
 
@@ -187,6 +193,71 @@ function setarValoresGasto() {
   valoresTotaisGastos = []
 
 }
+
+// cria as divs
+function criaAsDivsGastos() {
+  const novoArrayValores =  arrayResumoDespesa.map(item => item)
+  novoArrayValores.forEach(()=>{
+  const divPaiGasto = document.querySelector('#todasAsAtividadesDespesa')
+
+    const div = document.createElement('div')
+    div.classList.add('informacoesDaCategoria')
+  
+    div.innerHTML = `<h4 class="nomeDaCategoria"></h4>
+    <span class="graficoPorcentagem"></span>
+    <span class="porcentagemNumero"></span>
+    <span class="valorTotalDaCategoria"></span>`
+    divPaiGasto.appendChild(div)
+  })
+}
+criaAsDivsGastos()
+
+// adiciona ativo e abre o bg
+const divPaiGasto = document.querySelector('#todasAsAtividadesDespesa')
+
+function addAtivoGastos() {
+  divPaiGasto.parentElement.classList.add('ativo')
+  adicionaValoresATodasAsAtividadesGastos()
+}
+
+// fechar o bg
+const fecharGasto = divPaiGasto.querySelector('.fechar')
+
+fecharGasto.addEventListener('click', ()=>{
+    divPaiGasto.parentElement.classList.remove('ativo')
+  })
+
+// adiciona os valores nas suas divs
+function adicionaValoresATodasAsAtividadesGastos() {
+  arrayValoresColetadosGastosResumoTotal.sort((a, b) => b[0] - a[0])
+  
+  const novoArrayValores =  arrayValoresColetadosGastosResumoTotal.map(item => item)
+  let valoresSomados = valoresTotaisGastosResumoTotal.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
+
+  // setar valores
+  novoArrayValores.forEach((valor,n)=>{
+    const divs = divPaiGasto.querySelectorAll('.informacoesDaCategoria')
+    const nomeCategoria = divs[n].querySelector('.nomeDaCategoria')
+    const valorCategoria = divs[n].querySelector('.valorTotalDaCategoria')
+    const graficoPorcentagem = divs[n].querySelector('.graficoPorcentagem')
+    const porcentagemNumero = divs[n].querySelector('.porcentagemNumero')
+    
+
+  const porcentagem = +((valor[0] / valoresSomados) * 100).toFixed(0)
+
+    nomeCategoria.innerText = valor[1]
+    graficoPorcentagem.style.width = `${porcentagem}%`
+    porcentagemNumero.innerText = `${porcentagem}%`
+    valorCategoria.innerText = valor[0]
+
+    // esconder divs zeradas
+    if (valor[0] === 0) {
+      divs[n].classList.add('ocultar')
+    } else {
+      divs[n].classList.remove('ocultar')
+    }
+  })
+ }
 
 atualizaH3Gastos(30)
 valoresComparadosGasto(30)
@@ -210,6 +281,8 @@ graficoResumoDespesa.addEventListener('click', function (e) {
 
   // atualiza o valor do h3 
   if (botaoClicado.innerText === '7 dias') {
+    arrayValoresColetadosGastosResumoTotal = []
+    valoresTotaisGastosResumoTotal = []
     atualizaH3Gastos(7)
     valoresComparadosGasto(7)
     coletarValoresGasto(7)
@@ -217,6 +290,8 @@ graficoResumoDespesa.addEventListener('click', function (e) {
     setarValoresGasto()
 
   } else if (botaoClicado.innerText === '30 dias') {
+    arrayValoresColetadosGastosResumoTotal = []
+    valoresTotaisGastosResumoTotal = []
     atualizaH3Gastos(30)
     valoresComparadosGasto(30)
     coletarValoresGasto(30)
@@ -225,6 +300,8 @@ graficoResumoDespesa.addEventListener('click', function (e) {
 
 
   } else if (botaoClicado.innerText === '90 dias') {
+    arrayValoresColetadosGastosResumoTotal = []
+    valoresTotaisGastosResumoTotal = []
     atualizaH3Gastos(90)
     valoresComparadosGasto(90)
     coletarValoresGasto(90)
@@ -236,4 +313,11 @@ graficoResumoDespesa.addEventListener('click', function (e) {
 
   // cria as divs de resumo de despesas
 
+})
+graficoResumoDespesa.addEventListener('click', function (event) {
+  const botoesFiltros = graficoResumoDespesa.querySelectorAll('.botoes-filtro')
+  const botaoClicado = [...botoesFiltros].filter(botao => botao === event.target)
+  if (!botaoClicado.length) {
+    addAtivoGastos()
+  } 
 })
