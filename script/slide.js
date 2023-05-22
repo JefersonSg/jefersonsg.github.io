@@ -60,10 +60,12 @@ class Slide {
 
   changeSlideOnEnd() {
     if (this.dist.movement) {
-      if (this.dist.movement > 50 && this.index.next !== undefined) {
+      if (this.dist.movement > 80 && this.index.next !== undefined) {
         this.activeNextSlide()
-      } else if (this.dist.movement < -50 && this.index.prev !== undefined) {
+      } else if (this.dist.movement < -80 && this.index.prev !== undefined) {
         this.activePrevSlide()
+      } else {
+        this.changeSlide(this.index.active)
       }
     }
     this.dist.movement = 0
