@@ -222,11 +222,20 @@ function addAtivoReceita() {
 
 
 // fechar o bg
-const fechar = divPai.querySelector('.fechar')
 
-fechar.addEventListener('click', ()=>{
-    divPai.parentElement.classList.remove('ativo')
-  })
+const atividadesBg = document.querySelectorAll('.todasAsAtividadesBg')
+  atividadesBg[0].addEventListener('click', function (event) {
+
+    const itemIgnorado = atividadesBg[0].querySelector('.todasAsAtividades')
+    const fechar = atividadesBg[0].querySelector('.fechar')
+
+      if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+        atividadesBg[0].classList.remove('ativo')
+      }
+  });
+
+
+
 
 // adiciona os valores nas suas divs
 function adicionaValores() {

@@ -182,14 +182,14 @@ body {
   transform: translate3d(-50%, 100px, 0);
   height: auto;
   min-height: 300px;
-  padding: 20px;
-  width: 80vw;
+  padding: 20px 8px;
   width: 80vw;
   font-family: 'roboto', sans-serif;
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
   background-color: white;
   top: 40px;
+  box-sizing: border-box;
 }
 
 .todasAsAtividades .fechar {

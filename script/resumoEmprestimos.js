@@ -143,22 +143,25 @@ function addAtivoEmprestimo() {
 }
 
   // fechar o bg
-  const fecharEmprestimo = divPaiEmprestimo.querySelector('.fechar')
 
-  fecharEmprestimo.addEventListener('click', ()=>{
-      const divPaiEmprestimo = document.querySelector('#todasAsAtividadesEmprestimo')
-      const divs = divPaiEmprestimo.querySelectorAll('.informacoesDaCategoria')
+atividadesBg[2].addEventListener('click', function (event) {
+
+  const itemIgnorado = atividadesBg[2].querySelector('.todasAsAtividades')
+  const fechar = atividadesBg[2].querySelector('.fechar')
+  const divs = divPaiEmprestimo.querySelectorAll('.informacoesDaCategoria')
+
+
+    if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+      atividadesBg[2].classList.remove('ativo')
       divs.forEach((div)=>{
         div.remove()
       })
-        divPaiEmprestimo.parentElement.classList.remove('ativo')
-    })
-
+    }
+});
 
 // adiciona os valores nas suas divs
 function adicionaValoresATodasAsAtividadesEmprestimo() {
   arrayValoresColetadosEmprestimoResumoTotal.sort((a, b) => b[0] - a[0])
-  console.log(arrayValoresColetadosEmprestimoResumoTotal)
   const novoArrayValores =  arrayValoresColetadosEmprestimoResumoTotal.map(item => item)
   let valoresSomados = valoresTotaisEmprestimosResumoTotal.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
 

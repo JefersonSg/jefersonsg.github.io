@@ -221,11 +221,16 @@ function addAtivoGastos() {
 }
 
 // fechar o bg
-const fecharGasto = divPaiGasto.querySelector('.fechar')
 
-fecharGasto.addEventListener('click', ()=>{
-    divPaiGasto.parentElement.classList.remove('ativo')
-  })
+  atividadesBg[1].addEventListener('click', function (event) {
+
+    const itemIgnorado = atividadesBg[1].querySelector('.todasAsAtividades')
+    const fechar = atividadesBg[1].querySelector('.fechar')
+
+      if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+        atividadesBg[1].classList.remove('ativo')
+      }
+  });
 
 // adiciona os valores nas suas divs
 function adicionaValoresATodasAsAtividadesGastos() {
