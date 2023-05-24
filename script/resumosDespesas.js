@@ -177,7 +177,7 @@ function setarValoresGasto() {
     let valoresSomados = valoresTotaisGastos.reduce((acomulador, valoresSomados) => +acomulador + valoresSomados, 0,)
     const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
     nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
-    valorDiv.innerText = novoArrayValoresTop4[n][0]
+    valorDiv.innerText = (novoArrayValoresTop4[n][0]).toLocaleString('pt-BR')
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
 
@@ -218,6 +218,8 @@ const divPaiGasto = document.querySelector('#todasAsAtividadesDespesa')
 function addAtivoGastos() {
   divPaiGasto.parentElement.classList.add('ativo')
   adicionaValoresATodasAsAtividadesGastos()
+  document.body.style.overflow = 'hidden'
+
 }
 
 // fechar o bg
@@ -228,6 +230,7 @@ function addAtivoGastos() {
     const fechar = atividadesBg[1].querySelector('.fechar')
 
       if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+        document.body.style.overflow = 'auto'
         atividadesBg[1].classList.remove('ativo')
       }
   });

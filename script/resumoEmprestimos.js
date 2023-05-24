@@ -96,7 +96,7 @@ function setarValoresEmprestimos(dias) {
       const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
       porcentagemNumerica.innerText = `${porcentagem}%`
       graficoRocho.style.width = `${porcentagem}%`
-      valorDiv.innerText = novoArrayValoresTop4[n][0]
+      valorDiv.innerText = (novoArrayValoresTop4[n][0]).toLocaleString('pt-BR')
       nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
 
     } else if (!novoArrayValoresTop4[n] !== undefined) {
@@ -140,6 +140,7 @@ function addAtivoEmprestimo() {
   divPaiEmprestimo.parentElement.classList.add('ativo')
   criaAsDivsEmprestimo()
   adicionaValoresATodasAsAtividadesEmprestimo()
+  document.body.style.overflow = 'hidden'
 }
 
   // fechar o bg
@@ -152,6 +153,7 @@ atividadesBg[2].addEventListener('click', function (event) {
 
 
     if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+      document.body.style.overflow = 'auto'
       atividadesBg[2].classList.remove('ativo')
       divs.forEach((div)=>{
         div.remove()
@@ -179,7 +181,7 @@ function adicionaValoresATodasAsAtividadesEmprestimo() {
     nomeCategoria.innerText = valor[1]
     graficoPorcentagem.style.width = `${porcentagem}%`
     porcentagemNumero.innerText = `${porcentagem}%`
-    valorCategoria.innerText = valor[0]
+    valorCategoria.innerText = valor[0].toLocaleString('pt-BR')
 
     // esconder divs zeradas
     if (valor[0] === 0) {

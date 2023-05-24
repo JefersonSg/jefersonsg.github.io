@@ -174,7 +174,7 @@ function setarValores() {
     const porcentagem = ((novoArrayValoresTop4[n][0] / valoresSomados) * 100).toFixed(0)
 
     nomeDaCategoria.innerText = novoArrayValoresTop4[n][1]
-    valorDiv.innerText = novoArrayValoresTop4[n][0]
+    valorDiv.innerText = (novoArrayValoresTop4[n][0]).toLocaleString('pt-BR')
     graficoVerde.style.width = `${porcentagem}%`
     porcentagemNumerica.innerText = `${porcentagem}%`
 
@@ -217,12 +217,12 @@ const divPai = document.querySelector('#todasAsAtividadesReceita')
 function addAtivoReceita() {
   divPai.parentElement.classList.add('ativo')
   adicionaValores()
+  document.body.style.overflow = 'hidden'
 }
 
 
 
 // fechar o bg
-
 const atividadesBg = document.querySelectorAll('.todasAsAtividadesBg')
   atividadesBg[0].addEventListener('click', function (event) {
 
@@ -230,11 +230,10 @@ const atividadesBg = document.querySelectorAll('.todasAsAtividadesBg')
     const fechar = atividadesBg[0].querySelector('.fechar')
 
       if (!itemIgnorado.contains(event.target) || fechar.contains(event.target)) {
+        document.body.style.overflow = 'auto'
         atividadesBg[0].classList.remove('ativo')
       }
   });
-
-
 
 
 // adiciona os valores nas suas divs
@@ -258,7 +257,7 @@ function adicionaValores() {
     nomeCategoria.innerText = valor[1]
     graficoPorcentagem.style.width = `${porcentagem}%`
     porcentagemNumero.innerText = `${porcentagem}%`
-    valorCategoria.innerText = valor[0]
+    valorCategoria.innerText = valor[0].toLocaleString('pt-BR')
 
     // esconder divs zeradas
     if (valor[0] === 0) {

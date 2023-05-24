@@ -63,10 +63,11 @@ body {
 }
 
 .porcentagensAtuais {
-  display: flex;
+  display: grid;
+  grid-template-columns: max-content max-content max-content max-content;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 4px;
+  font-size: 11px;
   font-weight: 500;
   margin-top: 8px;
   margin-left: 16px;
@@ -76,8 +77,8 @@ body {
 .porcentagensAtuais::before {
   content: '';
   display: block;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
   background-color: #00CF15;
   border-radius: 5px;
 }
@@ -182,8 +183,9 @@ body {
   transform: translate3d(-50%, 100px, 0);
   height: auto;
   min-height: 300px;
-  padding: 20px 8px;
+  padding: 19px 0px;
   width: 80vw;
+  max-width: 500px;
   font-family: 'roboto', sans-serif;
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
@@ -205,4 +207,28 @@ body {
   border-radius: 13px;
   border: 1px solid black;
 
+}
+
+@media (min-width: 375px) {
+  .porcentagensAtuais {
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .porcentagensAtuais::before {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+@media (min-width: 500px) {
+  .porcentagensAtuais {
+    gap: 4px;
+    font-size: 12px;
+  }
+
+  .porcentagensAtuais::before {
+    width: 8px;
+    height: 8px;
+  }
 }
