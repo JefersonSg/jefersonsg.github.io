@@ -39,12 +39,11 @@
 }
 
 p#valor {
-  width: max-content;
-  justify-self: end;
+  text-align: start;
 }
 
 p#data {
-  justify-self: end;
+  text-align: start;
 }
 
 #vendaLabel #valor {
@@ -113,7 +112,7 @@ p#data {
 
 .movimentacoesLista {
   display: grid;
-  grid-template-columns: 40px 50% 80px;
+  grid-template-columns: 40px 60% 80px;
   max-width: 600px;
   font-family: 'roboto', sans-serif;
   align-items: center;
@@ -134,14 +133,21 @@ p#data {
 
 @media (min-width: 400px) {
   .movimentacoesLista {
-    grid-template-columns: 40px 55% 100px;
+    grid-template-columns: 40px 60% 90px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 500px) {
+  .movimentacoesLista {
+    grid-template-columns: 50px 65% 100px;
     font-size: 0.8rem;
   }
 }
 
 @media (min-width: 600px) {
   .movimentacoesLista {
-    grid-template-columns: 50px 60% 150px;
+    grid-template-columns: 50px 75% 100px;
     font-size: 0.8rem;
   }
 }
