@@ -256,7 +256,7 @@ function adicionaValoresATodasAsAtividadesGastos() {
     nomeCategoria.innerText = valor[1]
     graficoPorcentagem.style.width = `${porcentagem}%`
     porcentagemNumero.innerText = `${porcentagem}%`
-    valorCategoria.innerText = valor[0]
+    valorCategoria.innerText = valor[0].toLocaleString('pt-BR')
 
     // esconder divs zeradas
     if (valor[0] === 0) {

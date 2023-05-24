@@ -1,6 +1,4 @@
 /* Financas */
-
-
 .financas-bg {
   width: 100%;
   background: linear-gradient(180.52deg, #009FE3 8.62%, rgba(240, 240, 240, 0) 45.11%);
@@ -11,7 +9,7 @@
 
 .selecao-radio {
   width: 88%;
-  max-width: 1200px;
+  max-width: 600px;
   height: auto;
   display: flex;
   flex-direction: column;
