@@ -25,7 +25,6 @@ body {
 .transacoesTotais {
   display: grid;
   justify-content: center;
-  border-radius: 5px;
   background: white;
   margin-top: 8px;
   padding: 12px 0px 0px 0px;
