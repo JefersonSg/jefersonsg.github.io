@@ -18,6 +18,18 @@
   user-select: none;
 }
 
+.menu:focus,
+.menu::after,
+.menu::before {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  outline: none;
+}
+
 .menu::after,
 .menu::before {
   content: '';
@@ -28,6 +40,12 @@
   background-color: gray;
   position: relative;
   transition: transform .3s ease;
+}
+
+.menu,
+.menu::after,
+.menu::before {
+  touch-action: none;
 }
 
 .menu.ativo {
